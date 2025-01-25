@@ -11,7 +11,7 @@
     <main>
         <section class="auth-form">
             <h1>Iniciar Sesión</h1>
-            <form action="dashboard.php" method="post">
+            <form action="../private/login.php" method="post">
                 <label for="email">Correo Electrónico:</label>
                 <input type="email" id="email" name="email" required>
 
