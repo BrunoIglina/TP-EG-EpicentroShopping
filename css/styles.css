@@ -229,6 +229,18 @@ footer {
 }
 
 
+body {
+    background-color: #fff;
+    color: #333;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    padding: 1rem;
+}
+
 .auth-form {
     max-width: 400px;
     margin: 2rem auto;
@@ -251,6 +263,18 @@ footer {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.auth-form input[type="radio"] {
+    display: inline-block;
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+.auth-form label[for="cliente"], .auth-form label[for="dueno"] {
+    display: inline-block;
+    width: auto;
+    margin-right: 1rem;
 }
 
 
