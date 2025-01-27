@@ -1,3 +1,11 @@
+<?php
+session_start();
+if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
+    header("Location: index.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
