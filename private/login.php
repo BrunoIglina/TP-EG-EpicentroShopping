@@ -18,7 +18,7 @@ if ($result->num_rows > 0) {
         $_SESSION['user_email'] = $row['email'];
         $_SESSION['user_tipo'] = $row['tipo'];
         
-        header("Location: vistas.php");
+        header("Location: ../public/index.php");
         exit();
     } else {
         echo "Contraseña incorrecta.";
