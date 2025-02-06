@@ -16,43 +16,47 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
+    
     <main>
-        <section class="admin-section">
-            <h1>Administración de Promociones</h1>
-            <button onclick="location.href='nueva_promocion.php'">Agregar Promoción</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Seleccionar</th>
-                        <th>Código promoción</th>
-                        <th>Promoción</th>
-                        <th>Fecha desde promoción</th>
-                        <th>Fecha hasta promoción</th>
-                        <th>Categoría cliente</th>
-                        <th>Días de la semana</th>
-                        <th>Estado de la promoción</th>
-                        <th>Código local</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="checkbox" class="select-item"></td>
-                        <td>301</td>
-                        <td>Texto promoción 1</td>
-                        <td>01/01/2024</td>
-                        <td>31/01/2024</td>
-                        <td>Premium</td>
-                        <td>Martes</td>
-                        <td>Pendiente</td>
-                        <td>102</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="actions">
-                <button onclick="editSelected()">Editar Seleccionados</button>
-                <button onclick="deleteSelected()">Eliminar Seleccionados</button>
-            </div>
-        </section>
+
+<h1>Aprobar Promociones Pendientes</h1>
+    <form action="../private/controAcepPromo.php" method="POST">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Texto de la Promoción</th>
+                <th>Fecha de Inicio</th>
+                <th>Fecha de Fin</th>
+                <th>Acción</th>
+            </tr>
+            <?php
+            $conn = new mysqli("127.0.0.1", "root", "", "shopping_db", 3309);
+            if ($conn->connect_error) {
+                die("Conexión fallida: " . $conn->connect_error);
+            }
+
+            $sql = "SELECT id, textoPromo, fecha_inicio, fecha_fin FROM promociones WHERE estadoPromo = 'Pendiente'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . $row['id'] . "</td>";
+                    echo "<td>" . $row['textoPromo'] . "</td>";
+                    echo "<td>" . $row['fecha_inicio'] . "</td>";
+                    echo "<td>" . $row['fecha_fin'] . "</td>";
+                    echo "<td><button type='submit' name='aprobar' value='" . $row['id'] . "'>Aprobar</button></td>";
+                    echo "<td><button type='submit' name='rechazar' value='" . $row['id'] . "'>Rechazar</button></td>";
+                    
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='5'>No hay promociones pendientes</td></tr>";
+            }
+            $conn->close();
+            ?>
+        </table>
+    </form>
     </main>
     <?php include '../includes/footer.php'; ?>
 </body>
