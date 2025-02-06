@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3309
--- Tiempo de generación: 25-01-2025 a las 16:30:43
+-- Tiempo de generación: 06-02-2025 a las 15:04:58
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,20 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `shopping_db`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `descuentos`
---
-
-CREATE TABLE `descuentos` (
-  `id` int(11) NOT NULL,
-  `cliente_id` int(11) DEFAULT NULL,
-  `promocion_id` int(11) DEFAULT NULL,
-  `fecha_solicitud` date NOT NULL,
-  `estado` enum('Pendiente','Aceptado','Rechazado') DEFAULT 'Pendiente'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -75,7 +61,7 @@ CREATE TABLE `promociones` (
   `textoPromo` varchar(200) NOT NULL,
   `fecha_inicio` date NOT NULL,
   `fecha_fin` date NOT NULL,
-  `diasSemana` set('Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo') NOT NULL,
+  `diasSemana` varchar(70) NOT NULL,
   `categoriaCliente` enum('Inicial','Medium','Premium') NOT NULL,
   `estadoPromo` set('Pendiente','Aprobada','Denegada') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -115,7 +101,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `email`, `password`, `tipo`, `categoria`, `validado`, `token_validacion`) VALUES
 (6, 'brunoniglina@gmail.com', '$2y$10$x.mScAlxRJij8uHNll7Huu7KOSNwnmjBiuh.TqS9SULLCuIuaNlxW', 'Dueño', NULL, 1, NULL),
-(8, 'brunitoiglina@gmail.com', '$2y$10$KKItwAdmmORPmWAUOxsLJ.wcm.9j.FK85rUhpExRqUWPLtX6UHymi', 'Cliente', 'Inicial', 1, 'fea8d43c168eeaa35c16e29a7f7fabac'),
+(8, 'brunitoiglina@gmail.com', '$2y$10$xSAHdyrnt3KJBRKMArOtHus.VdyVPezEBvD84HK80vU6k.GLVwngS', 'Cliente', 'Inicial', 1, 'fea8d43c168eeaa35c16e29a7f7fabac'),
 (11, 'biglina@gmail.com', '$2y$10$Z1P7kk3t2UyAIFtlLQgaRecu7HRM/8Wx6Q1Swdw7xyz3PFI05V1mu', 'Administrador', NULL, 1, NULL);
 
 --
@@ -123,20 +109,12 @@ INSERT INTO `usuarios` (`id`, `email`, `password`, `tipo`, `categoria`, `validad
 --
 
 --
--- Indices de la tabla `descuentos`
---
-ALTER TABLE `descuentos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `cliente_id` (`cliente_id`),
-  ADD KEY `promocion_id` (`promocion_id`);
-
---
 -- Indices de la tabla `locales`
 --
 ALTER TABLE `locales`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idUsuario` (`idUsuario`),
-  ADD UNIQUE KEY `nombre` (`nombre`);
+  ADD UNIQUE KEY `nombre` (`nombre`),
+  ADD KEY `idUsuario` (`idUsuario`);
 
 --
 -- Indices de la tabla `novedades`
@@ -170,12 +148,6 @@ ALTER TABLE `usuarios`
 --
 
 --
--- AUTO_INCREMENT de la tabla `descuentos`
---
-ALTER TABLE `descuentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `locales`
 --
 ALTER TABLE `locales`
@@ -202,13 +174,6 @@ ALTER TABLE `usuarios`
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `descuentos`
---
-ALTER TABLE `descuentos`
-  ADD CONSTRAINT `descuentos_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `usuarios` (`id`),
-  ADD CONSTRAINT `descuentos_ibfk_2` FOREIGN KEY (`promocion_id`) REFERENCES `promociones` (`id`);
 
 --
 -- Filtros para la tabla `locales`
