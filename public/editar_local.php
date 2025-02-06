@@ -48,9 +48,12 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                 <form id="localesForm" method="POST" action="../private/update_local.php">
                         <?php
                             foreach ($locales as $local){?>
+
+                            <input type="hidden" name="nombre_antiguo_local[]" value="<?php echo $local['nombre']?>"
+                            
                                 <tr>
 
-                                    <td><?php echo $local['id']?><input type="hidden" name="id_local[]" value="<?php echo $local['id']?>"</td>
+                                    <td><?php echo $local['id']?><input type="hidden" name="id_local[]" value="<?php echo $local['id']?>"></td>
 
                                     <td><input type="text" name="nombre_local[]" value="<?php echo $local['nombre']?>" required></td>
 
