@@ -1,4 +1,7 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 session_start();
 $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante';
 ?>
@@ -20,7 +23,7 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
                 <li><a href="admin_promociones.php">Gestionar Promociones</a></li>
                 <li><a href="admin_aprobar_dueños.php">Aprobar Dueños</a></li>
             <?php elseif ($user_tipo == 'Dueño'): ?>
-                <li><a href="mis_promociones.php">Mis Promociones</a></li>
+                <li><a href="misPromos.php">Mis Promociones</a></li>
             <?php endif; ?>
             <?php if (isset($_SESSION['user_id'])): ?>
                 <li><a href="logout.php">Cerrar Sesión</a></li>
