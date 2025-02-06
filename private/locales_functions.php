@@ -6,7 +6,8 @@ function get_all_locales(){
     if(!($result_locales = $conn->query($qry_locales))){
         echo "Error: " . $sql . "<br>" . $conn->error;
     }else{
-        return $result_locales;
+        $locales = $result_locales -> fetch_all(MYSQLI_ASSOC);
+        return $locales;
     };
 }
 
@@ -16,8 +17,8 @@ function get_local($id_local){
     if(!($result_local = $conn->query($qry_local))){
         echo "Error: " . $sql . "<br>" . $conn->error;
     }else{
-        return $result_local;
-        
+        $local = $result_local -> fetch_assoc();
+        return $local;
     };
 }
 
@@ -27,8 +28,8 @@ function get_local_by_nombre($nombre){
     if(!($result_local = $conn->query($qry_local))){
         echo "Error: " . $sql . "<br>" . $conn->error;
     }else{
-        return $result_local;
-        
+        $local = $result_local -> fetch_assoc();
+        return $local;
     };
 }
 

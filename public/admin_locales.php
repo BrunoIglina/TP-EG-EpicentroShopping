@@ -32,7 +32,7 @@
                     <tbody>
                         <?php
                             $locales = get_all_locales();
-                            while ($local = mysqli_fetch_assoc($locales)) { ?>
+                            foreach ($locales as $local){ ?>
                             <tr>
                                 <td><input type="checkbox" name="locales[]" value="<?php echo $local['id']; ?>" <?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'checked' : ''; ?>></td>
                                 <td><?php echo $local['id']?></td>
@@ -40,9 +40,8 @@
                                 <td><?php echo $local['ubicacion']?></td>
                                 <td><?php echo $local['rubro']?></td>
                                 <?php 
-                                        $result_dueño = get_dueño($local['idUsuario']);
-                                        $dueño = $result_dueño -> fetch_assoc();
-                                    ?>
+                                    $dueño = get_dueño($local['idUsuario']);
+                                ?>
                                 <td><?php echo $dueño['email']?></td>    
                             </tr>
                         <?php } ?>

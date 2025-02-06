@@ -39,8 +39,8 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                     <?php
                         if (isset($_GET['ids'])) {
                             $ids = explode(',', $_GET['ids']); // Convertir la cadena de IDs en un array
-                            foreach ($ids as $id_local) {
-                                $locales[] = mysqli_fetch_assoc($result_local = get_local($id_local));
+                            foreach ($ids as $id_local){
+                                $locales[] = get_local($id_local);
                             }
                         }
                     ?>
@@ -49,8 +49,8 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                         <?php
                             foreach ($locales as $local){?>
 
-                            <input type="hidden" name="nombre_antiguo_local[]" value="<?php echo $local['nombre']?>"
-                            
+                            <input type="hidden" name="nombre_antiguo_local[]" value="<?php echo $local['nombre']?>">
+
                                 <tr>
 
                                     <td><?php echo $local['id']?><input type="hidden" name="id_local[]" value="<?php echo $local['id']?>"></td>
@@ -61,12 +61,15 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 
                                     <td><input type="text" name="rubro_local[]" value="<?php echo $local['rubro']?>" required></td>
 
-                                    <?php 
-                                        $result_dueño = get_dueño($local['idUsuario']);
-                                        $dueño = $result_dueño -> fetch_assoc();
+                                    <td><select id="email_dueño" name="id_dueño[]" required>
+                                    <?php
+                                        $dueños = get_all_dueños();
+                                        foreach ($dueños as $dueño) {
+                                            $selected = ($dueño['id'] == $local['idUsuario']) ? 'selected' : '';
+                                            echo "<option value='{$dueño['id']}' $selected>{$dueño['email']}</option>";
+                                        }
                                     ?>
-
-                                    <td><input type="text" name="email[]" value="<?php echo $dueño['email'] ?>" required></td>
+                                    </select></td>
                                     
                                 </tr>
                             <?php 

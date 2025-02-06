@@ -13,6 +13,8 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
     <title>Epicentro Shopping - Agregar Local</title>
+    <?php include '../private/locales_functions.php'; ?>
+    <?php include '../private/usuarios_functions.php'; ?>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -31,8 +33,14 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                 <input type="text" id="rubro_local" name="rubro_local" required>
 
                 <label for="email_dueño">Email dueño del local:</label>
-                <input type="email" id="email_dueño" name="email_dueño" required>
-
+                <select id="email_dueño" name="id_dueño" required>
+                <?php
+                    $dueños = get_all_dueños();
+                    foreach ($dueños as $dueño) {
+                        echo "<option value='{$dueño['id']}'>{$dueño['email']}</option>";
+                    }
+                ?>
+                </select>
                 <button type="submit">Registrar</button>
             </form>
         </section>
