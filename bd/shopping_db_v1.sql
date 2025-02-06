@@ -135,7 +135,8 @@ ALTER TABLE `descuentos`
 --
 ALTER TABLE `locales`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idUsuario` (`idUsuario`);
+  ADD KEY `idUsuario` (`idUsuario`),
+  ADD UNIQUE KEY `nombre` (`nombre`);
 
 --
 -- Indices de la tabla `novedades`

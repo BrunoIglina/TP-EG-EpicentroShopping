@@ -6,6 +6,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 }
 
 include "../env/shopping_db.php";
+include "usuarios_functions.php";
+include "locales_functions.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -13,22 +15,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombres = $_POST['nombre_local'];
     $ubicaciones = $_POST['ubicacion_local'];
     $rubros = $_POST['rubro_local'];
-    $idUsuarios = $_POST['idUsuario'];
+    $emails = $_POST['email'];
 
     // Actualiza cada local en la base de datos
     foreach ($ids as $index => $id_local){
-        $nombre = $nombres[$index];
+
+        $nombre_local = $nombres[$index];
         $ubicacion = $ubicaciones[$index];
         $rubro = $rubros[$index];
-        $idUsuario = $idUsuarios[$index];
-        include "get_dueño.php";
+        $email = $emails[$index];
+        
+        $result_dueño = get_dueño_by_email($email);
+
         if(!($result_dueño -> num_rows > 0)){
-            echo "El usuario ingresado para el local: ", $id_local, " no es dueño.";
+
+            echo "El usuario ingresado para el local: ", $nombre_local, " no es dueño.";
+            exit();
+
         }else{
-            $query = "UPDATE locales SET nombre = '$nombre', ubicacion = '$ubicacion', rubro = '$rubro', idUsuario = '$idUsuario' WHERE id = '$id_local'";
-            if(!($conn->query($query))){
-                echo "Error: " . $sql . "<br>" . $conn->error;
+
+            $result_local = get_local_by_nombre($nombre_local);
+
+            if(!($result_local -> num_rows > 0)){
+
+                $dueño = $result_dueño -> fetch_assoc();
+                $query = "UPDATE locales SET nombre = '$nombre', ubicacion = '$ubicacion', rubro = '$rubro', idUsuario = '$idUsuario' WHERE id = '$id_local'";
+
+                if ($conn->query($qry_alta) === FALSE) {
+
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+
+                }
+            }else{
+
+                echo "Ya existe un local con éste nombre: ", $nombre_local;
+                exit();
+
             }
+
         }
     }
     echo "Locales actualizados con éxito";

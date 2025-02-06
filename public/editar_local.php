@@ -13,6 +13,8 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
     <title>Epicentro Shopping - Administración de Locales</title>
+    <?php include '../private/locales_functions.php'?>
+    <?php include '../private/usuarios_functions.php'?>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -28,7 +30,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                         <th>Nombre</th>
                         <th>Ubicación</th>
                         <th>Rubro</th>
-                        <th>Código del dueño</th>
+                        <th>Email del dueño</th>
                     </tr>
                 </thead>
 
@@ -37,10 +39,8 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                     <?php
                         if (isset($_GET['ids'])) {
                             $ids = explode(',', $_GET['ids']); // Convertir la cadena de IDs en un array
-
                             foreach ($ids as $id_local) {
-                                include '../private/get_local.php';
-                                $locales[] = mysqli_fetch_assoc($result_locales);
+                                $locales[] = mysqli_fetch_assoc($result_local = get_local($id_local));
                             }
                         }
                     ?>
@@ -58,7 +58,12 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 
                                     <td><input type="text" name="rubro_local[]" value="<?php echo $local['rubro']?>" required></td>
 
-                                    <td><input type="text" name="idUsuario[]" value="<?php echo $local['idUsuario']?>" required></td>
+                                    <?php 
+                                        $result_dueño = get_dueño($local['idUsuario']);
+                                        $dueño = $result_dueño -> fetch_assoc();
+                                    ?>
+
+                                    <td><input type="text" name="email[]" value="<?php echo $dueño['email'] ?>" required></td>
                                     
                                 </tr>
                             <?php 
