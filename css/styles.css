@@ -1,4 +1,4 @@
-
+/* General Styles */
 body {
     background-color: #fff;
     color: #333;
@@ -7,12 +7,11 @@ body {
     padding: 0;
 }
 
-
-
 main {
     padding: 1rem;
 }
 
+/* Carousel Styles */
 .carrusel {
     max-width: 800px;
     margin: 2rem auto;
@@ -61,7 +60,6 @@ main {
     font-size: 1rem;
 }
 
-
 .prev, .next {
     cursor: pointer;
     position: absolute;
@@ -89,7 +87,7 @@ main {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-
+/* Promotions Styles */
 .promotions-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -106,6 +104,7 @@ main {
     margin-top: 0;
 }
 
+/* Novedades Styles */
 .novedades {
     max-width: 800px;
     margin: 2rem auto;
@@ -151,6 +150,7 @@ main {
     color: #9a8c98;
 }
 
+/* Locales Section Styles */
 .locales-section { 
     max-width: 800px; 
     margin: 2rem auto; 
@@ -176,7 +176,6 @@ main {
 .local-card h2 { 
     margin-top: 0; 
 }
-
 
 header {
     background-color: #1b1f30;
@@ -205,6 +204,7 @@ header nav ul li a.active {
     text-decoration: underline;
 }
 
+/* Footer Styles */
 footer {
     background-color: #4a4e69;
     color: #ffb400;
@@ -213,34 +213,19 @@ footer {
     margin-top: 2rem;
 }
 
+/* Actions Buttons */
 .actions button {
     background-color: #c9ada7;
     color: #4a4e69;
 }
 
-.actions button {
-    background-color: #c9ada7;
-    color: #4a4e69;
-}
-
-#registrarse{
+/* Registration Button */
+#registrarse {
     background-color: #fff;
     color: #333;
 }
 
-
-body {
-    background-color: #fff;
-    color: #333;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-main {
-    padding: 1rem;
-}
-
+/* Authentication Form Styles */
 .auth-form {
     max-width: 400px;
     margin: 2rem auto;
@@ -277,7 +262,7 @@ main {
     margin-right: 1rem;
 }
 
-
+/* Admin Section Styles */
 .admin-section {
     max-width: 800px;
     margin: 2rem auto;
@@ -311,14 +296,33 @@ main {
     cursor: pointer;
 }
 
-.admin-section button:first-child {
-    background-color: #4CAF50;
-    color: #fff;
+/* Specific Button Styles */
+button.green {
+    background-color: #4CAF50 ; /* Verde */
+    color: #fff ;
     margin: 0.3rem;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
 }
 
-.admin-section button:last-child {
-    background-color: #f44336;
+button.red {
+    background-color: #f44336 ; /* Rojo */
+    color: #fff ;
+    margin: 0.3rem;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
+}
+
+button.select-toggle {
+    background-color: #008CBA; /* Azul */
     color: #fff;
     margin: 0.3rem;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
 }
