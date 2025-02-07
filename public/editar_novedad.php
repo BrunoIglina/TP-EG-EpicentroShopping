@@ -1,0 +1,81 @@
+<?php
+session_start();
+if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
+    header("Location: index.php");
+    exit();
+}
+
+include '../private/novedades_functions.php';
+
+if (isset($_GET['ids'])) {
+    $ids = explode(',', $_GET['ids']); // Convertir la cadena de IDs en un array
+    foreach ($ids as $id_novedad){
+        $novedades[] = get_novedad($id_novedad);
+    }
+    $categorias = get_categorias();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>Epicentro Shopping - Modificación de Novedades</title>
+    <?php include_once '../private/novedades_functions.php'; ?>
+</head>
+<body>
+    <?php include '../includes/header.php'; ?>
+    <main>
+
+        <section class="admin-section">
+            <h1>Modificar novedades</h1>
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Código novedad</th>
+                        <th>Novedad</th>
+                        <th>Fecha desde novedad</th>
+                        <th>Fecha hasta novedad</th>
+                        <th>Categoria</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    
+                    <form id="novedadesForm" method="POST" action="../private/update_novedad.php">
+                            <?php
+                                foreach ($novedades as $novedad){
+                            ?>
+                                    <tr>
+
+                                        <td><?php echo $novedad['id']?><input type="hidden" name="id_novedad[]" value="<?php echo $novedad['id']?>"></td>
+
+                                        <td><input type="textarea" name="texto_novedad[]" value="<?php echo $novedad['textoNovedad']?>" required></td>
+
+                                        <td><input type="date" name="fecha_desde[]" value="<?php echo $novedad['fecha_desde']?>" required></td>
+
+                                        <td><input type="date" name="fecha_hasta[]" value="<?php echo $novedad['fecha_hasta']?>" required></td>
+
+                                        <td><select id="categoria" name="categoria[]" required>
+                                            <?php
+                                            foreach ($categorias as $categoria) {
+                                                $selected = ($categoria == $novedad['categoria']) ? 'selected' : '';
+                                                echo "<option value='{$categoria}' $selected>{$categoria}</option>";
+                                            }
+                                            ?>
+                                        </select></td>
+                                    </tr>
+                                <?php 
+                                }?>
+                        <button type="submit">Aplicar cambios</button>
+                    </form>
+                </tbody>
+            </table>
+        </section>
+</main>
+<?php include '../includes/footer.php'; ?>
+</body>
+</html>

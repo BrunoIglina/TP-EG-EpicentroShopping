@@ -4,6 +4,10 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     header("Location: index.php");
     exit();
 }
+
+include '../private/usuarios_functions.php'; 
+
+$dueños = get_all_dueños();
 ?>
 
 <!DOCTYPE html>
@@ -13,8 +17,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
     <title>Epicentro Shopping - Agregar Local</title>
-    <?php include '../private/locales_functions.php'; ?>
-    <?php include '../private/usuarios_functions.php'; ?>
+    <?php ?>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -35,7 +38,6 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                 <label for="email_dueño">Email dueño del local:</label>
                 <select id="email_dueño" name="id_dueño" required>
                 <?php
-                    $dueños = get_all_dueños();
                     foreach ($dueños as $dueño) {
                         echo "<option value='{$dueño['id']}'>{$dueño['email']}</option>";
                     }
