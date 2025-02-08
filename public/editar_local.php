@@ -4,6 +4,18 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     header("Location: index.php");
     exit();
 }
+
+include '../private/functions_locales.php';
+include '../private/functions_usuarios.php';
+
+if (isset($_GET['ids'])) {
+    $ids = explode(',', $_GET['ids']); // Convertir la cadena de IDs en un array
+    foreach ($ids as $id_local){
+        $locales[] = get_local($id_local);
+    }
+    $dueños = get_all_dueños();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -12,16 +24,15 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
-    <title>Epicentro Shopping - Administración de Locales</title>
-    <?php include '../private/locales_functions.php'?>
-    <?php include '../private/usuarios_functions.php'?>
+    <title>Epicentro Shopping - Modificación de Locales</title>
+    
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
     <main>
 
         <section class="admin-section">
-            <h1>Modifica locales</h1>
+            <h1>Modificar locales</h1>
             <table>
 
                 <thead>
@@ -35,42 +46,37 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                 </thead>
 
                 <tbody>
+                    <form id="localesForm" method="POST" action="../private/update_local.php">
+                            <?php
+                                foreach ($locales as $local){?>
 
-                    <?php
-                        if (isset($_GET['ids'])) {
-                            $ids = explode(',', $_GET['ids']); // Convertir la cadena de IDs en un array
-                            foreach ($ids as $id_local) {
-                                $locales[] = mysqli_fetch_assoc($result_local = get_local($id_local));
-                            }
-                        }
-                    ?>
+                                <input type="hidden" name="nombre_antiguo_local[]" value="<?php echo $local['nombre']?>">
 
-                <form id="localesForm" method="POST" action="../private/update_local.php">
-                        <?php
-                            foreach ($locales as $local){?>
-                                <tr>
+                                    <tr>
 
-                                    <td><?php echo $local['id']?><input type="hidden" name="id_local[]" value="<?php echo $local['id']?>"</td>
+                                        <td><?php echo $local['id']?><input type="hidden" name="id_local[]" value="<?php echo $local['id']?>"></td>
 
-                                    <td><input type="text" name="nombre_local[]" value="<?php echo $local['nombre']?>" required></td>
+                                        <td><input type="text" name="nombre_local[]" value="<?php echo $local['nombre']?>" required></td>
 
-                                    <td><input type="text" name="ubicacion_local[]" value="<?php echo $local['ubicacion']?>" required></td>
+                                        <td><input type="text" name="ubicacion_local[]" value="<?php echo $local['ubicacion']?>" required></td>
 
-                                    <td><input type="text" name="rubro_local[]" value="<?php echo $local['rubro']?>" required></td>
+                                        <td><input type="text" name="rubro_local[]" value="<?php echo $local['rubro']?>" required></td>
 
-                                    <?php 
-                                        $result_dueño = get_dueño($local['idUsuario']);
-                                        $dueño = $result_dueño -> fetch_assoc();
-                                    ?>
-
-                                    <td><input type="text" name="email[]" value="<?php echo $dueño['email'] ?>" required></td>
-                                    
-                                </tr>
-                            <?php 
-                            }?>
-                    <button type="submit">Aplicar cambios</button>
-                </form>
-            </tbody>
+                                        <td><select id="email_dueño" name="id_dueño[]" required>
+                                        <?php
+                                            foreach ($dueños as $dueño) {
+                                                $selected = ($dueño['id'] == $local['idUsuario']) ? 'selected' : '';
+                                                echo "<option value='{$dueño['id']}' $selected>{$dueño['email']}</option>";
+                                            }
+                                        ?>
+                                        </select></td>
+                                        
+                                    </tr>
+                                <?php 
+                                }?>
+                        <button type="submit">Aplicar cambios</button>
+                    </form>
+                </tbody>
         </table>
     </section>
 </main>
