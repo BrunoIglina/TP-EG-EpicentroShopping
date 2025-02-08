@@ -43,10 +43,11 @@ CREATE TABLE `locales` (
 
 CREATE TABLE `novedades` (
   `id` int(11) NOT NULL,
+  `tituloNovedad` varchar(30) NOT NULL,
   `textoNovedad` varchar(200) NOT NULL,
   `fecha_desde` date NOT NULL,
   `fecha_hasta` date NOT NULL,
-  `tipoUsuario` enum('Administrador','Dueño','Cliente') NOT NULL
+  `categoria` enum('Inicial','Medium','Premium') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

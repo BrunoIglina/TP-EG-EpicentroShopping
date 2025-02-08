@@ -6,50 +6,56 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 }
 
 include "../env/shopping_db.php";
-include "usuarios_functions.php";
-include "locales_functions.php";
+include "functions_usuarios.php";
+include "functions_locales.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $ids = $_POST['id_local'];
+    $ids_locales = $_POST['id_local'];
+    $nombres_antiguos = $_POST['nombre_antiguo_local'];
     $nombres = $_POST['nombre_local'];
     $ubicaciones = $_POST['ubicacion_local'];
     $rubros = $_POST['rubro_local'];
-    $emails = $_POST['email'];
+    $ids_dueños = $_POST['id_dueño'];
 
     // Actualiza cada local en la base de datos
-    foreach ($ids as $index => $id_local){
+    foreach ($ids_locales as $index => $id_local) {
 
+        $nombre_antiguo = $nombres_antiguos[$index];
         $nombre_local = $nombres[$index];
         $ubicacion = $ubicaciones[$index];
         $rubro = $rubros[$index];
-        $email = $emails[$index];
-        
-        $result_dueño = get_dueño_by_email($email);
+        $id_dueño = $ids_dueños[$index];
 
-        if(!($result_dueño -> num_rows > 0)){
+        $dueño = get_dueño($id_dueño);
 
-            echo "El usuario ingresado para el local: ", $nombre_local, " no es dueño.";
+        if (!($dueño)) {
+
+            echo "El usuario ingresado para el local: " . htmlspecialchars($nombre_local, ENT_QUOTES, 'UTF-8') . " no es dueño.";
             exit();
 
-        }else{
+        } else {
 
-            $result_local = get_local_by_nombre($nombre_local);
+            $local = get_local_by_nombre($nombre_local);
 
-            if(!($result_local -> num_rows > 0)){
+            if (($local) && $nombre_antiguo != $nombre_local) {
 
-                $dueño = $result_dueño -> fetch_assoc();
-                $query = "UPDATE locales SET nombre = '$nombre', ubicacion = '$ubicacion', rubro = '$rubro', idUsuario = '$idUsuario' WHERE id = '$id_local'";
+                echo "Ya existe un local con éste nombre: " . htmlspecialchars($nombre_local, ENT_QUOTES, 'UTF-8');
+                exit();
 
-                if ($conn->query($qry_alta) === FALSE) {
+            } else {
 
-                    echo "Error: " . $sql . "<br>" . $conn->error;
+                $id_dueño = $dueño['id'];
+
+                // Usar sentencias preparadas para evitar errores de sintaxis y mejorar la seguridad
+                $query = $conn->prepare("UPDATE locales SET nombre = ?, ubicacion = ?, rubro = ?, idUsuario = ? WHERE id = ?");
+                $query->bind_param('ssssi', $nombre_local, $ubicacion, $rubro, $id_dueño, $id_local);
+
+                if ($query->execute() === FALSE) {
+
+                    echo "Error: " . $query->error;
 
                 }
-            }else{
-
-                echo "Ya existe un local con éste nombre: ", $nombre_local;
-                exit();
 
             }
 

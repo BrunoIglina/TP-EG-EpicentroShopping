@@ -23,6 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
+    if (empty($locales)) {
+        echo "Por favor, selecciona al menos un local.";
+        exit();
+    }
+
     if ($action == 'edit') {
         $ids = implode(',', $locales);
         header("Location: ../public/editar_local.php?ids=$ids");
@@ -30,9 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($action == 'delete') {
         foreach ($locales as $local_id) {
             $query = "DELETE FROM locales WHERE id = '$local_id'";
-            $conn->query($query);
+            if ($conn->query($query) === TRUE) {
+                echo "Local eliminado con éxito.";
+            } else {
+                echo "Error al eliminar el local: " . $conn->error;
+            }
         }
-        echo "Locales eliminados con éxito.";
         header("Location: ../public/admin_locales.php");
         exit();
     }
