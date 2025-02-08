@@ -5,8 +5,8 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include '../private/locales_functions.php';
-include '../private/usuarios_functions.php';
+include '../private/functions_locales.php';
+include '../private/functions_usuarios.php';
 
 if (isset($_GET['ids'])) {
     $ids = explode(',', $_GET['ids']); // Convertir la cadena de IDs en un array

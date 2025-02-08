@@ -33,4 +33,20 @@ function get_all_dueños(){
     };
 }
 
+function get_usuario($id){
+    include '../en/shopping_db.php';
+    $qry = "SELECT * FROM usuarios WHERE id = '$id'";
+    if(!($result_usuario = $conn->query($qry))){
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }else{
+        $usuario = $result_usuario -> fetch_assoc();
+        return $usuario;
+    }
+}
+
+function get_categorias() {
+    return ['Inicial', 'Medium', 'Premium'];
+}
+
+
 ?>

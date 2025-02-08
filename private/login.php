@@ -20,6 +20,7 @@ if ($result->num_rows > 0) {
         $_SESSION['user_id'] = $row['id'];
         $_SESSION['user_email'] = $row['email'];
         $_SESSION['user_tipo'] = $row['tipo'];
+        $_SESSION['user_categoria'] = $row['categoria'];
         
         echo "Inicio de sesión exitoso."; // Mensaje de éxito
     } else {

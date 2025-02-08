@@ -5,7 +5,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include '../private/novedades_functions.php';
+include '../private/functions_usuarios.php';
 $categorias = get_categorias();
 ?>
 
@@ -24,8 +24,11 @@ $categorias = get_categorias();
             <h1>Agregar novedad</h1>
             <form action="../private/alta_novedad.php" method="post">
 
+                <label for="titulo_novedad">Titulo de la novedad:</label>
+                <input type="text" id="titulo_novedad" name="titulo_novedad" required>
+
                 <label for="texto_novedad">Texto de la novedad:</label>
-                <input type="textarea" id="texto_novedad" name="texto_novedad" required>
+                <textarea id="texto_novedad" name="texto_novedad" required></textarea>
 
                 <label for="fecha_desde">Fecha desde:</label>
                 <input type="date" id="fecha_desde" name="fecha_desde" required>

@@ -9,6 +9,7 @@ include "../env/shopping_db.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ids= $_POST['id_novedad'];
+    $titulos = $_POST['titulo_novedad'];
     $textos = $_POST['texto_novedad'];
     $fechas_desde = $_POST['fecha_desde'];
     $fechas_hasta = $_POST['fecha_hasta'];
@@ -17,7 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $today = date("Y-m-d");
 
     foreach($ids as $index => $id_novedad){
-        
+
+        $titulo_novedad = $titulos[$index];
         $texto_novedad = $textos[$index];
         $fecha_desde = $fechas_desde[$index];
         $fecha_hasta = $fechas_hasta[$index];
@@ -27,19 +29,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "La fecha hasta ingresada ya caducó";
 
         }else{
-            $qry = "UPDATE novedades SET textoNovedad = '$texto_novedad', fecha_desde = '$fecha_desde', fecha_hasta = '$fecha_hasta', categoria = '$categoria' WHERE id = $id_novedad";
+            $qry = "UPDATE novedades SET tituloNovedad = '$titulo_novedad',textoNovedad = '$texto_novedad', fecha_desde = '$fecha_desde', fecha_hasta = '$fecha_hasta', categoria = '$categoria' WHERE id = $id_novedad";
 
             if ($conn->query($qry) === TRUE) {
-                $conn->close();
                 echo "Novedad actualizada con éxito";
-                header("Location: ../public/admin_novedades.php");
-                exit();
-
+                
             }else{
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }
         }
     }
+    header("Location: ../public/admin_novedades.php");
+    $conn->close();
+    exit();
 }
 
 ?>

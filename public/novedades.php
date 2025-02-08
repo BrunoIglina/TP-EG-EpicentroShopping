@@ -1,3 +1,16 @@
+<?php
+session_start();
+if(!isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit();
+}
+
+include '../private/functions_novedades.php';
+
+$novedades = get_novedades_permitidas($_SESSION['user_id'],$_SESSION['user_tipo'],$_SESSION['user_categoria']);
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,20 +28,14 @@
             
             <div class="novedades-lista">
                 
+            <?php foreach ($novedades as $novedad) {?>
                 <article class="novedad">
-                    <h2>Evento especial de descuentos</h2>
-                    <p>Fecha: 20 de Noviembre de 2024</p>
-                    <p>Participa en nuestro evento especial de descuentos, donde podrás obtener hasta un 50% de descuento en tiendas seleccionadas.</p>
+                    <h2><?php echo $novedad['tituloNovedad']?></h2>
+                    <p><?php echo $novedad['fecha_desde']?></p>
+                    <p><?php echo $novedad['textoNovedad']?></p>
                 </article>
-
-                
-                <article class="novedad">
-                    <h2>¡Nueva apertura en el centro comercial!</h2>
-                    <p>Fecha: 15 de Noviembre de 2024</p>
-                    <p>Nos complace anunciar la apertura de un nuevo local de tecnología en el segundo piso. Ven a descubrir las últimas tendencias en tecnología.</p>
-                </article>
-
-                
+            <?php }
+            ?>
             </div>
         </section>
     </main>

@@ -5,8 +5,8 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include '../private/locales_functions.php'; 
-include '../private/usuarios_functions.php'; 
+include '../private/functions_locales.php'; 
+include '../private/functions_usuarios.php'; 
 
 $locales = get_all_locales();
 ?>
@@ -19,8 +19,6 @@ $locales = get_all_locales();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
     <title>Epicentro Shopping - Administración de Locales</title>
-    <?php include '../private/locales_functions.php'; ?>
-    <?php include '../private/usuarios_functions.php'; ?>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>

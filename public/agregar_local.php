@@ -5,7 +5,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include '../private/usuarios_functions.php'; 
+include '../private/functions_usuarios.php'; 
 
 $dueños = get_all_dueños();
 ?>

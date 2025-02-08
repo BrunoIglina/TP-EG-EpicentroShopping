@@ -4,7 +4,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     header("Location: index.php");
     exit();
 }
-include '../private/novedades_functions.php';
+include '../private/functions_novedades.php';
 $novedades = get_all_novedades();
 
 ?>
@@ -36,9 +36,10 @@ $novedades = get_all_novedades();
                             <tr>
                                 <th>Seleccionar</th>
                                 <th>Código novedad</th>
-                                <th>Novedad</th>
-                                <th>Fecha desde novedad</th>
-                                <th>Fecha hasta novedad</th>
+                                <th>Titulo</th>
+                                <th>Descripcion</th>
+                                <th>Fecha desde</th>
+                                <th>Fecha hasta</th>
                                 <th>Categoria</th>
                             </tr>
                         </thead>
@@ -48,6 +49,7 @@ $novedades = get_all_novedades();
                                 <tr>
                                     <td><input type="checkbox" name="novedades[]" value="<?php echo $novedad['id']; ?>" <?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'checked' : ''; ?>></td>
                                     <td><?php echo $novedad['id']?></td>
+                                    <td><?php echo $novedad['tituloNovedad']?></td>
                                     <td><?php echo $novedad['textoNovedad']?></td>
                                     <td><?php echo $novedad['fecha_desde']?></td>
                                     <td><?php echo $novedad['fecha_hasta']?></td>

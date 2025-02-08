@@ -19,7 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($novedades) && $select_all != '1') {
-        echo "Por favor, selecciona al menos un local.";
+        echo "Por favor, selecciona al menos una novedad.";
+        exit();
+    }
+
+    if (empty($novedades)) {
+        echo "Por favor, selecciona al menos una novedad.";
         exit();
     }
 

@@ -5,7 +5,8 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include '../private/novedades_functions.php';
+include '../private/functions_novedades.php';
+include '../private/functions_usuarios.php';
 
 if (isset($_GET['ids'])) {
     $ids = explode(',', $_GET['ids']); // Convertir la cadena de IDs en un array
@@ -23,7 +24,7 @@ if (isset($_GET['ids'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
     <title>Epicentro Shopping - Modificación de Novedades</title>
-    <?php include_once '../private/novedades_functions.php'; ?>
+    <?php include_once '../private/functions_novedades.php'; ?>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
@@ -36,9 +37,10 @@ if (isset($_GET['ids'])) {
                 <thead>
                     <tr>
                         <th>Código novedad</th>
-                        <th>Novedad</th>
-                        <th>Fecha desde novedad</th>
-                        <th>Fecha hasta novedad</th>
+                        <th>Título</th>
+                        <th>Descripcion</th>
+                        <th>Fecha desde</th>
+                        <th>Fecha hasta</th>
                         <th>Categoria</th>
                     </tr>
                 </thead>
@@ -52,6 +54,9 @@ if (isset($_GET['ids'])) {
                                     <tr>
 
                                         <td><?php echo $novedad['id']?><input type="hidden" name="id_novedad[]" value="<?php echo $novedad['id']?>"></td>
+
+                                        <td><input type="textarea" name="titulo_novedad[]" value="<?php echo $novedad['tituloNovedad']?>" required></td>
+
 
                                         <td><input type="textarea" name="texto_novedad[]" value="<?php echo $novedad['textoNovedad']?>" required></td>
 

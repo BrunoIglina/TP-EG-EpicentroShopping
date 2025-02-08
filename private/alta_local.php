@@ -1,7 +1,7 @@
 <?php
 include '../env/shopping_db.php';
-include 'usuarios_functions.php';
-include 'locales_functions.php';
+include 'functions_usuarios.php';
+include 'functions_locales.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
