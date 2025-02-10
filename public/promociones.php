@@ -14,7 +14,8 @@ $sql = "
         promociones.textoPromo, 
         promociones.fecha_inicio, 
         promociones.fecha_fin,
-        promociones.diasSemana
+        promociones.diasSemana,
+        promociones.categoriaCliente
     FROM 
         locales 
     INNER JOIN 
@@ -59,7 +60,8 @@ if (!$result) {
                 echo "<p><strong>" . $row["textoPromo"] . "</strong></p>";
                 echo "<p>Fecha de Inicio: " . $row["fecha_inicio"] . "</p>";
                 echo "<p>Fecha de Fin: " . $row["fecha_fin"] . "</p>";
-                echo "<p>Días de la Semana: " . $row["diasSemana"] . "</p>"; // Mostrar los días de la semana
+                echo "<p>Días de la Semana: " . $row["diasSemana"] . "</p>";
+                echo "<p>Categoria: " . $row["categoriaCliente"] . "</p>"; // Mostrar los días de la semana
                 echo "</div>";
             }
             echo "</div>"; // Cerrar el div del último local
