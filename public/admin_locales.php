@@ -4,7 +4,13 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     header("Location: index.php");
     exit();
 }
+
+include '../private/functions_locales.php'; 
+include '../private/functions_usuarios.php'; 
+
+$locales = get_all_locales();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -19,48 +25,50 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     <main>
         <section class="admin-section">
             <h1>Administración de Locales</h1>
-            <button onclick="location.href='nuevo_local.php'">Agregar Local</button>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Seleccionar</th>
-                        <th>Código del local</th>
-                        <th>Nombre</th>
-                        <th>Ubicación</th>
-                        <th>Rubro</th>
-                        <th>Código del dueño</th>
-                        <th>Dueño</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="checkbox" class="select-item"></td>
-                        <td>101</td>
-                        <td>Local 1</td>
-                        <td>Piso 1</td>
-                        <td>Tienda de ropa</td>
-                        <td>001</td>
-                        <td>Jorge</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="select-item"></td>
-                        <td>102</td>
-                        <td>Local 2</td>
-                        <td>Piso 1</td>
-                        <td>Ferretería</td>
-                        <td>002</td>
-                        <td>María</td>
-                    </tr>
-                    
-                </tbody>
-            </table>
+            <button onclick="location.href='agregar_local.php'">Agregar Local</button>
+            <?php
+            if(!$locales){?>
+                    <b>NO HAY LOCALES CARGADOS</b>
 
-            
-            <div class="actions">
-                <button onclick="editSelected()">Editar Seleccionados</button>
-                <button onclick="deleteSelected()">Eliminar Seleccionados</button>
-            </div>
+                <?php }else{?>                
+                <form id="localesForm" method="POST" action="../private/procesar_local.php">
+
+                    <button type="submit" name="action" class="select-toggle" value="toggle"><?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'Deseleccionar Todo' : 'Seleccionar Todo'; ?></button>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Seleccionar</th>
+                                <th>Código del local</th>
+                                <th>Nombre</th>
+                                <th>Ubicación</th>
+                                <th>Rubro</th>
+                                <th>Email del dueño</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                
+                                foreach ($locales as $local){ ?>
+                                <tr>
+                                    <td><input type="checkbox" name="locales[]" value="<?php echo $local['id']; ?>" <?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'checked' : ''; ?>></td>
+                                    <td><?php echo $local['id']?></td>
+                                    <td><?php echo $local['nombre']?></td>
+                                    <td><?php echo $local['ubicacion']?></td>
+                                    <td><?php echo $local['rubro']?></td>
+                                    <?php 
+                                        $dueño = get_dueño($local['idUsuario']);
+                                    ?>
+                                    <td><?php echo $dueño['email']?></td>    
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                    <button type="submit" name="action" class="green" value="edit">Modificar local</button>
+                    <button type="submit" name="action" class="red" value="delete">Eliminar local</button>
+                    <input type="hidden" name="select_all" value="<?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? '0' : '1'; ?>">
+                </form>
+            <?php }?>
         </section>
     </main>
     <?php include '../includes/footer.php'; ?>
