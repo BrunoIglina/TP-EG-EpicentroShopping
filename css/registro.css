@@ -1,0 +1,25 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.auth-form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.auth-form h1 {
+    color: #4a4e69;
+}
+
+.auth-form .form-control {
+    border-radius: 5px;
+}
+
+.auth-form button {
+    background-color: #4a4e69;
+    color: white;
+}
+
+.message {
+    font-size: 0.9rem;
+}
