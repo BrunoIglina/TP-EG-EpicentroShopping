@@ -10,34 +10,27 @@ main {
     padding: 1rem;
 }
 
-.form-container {
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 2rem;
+.card {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.form-container h1 {
-    text-align: center;
     margin-bottom: 1rem;
 }
 
-.form-container form label, .form-container form input, .form-container form button {
-    display: block;
-    width: 100%;
-    margin-bottom: 1rem;
+.card-title {
+    font-size: 1.5rem;
+    color: #4a4e69;
 }
 
-.form-container form button {
-    background-color: #4a4e69;
-    color: #fff;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.card-body p {
+    font-size: 1rem;
+    color: #22223b;
 }
+
+.card-body p strong {
+    color: #9a8c98;
+}
+
 /*
 
 header .logo img {

@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../css/styles.css">
+    <!--    <link rel="stylesheet" href="../css/styles.css"> -->
     <link rel="stylesheet" href="../css/mod_perfil.css">
     <title>Editar Perfil</title>
 </head>

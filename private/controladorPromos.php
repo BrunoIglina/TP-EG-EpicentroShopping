@@ -2,8 +2,6 @@
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo "Formulario recibido.<br>";  
-
     $local_id = $_POST['local_id']; 
     $textoPromo = $_POST['textoPromo'];
     $fecha_inicio = $_POST['fecha_inicio'];
@@ -12,17 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $categoriaCliente = $_POST['categoriaCliente'];
     $estadoPromo = 'Pendiente';  
 
-    echo "Datos recibidos: $local_id, $textoPromo, $fecha_inicio, $fecha_fin, $diasSemana, $categoriaCliente, $estadoPromo.<br>";  // Mensaje de depuración
-
     $conn = new mysqli("127.0.0.1", "root", "", "shopping_db", 3309);
 
     if ($conn->connect_error) {
         die("Conexión fallida: " . $conn->connect_error);
     }
 
-    echo "Conexión a la base de datos exitosa.<br>";  
-
-    
     $hoy = date('Y-m-d');
     if ($fecha_inicio < $hoy) {
         $_SESSION['error'] = "La fecha de inicio no puede ser anterior a hoy.";
@@ -34,20 +27,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    
     $sql = "INSERT INTO promociones (local_id, textoPromo, fecha_inicio, fecha_fin, diasSemana, categoriaCliente, estadoPromo)
             VALUES ('$local_id', '$textoPromo', '$fecha_inicio', '$fecha_fin', '$diasSemana', '$categoriaCliente', '$estadoPromo')";
 
-    echo "Consulta SQL: $sql<br>";  
-
     if ($conn->query($sql) === TRUE) {
-        echo "Promoción agregada exitosamente.<br>";
+        echo "<script>
+                alert('Promoción agregada exitosamente. El Administrador debe evaluar dicha promoción, puede ver su estado en la seccion Mis Promociones.');
+                window.location.href = '../public/misPromos.php';
+              </script>";
     } else {
-        echo "Error en la consulta: " . $conn->error . "<br>";
+        echo "<script>
+                alert('Error en la consulta: " . $conn->error . "');
+                window.location.href = '../public/darAltaPromos.php';
+              </script>";
     }
 
     $conn->close();
 } else {
-    echo "Método de solicitud no válido.<br>";
+    echo "<script>
+            alert('Método de solicitud no válido.');
+            window.location.href = '../public/darAltaPromos.php';
+          </script>";
 }
 ?>

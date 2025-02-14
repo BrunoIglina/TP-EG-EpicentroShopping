@@ -10,8 +10,8 @@ main {
     padding: 1rem;
 }
 
-.form-container {
-    max-width: 400px;
+.profile-container {
+    max-width: 600px;
     margin: 2rem auto;
     padding: 2rem;
     border: 1px solid #ccc;
@@ -19,24 +19,25 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.form-container h1 {
+.profile-container h1 {
     text-align: center;
     margin-bottom: 1rem;
 }
 
-.form-container form label, .form-container form input, .form-container form button {
-    display: block;
-    width: 100%;
+.profile-container p {
+    font-size: 1rem;
     margin-bottom: 1rem;
 }
 
-.form-container form button {
+.profile-container a {
+    display: block;
+    text-align: center;
     background-color: #4a4e69;
     color: #fff;
     padding: 0.5rem;
-    border: none;
     border-radius: 5px;
-    cursor: pointer;
+    text-decoration: none;
+    margin-top: 1rem;
 }
 /*
 

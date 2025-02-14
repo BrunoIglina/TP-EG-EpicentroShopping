@@ -1,76 +1,39 @@
-body {
-    background-color: #fff;
-    color: #333;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+.perfil-container {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
 }
 
-main {
-    padding: 1rem;
-}
-
-.profile-container {
-    max-width: 600px;
-    margin: 2rem auto;
+.perfil-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 10px;
     padding: 2rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.profile-container h1 {
     text-align: center;
-    margin-bottom: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 100%;
 }
 
-.profile-container p {
+.perfil-card .card-header h2 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #000000;
+}
+
+.perfil-card .btn-primary {
+    background-color: #ff6600;
+    border: none;
+    padding: 0.8rem;
     font-size: 1rem;
-    margin-bottom: 1rem;
+    font-weight: bold;
+    border-radius: 30px;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
 }
 
-.profile-container a {
-    display: block;
-    text-align: center;
-    background-color: #4a4e69;
-    color: #fff;
-    padding: 0.5rem;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-top: 1rem;
-}
-
-header {
-    background-color: #1b1f30;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-header .logo img {
-    width: 150px;
-}
-
-header nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1rem;
-}
-
-header nav ul li a {
-    color: #ffb400;
-    text-decoration: none;
-}
-
-header nav ul li a.active {
-    text-decoration: underline;
-}
-
-footer {
-    background-color: #4a4e69;
-    color: #ffb400;
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
+.perfil-card .btn-primary:hover {
+    background-color: #e65c00;
+    transform: scale(1.05);
 }

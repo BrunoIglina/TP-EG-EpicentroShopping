@@ -1,3 +1,4 @@
+
 body {
     background-color: #fff;
     color: #333;
@@ -10,33 +11,68 @@ main {
     padding: 1rem;
 }
 
-.form-container {
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 2rem;
+h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.form-container h1 {
-    text-align: center;
-    margin-bottom: 1rem;
+label {
+    display: block;
+    margin-bottom: 0.5rem;
 }
 
-.form-container form label, .form-container form input, .form-container form button {
+input[type="text"], input[type="date"], textarea, select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+input[type="submit"] {
     display: block;
     width: 100%;
-    margin-bottom: 1rem;
-}
-
-.form-container form button {
+    padding: 0.5rem;
     background-color: #4a4e69;
     color: #fff;
-    padding: 0.5rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #3b3e5b;
+}
+
+.error {
+    color: red;
+    margin-bottom: 1rem;
+}
+
+
+.days-of-week {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.days-of-week label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
 }
 /*
 

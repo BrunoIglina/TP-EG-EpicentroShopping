@@ -8,7 +8,7 @@ function obtenerDiasSeleccionados() {
         diasSeleccionados.push(checkbox.value);
     });
     
-    // Convierto el array en separado por comas
+
     return diasSeleccionados.join(',');
 }
 
