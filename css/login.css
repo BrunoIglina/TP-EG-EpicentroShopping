@@ -1,0 +1,53 @@
+body {
+    background-color: #fff;
+    color: #333;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.auth-form {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form label, .auth-form input, .auth-form button {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.auth-form button {
+    background-color: #4a4e69;
+    color: #fff;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.auth-form input[type="radio"] {
+    display: inline-block;
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+.auth-form label[for="cliente"], .auth-form label[for="dueno"] {
+    display: inline-block;
+    width: auto;
+    margin-right: 1rem;
+}
+
+#registrarse {
+    background-color: #fff;
+    color: #333;
+}
+
+.actions button {
+    background-color: #c9ada7;
+    color: #4a4e69;
+}

@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../css/cambiar_contraseña.css">
-    <link rel="stylesheet" href="../css/styles.css">
+    <!--    <link rel="stylesheet" href="../css/styles.css"> -->
     <title>Cambiar Contraseña</title>
 </head>
 <body>

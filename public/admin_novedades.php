@@ -14,24 +14,25 @@ $novedades = get_all_novedades();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/admin_novedades.css">
     <title>Epicentro Shopping - Administración de Novedades</title>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
-    <main>
+    <main class="container">
         <section class="admin-section">
-            <h1>Administración de Novedades</h1>
-            <button onclick="location.href='agregar_novedad.php'">Agregar novedad</button>
+            <h1 class="text-center my-4">Administración de Novedades</h1>
+            <button class="btn btn-primary mb-3" onclick="location.href='agregar_novedad.php'">Agregar novedad</button>
             <?php
                 if(!$novedades){?>
                     <b>NO HAY NOVEDADES CARGADAS</b>
                 <?php }else{?>                
                 <form id="novedadesForm" method="POST" action="../private/procesar_novedad.php">
-                    <button type="submit" name="action" class="select-toggle" value="toggle">
+                    <button type="submit" name="action" class="btn btn-secondary mb-3" value="toggle">
                         <?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'Deseleccionar Todo' : 'Seleccionar Todo'; ?>
                     </button>
-                    <table>
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th>Seleccionar</th>
@@ -58,13 +59,16 @@ $novedades = get_all_novedades();
                             <?php } ?>
                         </tbody>
                     </table>
-                    <button type="submit" name="action" class="green" value="edit">Modificar novedad</button>
-                    <button type="submit" name="action" class="red" value="delete">Eliminar novedad</button>
+                    <button type="submit" name="action" class="btn btn-success" value="edit">Modificar novedad</button>
+                    <button type="submit" name="action" class="btn btn-danger" value="delete">Eliminar novedad</button>
                     <input type="hidden" name="select_all" value="<?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? '0' : '1'; ?>">
                 </form>
             <?php }?>
         </section>
     </main>
     <?php include '../includes/footer.php'; ?>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

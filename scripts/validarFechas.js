@@ -2,12 +2,12 @@ function validarFechas(event) {
     var fechaInicio = new Date(document.getElementById("fecha_inicio").value);
     var fechaFin = new Date(document.getElementById("fecha_fin").value);
     var fechaHoy = new Date();
-    fechaHoy.setHours(0, 0, 0, 0); // No tomamos en cuenta la hora, o sea estamos solo fijandonos en la fecha
+    fechaHoy.setHours(0, 0, 0, 0); 
 
     var errorFechaInicio = document.getElementById("fechaInicioError");
     var errorFechaFin = document.getElementById("fechaFinError");
     
-    // Limpiar mensajes de error previos
+
     errorFechaInicio.textContent = "";
     errorFechaFin.textContent = "";
 

@@ -10,6 +10,11 @@ $usuario_id = $_SESSION['user_id'];
 
 include '../env/shopping_db.php';
 
+
+$limit = 4; 
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
 $sql = "
     SELECT 
         locales.nombre,
@@ -29,39 +34,68 @@ $sql = "
     ON
         promociones.local_id = locales.id
     WHERE 
-        promociones_cliente.idCliente = $usuario_id
+        promociones_cliente.idCliente = ?
+    LIMIT ? OFFSET ?
 ";
 
-$result = $conn->query($sql);
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("iii", $usuario_id, $limit, $offset);
+$stmt->execute();
+$result = $stmt->get_result();
 
-if (!$result) {
-    die("Error en la consulta: " . $conn->error);
-}
+$total_result_sql = "
+    SELECT COUNT(*) AS total
+    FROM 
+        promociones_cliente 
+    INNER JOIN 
+        promociones 
+    ON 
+        promociones_cliente.idPromocion = promociones.id 
+    INNER JOIN 
+        locales
+    ON
+        promociones.local_id = locales.id
+    WHERE 
+        promociones_cliente.idCliente = ?
+";
+$total_stmt = $conn->prepare($total_result_sql);
+$total_stmt->bind_param("i", $usuario_id);
+$total_stmt->execute();
+$total_result = $total_stmt->get_result();
+$total_rows = $total_result->fetch_assoc()['total'];
+$total_pages = ceil($total_rows / $limit);
+
+$stmt->close();
+$total_stmt->close();
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/mis_promociones.css">
     <title>Epicentro Shopping - Mis Promociones</title>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
-    <main>
-        <h1>Mis Promociones</h1>
-        <div id="misPromocionesContainer">
+    <main class="container">
+        <h1 class="my-4">Mis Promociones</h1>
+        <div id="misPromocionesContainer" class="row">
             <?php
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
+                    echo "<div class='col-lg-6 col-md-12 mb-4'>";
                     echo "<div class='card'>";
                     echo "<div class='card-body'>";
-                    echo "<h2>" . $row["nombre"] . "</h2>";
+                    echo "<h2 class='card-title'>" . $row["nombre"] . "</h2>";
                     echo "<p><strong>" . $row["textoPromo"] . "</strong></p>";
                     echo "<p>Fecha de Inicio: " . $row["fecha_inicio"] . "</p>";
                     echo "<p>Fecha de Fin: " . $row["fecha_fin"] . "</p>";
                     echo "<p>Días de la Semana: " . $row["diasSemana"] . "</p>";
                     echo "<p>Estado: " . $row["estado"] . "</p>";
+                    echo "</div>";
                     echo "</div>";
                     echo "</div>";
                 }
@@ -70,7 +104,26 @@ if (!$result) {
             }
             ?>
         </div>
+        
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item <?php if($page <= 1){ echo 'disabled'; } ?>">
+                    <a class="page-link" href="<?php if($page > 1){ echo "?page=" . ($page - 1); } ?>">Anterior</a>
+                </li>
+                <?php for($i = 1; $i <= $total_pages; $i++): ?>
+                    <li class="page-item <?php if($page == $i){ echo 'active'; } ?>">
+                        <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
+                    </li>
+                <?php endfor; ?>
+                <li class="page-item <?php if($page >= $total_pages){ echo 'disabled'; } ?>">
+                    <a class="page-link" href="<?php if($page < $total_pages){ echo "?page=" . ($page + 1); } ?>">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
     </main>
     <?php include '../includes/footer.php'; ?>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

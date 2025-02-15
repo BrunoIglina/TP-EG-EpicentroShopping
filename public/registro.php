@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/styles.css"> <!-- Está fallando el enlace o algo , CHEQUEAR -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css"> 
     <title>Epicentro Shopping - Registrarse</title> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../scripts/registro.js"></script> 
@@ -12,28 +13,36 @@
    
     <?php include '../includes/header.php'; ?>
     <main>
-        <section class="auth-form">
-            <h1>Registrarse</h1>
-            <form id="registerForm" method="post">
-                
-                <label for="email">Correo Electrónico:</label>
-                <input type="email" id="email" name="email" required>
-                <div id="emailMessage" class="message" style="color: red"></div> <!-- Div para mostrar el mensaje del email -->
+        <div class="container mt-5">
+            <section class="auth-form mx-auto p-4 border rounded shadow-sm">
+                <h1 class="text-center mb-4">Registrarse</h1>
+                <form id="registerForm" method="post">
+                    
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico:</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                        <div id="emailMessage" class="message text-danger"></div>
+                    </div>
 
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
+                    <div class="form-group">
+                        <label for="password">Contraseña:</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
 
-                <label for="tipo">Registrarse como:</label>
-                <input type="radio" id="cliente" name="tipo" value="Cliente" required>
-                <label for="cliente">Cliente</label>
-                <input type="radio" id="dueno" name="tipo" value="Dueño" required>
-                <label for="dueno">Dueño</label>
+                    <div class="form-group">
+                        <label>Registrarse como:</label>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" id="cliente" name="tipo" value="Cliente" class="form-check-input" required>
+                            <label for="cliente" class="form-check-label">Cliente</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" id="dueno" name="tipo" value="Dueño" class="form-check-input" required>
+                            <label for="dueno" class="form-check-label">Dueño</label>
+                        </div>
+                    </div>
 
-                <button type="submit">Registrarse</button>
-            </form>
-        </section>
-    </main>
-    <?php include '../includes/footer.php'; ?>
-
-</body>
-</html>
+                    <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+                </form>
+            </section>
+        </div>
+    <

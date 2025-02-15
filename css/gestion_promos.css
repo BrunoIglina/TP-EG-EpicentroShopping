@@ -1,0 +1,137 @@
+body {
+    background-color: #fff;
+    color: #333;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    padding: 1rem;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.card-body h2 {
+    font-size: 1.5rem;
+    color: #4a4e69;
+}
+
+.card-body p {
+    font-size: 1rem;
+    color: #22223b;
+}
+
+.card-body p strong {
+    color: #9a8c98;
+}
+
+.button-container {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+button {
+    background-color: #4a4e69;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3b3e5b;
+}
+
+button.accept {
+    background-color: #4CAF50; 
+}
+
+button.accept:hover {
+    background-color: #45a049;
+}
+
+button.reject {
+    background-color: #f44336; 
+}
+
+button.reject:hover {
+    background-color: #e53935;
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.pagination a {
+    color: #4a4e69;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    margin: 0 0.25rem;
+    border-radius: 5px;
+}
+
+.pagination a.active {
+    background-color: #4a4e69;
+    color: #fff;
+    border: 1px solid #4a4e69;
+}
+
+.pagination a.disabled {
+    pointer-events: none;
+    color: #ccc;
+    border: 1px solid #ccc;
+}
+
+/*
+
+header .logo img {
+    max-width: 150px;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+header nav ul li a {
+    color: #ffb400;
+    text-decoration: none;
+}
+
+header nav ul li a.active {
+    text-decoration: underline;
+}
+
+
+footer {
+    background-color: #4a4e69;
+    color: #ffb400;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+}*/
