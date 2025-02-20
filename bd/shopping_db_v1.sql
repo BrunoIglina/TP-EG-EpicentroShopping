@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3309
--- Tiempo de generación: 06-02-2025 a las 15:04:58
+-- Tiempo de generación: 20-02-2025 a las 16:03:07
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -35,6 +35,14 @@ CREATE TABLE `locales` (
   `idUsuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `locales`
+--
+
+INSERT INTO `locales` (`id`, `nombre`, `ubicacion`, `rubro`, `idUsuario`) VALUES
+(1, 'Burger King', 'Local 22', 'Alimentos', 6),
+(2, 'Mostaza', 'Local 21', 'Alimentos', 6);
+
 -- --------------------------------------------------------
 
 --
@@ -49,6 +57,13 @@ CREATE TABLE `novedades` (
   `fecha_hasta` date NOT NULL,
   `categoria` enum('Inicial','Medium','Premium') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `novedades`
+--
+
+INSERT INTO `novedades` (`id`, `tituloNovedad`, `textoNovedad`, `fecha_desde`, `fecha_hasta`, `categoria`) VALUES
+(1, 'Navidad en Epicentro', 'Descuento en juguetes', '2025-02-12', '2025-12-25', 'Inicial');
 
 -- --------------------------------------------------------
 
@@ -67,6 +82,17 @@ CREATE TABLE `promociones` (
   `estadoPromo` set('Pendiente','Aprobada','Denegada') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `promociones`
+--
+
+INSERT INTO `promociones` (`id`, `local_id`, `textoPromo`, `fecha_inicio`, `fecha_fin`, `diasSemana`, `categoriaCliente`, `estadoPromo`) VALUES
+(1, 1, '2x1', '2025-02-12', '2025-02-26', 'Lunes,Martes,Miércoles', 'Inicial', 'Aprobada'),
+(2, 2, '2x1', '2025-02-12', '2025-02-26', 'Lunes,Martes,Miércoles', 'Inicial', 'Aprobada'),
+(3, 2, '4x2', '2025-02-12', '2025-02-26', 'Lunes,Martes,Miércoles', 'Inicial', 'Aprobada'),
+(4, 1, '25% OFF', '2025-02-13', '2025-02-19', 'Lunes,Martes,Domingo', 'Inicial', 'Pendiente'),
+(5, 2, '10% OFF', '2025-02-14', '2025-02-26', 'Miércoles,Jueves,Viernes', 'Inicial', 'Pendiente');
+
 -- --------------------------------------------------------
 
 --
@@ -79,6 +105,14 @@ CREATE TABLE `promociones_cliente` (
   `fechaUsoPromo` date NOT NULL,
   `estado` enum('enviada','aceptada','rechazada') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `promociones_cliente`
+--
+
+INSERT INTO `promociones_cliente` (`idCliente`, `idPromocion`, `fechaUsoPromo`, `estado`) VALUES
+(8, 1, '2025-02-12', 'enviada'),
+(8, 2, '2025-02-12', 'enviada');
 
 -- --------------------------------------------------------
 
@@ -101,9 +135,10 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `email`, `password`, `tipo`, `categoria`, `validado`, `token_validacion`) VALUES
-(6, 'brunoniglina@gmail.com', '$2y$10$x.mScAlxRJij8uHNll7Huu7KOSNwnmjBiuh.TqS9SULLCuIuaNlxW', 'Dueño', NULL, 1, NULL),
-(8, 'brunitoiglina@gmail.com', '$2y$10$xSAHdyrnt3KJBRKMArOtHus.VdyVPezEBvD84HK80vU6k.GLVwngS', 'Cliente', 'Inicial', 1, 'fea8d43c168eeaa35c16e29a7f7fabac'),
-(11, 'biglina@gmail.com', '$2y$10$Z1P7kk3t2UyAIFtlLQgaRecu7HRM/8Wx6Q1Swdw7xyz3PFI05V1mu', 'Administrador', NULL, 1, NULL);
+(6, 'brunoniglina@gmail.com', '$2y$10$riQzskTvG5NpOzV1u4MZyuGzL8iSOcykqHUbhkJeo6GrZ9Ugrq9wW', 'Dueño', NULL, 1, NULL),
+(8, 'brunitoiglina@gmail.com', '$2y$10$7GdSSRn8y8fezyK7knbWJOz6iFaYa0YTVFUZdQOURKhZHrujTBjya', 'Cliente', 'Inicial', 1, 'fea8d43c168eeaa35c16e29a7f7fabac'),
+(11, 'biglina@gmail.com', '$2y$10$XXcWtYmMTIarCElwVLLHTed.xFrYA0A0FGOlnmwbW.i4z8AsRq3m2', 'Administrador', NULL, 1, NULL),
+(12, 'brunoiglinadev@gmail.com', '$2y$10$IPohjLmYtZvaobVF0CD1POlWBHYBGQHJQpOOgG5MCvm8mxPEm9o3e', 'Cliente', 'Inicial', 0, '2367d3d031c984e72f9cdb310acff7c4');
 
 --
 -- Índices para tablas volcadas
@@ -134,15 +169,15 @@ ALTER TABLE `promociones`
 -- Indices de la tabla `promociones_cliente`
 --
 ALTER TABLE `promociones_cliente`
-  ADD PRIMARY KEY (`idCliente`,`idPromocion`);
+  ADD PRIMARY KEY (`idCliente`,`idPromocion`),
+  ADD KEY `fk_promocion` (`idPromocion`);
 
 --
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `email_2` (`email`);
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -152,25 +187,25 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `locales`
 --
 ALTER TABLE `locales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `novedades`
 --
 ALTER TABLE `novedades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `promociones`
 --
 ALTER TABLE `promociones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restricciones para tablas volcadas
@@ -187,6 +222,13 @@ ALTER TABLE `locales`
 --
 ALTER TABLE `promociones`
   ADD CONSTRAINT `promociones_ibfk_1` FOREIGN KEY (`local_id`) REFERENCES `locales` (`id`);
+
+--
+-- Filtros para la tabla `promociones_cliente`
+--
+ALTER TABLE `promociones_cliente`
+  ADD CONSTRAINT `fk_cliente` FOREIGN KEY (`idCliente`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `fk_promocion` FOREIGN KEY (`idPromocion`) REFERENCES `promociones` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
