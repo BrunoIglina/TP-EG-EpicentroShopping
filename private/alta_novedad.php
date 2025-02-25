@@ -18,24 +18,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $today = date("Y-m-d");
 
-    if ($fecha_hasta < $today) {
-        echo "La fecha hasta ingresada ya caducó";
+    if ($fecha_desde < $today) {
+        $_SESSION['error'] = "La fecha desde no puede ser anterior a hoy.";
+        header("Location: agregar_novedad.php");
         exit();
+    }
 
+    if ($fecha_hasta < $today) {
+        $_SESSION['error'] = "La fecha hasta ingresada ya caducó.";
+        header("Location: agregar_novedad.php"); 
+        exit();
     } else {
-        // Usar sentencias preparadas para evitar errores de sintaxis y mejorar la seguridad
+        
         $qry_alta = $conn->prepare("INSERT INTO novedades (tituloNovedad, textoNovedad, fecha_desde, fecha_hasta, categoria) VALUES (?, ?, ?, ?, ?)");
         $qry_alta->bind_param('sssss', $titulo_novedad, $texto_novedad, $fecha_desde, $fecha_hasta, $categoria);
 
         if ($qry_alta->execute()) {
-            $conn->close();
-            echo "Novedad dada de alta con éxito";
+            $_SESSION['success'] = "Novedad dada de alta con éxito.";
             header("Location: ../public/admin_novedades.php");
             exit();
-
         } else {
-            echo "Error: " . $qry_alta->error;
+            $_SESSION['error'] = "Error: " . $qry_alta->error;
+            header("Location: agregar_novedad.php");
+            exit();
         }
     }
 }
+
 ?>

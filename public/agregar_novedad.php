@@ -22,6 +22,14 @@ $categorias = get_categorias();
     <main>
         <section class="admin-section">
             <h1>Agregar novedad</h1>
+
+            <?php
+            if (isset($_SESSION['error'])) {
+                echo "<p style='color: red;'>".$_SESSION['error']."</p>";
+                unset($_SESSION['error']);  
+            }
+            ?>
+
             <form action="../private/alta_novedad.php" method="post">
 
                 <label for="titulo_novedad">Titulo de la novedad:</label>
@@ -40,8 +48,7 @@ $categorias = get_categorias();
                 <select id="categoria" name="categoria" required>
                     <?php
                         foreach ($categorias as $categoria) {
-                            $selected = ($categoria == $novedad['categoria']) ? 'selected' : '';
-                            echo "<option value='{$categoria}' $selected>{$categoria}</option>";
+                            echo "<option value='{$categoria}'>{$categoria}</option>";
                         }
                     ?>
                 </select>
