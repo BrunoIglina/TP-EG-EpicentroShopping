@@ -10,6 +10,12 @@ main {
     padding: 1rem;
 }
 
+.wrapper {
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+}
+
 .card {
     border: 1px solid #ccc;
     border-radius: 5px;

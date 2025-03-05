@@ -110,97 +110,96 @@ $total_pages = ceil($total_rows / $limit);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!--    <link rel="stylesheet" href="../css/styles.css"> -->
+    <link rel="stylesheet" href="../css/styles.css">
     <title>Epicentro Shopping - Promociones</title>
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
-    <main class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <h3>Filtrar por:</h3>
-                <form method="GET" action="">
-                    <div class="form-group">
-                        <input type="text" name="nombre_local" class="form-control" placeholder="Buscar por nombre del local...">
-                    </div>
-                    <div class="form-group">
-                        <select name="rubro" class="form-control">
-                            <option value="">Todos los rubros</option>
-                            <option value="Ropa">Ropa</option>
-                            <option value="Electrónica">Electrónica</option>
-                            <option value="Joyería">Joyería</option>
-                            <option value="Calzado">Calzado</option>
-                            <option value="Librería">Librería</option>
-                            <option value="Alimentos">Alimentos</option>
-                            <option value="Bebidas">Bebidas</option>
-                            <option value="Farmacia">Farmacia</option>
-                            <option value="Deportes">Deportes</option>
-                            <option value="Muebles">Muebles</option>
-                            <option value="Hogar">Hogar</option>
-                            <option value="Automóviles">Automóviles</option>
-                            <option value="Belleza">Belleza</option>
-                            <option value="Viajes">Viajes</option>
-                            <option value="Otros">Otros</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="number" name="local_id" class="form-control" placeholder="Buscar por ID del local...">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
-                </form>
-            </div>
-            <div class="col-md-9">
-                <div id="promocionesContainer">
-                    <?php
-                    $currentLocal = '';
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            if ($currentLocal != $row["local_nombre"]) {
-                                if ($currentLocal != '') {
-                                    echo "</div>";
-                                }
-                                echo "<div class='card mb-3'>";
-                                echo "<div class='card-header'><h2 class='card-title'>" . $row["local_nombre"] . "</h2></div>";
-                                $currentLocal = $row["local_nombre"];
-                            }
-                            echo "<div class='card-body'>";
-                            echo "<p><strong>" . $row["textoPromo"] . "</strong></p>";
-                            echo "<p>Fecha de Inicio: " . $row["fecha_inicio"] . "</p>";
-                            echo "<p>Fecha de Fin: " . $row["fecha_fin"] . "</p>";
-                            echo "<p>Días de la Semana: " . $row["diasSemana"] . "</p>";
-                            echo "<p>Rubro: " . $row["rubro"] . "</p>";
-                            echo "<p>ID del Local: " . $row["local_id"] . "</p>";
-                            echo "<form method='POST' action='pedir_promocion.php'>";
-                            echo "<input type='hidden' name='promo_id' value='" . $row["promo_id"] . "'>";
-                            echo "<button type='submit' class='btn btn-success'>Pedir Promoción</button>";
-                            echo "</form>";
-                            echo "</div>";
-                        }
-                        echo "</div>";
-                    } else {
-                        echo "<p>No hay promociones que coincidan con los criterios de búsqueda.</p>";
-                    }
-                    ?>
+    <div class="wrapper">
+        <?php include '../includes/header.php'; ?>
+        <main class="container">
+            <div class="row">
+                <div class="col-mdform-group">
+                            <input type="text" name="nombre_local" class="form-control" placeholder="Buscar por nombre del local...">
+                        </div>
+                        <div class="form-group">
+                            <select name="rubro" class="form-control">
+                                <option value="">Todos los rubros</option>
+                                <option value="Ropa">Ropa</option>
+                                <option value="Electrónica">Electrónica</option>
+                                <option value="Joyería">Joyería</option>
+                                <option value="Calzado">Calzado</option>
+                                <option value="Librería">Librería</option>
+                                <option value="Alimentos">Alimentos</option>
+                                <option value="Bebidas">Bebidas</option>
+                                <option value="Farmacia">Farmacia</option>
+                                <option value="Deportes">Deportes</option>
+                                <option value="Muebles">Muebles</option>
+                                <option value="Hogar">Hogar</option>
+                                <option value="Automóviles">Automóviles</option>
+                                <option value="Belleza">Belleza</option>
+                                <option value="Viajes">Viajes</option>
+                                <option value="Otros">Otros</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="local_id" class="form-control" placeholder="Buscar por ID del local...">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </form>
                 </div>
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item <?php if($page <= 1){ echo 'disabled'; } ?>">
-                            <a class="page-link" href="<?php if($page > 1){ echo "?page=" . ($page - 1); } ?>">Anterior</a>
-                        </li>
-                        <?php for($i = 1; $i <= $total_pages; $i++): ?>
-                            <li class="page-item <?php if($page == $i){ echo 'active'; } ?>">
-                                <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
+                <div class="col-md-9">
+                    <div id="promocionesContainer">
+                        <?php
+                        $currentLocal = '';
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                if ($currentLocal != $row["local_nombre"]) {
+                                    if ($currentLocal != '') {
+                                        echo "</div>";
+                                    }
+                                    echo "<div class='card mb-3'>";
+                                    echo "<div class='card-header'><h2 class='card-title'>" . $row["local_nombre"] . "</h2></div>";
+                                    $currentLocal = $row["local_nombre"];
+                                }
+                                echo "<div class='card-body'>";
+                                echo "<p><strong>" . $row["textoPromo"] . "</strong></p>";
+                                echo "<p>Fecha de Inicio: " . $row["fecha_inicio"] . "</p>";
+                                echo "<p>Fecha de Fin: " . $row["fecha_fin"] . "</p>";
+                                echo "<p>Días de la Semana: " . $row["diasSemana"] . "</p>";
+                                echo "<p>Rubro: " . $row["rubro"] . "</p>";
+                                echo "<p>ID del Local: " . $row["local_id"] . "</p>";
+                                echo "<form method='POST' action='pedir_promocion.php'>";
+                                echo "<input type='hidden' name='promo_id' value='" . $row["promo_id"] . "'>";
+                                echo "<button type='submit' class='btn btn-success'>Pedir Promoción</button>";
+                                echo "</form>";
+                                echo "</div>";
+                            }
+                            echo "</div>";
+                        } else {
+                            echo "<p>No hay promociones que coincidan con los criterios de búsqueda.</p>";
+                        }
+                        ?>
+                    </div>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item <?php if($page <= 1){ echo 'disabled'; } ?>">
+                                <a class="page-link" href="<?php if($page > 1){ echo "?page=" . ($page - 1); } ?>">Anterior</a>
                             </li>
-                        <?php endfor; ?>
-                        <li class="page-item <?php if($page >= $total_pages){ echo 'disabled'; } ?>">
-                            <a class="page-link" href="<?php if($page < $total_pages){ echo "?page=" . ($page + 1); } ?>">Siguiente</a>
-                        </li>
-                    </ul>
-                </nav>
+                            <?php for($i = 1; $i <= $total_pages; $i++): ?>
+                                <li class="page-item <?php if($page == $i){ echo 'active'; } ?>">
+                                    <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
+                                </li>
+                            <?php endfor; ?>
+                            <li class="page-item <?php if($page >= $total_pages){ echo 'disabled'; } ?>">
+                                <a class="page-link" href="<?php if($page < $total_pages){ echo "?page=" . ($page + 1); } ?>">Siguiente</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-        </div>
-    </main>
-    <?php include '../includes/footer.php'; ?>
+        </main>
+        <?php include '../includes/footer.php'; ?>
+    </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<?php include '../includes/header.php'; ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -61,29 +61,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Epicentro Shopping - Iniciar Sesión</title>
 </head>
 <body>
-    <div class="auth-container">
-        <section class="auth-form">
-            <h1>Iniciar Sesión</h1>
-            <?php
-            if (isset($_SESSION['error'])) {
-                echo "<p class='text-danger'>" . $_SESSION['error'] . "</p>";
-                unset($_SESSION['error']);
-            }
-            ?>
-            <form action="login.php" method="post">
-                <label for="email">Correo Electrónico:</label>
-                <input type="email" id="email" name="email" required>
+    <div class="wrapper">
+        <?php include '../includes/header.php'; ?>
+        <div class="auth-container">
+            <section class="auth-form">
+                <h1>Iniciar Sesión</h1>
+                <?php
+                if (isset($_SESSION['error'])) {
+                    echo "<p class='text-danger'>" . $_SESSION['error'] . "</p>";
+                    unset($_SESSION['error']);
+                }
+                ?>
+                <form action="login.php" method="post">
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" name="email" required>
 
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
 
-                <button type="submit" class="btn btn-login">Ingresar</button>
-            </form>
-            <a href="registro.php"><button class="btn btn-register">Registrarse</button></a>
-            <a href="recuperar_cuenta.php">¿Olvidaste tu contraseña?</a>
-        </section>
+                    <button type="submit" class="btn btn-login">Ingresar</button>
+                </form>
+                <a href="registro.php"><button class="btn btn-register">Registrarse</button></a>
+                <a href="recuperar_cuenta.php">¿Olvidaste tu contraseña?</a>
+            </section>
+        </div>
+        <?php include '../includes/footer.php'; ?>
     </div>
-    
-    <?php include '../includes/footer.php'; ?>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

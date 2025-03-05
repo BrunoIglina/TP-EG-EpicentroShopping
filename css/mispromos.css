@@ -16,6 +16,12 @@ h1 {
     margin-bottom: 1rem;
 }
 
+.wrapper {
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+}
+
 button {
     display: block;
     margin: 0 auto 1rem auto;

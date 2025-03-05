@@ -19,47 +19,49 @@ $categorias = get_categorias();
     <title>Epicentro Shopping - Agregar Novedad</title>
 </head>
 <body>
+    <div class="wrapper">
     <?php include '../includes/header.php'; ?>
-    <main>
-        <section class="admin-section">
-            <h1>Agregar novedad</h1>
+        <main>
+            <section class="admin-section">
+                <h1>Agregar novedad</h1>
 
-            <?php
-            if (isset($_SESSION['error'])) {
-                echo "<p style='color: red;'>".$_SESSION['error']."</p>";
-                unset($_SESSION['error']);  
-            }
-            ?>
+                <?php
+                if (isset($_SESSION['error'])) {
+                    echo "<p style='color: red;'>".$_SESSION['error']."</p>";
+                    unset($_SESSION['error']);  
+                }
+                ?>
 
-            <form action="../private/alta_novedad.php" method="post">
+                <form action="../private/alta_novedad.php" method="post">
 
-                <label for="titulo_novedad">Titulo de la novedad:</label>
-                <input type="text" id="titulo_novedad" name="titulo_novedad" required>
+                    <label for="titulo_novedad">Titulo de la novedad:</label>
+                    <input type="text" id="titulo_novedad" name="titulo_novedad" required>
 
-                <label for="texto_novedad">Texto de la novedad:</label>
-                <textarea id="texto_novedad" name="texto_novedad" required></textarea>
+                    <label for="texto_novedad">Texto de la novedad:</label>
+                    <textarea id="texto_novedad" name="texto_novedad" required></textarea>
 
-                <label for="fecha_desde">Fecha desde:</label>
-                <input type="date" id="fecha_desde" name="fecha_desde" required>
+                    <label for="fecha_desde">Fecha desde:</label>
+                    <input type="date" id="fecha_desde" name="fecha_desde" required>
 
-                <label for="fecha_hasta">Fecha hasta:</label>
-                <input type="date" id="fecha_hasta" name="fecha_hasta" required>
+                    <label for="fecha_hasta">Fecha hasta:</label>
+                    <input type="date" id="fecha_hasta" name="fecha_hasta" required>
 
-                <label for="categoria">Categoria:</label>
-                <select id="categoria" name="categoria" required>
-                    <?php
-                        foreach ($categorias as $categoria) {
-                            echo "<option value='{$categoria}'>{$categoria}</option>";
-                        }
-                    ?>
-                </select>
+                    <label for="categoria">Categoria:</label>
+                    <select id="categoria" name="categoria" required>
+                        <?php
+                            foreach ($categorias as $categoria) {
+                                echo "<option value='{$categoria}'>{$categoria}</option>";
+                            }
+                        ?>
+                    </select>
 
-                <button type="submit">Registrar</button>
+                    <button type="submit">Registrar</button>
 
-            </form>
-        </section>
-    </main>
-    <?php include '../includes/footer.php'; ?>
+                </form>
+            </section>
+        </main>
+        <?php include '../includes/footer.php'; ?>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

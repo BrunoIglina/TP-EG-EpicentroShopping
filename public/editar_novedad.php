@@ -28,61 +28,63 @@ if (isset($_GET['ids'])) {
     <?php include_once '../private/functions_novedades.php'; ?>
 </head>
 <body>
+    <div class="wrapper">
     <?php include '../includes/header.php'; ?>
-    <main>
+            <main>
 
-        <section class="admin-section">
-            <h1>Modificar novedades</h1>
-            <table>
+                <section class="admin-section">
+                    <h1>Modificar novedades</h1>
+                    <table>
 
-                <thead>
-                    <tr>
-                        <th>Código novedad</th>
-                        <th>Título</th>
-                        <th>Descripcion</th>
-                        <th>Fecha desde</th>
-                        <th>Fecha hasta</th>
-                        <th>Categoria</th>
-                    </tr>
-                </thead>
+                        <thead>
+                            <tr>
+                                <th>Código novedad</th>
+                                <th>Título</th>
+                                <th>Descripcion</th>
+                                <th>Fecha desde</th>
+                                <th>Fecha hasta</th>
+                                <th>Categoria</th>
+                            </tr>
+                        </thead>
 
-                <tbody>
-                    
-                    <form id="novedadesForm" method="POST" action="../private/update_novedad.php">
-                            <?php
-                                foreach ($novedades as $novedad){
-                            ?>
-                                    <tr>
+                        <tbody>
+                            
+                            <form id="novedadesForm" method="POST" action="../private/update_novedad.php">
+                                    <?php
+                                        foreach ($novedades as $novedad){
+                                    ?>
+                                            <tr>
 
-                                        <td><?php echo $novedad['id']?><input type="hidden" name="id_novedad[]" value="<?php echo $novedad['id']?>"></td>
+                                                <td><?php echo $novedad['id']?><input type="hidden" name="id_novedad[]" value="<?php echo $novedad['id']?>"></td>
 
-                                        <td><input type="textarea" name="titulo_novedad[]" value="<?php echo $novedad['tituloNovedad']?>" required></td>
+                                                <td><input type="textarea" name="titulo_novedad[]" value="<?php echo $novedad['tituloNovedad']?>" required></td>
 
 
-                                        <td><input type="textarea" name="texto_novedad[]" value="<?php echo $novedad['textoNovedad']?>" required></td>
+                                                <td><input type="textarea" name="texto_novedad[]" value="<?php echo $novedad['textoNovedad']?>" required></td>
 
-                                        <td><input type="date" name="fecha_desde[]" value="<?php echo $novedad['fecha_desde']?>" required></td>
+                                                <td><input type="date" name="fecha_desde[]" value="<?php echo $novedad['fecha_desde']?>" required></td>
 
-                                        <td><input type="date" name="fecha_hasta[]" value="<?php echo $novedad['fecha_hasta']?>" required></td>
+                                                <td><input type="date" name="fecha_hasta[]" value="<?php echo $novedad['fecha_hasta']?>" required></td>
 
-                                        <td><select id="categoria" name="categoria[]" required>
-                                            <?php
-                                            foreach ($categorias as $categoria) {
-                                                $selected = ($categoria == $novedad['categoria']) ? 'selected' : '';
-                                                echo "<option value='{$categoria}' $selected>{$categoria}</option>";
-                                            }
-                                            ?>
-                                        </select></td>
-                                    </tr>
-                                <?php 
-                                }?>
-                        <button type="submit">Aplicar cambios</button>
-                    </form>
-                </tbody>
-            </table>
-        </section>
-</main>
-<?php include '../includes/footer.php'; ?>
+                                                <td><select id="categoria" name="categoria[]" required>
+                                                    <?php
+                                                    foreach ($categorias as $categoria) {
+                                                        $selected = ($categoria == $novedad['categoria']) ? 'selected' : '';
+                                                        echo "<option value='{$categoria}' $selected>{$categoria}</option>";
+                                                    }
+                                                    ?>
+                                                </select></td>
+                                            </tr>
+                                        <?php 
+                                        }?>
+                                <button type="submit">Aplicar cambios</button>
+                            </form>
+                        </tbody>
+                    </table>
+                </section>
+        </main>
+        <?php include '../includes/footer.php'; ?>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

@@ -1,9 +1,14 @@
 .perfil-container {
-    margin-top: 3rem;
+    margin-top: 10rem;
     display: flex;
     justify-content: center;
+    margin-bottom: 10rem;
 }
-
+.wrapper {
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr auto;
+}
 .perfil-card {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);

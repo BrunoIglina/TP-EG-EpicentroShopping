@@ -36,7 +36,7 @@ body {
     margin-right: 0.5rem;
 }
 
-.auth-form label[for="cliente"], .auth-form label[for="dueno"] {
+[for="cliente"], .auth-form label[for="dueno"] {
     display: inline-block;
     width: auto;
     margin-right: 1rem;
@@ -50,4 +50,10 @@ body {
 .actions button {
     background-color: #c9ada7;
     color: #4a4e69;
+}
+
+.wrapper {
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
 }

@@ -9,7 +9,8 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <div class="logo">
-                <img src="../assets/logo.png" alt="Epicentro Shopping Logo" class="img-fluid">
+               <a href="index.php"><img src="../assets/logo.png" alt="Epicentro Shopping Logo" class="img-fluid" href="index.php"></a> 
+                
             </div>
             <nav class="navbar navbar-expand-lg navbar-dark">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,6 +22,7 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
                         <li class="nav-item"><a class="nav-link" href="promociones.php">Promociones</a></li>
                         <li class="nav-item"><a class="nav-link" href="novedades.php">Novedades</a></li>
                         <li class="nav-item"><a class="nav-link" href="locales.php">Locales</a></li>
+                        <li class="nav-item"><a class="nav-link" href="mapadesitio.php">Mapa De Sitio</a></li>
                         <?php if ($user_tipo == 'Administrador'): ?>
                             <li class="nav-item"><a class="nav-link" href="admin_locales.php">Gestionar Locales</a></li>
                             <li class="nav-item"><a class="nav-link" href="admin_novedades.php">Gestionar Novedades</a></li>

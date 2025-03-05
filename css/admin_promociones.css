@@ -4,6 +4,11 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+.wrapper {
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+}
 .navbar-dark .navbar-nav .nav-link {
     color: #857c67;
 }
