@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../env/shopping_db.php';
+include '../private/envio_mail.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
@@ -30,12 +31,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO usuarios (email, password, tipo) VALUES (?, ?, ?)";
+    $token = bin2hex(random_bytes(16));
+    $sql = "INSERT INTO usuarios (email, password, tipo, token_validacion) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $email, $hashedPassword, $tipo);
+    $stmt->bind_param("ssss", $email, $hashedPassword, $tipo, $token);
 
     if ($stmt->execute()) {
-        $_SESSION['success'] = "Registro exitoso. Ahora puedes iniciar sesión.";
+        if($tipo == "Cliente")
+        {
+            sendValidationEmail($email, $token);
+        }
+        $_SESSION['success'] = "Registro exitoso. Ahora puedes iniciar sesión. Si deseas ser cliente debes validar tu cuenta con el link que te enviamos a tu correo electrónico.";
     } else {
         $_SESSION['error'] = "Error al registrarse. Inténtalo nuevamente.";
     }

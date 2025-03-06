@@ -65,22 +65,6 @@ $locales = get_all_locales();
                                     <td><?php echo $dueño['email']?></td>
                                     <td><button type="button" onclick="window.location.href='../private/generarInforme.php?local_id=<?php echo $local['id']; ?>'">Generar PDF</button></td> 
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                    
-                                    foreach ($locales as $local){ ?>
-                                    <tr>
-                                        <td><input type="checkbox" name="locales[]" value="<?php echo $local['id']; ?>" <?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'checked' : ''; ?>></td>
-                                        <td><?php echo $local['id']?></td>
-                                        <td><?php echo $local['nombre']?></td>
-                                        <td><?php echo $local['ubicacion']?></td>
-                                        <td><?php echo $local['rubro']?></td>
-                                        <?php 
-                                            $dueño = get_dueño($local['idUsuario']);
-                                        ?>
-                                        <td><?php echo $dueño['email']?></td>    
-                                    </tr>
                                 <?php } ?>
                             </tbody>
                         </table>

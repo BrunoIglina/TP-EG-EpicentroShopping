@@ -34,37 +34,8 @@ form button {
     cursor: pointer;
 }
 
-header {
-    background-color: #1b1f30;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-header .logo img {
-    width: 150px;
-}
-
-header nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1rem;
-}
-
-header nav ul li a {
-    color: #ffb400;
-    text-decoration: none;
-}
-
-header nav ul li a.active {
-    text-decoration: underline;
-}
-
-footer {
-    background-color: #4a4e69;
-    color: #ffb400;
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
+.wrapper {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100dvh;
 }

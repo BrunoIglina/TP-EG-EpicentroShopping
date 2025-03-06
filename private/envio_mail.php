@@ -8,7 +8,7 @@ function sendValidationEmail($email, $token) {
     $mail = new PHPMailer(true);
 
     try {
-        // Configuración del servidor SMTP
+        
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com'; 
         $mail->SMTPAuth = true;
@@ -17,11 +17,11 @@ function sendValidationEmail($email, $token) {
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 
-        // Remitente y destinatario
+        
         $mail->setFrom('no-reply@epicentroshopping.com', 'Epicentro Shopping');
         $mail->addAddress($email);
 
-        // Contenido del correo
+        
         $mail->isHTML(true);
         $mail->Subject = 'Validacion de cuenta en Epicentro Shopping';
         $mail->Body    = "Haz clic en el siguiente enlace para validar tu cuenta: <a href='http://localhost/tp/private/validar_cliente.php?token=$token'>Validar cuenta</a>";
