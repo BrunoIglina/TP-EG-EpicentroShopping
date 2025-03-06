@@ -7,7 +7,7 @@ function validarFechas(event) {
     var errorFechaInicio = document.getElementById("fechaInicioError");
     var errorFechaFin = document.getElementById("fechaFinError");
     
-    // Limpiar mensajes de error previos
+    
     errorFechaInicio.textContent = "";
     errorFechaFin.textContent = "";
 

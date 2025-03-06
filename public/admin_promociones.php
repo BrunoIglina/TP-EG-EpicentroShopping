@@ -35,7 +35,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                 die("Conexión fallida: " . $conn->connect_error);
             }
 
-            $sql = "SELECT id, textoPromo, fecha_inicio, fecha_fin FROM promociones WHERE estadoPromo = 'Pendiente'";
+            $sql = "SELECT id, textoPromo, fecha_inicio, fecha_fin, categoriaCliente FROM promociones WHERE estadoPromo = 'Pendiente'";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -45,6 +45,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                     echo "<td>" . $row['textoPromo'] . "</td>";
                     echo "<td>" . $row['fecha_inicio'] . "</td>";
                     echo "<td>" . $row['fecha_fin'] . "</td>";
+                    echo "<td>" . $row['categoriaCliente'] . "</td>";
                     echo "<td><button type='submit' name='aprobar' value='" . $row['id'] . "'>Aprobar</button></td>";
                     echo "<td><button type='submit' name='rechazar' value='" . $row['id'] . "'>Rechazar</button></td>";
                     

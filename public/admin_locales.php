@@ -11,7 +11,6 @@ include '../private/functions_usuarios.php';
 $locales = get_all_locales();
 ?>
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -29,7 +28,6 @@ $locales = get_all_locales();
             <?php
             if(!$locales){?>
                     <b>NO HAY LOCALES CARGADOS</b>
-
                 <?php }else{?>                
                 <form id="localesForm" method="POST" action="../private/procesar_local.php">
 
@@ -44,6 +42,7 @@ $locales = get_all_locales();
                                 <th>Ubicación</th>
                                 <th>Rubro</th>
                                 <th>Email del dueño</th>
+                                <th>Acciones</th> <!-- Añadimos una nueva columna para las acciones -->
                             </tr>
                         </thead>
                         <tbody>
@@ -59,7 +58,8 @@ $locales = get_all_locales();
                                     <?php 
                                         $dueño = get_dueño($local['idUsuario']);
                                     ?>
-                                    <td><?php echo $dueño['email']?></td>    
+                                    <td><?php echo $dueño['email']?></td>
+                                    <td><button type="button" onclick="window.location.href='../private/generarInforme.php?local_id=<?php echo $local['id']; ?>'">Generar PDF</button></td> <!-- Cambiamos el nombre aquí -->
                                 </tr>
                             <?php } ?>
                         </tbody>
