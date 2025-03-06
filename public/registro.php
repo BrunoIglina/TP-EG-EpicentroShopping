@@ -1,3 +1,54 @@
+<?php
+session_start();
+include '../env/shopping_db.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    $tipo = trim($_POST['tipo']);
+
+    if (empty($email) || empty($password) || empty($tipo)) {
+        $_SESSION['error'] = "Todos los campos son obligatorios.";
+        header("Location: registro.php");
+        exit();
+    }
+
+    $sql = "SELECT id FROM usuarios WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        $_SESSION['error'] = "El correo electrónico ya está registrado.";
+        $stmt->close();
+        $conn->close();
+        header("Location: registro.php");
+        exit();
+    }
+
+    $stmt->close();
+
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $sql = "INSERT INTO usuarios (email, password, tipo) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $email, $hashedPassword, $tipo);
+
+    if ($stmt->execute()) {
+        $_SESSION['success'] = "Registro exitoso. Ahora puedes iniciar sesión.";
+    } else {
+        $_SESSION['error'] = "Error al registrarse. Inténtalo nuevamente.";
+    }
+
+    $stmt->close();
+    $conn->close();
+    header("Location: registro.php");
+    exit();
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,43 +57,57 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css"> 
     <title>Epicentro Shopping - Registrarse</title> 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="../scripts/registro.js"></script> 
 </head>
 <body>
-   
+    <div class="wrapper">
     <?php include '../includes/header.php'; ?>
-    <main>
-        <div class="container mt-5">
-            <section class="auth-form mx-auto p-4 border rounded shadow-sm">
-                <h1 class="text-center mb-4">Registrarse</h1>
-                <form id="registerForm" method="post">
-                    
-                    <div class="form-group">
-                        <label for="email">Correo Electrónico:</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
-                        <div id="emailMessage" class="message text-danger"></div>
-                    </div>
+        <main>
+            <div class="container mt-5">
+                <section class="auth-form mx-auto p-4 border rounded shadow-sm">
+                    <h1 class="text-center mb-4">Registrarse</h1>
 
-                    <div class="form-group">
-                        <label for="password">Contraseña:</label>
-                        <input type="password" id="password" name="password" class="form-control" required>
-                    </div>
+                    <?php if (isset($_SESSION['error'])): ?>
+                        <p class="text-danger text-center"><?= $_SESSION['error']; unset($_SESSION['error']); ?></p>
+                    <?php endif; ?>
 
-                    <div class="form-group">
-                        <label>Registrarse como:</label>
-                        <div class="form-check form-check-inline">
-                            <input type="radio" id="cliente" name="tipo" value="Cliente" class="form-check-input" required>
-                            <label for="cliente" class="form-check-label">Cliente</label>
+                    <?php if (isset($_SESSION['success'])): ?>
+                        <p class="text-success text-center"><?= $_SESSION['success']; unset($_SESSION['success']); ?></p>
+                        <meta http-equiv="refresh" content="2;url=login.php">
+                    <?php endif; ?>
+
+                    <form action="registro.php" method="post">
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico:</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input type="radio" id="dueno" name="tipo" value="Dueño" class="form-check-input" required>
-                            <label for="dueno" class="form-check-label">Dueño</label>
-                        </div>
-                    </div>
 
-                    <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
-                </form>
-            </section>
-        </div>
-    <
+                        <div class="form-group">
+                            <label for="password">Contraseña:</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Registrarse como:</label>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" id="cliente" name="tipo" value="Cliente" class="form-check-input" required>
+                                <label for="cliente" class="form-check-label">Cliente</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" id="dueno" name="tipo" value="Dueño" class="form-check-input" required>
+                                <label for="dueno" class="form-check-label">Dueño</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+                    </form>
+                </section>
+            </div>
+        </main>
+
+        <?php include '../includes/footer.php'; ?>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

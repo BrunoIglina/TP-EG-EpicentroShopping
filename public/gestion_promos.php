@@ -93,64 +93,66 @@ if (!$result) {
     </script>
 </head>
 <body>
+    <div class="wrapper">   
     <?php include '../includes/header.php'; ?>
-    <main class="container my-4">
-        <h1>Gestión de Promociones</h1>
-        <div id="promocionesContainer">
-            <?php
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<div class='card'>";
-                    echo "<div class='card-body'>";
-                    echo "<h2>" . $row["local_nombre"] . "</h2>";
-                    echo "<p><strong>" . $row["textoPromo"] . "</strong></p>";
-                    echo "<p>Fecha de Inicio: " . $row["fecha_inicio"] . "</p>";
-                    echo "<p>Fecha de Fin: " . $row["fecha_fin"] . "</p>";
-                    echo "<p>Días de la Semana: " . $row["diasSemana"] . "</p>";
-                    echo "<p>Estado: " . $row["estado"] . "</p>";
-                    echo "<p>Email: " . $row["email"] . "</p>";
-                    if ($row["estado"] == 'enviada') {
-                        echo "<div class='button-container'>";
-                        echo "<form id='promoForm_" . $row["idPromocion"] . "_aceptar' method='POST' action='../private/gestionar_promocion.php'>";
-                        echo "<input type='hidden' name='promo_id' value='" . $row["idPromocion"] . "'>";
-                        echo "<input type='hidden' name='accion' value='aceptar'>";
-                        echo "<button type='button' class='accept' onclick='confirmarAccion(" . $row["idPromocion"] . ", \"aceptar\")'>Aceptar</button>";
-                        echo "</form>";
-                        echo "<form id='promoForm_" . $row["idPromocion"] . "_rechazar' method='POST' action='../private/gestionar_promocion.php'>";
-                        echo "<input type='hidden' name='promo_id' value='" . $row["idPromocion"] . "'>";
-                        echo "<input type='hidden' name='accion' value='rechazar'>";
-                        echo "<button type='button' class='reject' onclick='confirmarAccion(" . $row["idPromocion"] . ", \"rechazar\")'>Rechazar</button>";
-                        echo "</form>";
+        <main class="container my-4">
+            <h1>Gestión de Promociones</h1>
+            <div id="promocionesContainer">
+                <?php
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<div class='card'>";
+                        echo "<div class='card-body'>";
+                        echo "<h2>" . $row["local_nombre"] . "</h2>";
+                        echo "<p><strong>" . $row["textoPromo"] . "</strong></p>";
+                        echo "<p>Fecha de Inicio: " . $row["fecha_inicio"] . "</p>";
+                        echo "<p>Fecha de Fin: " . $row["fecha_fin"] . "</p>";
+                        echo "<p>Días de la Semana: " . $row["diasSemana"] . "</p>";
+                        echo "<p>Estado: " . $row["estado"] . "</p>";
+                        echo "<p>Email: " . $row["email"] . "</p>";
+                        if ($row["estado"] == 'enviada') {
+                            echo "<div class='button-container'>";
+                            echo "<form id='promoForm_" . $row["idPromocion"] . "_aceptar' method='POST' action='../private/gestionar_promocion.php'>";
+                            echo "<input type='hidden' name='promo_id' value='" . $row["idPromocion"] . "'>";
+                            echo "<input type='hidden' name='accion' value='aceptar'>";
+                            echo "<button type='button' class='accept' onclick='confirmarAccion(" . $row["idPromocion"] . ", \"aceptar\")'>Aceptar</button>";
+                            echo "</form>";
+                            echo "<form id='promoForm_" . $row["idPromocion"] . "_rechazar' method='POST' action='../private/gestionar_promocion.php'>";
+                            echo "<input type='hidden' name='promo_id' value='" . $row["idPromocion"] . "'>";
+                            echo "<input type='hidden' name='accion' value='rechazar'>";
+                            echo "<button type='button' class='reject' onclick='confirmarAccion(" . $row["idPromocion"] . ", \"rechazar\")'>Rechazar</button>";
+                            echo "</form>";
+                            echo "</div>";
+                        }
+                        echo "</div>";
                         echo "</div>";
                     }
-                    echo "</div>";
-                    echo "</div>";
+                } else {
+                    echo "<p>No hay promociones solicitadas para tus locales.</p>";
                 }
-            } else {
-                echo "<p>No hay promociones solicitadas para tus locales.</p>";
-            }
-            ?>
-        </div>
-        </div>
-        <div class="pagination">
-            <?php if ($page > 1): ?>
-                <a href="?page=<?php echo $page - 1; ?>">Anterior</a>
-            <?php else: ?>
-                <a class="disabled">Anterior</a>
-            <?php endif; ?>
+                ?>
+            </div>
+            </div>
+            <div class="pagination">
+                <?php if ($page > 1): ?>
+                    <a href="?page=<?php echo $page - 1; ?>">Anterior</a>
+                <?php else: ?>
+                    <a class="disabled">Anterior</a>
+                <?php endif; ?>
 
-            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                <a href="?page=<?php echo $i; ?>" class="<?php if ($i == $page) echo 'active'; ?>"><?php echo $i; ?></a>
-            <?php endfor; ?>
+                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                    <a href="?page=<?php echo $i; ?>" class="<?php if ($i == $page) echo 'active'; ?>"><?php echo $i; ?></a>
+                <?php endfor; ?>
 
-            <?php if ($page < $total_pages): ?>
-                <a href="?page=<?php echo $page + 1; ?>">Siguiente</a>
-            <?php else: ?>
-                <a class="disabled">Siguiente</a>
-            <?php endif; ?>
-        </div>
-    </main>
-    <?php include '../includes/footer.php'; ?>
+                <?php if ($page < $total_pages): ?>
+                    <a href="?page=<?php echo $page + 1; ?>">Siguiente</a>
+                <?php else: ?>
+                    <a class="disabled">Siguiente</a>
+                <?php endif; ?>
+            </div>
+        </main>
+        <?php include '../includes/footer.php'; ?>
+    </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

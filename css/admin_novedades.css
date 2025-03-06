@@ -10,6 +10,12 @@ main {
     padding: 1rem;
 }
 
+.wrapper {
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+}
+
 h1 {
     color: #4a4e69;
     margin-bottom: 2rem;

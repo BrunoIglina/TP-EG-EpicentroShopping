@@ -7,6 +7,12 @@ body {
     padding: 0;
 }
 
+.wrapper {
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+}
+
 main {
     padding: 1rem;
 }

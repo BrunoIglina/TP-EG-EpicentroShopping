@@ -16,6 +16,12 @@ h1 {
     margin-bottom: 1rem;
 }
 
+.wrapper {
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+}
+
 button {
     display: block;
     margin: 0 auto 1rem auto;
@@ -68,32 +74,3 @@ td form input[type="submit"]:hover {
     background-color: #d32f2f;
 }
 
-/*
-
-header .logo img {
-    max-width: 150px;
-}
-
-header nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1rem;
-}
-
-header nav ul li a {
-    color: #ffb400;
-    text-decoration: none;
-}
-
-header nav ul li a.active {
-    text-decoration: underline;
-}
-
-
-footer {
-    background-color: #4a4e69;
-    color: #ffb400;
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
-}*/
