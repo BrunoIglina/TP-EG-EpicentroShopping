@@ -6,6 +6,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 }
 
 include '../private/functions_usuarios.php'; 
+include '../private/rubros.php';
 
 $dueños = get_all_dueños();
 ?>
@@ -35,7 +36,14 @@ $dueños = get_all_dueños();
                     <input type="text" id="ubicacion_local" name="ubicacion_local" required>
 
                     <label for="rubro_local">Rubro del local:</label>
-                    <input type="text" id="rubro_local" name="rubro_local" required>
+
+                    <select name="rubro_local"  required>
+                                <?php foreach ($rubros as $label => $value) {?>
+                                    <option value="<?php echo $value; ?>">
+                                        <?php echo $label; ?></option> 
+                                    <?php 
+                                } ?>
+                    </select>
 
                     <label for="email_dueño">Email dueño del local:</label>
                     <select id="email_dueño" name="id_dueño" required>
