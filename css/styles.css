@@ -122,23 +122,6 @@ footer {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-/* Other Styles */
-/*.promotions-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-}
-
-.promotion-card {
-    border: 1px solid #ccc;
-    padding: 1rem;
-    border-radius: 5px;
-}
-
-.promotion-card h2 {
-    margin-top: 0;
-}
-
 .novedades {
     max-width: 800px;
     margin: 2rem auto;
@@ -183,6 +166,42 @@ footer {
     font-weight: bold;
     color: #9a8c98;
 }
+
+/* Other Styles */
+/*.promotions-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.promotion-card {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.promotion-card h2 {
+    margin-top: 0;
+}
+
+
+/* Other Styles */
+/*.promotions-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.promotion-card {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.promotion-card h2 {
+    margin-top: 0;
+}
+
 
 .locales-section { 
     max-width: 800px; 
