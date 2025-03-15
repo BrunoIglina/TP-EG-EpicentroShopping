@@ -1,11 +1,11 @@
 <?php
 session_start();
-require '../env/shopping_db.php'; 
-
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit;
+if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
+    header("Location: login.php");
+    exit();
 }
+
+require '../env/shopping_db.php'; 
 
 $user_id = $_SESSION['user_id'];
 $query = "SELECT * FROM usuarios WHERE id = ?";

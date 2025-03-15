@@ -24,18 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $fecha_hasta = $fechas_hasta[$index];
         $categoria = $categorias[$index];
 
-        if ($fecha_hasta < $today) {
-            $_SESSION['error'] = "La fecha hasta de la novedad con ID $id_novedad ya caducó.";
-            header("Location: modificar_novedad.php?ids=" . implode(',', $ids));
-            exit();
-        }
-
-        if ($fecha_desde < $today) {
-            $_SESSION['error'] = "La fecha desde de la novedad con ID $id_novedad no puede ser anterior a hoy.";
-            header("Location: modificar_novedad.php?ids=" . implode(',', $ids));
-            exit();
-        }
-
         $qry = "UPDATE novedades SET tituloNovedad = ?, textoNovedad = ?, fecha_desde = ?, fecha_hasta = ?, categoria = ? WHERE id = ?";
         $stmt = $conn->prepare($qry);
         $stmt->bind_param('sssssi', $titulo_novedad, $texto_novedad, $fecha_desde, $fecha_hasta, $categoria, $id_novedad);

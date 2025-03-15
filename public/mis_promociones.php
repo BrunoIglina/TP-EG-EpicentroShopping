@@ -1,8 +1,7 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    echo "Debes estar registrado para ver tus promociones.";
+if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
+    header("Location: login.php");
     exit();
 }
 

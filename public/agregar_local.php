@@ -6,6 +6,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 }
 
 include '../private/functions_usuarios.php'; 
+include '../private/rubros.php';
 
 $dueños = get_all_dueños();
 ?>
@@ -18,39 +19,50 @@ $dueños = get_all_dueños();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <title>Epicentro Shopping - Agregar Local</title>
-    <?php ?>
 </head>
 <body>
-    <div class="wrapper">   
     <?php include '../includes/header.php'; ?>
+    <div class="container mt-5">
         <main>
             <section class="admin-section">
-                <h1>Agregar local</h1>
+                <h1 class="mb-4">Agregar Local</h1>
                 <form action="../private/alta_local.php" method="post">
+                    <div class="form-group">
+                        <label for="nombre_local">Nombre del local:</label>
+                        <input type="text" id="nombre_local" name="nombre_local" class="form-control" required>
+                    </div>
 
-                    <label for="nombre_local">Nombre del local:</label>
-                    <input type="text" id="nombre_local" name="nombre_local" required>
+                    <div class="form-group">
+                        <label for="ubicacion_local">Ubicación del local:</label>
+                        <input type="text" id="ubicacion_local" name="ubicacion_local" class="form-control" required>
+                    </div>
 
-                    <label for="ubicacion_local">Ubicación del local:</label>
-                    <input type="text" id="ubicacion_local" name="ubicacion_local" required>
+                    <div class="form-group">
+                        <label for="rubro_local">Rubro del local:</label>
+                        <select id="rubro_local" name="rubro_local" class="form-control" required>
+                            <?php foreach ($rubros as $label => $value) { ?>
+                                <option value="<?php echo $value; ?>"><?php echo $label; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
 
-                    <label for="rubro_local">Rubro del local:</label>
-                    <input type="text" id="rubro_local" name="rubro_local" required>
+                    <div class="form-group">
+                        <label for="email_dueño">Email dueño del local:</label>
+                        <select id="email_dueño" name="id_dueño" class="form-control" required>
+                            <?php
+                                foreach ($dueños as $dueño) {
+                                    echo "<option value='{$dueño['id']}'>{$dueño['email']}</option>";
+                                }
+                            ?>
+                        </select>
+                    </div>
 
-                    <label for="email_dueño">Email dueño del local:</label>
-                    <select id="email_dueño" name="id_dueño" required>
-                    <?php
-                        foreach ($dueños as $dueño) {
-                            echo "<option value='{$dueño['id']}'>{$dueño['email']}</option>";
-                        }
-                    ?>
-                    </select>
-                    <button type="submit">Registrar</button>
+                    <button type="submit" class="btn btn-primary">Registrar</button>
                 </form>
             </section>
         </main>
-        <?php include '../includes/footer.php'; ?>
     </div>
+    <?php include '../includes/footer.php'; ?>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

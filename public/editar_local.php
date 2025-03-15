@@ -7,6 +7,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 
 include '../private/functions_locales.php';
 include '../private/functions_usuarios.php';
+include '../private/rubros.php';
 
 if (isset($_GET['ids'])) {
     $ids = explode(',', $_GET['ids']); // Convertir la cadena de IDs en un array
@@ -62,7 +63,15 @@ if (isset($_GET['ids'])) {
 
                                                 <td><input type="text" name="ubicacion_local[]" value="<?php echo $local['ubicacion']?>" required></td>
 
-                                                <td><input type="text" name="rubro_local[]" value="<?php echo $local['rubro']?>" required></td>
+                                                <?php $selected_rubro = $local['rubro'] ?>
+
+                                                <td>
+                                                <select name="rubro_local[]" required>
+                                                    <?php foreach ($rubros as $label => $value) { ?>
+                                                        <option value="<?php echo $value; ?>" <?php echo ($value == $selected_rubro) ? 'selected' : ''; ?>><?php echo $label; ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                                </td>
 
                                                 <td><select id="email_dueño" name="id_dueño[]" required>
                                                 <?php
