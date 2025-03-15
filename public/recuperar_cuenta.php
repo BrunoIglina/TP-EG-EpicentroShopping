@@ -1,3 +1,33 @@
+<?php
+session_start();
+require '../env/shopping_db.php'; 
+require '../private/gen_code_verif.php'; 
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email']; 
+
+    $query = "SELECT * FROM usuarios WHERE email = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    if ($user) {
+        $result = generate_verification_code($email);
+
+        if ($result === true) {
+            header("Location: cod_verif.php?email=" . urlencode($email)); 
+            exit();
+        } else {
+            $error = $result; 
+        }
+    } else {
+        $error = "Correo electrónico no registrado.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,13 +38,12 @@
     <title>Epicentro Shopping - Recuperar Cuenta</title>
 </head>
 <body>
-    
     <div class="wrapper">
-    <?php include '../includes/header.php'; ?>
+        <?php include '../includes/header.php'; ?>
         <main>
             <section class="auth-form">
                 <h1>Recuperar Cuenta</h1>
-                <form action="recuperar_exito.php" method="post">
+                <form action="recuperar_cuenta.php" method="post">
                     <label for="email">Correo Electrónico:</label>
                     <input type="email" id="email" name="email" required>
 

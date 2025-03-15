@@ -35,7 +35,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if (isset($_GET['generate_pdf'])) {
-    require('../lib/fpdf/fpdf.php');
+    require('../lib/vendor/setasign/fpdf/fpdf.php');
 
     class PDF extends FPDF {
         function Header() {

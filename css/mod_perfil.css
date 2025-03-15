@@ -10,20 +10,20 @@ main {
     padding: 1rem;
 }
 
+.wrapper{
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
+
 .form-container {
     max-width: 400px;
-    margin: 2rem auto;
-    padding: 2rem;
+    margin: auto auto ;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.wrapper {
-    display: grid;
-    min-height: 100vh;
-    grid-template-rows: auto 1fr auto;
-}
 
 .form-container h1 {
     text-align: center;

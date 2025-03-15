@@ -2,6 +2,7 @@
 session_start();
 require '../env/shopping_db.php'; 
 require '../lib/vendor/autoload.php'; 
+require '../private/gen_code_verif.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -19,36 +20,19 @@ $stmt->execute();
 
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
+ 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $user['email']; // El email no se puede cambiar ya que se loguea con ese mail
-    $verification_code = rand(100000, 999999);
+    $email = $user['email']; 
 
-    $mail = new PHPMailer(true);
-
-    try {
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com'; 
-        $mail->SMTPAuth = true;
-        $mail->Username = 'biprueba1@gmail.com'; 
-        $mail->Password = 'cvqhwxgolwgjskdt'; 
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
-
-        $mail->setFrom('no-reply@epicentroshopping.com', 'Epicentro Shopping');
-        $mail->addAddress($email);
-
-        $mail->isHTML(true);
-        $mail->Subject = 'Codigo de Verificacion';
-        $mail->Body    = "Tu código de verificación es: $verification_code";
-        $mail->AltBody = "Tu código de verificación es: $verification_code";
-
-        $mail->send();
-        $_SESSION['verification_code'] = $verification_code;
-        header('Location: cod_verif.php');
-        exit;
-    } catch (Exception $e) {
-        $error = "El mensaje no pudo ser enviado. Error de Mailer: {$mail->ErrorInfo}";
+    
+    $result = generate_verification_code($email);
+    
+    if ($result === true) {
+        header('Location: cod_verif.php'); 
+        exit();
+    } else {
+        $error = $result; 
     }
 }
 ?>
@@ -59,17 +43,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <!--    <link rel="stylesheet" href="../css/styles.css"> -->
     <link rel="stylesheet" href="../css/mod_perfil.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>Editar Perfil</title>
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
-    <main class="form-container">
-        <h1>Editar Perfil</h1>
-        <form method="POST">
-            <button type="submit">Enviar Código de Verificación</button>
-        </form>
-        <?php if (isset($error)) echo "<p>$error</p>"; ?>
-    </main>
-    <?php include '../includes/footer.php'; ?>
+    <div class="wrapper">
+
+        <?php include '../includes/header.php'; ?>
+        <main class="form-container">
+            <h1>Editar Perfil</h1>
+            <form method="POST">
+                <button type="submit">Enviar Código de Verificación</button>
+            </form>
+            <?php if (isset($error)) echo "<p>$error</p>"; ?>
+        </main>
+        <?php include '../includes/footer.php'; ?>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

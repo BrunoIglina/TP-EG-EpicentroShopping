@@ -11,7 +11,6 @@ include '../private/functions_usuarios.php';
 $locales = get_all_locales();
 ?>
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -35,34 +34,37 @@ $locales = get_all_locales();
                     <?php }else{?>                
                     <form id="localesForm" method="POST" action="../private/procesar_local.php">
 
+
                         <button type="submit" name="action" class="select-toggle" value="toggle"><?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'Deseleccionar Todo' : 'Seleccionar Todo'; ?></button>
 
-                        <table>
-                            <thead>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Seleccionar</th>
+                                <th>Código del local</th>
+                                <th>Nombre</th>
+                                <th>Ubicación</th>
+                                <th>Rubro</th>
+                                <th>Email del dueño</th>
+                                <th>Acciones</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                
+                                foreach ($locales as $local){ ?>
                                 <tr>
-                                    <th>Seleccionar</th>
-                                    <th>Código del local</th>
-                                    <th>Nombre</th>
-                                    <th>Ubicación</th>
-                                    <th>Rubro</th>
-                                    <th>Email del dueño</th>
+                                    <td><input type="checkbox" name="locales[]" value="<?php echo $local['id']; ?>" <?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'checked' : ''; ?>></td>
+                                    <td><?php echo $local['id']?></td>
+                                    <td><?php echo $local['nombre']?></td>
+                                    <td><?php echo $local['ubicacion']?></td>
+                                    <td><?php echo $local['rubro']?></td>
+                                    <?php 
+                                        $dueño = get_dueño($local['idUsuario']);
+                                    ?>
+                                    <td><?php echo $dueño['email']?></td>
+                                    <td><button type="button" onclick="window.location.href='../private/generarInforme.php?local_id=<?php echo $local['id']; ?>'">Generar PDF</button></td> 
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                    
-                                    foreach ($locales as $local){ ?>
-                                    <tr>
-                                        <td><input type="checkbox" name="locales[]" value="<?php echo $local['id']; ?>" <?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'checked' : ''; ?>></td>
-                                        <td><?php echo $local['id']?></td>
-                                        <td><?php echo $local['nombre']?></td>
-                                        <td><?php echo $local['ubicacion']?></td>
-                                        <td><?php echo $local['rubro']?></td>
-                                        <?php 
-                                            $dueño = get_dueño($local['idUsuario']);
-                                        ?>
-                                        <td><?php echo $dueño['email']?></td>    
-                                    </tr>
                                 <?php } ?>
                             </tbody>
                         </table>
