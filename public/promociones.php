@@ -2,6 +2,7 @@
 session_start();
 
 include '../env/shopping_db.php';
+include '../private/rubros.php';
 
 $categoriaCliente = isset($_SESSION['user_categoria']) ? $_SESSION['user_categoria'] : null;
 
@@ -124,21 +125,11 @@ $total_pages = ceil($total_rows / $limit);
                         <div class="form-group">
                             <select name="rubro" class="form-control">
                                 <option value="">Todos los rubros</option>
-                                <option value="Ropa">Ropa</option>
-                                <option value="Electrónica">Electrónica</option>
-                                <option value="Joyería">Joyería</option>
-                                <option value="Calzado">Calzado</option>
-                                <option value="Librería">Librería</option>
-                                <option value="Alimentos">Alimentos</option>
-                                <option value="Bebidas">Bebidas</option>
-                                <option value="Farmacia">Farmacia</option>
-                                <option value="Deportes">Deportes</option>
-                                <option value="Muebles">Muebles</option>
-                                <option value="Hogar">Hogar</option>
-                                <option value="Automóviles">Automóviles</option>
-                                <option value="Belleza">Belleza</option>
-                                <option value="Viajes">Viajes</option>
-                                <option value="Otros">Otros</option>
+                                <?php foreach ($rubros as $label => $value) {?>
+                                    <option value="<?php echo $value; ?>">
+                                        <?php echo $label; ?></option> 
+                                    <?php 
+                                } ?>
                             </select>
                         </div>
                         <div class="form-group">

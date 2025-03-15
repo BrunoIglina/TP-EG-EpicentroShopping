@@ -1,11 +1,9 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    echo "Debes estar registrado para gestionar las promociones.";
+if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
+    header("Location: login.php");
     exit();
 }
-
 $usuario_id = $_SESSION['user_id'];
 
 include '../env/shopping_db.php';
