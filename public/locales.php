@@ -6,7 +6,7 @@ include '../private/rubros.php';
 $locales = get_all_locales();
 $filtered_locales = $locales;
 
-// Filtrar por nombre
+
 if (isset($_GET['nombre_local']) && $_GET['nombre_local'] != '') {
     $nombre_local = $_GET['nombre_local'];
     $filtered_locales = array_filter($filtered_locales, function($local) use ($nombre_local) {
@@ -14,7 +14,7 @@ if (isset($_GET['nombre_local']) && $_GET['nombre_local'] != '') {
     });
 }
 
-// Filtrar por ID
+
 if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
     $local_id = $_GET['local_id'];
     $filtered_locales = array_filter($filtered_locales, function($local) use ($local_id) {
@@ -22,7 +22,7 @@ if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
     });
 }
 
-// Filtrar por rubro
+
 if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
     $rubro = $_GET['rubro'];
     $filtered_locales = array_filter($filtered_locales, function($local) use ($rubro) {
@@ -91,6 +91,12 @@ if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
                                 <a href="promociones.php?local_id=<?php echo $local['id']; ?>&local_nombre=<?php echo urlencode($local['nombre']); ?>&local_rubro=<?php echo urlencode($local['rubro']); ?>" class="card-link">
                                     <div class="card text-center">
                                         <div class="card-body">
+                                        <div class="local-imagen">
+                                            <?php
+                                            $local_id = $local['id'];
+                                            echo '<img src="../private/visualizar_imagen.php?local_id=' . $local_id . '" alt="Imagen de el local" class="img-fluid">';
+                                            ?>
+                                        </div>
                                             <h4 class="card-title"><?php echo $local['nombre']; ?></h4>
                                             <p class="card-text">
                                                 <?php echo $local['rubro']; ?><br>
