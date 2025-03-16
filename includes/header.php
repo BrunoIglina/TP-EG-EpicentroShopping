@@ -19,9 +19,8 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a class="nav-link" href="index.php">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="promociones.php">Promociones</a></li>
                         <li class="nav-item"><a class="nav-link" href="novedades.php">Novedades</a></li>
-                        <li class="nav-item"><a class="nav-link" href="locales.php">Locales</a></li>
+                        <li class="nav-item"><a class="nav-link" href="locales.php">Promociones de locales</a></li>
                         <li class="nav-item"><a class="nav-link" href="mapadesitio.php">Mapa De Sitio</a></li>
                         <?php if ($user_tipo == 'Administrador'): ?>
                             <li class="nav-item"><a class="nav-link" href="admin_locales.php">Gestionar Locales</a></li>
