@@ -17,7 +17,7 @@ $dueños = get_all_dueños();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/admin_locales.css">
     <title>Epicentro Shopping - Agregar Local</title>
 </head>
 <body>
@@ -26,7 +26,7 @@ $dueños = get_all_dueños();
         <main>
             <section class="admin-section">
                 <h1 class="mb-4">Agregar Local</h1>
-                <form action="../private/alta_local.php" method="post">
+                <form action="../private/alta_local.php" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="nombre_local">Nombre del local:</label>
                         <input type="text" id="nombre_local" name="nombre_local" class="form-control" required>
@@ -48,13 +48,19 @@ $dueños = get_all_dueños();
 
                     <div class="form-group">
                         <label for="email_dueño">Email dueño del local:</label>
-                        <select id="email_dueño" name="id_dueño" class="form-control" required>
+                        <select id="email_dueño" name="email_dueño" class="form-control" required>
                             <?php
                                 foreach ($dueños as $dueño) {
-                                    echo "<option value='{$dueño['id']}'>{$dueño['email']}</option>";
+                                    echo "<option value='{$dueño['email']}'>{$dueño['email']}</option>";
                                 }
                             ?>
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imagen_local">Imagen del local:</label>
+                        <input type="file" id="imagen_local" name="imagen_local" class="form-control" accept=".png" required>
+                        <p class="image-note">La imagen seleccionada no puede ser editada una vez cargada.</p>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Registrar</button>
