@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(!isset($_GET['local_id'])) {
+    header("Location: locales.php");
+}
 
 include '../env/shopping_db.php';
 include '../private/rubros.php';
@@ -9,20 +12,14 @@ $categoriaCliente = isset($_SESSION['user_categoria']) ? $_SESSION['user_categor
 $categorias = ['Inicial', 'Medium', 'Premium'];
 $sql = "
     SELECT 
-        locales.nombre AS local_nombre, 
         promociones.id AS promo_id,
         promociones.textoPromo, 
         promociones.fecha_inicio, 
         promociones.fecha_fin,
         promociones.diasSemana,
-        locales.rubro,
-        locales.id AS local_id
-    FROM 
-        locales 
-    INNER JOIN 
+        promociones.local_id
+    FROM
         promociones 
-    ON 
-        locales.id = promociones.local_id 
     WHERE 
         promociones.estadoPromo = 'Aprobada'
 ";
@@ -39,19 +36,9 @@ if ($categoriaCliente) {
     $sql .= ")";
 }
 
-if (isset($_GET['nombre_local']) && $_GET['nombre_local'] != '') {
-    $nombre_local = $conn->real_escape_string($_GET['nombre_local']);
-    $sql .= " AND locales.nombre LIKE '%$nombre_local%'";
-}
-
-if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
-    $rubro = $conn->real_escape_string($_GET['rubro']);
-    $sql .= " AND locales.rubro = '$rubro'";
-}
-
 if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
     $local_id = (int)$_GET['local_id'];
-    $sql .= " AND locales.id = $local_id";
+    $sql .= " AND promociones.local_id = $local_id";
 }
 
 $limit = 5; 
@@ -70,11 +57,7 @@ if (!$result) {
 $total_result_sql = "
     SELECT COUNT(*) AS total
     FROM 
-        locales 
-    INNER JOIN 
         promociones 
-    ON 
-        locales.id = promociones.local_id 
     WHERE 
         promociones.estadoPromo = 'Aprobada'
 ";
@@ -88,17 +71,10 @@ if ($categoriaCliente) {
     }
     $total_result_sql .= ")";
 }
-if (isset($_GET['nombre_local']) && $_GET['nombre_local'] != '') {
-    $nombre_local = $conn->real_escape_string($_GET['nombre_local']);
-    $total_result_sql .= " AND locales.nombre LIKE '%$nombre_local%'";
-}
-if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
-    $rubro = $conn->real_escape_string($_GET['rubro']);
-    $total_result_sql .= " AND locales.rubro = '$rubro'";
-}
+
 if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
     $local_id = (int)$_GET['local_id'];
-    $total_result_sql .= " AND locales.id = $local_id";
+    $total_result_sql .= " AND promociones.local_id = $local_id";
 }
 
 $total_result = $conn->query($total_result_sql);
@@ -117,48 +93,29 @@ $total_pages = ceil($total_rows / $limit);
 <body>
     <div class="wrapper">
         <?php include '../includes/header.php'; ?>
-        <main class="container">
+        <main class="container-fluid">
             <div class="row">
-                <div class="col-mdform-group">
-                            <input type="text" name="nombre_local" class="form-control" placeholder="Buscar por nombre del local...">
-                        </div>
-                        <div class="form-group">
-                            <select name="rubro" class="form-control">
-                                <option value="">Todos los rubros</option>
-                                <?php foreach ($rubros as $label => $value) {?>
-                                    <option value="<?php echo $value; ?>">
-                                        <?php echo $label; ?></option> 
-                                    <?php 
-                                } ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="number" name="local_id" class="form-control" placeholder="Buscar por ID del local...">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Filtrar</button>
-                    </form>
-                </div>
-                <div class="col-md-9">
+                <div class="col 12">
                     <div id="promocionesContainer">
                         <?php
                         $currentLocal = '';
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
-                                if ($currentLocal != $row["local_nombre"]) {
+                                if ($currentLocal != $_GET["local_nombre"]) {
                                     if ($currentLocal != '') {
                                         echo "</div>";
                                     }
                                     echo "<div class='card mb-3'>";
-                                    echo "<div class='card-header'><h2 class='card-title'>" . $row["local_nombre"] . "</h2></div>";
-                                    $currentLocal = $row["local_nombre"];
+                                    echo "<div class='card-header'><h2 class='card-title'>" . $_GET["local_nombre"] . "</h2></div>";
+                                    $currentLocal = $_GET["local_nombre"];
                                 }
                                 echo "<div class='card-body'>";
                                 echo "<p><strong>" . $row["textoPromo"] . "</strong></p>";
                                 echo "<p>Fecha de Inicio: " . $row["fecha_inicio"] . "</p>";
                                 echo "<p>Fecha de Fin: " . $row["fecha_fin"] . "</p>";
                                 echo "<p>Días de la Semana: " . $row["diasSemana"] . "</p>";
-                                echo "<p>Rubro: " . $row["rubro"] . "</p>";
-                                echo "<p>ID del Local: " . $row["local_id"] . "</p>";
+                                echo "<p>Rubro: " . $_GET["local_rubro"] . "</p>";
+                                echo "<p>ID del Local: " . $_GET["local_id"] . "</p>";
                                 echo "<form method='POST' action='pedir_promocion.php'>";
                                 echo "<input type='hidden' name='promo_id' value='" . $row["promo_id"] . "'>";
                                 echo "<button type='submit' class='btn btn-success'>Pedir Promoción</button>";
@@ -167,7 +124,7 @@ $total_pages = ceil($total_rows / $limit);
                             }
                             echo "</div>";
                         } else {
-                            echo "<p>No hay promociones que coincidan con los criterios de búsqueda.</p>";
+                            echo "<p>No hay promociones de este local.</p>";
                         }
                         ?>
                     </div>
