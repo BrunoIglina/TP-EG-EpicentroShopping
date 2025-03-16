@@ -2,7 +2,7 @@
 
 function get_all_locales(){
     include "../env/shopping_db.php";
-    $qry_locales = "SELECT * FROM locales";
+    $qry_locales = "SELECT * FROM locales ORDER BY nombre";
     if(!($result_locales = $conn->query($qry_locales))){
         echo "Error: " . $sql . "<br>" . $conn->error;
     }else{
