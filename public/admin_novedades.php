@@ -6,7 +6,6 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 }
 include '../private/functions_novedades.php';
 $novedades = get_all_novedades();
-
 ?>
 
 <!DOCTYPE html>
@@ -23,8 +22,8 @@ $novedades = get_all_novedades();
         <?php include '../includes/header.php'; ?>
         <main class="container">
             <section class="admin-section">
-                <h1 class="text-center my-4">Administración de Novedades</h1>
-                <button class="btn btn-primary mb-3" onclick="location.href='agregar_novedad.php'">Agregar novedad</button>
+                <h2 class="text-center my-4">Administración de Novedades</h2>
+                <button class="btn btn-primary btn-limited mb-3" onclick="location.href='agregar_novedad.php'">Agregar novedad</button>
                 <?php
                     if(!$novedades){?>
                         <b>NO HAY NOVEDADES CARGADAS</b>
@@ -33,38 +32,50 @@ $novedades = get_all_novedades();
                         <button type="submit" name="action" class="btn btn-secondary mb-3" value="toggle">
                             <?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'Deseleccionar Todo' : 'Seleccionar Todo'; ?>
                         </button>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Seleccionar</th>
-                                    <th>Código novedad</th>
-                                    <th>Titulo</th>
-                                    <th>Descripcion</th>
-                                    <th>Fecha desde</th>
-                                    <th>Fecha hasta</th>
-                                    <th>Categoria</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                    foreach ($novedades as $novedad){ ?>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead class="thead-dark">
                                     <tr>
-                                        <td><input type="checkbox" name="novedades[]" value="<?php echo $novedad['id']; ?>" <?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'checked' : ''; ?>></td>
-                                        <td><?php echo $novedad['id']?></td>
-                                        <td><?php echo $novedad['tituloNovedad']?></td>
-                                        <td><?php echo $novedad['textoNovedad']?></td>
-                                        <td><?php echo $novedad['fecha_desde']?></td>
-                                        <td><?php echo $novedad['fecha_hasta']?></td>
-                                        <td><?php echo $novedad['categoria']?></td> 
+                                        <th>Seleccionar</th>
+                                        <th>Código novedad</th>
+                                        <th>Titulo</th>
+                                        <th>Descripcion</th>
+                                        <th>Fecha desde</th>
+                                        <th>Fecha hasta</th>
+                                        <th>Imagen</th>
+                                        <th>Categoria</th>
                                     </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        foreach ($novedades as $novedad){ ?>
+                                        <tr>
+                                            <td><input type="checkbox" name="novedades[]" value="<?php echo $novedad['id']; ?>" <?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'checked' : ''; ?>></td>
+                                            <td><?php echo $novedad['id']?></td>
+                                            <td><?php echo $novedad['tituloNovedad']?></td>
+                                            <td><?php echo $novedad['textoNovedad']?></td>
+                                            <td><?php echo $novedad['fecha_desde']?></td>
+                                            <td><?php echo $novedad['fecha_hasta']?></td>
+                                            <td>
+                                                <?php
+                                                if (isset($novedad['imagen']) && !empty($novedad['imagen'])) {
+                                                    echo '<img src="../private/visualizar_imagen.php?novedad_id=' . $novedad['id'] . '" alt="Imagen del local" class="img-fluid" style="max-width: 100%; height: auto;">';
+                                                } else {
+                                                    echo "No hay imagen";
+                                                }
+                                                ?>
+                                            </td>
+                                            <td><?php echo $novedad['categoria']?></td> 
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
                         <button type="submit" name="action" class="btn btn-success" value="edit">Modificar novedad</button>
                         <button type="submit" name="action" class="btn btn-danger" value="delete">Eliminar novedad</button>
                         <input type="hidden" name="select_all" value="<?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? '0' : '1'; ?>">
                     </form>
-                <?php }?>
+                <?php } ?>
             </section>
         </main>
         <?php include '../includes/footer.php'; ?>

@@ -11,15 +11,21 @@ function get_dueño($idUsuario){
     };
 }
 
-function get_dueño_by_email($email){
-    include '../env/shopping_db.php';
-    $qry_dueño = "SELECT * FROM usuarios WHERE email LIKE '$email' AND tipo LIKE 'Dueño'";
-    if(!($result_dueño = $conn->query($qry_dueño))){
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }else{
-        $dueño = $result_dueño -> fetch_assoc();
-        return $dueño;
-    };
+function get_dueño_by_email($email) {
+    global $conn; 
+
+    $query = "SELECT id FROM usuarios WHERE email = ? AND tipo = 'Dueño'";
+    $stmt = $conn->prepare($query);
+    
+    if (!$stmt) {
+        die("Error en la preparación de la consulta: " . $conn->error);
+    }
+
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    return $result->fetch_assoc(); 
 }
 
 function get_all_dueños(){

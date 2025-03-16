@@ -1,49 +1,64 @@
 <?php
-include '../env/shopping_db.php';
-include 'functions_usuarios.php';
-include 'functions_locales.php';
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
+    header("Location: ../public/index.php");
+    exit();
+}
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+include '../env/shopping_db.php';
+include '../private/subirImagen.php';
+include '../private/functions_usuarios.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $nombre_local = $_POST['nombre_local'];
     $ubicacion_local = $_POST['ubicacion_local'];
     $rubro_local = $_POST['rubro_local'];
-    $id_dueño = $_POST['id_dueño'];
+    $email_dueño = $_POST['email_dueño']; 
+    
+    $dueño = get_dueño_by_email($email_dueño);
+    
+    if (!$dueño) {
+        echo "Error: No se encontró un usuario con ese email.";
+        exit();
+    }
 
-    $dueño = get_dueño($id_dueño);
+    $idUsuario = $dueño['id'];
 
-    if ($dueño){
+    if (empty($nombre_local) || empty($ubicacion_local) || empty($rubro_local) || empty($idUsuario)) {
+        echo "Error: Todos los campos son obligatorios.";
+        exit();
+    }
 
-        $local = get_local_by_nombre($nombre_local);
-        
-        if(!($local)){
+    $query = "INSERT INTO locales (nombre, ubicacion, rubro, idUsuario) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($query);
 
-            $id_dueño = $dueño['id'];
 
-            $qry_alta = "INSERT INTO locales (nombre, ubicacion, rubro, idUsuario) VALUES ('$nombre_local','$ubicacion_local','$rubro_local','$id_dueño')";
+    if ($stmt === false) {
+        echo "Error al preparar la consulta: " . $conn->error;
+        exit();
+    }
 
-            if ($conn->query($qry_alta) === TRUE) {
-                echo "Local dado de alta con éxito";
-                header("Location: ../public/admin_locales.php");
-                exit();
 
-            }else{
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }
+    $stmt->bind_param("sssi", $nombre_local, $ubicacion_local, $rubro_local, $idUsuario);
 
-        }else{
 
-            echo "Ya existe un local con éste nombre: ", $nombre_local;
+    if ($stmt->execute()) {
+        $id_local = $stmt->insert_id;
+        $stmt->close();
 
+        if (isset($_FILES['imagen_local']) && $_FILES['imagen_local']['error'] == 0) {
+            $imagen_tmp = $_FILES['imagen_local']['tmp_name'];
+            subirImagen($id_local, $imagen_tmp, "locales", $conn);
         }
 
-    }else{
 
-        echo "El usuario ingresado no es un dueño";
-
+        header("Location: ../public/admin_locales.php?success=1");
+        exit();
+    } else {
+        echo "Error al registrar el local: " . $stmt->error;
+        $stmt->close();
+        exit();
     }
-    
 }
-$conn->close();
-
 ?>

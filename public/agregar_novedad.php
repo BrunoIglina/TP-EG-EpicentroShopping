@@ -32,29 +32,29 @@ $categorias = get_categorias();
                 }
                 ?>
 
-                <form action="../private/alta_novedad.php" method="post">
+                <form action="../private/alta_novedad.php" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="titulo_novedad">Título de la novedad:</label>
+                        <label for="titulo_novedad"><strong>Titulo de la Novedad</strong></label>
                         <input type="text" id="titulo_novedad" name="titulo_novedad" class="form-control" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="texto_novedad">Texto de la novedad:</label>
+                        <label for="texto_novedad"><b>Texto de la Novedad</b></label>
                         <textarea id="texto_novedad" name="texto_novedad" class="form-control" rows="4" required></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="fecha_desde">Fecha desde:</label>
+                        <label for="fecha_desde"><b>Fecha desde</b></label>
                         <input type="date" id="fecha_desde" name="fecha_desde" class="form-control" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="fecha_hasta">Fecha hasta:</label>
+                        <label for="fecha_hasta"><b>Fecha hasta</b></label>
                         <input type="date" id="fecha_hasta" name="fecha_hasta" class="form-control" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="categoria">Categoría:</label>
+                        <label for="categoria"><b>Categoría</b></label>
                         <select id="categoria" name="categoria" class="form-control" required>
                             <?php
                                 foreach ($categorias as $categoria) {
@@ -62,6 +62,12 @@ $categorias = get_categorias();
                                 }
                             ?>
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imagen_novedad"><strong>Imagen de la novedad</strong></label>
+                        <input type="file" id="imagen_novedad" name="imagen_novedad" class="form-control" accept=".png"  required>
+                        <p class="image-note">La imagen seleccionada no puede ser editada una vez cargada.</p>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Registrar</button>
