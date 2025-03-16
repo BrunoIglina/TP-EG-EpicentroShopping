@@ -30,13 +30,21 @@ $novedades = get_novedades_permitidas($_SESSION['user_id'],$_SESSION['user_tipo'
                 
                 <div class="novedades-lista">
                     
-                <?php foreach ($novedades as $novedad) {?>
+                <?php foreach ($novedades as $novedad) { ?>
                     <article class="novedad">
-                        <h2><?php echo $novedad['tituloNovedad']?></h2>
-                        <p><?php echo $novedad['fecha_desde']?></p>
-                        <p><?php echo $novedad['textoNovedad']?></p>
+                        <div class="novedad-texto">
+                            <h2><?php echo $novedad['tituloNovedad']; ?></h2>
+                            <p><?php echo $novedad['fecha_desde']; ?></p>
+                            <p><?php echo $novedad['textoNovedad']; ?></p>
+                        </div>
+                        <div class="novedad-imagen">
+                            <?php
+                            $novedad_id = $novedad['id'];
+                            echo '<img src="../private/visualizar_imagen.php?novedad_id=' . $novedad_id . '" alt="Imagen de la novedad" class="img-fluid">';
+                            ?>
+                        </div>
                     </article>
-                <?php }
+                <?php } 
                 ?>
                 </div>
             </section>
