@@ -22,12 +22,14 @@ $dueños = get_all_dueños();
     <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Epicentro Shopping - Agregar Local</title>
 </head>
+
 <body>
+    
     <?php include '../includes/header.php'; ?>
     <div class="container mt-5">
         <main>
             <section class="admin-section">
-                <h2 class="mb-4">Agregar Local</h2>
+                
                 <form action="../private/alta_local.php" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="nombre_local">Nombre del local:</label>
@@ -76,5 +78,6 @@ $dueños = get_all_dueños();
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

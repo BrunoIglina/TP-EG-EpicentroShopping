@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="wrapper">
         <?php include '../includes/header.php'; ?>
-        <h2>Cambiar Contraseña</h2>
+        <h2 class="text-center my-4">Cambiar Contraseña</h2>
         <form method="POST">
             <label for="new_password">Nueva Contraseña:</label>
             <input type="password" id="new_password" name="new_password" required>
@@ -64,5 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

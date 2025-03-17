@@ -25,9 +25,11 @@ $locales = get_all_locales();
 <body>
     <div class="wrapper">
         <?php include '../includes/header.php'; ?>
+        <h2 class="text-center my-4">Administración de Locales</h2>
         <main>
+            
             <section class="admin-section">
-                <h2>Administración de Locales</h2>
+                
                 <p>
                 <button onclick="location.href='agregar_local.php'" class="btn btn-primary mb-3">Agregar Local</button>
                 </p>
@@ -98,7 +100,8 @@ $locales = get_all_locales();
         <?php include '../includes/footer.php'; ?>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php include '../includes/header.php'; ?>
         <main>
             <section class="auth-form">
-                <h2>Recuperar Cuenta</h2>
+                <h2 class="text-center my-4">Recuperar Cuenta</h2>
                 <form action="recuperar_cuenta.php" method="post">
                     <label for="email">Correo Electrónico:</label>
                     <input type="email" id="email" name="email" required>
@@ -58,5 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -21,9 +21,9 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 <body>
     <div class="wrapper">
         <?php include '../includes/header.php'; ?>
-        
+        <h2 class="text-center my-4">Aprobar Promociones Pendientes</h2>
         <main class="container">
-            <h2>Aprobar Promociones Pendientes</h2>
+            
             <form action="../private/controAcepPromo.php" method="POST">
                 <table class="table table-striped">
                     <thead>
@@ -71,4 +71,8 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
         <?php include '../includes/footer.php'; ?>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </html>

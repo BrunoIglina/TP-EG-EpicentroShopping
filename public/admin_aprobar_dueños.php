@@ -26,8 +26,9 @@ $result = mysqli_query($conn, $query);
 <body>
     <div class="wrapper">
         <?php include '../includes/header.php'; ?>
+        <h2 class="text-center my-4">Aprobar Dueños de Locales</h2>
         <main class="container">
-            <h2 class="text-center my-4">Aprobar Dueños de Locales</h2>
+            
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -54,7 +55,8 @@ $result = mysqli_query($conn, $query);
         </main>
         <?php include '../includes/footer.php'; ?>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

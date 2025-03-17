@@ -11,8 +11,9 @@
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
+    <h2 class="text-center my-4">Mapa del Sitio</h2>
     <main class="container my-4">
-        <h2 class="text-center">Mapa del Sitio</h2>
+        
         <div class="row">
             <div class="col-12 col-md-6 col-lg-4">
                 <ul class="list-unstyled">
@@ -65,5 +66,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

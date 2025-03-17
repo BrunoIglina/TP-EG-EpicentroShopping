@@ -28,7 +28,7 @@ $novedades = get_all_novedades();
                 <button class="btn btn-primary btn-limited mb-3" onclick="location.href='agregar_novedad.php'">Agregar novedad</button>
                 <?php
                     if(!$novedades){?>
-                        <b>NO HAY NOVEDADES CARGADAS</b>
+                        <div class="alert alert-warning">No hay novedades cargadas</div>
                     <?php }else{?>                
                     <form id="novedadesForm" method="POST" action="../private/procesar_novedad.php">
                         <button type="submit" name="action" class="btn btn-secondary mb-3" value="toggle">
@@ -40,12 +40,12 @@ $novedades = get_all_novedades();
                                     <tr>
                                         <th>Seleccionar</th>
                                         <th>Código novedad</th>
-                                        <th>Titulo</th>
-                                        <th>Descripcion</th>
+                                        <th>Título</th>
+                                        <th>Descripción</th>
                                         <th>Fecha desde</th>
                                         <th>Fecha hasta</th>
                                         <th>Imagen</th>
-                                        <th>Categoria</th>
+                                        <th>Categoría</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -73,8 +73,10 @@ $novedades = get_all_novedades();
                                 </tbody>
                             </table>
                         </div>
-                        <button type="submit" name="action" class="btn btn-success" value="edit">Modificar novedad</button>
-                        <button type="submit" name="action" class="btn btn-danger" value="delete">Eliminar novedad</button>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" name="action" class="btn btn-success" value="edit">Modificar novedad</button>
+                            <button type="submit" name="action" class="btn btn-danger" value="delete">Eliminar novedad</button>
+                        </div>
                         <input type="hidden" name="select_all" value="<?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? '0' : '1'; ?>">
                     </form>
                 <?php } ?>
@@ -85,5 +87,6 @@ $novedades = get_all_novedades();
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -34,10 +34,11 @@ if (isset($_GET['ids'])) {
 <body>
     <div class="wrapper">
     <?php include '../includes/header.php'; ?>
+    <h2 class="text-center my-4">Modificar locales</h2>
             <main>
 
                 <section class="admin-section">
-                    <h2>Modificar locales</h2>
+                   
                     <table>
 
                         <thead>
@@ -95,8 +96,9 @@ if (isset($_GET['ids'])) {
         </main>
         <?php include '../includes/footer.php'; ?>
     </div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
