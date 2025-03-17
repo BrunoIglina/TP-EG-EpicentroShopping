@@ -40,12 +40,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../css/cambiar_contraseña.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Cambiar Contraseña</title>
 </head>
 <body>
     <div class="wrapper">
         <?php include '../includes/header.php'; ?>
-        <h1>Cambiar Contraseña</h1>
+        <h2>Cambiar Contraseña</h2>
         <form method="POST">
             <label for="new_password">Nueva Contraseña:</label>
             <input type="password" id="new_password" name="new_password" required>

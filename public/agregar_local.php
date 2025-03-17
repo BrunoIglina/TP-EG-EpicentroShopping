@@ -18,6 +18,8 @@ $dueños = get_all_dueños();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/admin_locales.css">
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Epicentro Shopping - Agregar Local</title>
 </head>
 <body>
@@ -25,21 +27,22 @@ $dueños = get_all_dueños();
     <div class="container mt-5">
         <main>
             <section class="admin-section">
-                <h1 class="mb-4">Agregar Local</h1>
+                <h2 class="mb-4">Agregar Local</h2>
                 <form action="../private/alta_local.php" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="nombre_local">Nombre del local:</label>
-                        <input type="text" id="nombre_local" name="nombre_local" class="form-control" required>
+                        <input type="text" id="nombre_local" name="nombre_local" class="form-control" placeholder="Ingrese nombre del local" required>
                     </div>
 
                     <div class="form-group">
                         <label for="ubicacion_local">Ubicación del local:</label>
-                        <input type="text" id="ubicacion_local" name="ubicacion_local" class="form-control" required>
+                        <input type="text" id="ubicacion_local" name="ubicacion_local" class="form-control" placeholder="Ingrese ubicación del local" required>
                     </div>
 
                     <div class="form-group">
                         <label for="rubro_local">Rubro del local:</label>
                         <select id="rubro_local" name="rubro_local" class="form-control" required>
+                        <option value="" disabled selected>Seleccione un rubro</option>
                             <?php foreach ($rubros as $label => $value) { ?>
                                 <option value="<?php echo $value; ?>"><?php echo $label; ?></option>
                             <?php } ?>
@@ -49,6 +52,7 @@ $dueños = get_all_dueños();
                     <div class="form-group">
                         <label for="email_dueño">Email dueño del local:</label>
                         <select id="email_dueño" name="email_dueño" class="form-control" required>
+                        <option value="" disabled selected>Seleccione un Dueño</option>
                             <?php
                                 foreach ($dueños as $dueño) {
                                     echo "<option value='{$dueño['email']}'>{$dueño['email']}</option>";

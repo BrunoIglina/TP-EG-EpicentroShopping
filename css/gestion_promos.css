@@ -112,6 +112,32 @@ button.reject:hover {
     border: 1px solid #ccc;
 }
 
+.green {
+    background-color: #4CAF50; 
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.green:hover {
+    background-color: #45a049;
+}
+
+.red {
+    background-color: #f44336; 
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.red:hover {
+    background-color: #e53935;
+}
+
 /*
 
 header .logo img {

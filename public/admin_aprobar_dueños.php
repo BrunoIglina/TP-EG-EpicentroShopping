@@ -19,13 +19,15 @@ $result = mysqli_query($conn, $query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/admin_aprobar_dueños.css">
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Epicentro Shopping - Aprobar Dueños de Locales</title>
 </head>
 <body>
     <div class="wrapper">
         <?php include '../includes/header.php'; ?>
         <main class="container">
-            <h1 class="text-center my-4">Aprobar Dueños de Locales</h1>
+            <h2 class="text-center my-4">Aprobar Dueños de Locales</h2>
             <table class="table table-striped">
                 <thead>
                     <tr>

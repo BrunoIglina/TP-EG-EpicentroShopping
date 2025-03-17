@@ -18,6 +18,8 @@ $locales = get_all_locales();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/admin_locales.css">
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Epicentro Shopping - Administración de Locales</title>
 </head>
 <body>
@@ -25,8 +27,10 @@ $locales = get_all_locales();
         <?php include '../includes/header.php'; ?>
         <main>
             <section class="admin-section">
-                <h1>Administración de Locales</h1>
+                <h2>Administración de Locales</h2>
+                <p>
                 <button onclick="location.href='agregar_local.php'" class="btn btn-primary mb-3">Agregar Local</button>
+                </p>
 
                 <?php if (!$locales) { ?>
                     <p><b>No hay locales cargados.</b></p>

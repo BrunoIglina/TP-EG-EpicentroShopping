@@ -1,3 +1,8 @@
+<?php
+include '../private/functions_novedades.php';
+$novedades = get_all_novedades();
+$novedades = array_slice($novedades, 0, 5); 
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,6 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css"> 
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Epicentro Shopping - Inicio</title>
 </head>
 <body>
@@ -12,26 +20,32 @@
     <?php include '../includes/header.php'; ?>
         <main class="container">
             <section class="carrusel my-4">
-                <h1 class="text-center">Destacados del Mes</h1>
-                <div class="carrusel-container position-relative">
-                    <div class="slide active">
-                        <img src="../assets/tecnologia.png" class="d-block w-100" alt="Descuento en Tecnología">
-                        <div class="caption">Hasta un 30% de descuento en tecnología</div>
+                <h2 >Novedades Recientes</h2>
+                
+                <div class="row justify-content-center">
+                    <div class="col-10 col-md-8">
+                    <button class="prev" onclick="prevSlide()">&#10094;</button>
+                        <div class="carrusel-container position-relative">
+                            <?php foreach ($novedades as $index => $novedad): ?>
+                                <div class="slide <?php echo $index === 0 ? 'active' : ''; ?>" 
+                                    style="background-image: url('../private/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>');">
+                                    <a href="novedades.php" class="slide-link">
+                                        <div class="caption text-center p-2">
+                                            <h3><?php echo htmlspecialchars($novedad['tituloNovedad']); ?></h3>
+                                        </div>
+                                    </a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
-                    <div class="slide">
-                        <img src="../assets/tiendaropa.png" class="d-block w-100" alt="Nueva Colección de Moda">
-                        <div class="caption">Descubre la nueva colección de moda</div>
-                    </div>
-                    <div class="slide">
-                        <img src="../assets/jugueteria.png" class="d-block w-100" alt="Apertura de Local de Juguetes">
-                        <div class="caption">Gran apertura del local de juguetes</div>
+                    <div class="col-auto d-flex align-items-center">
+                        
+                        <button class="next" onclick="nextSlide()">&#10095;</button>
                     </div>
                 </div>
-                <button class="prev" onclick="prevSlide()">&#10094;</button>
-                <button class="next" onclick="nextSlide()">&#10095;</button>
             </section>
         </main>
-    
+
         <?php include '../includes/footer.php'; ?>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

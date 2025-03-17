@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
+if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Cliente') {
     header("Location: login.php");
     exit();
 }
@@ -75,13 +75,15 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/mis_promociones.css">
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Epicentro Shopping - Mis Promociones</title>
 </head>
 <body>
     <div class="wrapper">
     <?php include '../includes/header.php'; ?>
         <main class="container">
-            <h1 class="my-4">Mis Promociones</h1>
+            <h2 class="my-4">Mis Promociones</h2>
             <div id="misPromocionesContainer" class="row">
                 <?php
                 if ($result->num_rows > 0) {

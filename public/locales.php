@@ -40,6 +40,8 @@ if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
     <link href="../css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/locales.css">
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Epicentro Shopping - Locales</title>
 </head>
 <body>

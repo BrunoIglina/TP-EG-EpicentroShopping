@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/mapadesitio.css">
-    
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Mapa del Sitio - Epicentro Shopping</title>
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
     <main class="container my-4">
-        <h1 class="text-center">Mapa del Sitio</h1>
+        <h2 class="text-center">Mapa del Sitio</h2>
         <div class="row">
             <div class="col-12 col-md-6 col-lg-4">
                 <ul class="list-unstyled">

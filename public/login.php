@@ -58,6 +58,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Epicentro Shopping - Iniciar Sesión</title>
 </head>
 <body>
@@ -65,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php include '../includes/header.php'; ?>
         <div class="auth-container">
             <section class="auth-form">
-                <h1>Iniciar Sesión</h1>
+                <h2>Iniciar Sesión</h2>
                 <?php
                 if (isset($_SESSION['error'])) {
                     echo "<p class='text-danger'>" . $_SESSION['error'] . "</p>";

@@ -18,6 +18,8 @@ $novedades = get_novedades_permitidas($_SESSION['user_id'],$_SESSION['user_tipo'
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Epicentro Shopping - Novedades</title>
 </head>
 <body>
@@ -25,7 +27,7 @@ $novedades = get_novedades_permitidas($_SESSION['user_id'],$_SESSION['user_tipo'
         <?php include '../includes/header.php'; ?>
         <main>
             <section class="novedades">
-                <h1>Novedades</h1>
+                <h2>Novedades</h2>
                 <p>Explora las últimas novedades y noticias de Epicentro Shopping.</p>
                 
                 <div class="novedades-lista">

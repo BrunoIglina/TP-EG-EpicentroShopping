@@ -1,16 +1,23 @@
 let slideIndex = 0;
 const slides = document.querySelectorAll('.slide');
 
+function showSlide(index) {
+    slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === index) {
+            slide.classList.add('active');
+        }
+    });
+}
+
 function nextSlide() {
-    slides[slideIndex].classList.remove('active');
     slideIndex = (slideIndex + 1) % slides.length;
-    slides[slideIndex].classList.add('active');
+    showSlide(slideIndex);
 }
 
 function prevSlide() {
-    slides[slideIndex].classList.remove('active');
     slideIndex = (slideIndex - 1 + slides.length) % slides.length;
-    slides[slideIndex].classList.add('active');
+    showSlide(slideIndex);
 }
 
 setInterval(nextSlide, 5000);
