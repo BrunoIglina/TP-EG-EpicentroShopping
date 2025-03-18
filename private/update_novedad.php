@@ -6,33 +6,31 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 }
 
 include "../env/shopping_db.php";
+include "../private/subirImagen.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $ids = $_POST['id_novedad'];
-    $titulos = $_POST['titulo_novedad'];
-    $textos = $_POST['texto_novedad'];
-    $fechas_desde = $_POST['fecha_desde'];
-    $fechas_hasta = $_POST['fecha_hasta'];
-    $categorias = $_POST['categoria'];
+    $id_novedad = $_POST['id_novedad'];
+    $titulo_novedad = $_POST['titulo_novedad'];
+    $texto_novedad = $_POST['texto_novedad'];
+    $fecha_desde = $_POST['fecha_desde'];
+    $fecha_hasta = $_POST['fecha_hasta'];
+    $categoria = $_POST['categoria'];
 
     $today = date("Y-m-d");
 
-    foreach($ids as $index => $id_novedad){
-        $titulo_novedad = $titulos[$index];
-        $texto_novedad = $textos[$index];
-        $fecha_desde = $fechas_desde[$index];
-        $fecha_hasta = $fechas_hasta[$index];
-        $categoria = $categorias[$index];
-
-        $qry = "UPDATE novedades SET tituloNovedad = ?, textoNovedad = ?, fecha_desde = ?, fecha_hasta = ?, categoria = ? WHERE id = ?";
-        $stmt = $conn->prepare($qry);
-        $stmt->bind_param('sssssi', $titulo_novedad, $texto_novedad, $fecha_desde, $fecha_hasta, $categoria, $id_novedad);
-
-        if ($stmt->execute()) {
-            $_SESSION['success'] = "Novedad actualizada con éxito.";
-        } else {
-            $_SESSION['error'] = "Error al actualizar la novedad con ID $id_novedad.";
+    $qry = "UPDATE novedades SET tituloNovedad = ?, textoNovedad = ?, fecha_desde = ?, fecha_hasta = ?, categoria = ? WHERE id = ?";
+    $stmt = $conn->prepare($qry);
+    $stmt->bind_param('sssssi', $titulo_novedad, $texto_novedad, $fecha_desde, $fecha_hasta, $categoria, $id_novedad);
+    
+    if ($stmt->execute()) {
+        $stmt->close();
+        if (isset($_FILES['imagen_novedad']) && $_FILES['imagen_novedad']['error'] == 0) {
+            $imagen_tmp = $_FILES['imagen_novedad']['tmp_name'];
+            subirImagen($id_novedad, $imagen_tmp, "novedades", $conn);
         }
+
+    } else {
+        $_SESSION['error'] = "Error al actualizar la novedad con ID $id_novedad.";
     }
 
     $conn->close();

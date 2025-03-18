@@ -8,11 +8,8 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 include '../private/functions_novedades.php';
 include '../private/functions_usuarios.php';
 
-if (isset($_GET['ids'])) {
-    $ids = explode(',', $_GET['ids']); // Convertir la cadena de IDs en un array
-    foreach ($ids as $id_novedad){
-        $novedades[] = get_novedad($id_novedad);
-    }
+if (isset($_GET['id'])) {
+    $novedad = get_novedad($_GET['id']);
     $categorias = get_categorias();
 }
 ?>
@@ -29,59 +26,73 @@ if (isset($_GET['ids'])) {
 </head>
 <body>
     <div class="wrapper">
-    <?php include '../includes/header.php'; ?>
-            <main>
+        <?php include '../includes/header.php'; ?>
+        <main>
 
-                <section class="admin-section">
-                    <h1>Modificar novedades</h1>
-                    <table>
+            <section class="admin-section">
+                <h1>Modificar Novedad</h1>
+                <form id="localesNovedadesForm" method="POST" action="../private/update_novedad.php" enctype="multipart/form-data" class="form-style">
+                    <!-- Código Novedad (Solo lectura) -->
+                    <div class="form-group">
+                        <label for="codigo_novedad">Código Novedad</label>
+                        <input type="text" id="codigo_novedad" name="id_novedad" value="<?php echo $novedad['id']; ?>" readonly class="form-control">
+                    </div>
 
-                        <thead>
-                            <tr>
-                                <th>Código novedad</th>
-                                <th>Título</th>
-                                <th>Descripcion</th>
-                                <th>Fecha desde</th>
-                                <th>Fecha hasta</th>
-                                <th>Categoria</th>
-                            </tr>
-                        </thead>
+                    <!-- Título -->
+                    <div class="form-group">
+                        <label for="titulo_novedad">Título</label>
+                        <input type="text" id="titulo_novedad" name="titulo_novedad" value="<?php echo $novedad['tituloNovedad']; ?>" required class="form-control">
+                    </div>
 
-                        <tbody>
-                            
-                            <form id="novedadesForm" method="POST" action="../private/update_novedad.php">
-                                    <?php
-                                        foreach ($novedades as $novedad){
-                                    ?>
-                                            <tr>
+                    <!-- Descripción -->
+                    <div class="form-group">
+                        <label for="texto_novedad">Descripción</label>
+                        <textarea id="texto_novedad" name="texto_novedad" rows="4" required class="form-control"><?php echo $novedad['textoNovedad']; ?></textarea>
+                    </div>
 
-                                                <td><?php echo $novedad['id']?><input type="hidden" name="id_novedad[]" value="<?php echo $novedad['id']?>"></td>
+                    <!-- Fecha Desde -->
+                    <div class="form-group">
+                        <label for="fecha_desde">Fecha Desde</label>
+                        <input type="date" id="fecha_desde" name="fecha_desde" value="<?php echo $novedad['fecha_desde']; ?>" required class="form-control">
+                    </div>
 
-                                                <td><input type="textarea" name="titulo_novedad[]" value="<?php echo $novedad['tituloNovedad']?>" required></td>
+                    <!-- Fecha Hasta -->
+                    <div class="form-group">
+                        <label for="fecha_hasta">Fecha Hasta</label>
+                        <input type="date" id="fecha_hasta" name="fecha_hasta" value="<?php echo $novedad['fecha_hasta']; ?>" required class="form-control">
+                    </div>
 
+                    <!-- Categoría -->
+                    <div class="form-group">
+                        <label for="categoria">Categoría</label>
+                        <select id="categoria" name="categoria" required class="form-control">
+                            <?php foreach ($categorias as $categoria): ?>
+                                <option value="<?php echo $categoria; ?>" <?php echo ($categoria == $novedad['categoria']) ? 'selected' : ''; ?>>
+                                    <?php echo $categoria; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-                                                <td><input type="textarea" name="texto_novedad[]" value="<?php echo $novedad['textoNovedad']?>" required></td>
+                    <!-- Imagen -->
+                    <div class="form-group">
+                        <label for="imagen_novedad">Imagen</label>
+                        <?php if (!empty($novedad['imagen'])): ?>
+                            <img src="../private/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>" alt="Imagen de la novedad" style="max-width: 80px;
+                            height: auto;">
+                        <?php else: ?>
+                            <p>No hay imagen disponible</p>
+                        <?php endif; ?>
+                        <input type="file" id="imagen_novedad" name="imagen_novedad" class="form-control mt-2" accept=".png, .jpeg, .jpg">
+                    </div>
 
-                                                <td><input type="date" name="fecha_desde[]" value="<?php echo $novedad['fecha_desde']?>" required></td>
+                    <!-- Botón Aplicar Cambios -->
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-success">Aplicar cambios</button>
+                    </div>
+                </form>
+            </section>
 
-                                                <td><input type="date" name="fecha_hasta[]" value="<?php echo $novedad['fecha_hasta']?>" required></td>
-
-                                                <td><select id="categoria" name="categoria[]" required>
-                                                    <?php
-                                                    foreach ($categorias as $categoria) {
-                                                        $selected = ($categoria == $novedad['categoria']) ? 'selected' : '';
-                                                        echo "<option value='{$categoria}' $selected>{$categoria}</option>";
-                                                    }
-                                                    ?>
-                                                </select></td>
-                                            </tr>
-                                        <?php 
-                                        }?>
-                                <button type="submit">Aplicar cambios</button>
-                            </form>
-                        </tbody>
-                    </table>
-                </section>
         </main>
         <?php include '../includes/footer.php'; ?>
     </div>

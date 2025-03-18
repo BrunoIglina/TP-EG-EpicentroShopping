@@ -52,15 +52,13 @@ $dueños = get_all_dueños();
                             <?php
                                 foreach ($dueños as $dueño) {
                                     echo "<option value='{$dueño['email']}'>{$dueño['email']}</option>";
-                                }
-                            ?>
+                                }?>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="imagen_local">Imagen del local:</label>
-                        <input type="file" id="imagen_local" name="imagen_local" class="form-control" accept=".png" required>
-                        <p class="image-note">La imagen seleccionada <b>NO puede ser editada</b> una vez cargada. <b>La imagen debe ser formato png.</b></p>
+                        <input type="file" id="imagen_local" name="imagen_local" class="form-control" accept=".png, .jpeg, .jpg" required>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Registrar</button>

@@ -31,7 +31,7 @@ $locales = get_all_locales();
                 <?php if (!$locales) { ?>
                     <p><b>No hay locales cargados.</b></p>
                 <?php } else { ?>
-                    <form id="localesForm" method="POST" action="../private/procesar_local.php">
+                    <form id="localesNovedadesForm" method="POST" action="../private/procesar_local.php">
                         <button type="submit" name="action" class="btn btn-secondary mb-3" value="toggle">
                             <?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'Deseleccionar Todo' : 'Seleccionar Todo'; ?>
                         </button>

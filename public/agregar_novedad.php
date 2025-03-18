@@ -67,7 +67,6 @@ $categorias = get_categorias();
                     <div class="form-group">
                         <label for="imagen_novedad"><strong>Imagen de la novedad</strong></label>
                         <input type="file" id="imagen_novedad" name="imagen_novedad" class="form-control" accept=".png"  required>
-                        <p class="image-note">La imagen seleccionada <b>NO puede ser editada</b> una vez cargada. <b>La imagen debe ser formato png.</b></p>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Registrar</button>

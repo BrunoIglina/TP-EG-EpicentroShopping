@@ -28,7 +28,7 @@ $novedades = get_all_novedades();
                     if(!$novedades){?>
                         <b>NO HAY NOVEDADES CARGADAS</b>
                     <?php }else{?>                
-                    <form id="novedadesForm" method="POST" action="../private/procesar_novedad.php">
+                    <form id="localesNovedadesForm" method="POST" action="../private/procesar_novedad.php">
                         <button type="submit" name="action" class="btn btn-secondary mb-3" value="toggle">
                             <?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'Deseleccionar Todo' : 'Seleccionar Todo'; ?>
                         </button>
@@ -58,11 +58,9 @@ $novedades = get_all_novedades();
                                             <td><?php echo $novedad['fecha_hasta']?></td>
                                             <td>
                                                 <?php
-                                                if (isset($novedad['imagen']) && !empty($novedad['imagen'])) {
-                                                    echo '<img src="../private/visualizar_imagen.php?novedad_id=' . $novedad['id'] . '" alt="Imagen del local" class="img-fluid" style="max-width: 100%; height: auto;">';
-                                                } else {
-                                                    echo "No hay imagen";
-                                                }
+                                                if (isset($novedad['imagen']) && !empty($novedad['imagen'])) {?>
+                                                    <img src="../private/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>" alt="Imagen de la novedad">
+                                                <?php } else {echo "No hay imagen";}
                                                 ?>
                                             </td>
                                             <td><?php echo $novedad['categoria']?></td> 

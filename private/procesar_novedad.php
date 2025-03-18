@@ -28,9 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    if ($action == 'edit') {
-        $ids = implode(',', $novedades);
-        header("Location: ../public/editar_novedad.php?ids=$ids");
+    if ($action == 'edit' && count($novedades) < 2) {
+        $id = $novedades[0];
+        header("Location: ../public/editar_novedad.php?id=$id");
         exit();
 
     }elseif ($action == 'delete') {
@@ -42,6 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Novedades eliminadas con éxito.";
         header("Location: ../public/admin_novedades.php");
         exit();
+    } else {
+        die("Se puede seleccionar una sola novedad para modificar");
     }
 }
 ?>
