@@ -2,7 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../lib/vendor/autoload.php';
+require './lib/vendor/autoload.php';
 
 function sendValidationEmail($email, $token) {
     $mail = new PHPMailer(true);

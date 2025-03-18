@@ -48,7 +48,7 @@ function get_novedades_permitidas($id_usuario, $tipo_usuario, $categoria_usuario
 
     $today = date("Y-m-d");
 
-    if ($tipo_usuario == 'Dueño' || $tipo_usuario == 'Administrador' || $categoria_usuario == 'Premium') {
+    if ($tipo_usuario == 'Dueno' || $tipo_usuario == 'Administrador' || $categoria_usuario == 'Premium') {
         $qry_novedad = "SELECT * FROM novedades WHERE '$today' BETWEEN fecha_desde AND fecha_hasta ORDER BY fecha_desde DESC";
     } else {
         $qry_novedad = ($categoria_usuario == 'Medium') ? 

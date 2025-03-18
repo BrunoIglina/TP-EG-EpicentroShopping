@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $conn->close();
-    header("Location: ../public/admin_novedades.php");
+    header("Location: ../admin_novedades.php");
     exit();
 }
 ?>

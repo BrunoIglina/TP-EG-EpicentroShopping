@@ -6,7 +6,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 
 $email = $_POST['email'];
 $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-$tipo = 'Dueño';
+$tipo = 'Dueno';
 
 $sql_chequeo = "SELECT * FROM usuarios WHERE email ='$email'";
 $result = $conn->query($sql_chequeo);

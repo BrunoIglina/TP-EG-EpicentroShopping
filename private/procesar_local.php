@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action == 'edit') {
         $ids = implode(',', $locales);
-        header("Location: ../public/editar_local.php?ids=$ids");
+        header("Location: ../editar_local.php?ids=$ids");
         exit();
     } elseif ($action == 'delete') {
         foreach ($locales as $local_id) {
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "Error al eliminar el local: " . $conn->error;
             }
         }
-        header("Location: ../public/admin_locales.php");
+        header("Location: ../admin_locales.php");
         exit();
     }
 }

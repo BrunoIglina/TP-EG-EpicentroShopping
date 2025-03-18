@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $select_all = isset($_POST['select_all']) ? $_POST['select_all'] : '0';
 
     if ($action == 'toggle') {
-        header("Location: ../public/admin_novedades.php?select_all=$select_all");
+        header("Location: ../admin_novedades.php?select_all=$select_all");
         exit();
     }
 
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action == 'edit') {
         $ids = implode(',', $novedades);
-        header("Location: ../public/editar_novedad.php?ids=$ids");
+        header("Location: ../editar_novedad.php?ids=$ids");
         exit();
 
     }elseif ($action == 'delete') {
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         echo "Novedades eliminadas con éxito.";
-        header("Location: ../public/admin_novedades.php");
+        header("Location: ../admin_novedades.php");
         exit();
     }
 }

@@ -35,7 +35,7 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
                                     <a class="dropdown-item" href="admin_aprobar_dueños.php"><strong>Aprobar Dueños</strong></a>
                                 </div>
                             </li>
-                        <?php elseif ($user_tipo == 'Dueño'): ?>
+                        <?php elseif ($user_tipo == 'Dueno'): ?>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="duenoDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <strong>Gestionar Promociones</strong>

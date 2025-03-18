@@ -3,7 +3,7 @@
 function get_dueño($idUsuario){
     include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 
-    $qry_dueño = "SELECT * FROM usuarios WHERE id = '$idUsuario' AND tipo LIKE 'Dueño'";
+    $qry_dueño = "SELECT * FROM usuarios WHERE id = '$idUsuario' AND tipo LIKE 'Dueno'";
     if(!($result_dueño = $conn->query($qry_dueño))){
         echo "Error: " . $sql . "<br>" . $conn->error;
     }else{
@@ -15,7 +15,7 @@ function get_dueño($idUsuario){
 function get_dueño_by_email($email) {
     global $conn; 
 
-    $query = "SELECT id FROM usuarios WHERE email = ? AND tipo = 'Dueño'";
+    $query = "SELECT id FROM usuarios WHERE email = ? AND tipo = 'Dueno'";
     $stmt = $conn->prepare($query);
     
     if (!$stmt) {
@@ -32,7 +32,7 @@ function get_dueño_by_email($email) {
 function get_all_dueños(){
     include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 
-    $qry_dueño = "SELECT * FROM usuarios WHERE tipo LIKE 'Dueño'";
+    $qry_dueño = "SELECT * FROM usuarios WHERE tipo LIKE 'Dueno'";
     if(!($result_dueño = $conn->query($qry_dueño))){
         echo "Error: " . $sql . "<br>" . $conn->error;
     }else{

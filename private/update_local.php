@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     echo "Locales actualizados con éxito";
-    header("Location: ../public/admin_locales.php");
+    header("Location: ../admin_locales.php");
     exit();
 }
 ?>
