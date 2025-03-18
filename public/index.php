@@ -1,8 +1,16 @@
 <?php
+session_start();
 include '../private/functions_novedades.php';
+
+if (isset($_SESSION['mensaje_error'])) {
+    echo "<div class='alert alert-danger text-center'>" . $_SESSION['mensaje_error'] . "</div>";
+    unset($_SESSION['mensaje_error']); 
+}
+
 $novedades = get_all_novedades();
-$novedades = array_slice($novedades, 0, 5); 
+$novedades = array_slice($novedades, 0, 5);
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
