@@ -27,9 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    if ($action == 'edit') {
-        $ids = implode(',', $locales);
-        header("Location: ../public/editar_local.php?ids=$ids");
+    if ($action == 'edit' && count($locales) < 2) {
+        $id = $locales[0];
+        header("Location: ../public/editar_local.php?id=$id");
         exit();
     } elseif ($action == 'delete') {
         foreach ($locales as $local_id) {
@@ -42,6 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         header("Location: ../public/admin_locales.php");
         exit();
+    } else {
+        die("Se puede seleccionar un solo local para modificar");
     }
 }
 ?>

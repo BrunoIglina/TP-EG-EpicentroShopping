@@ -93,12 +93,12 @@ if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
                                 <a href="promociones.php?local_id=<?php echo $local['id']; ?>&local_nombre=<?php echo urlencode($local['nombre']); ?>&local_rubro=<?php echo urlencode($local['rubro']); ?>" class="card-link">
                                     <div class="card text-center">
                                         <div class="card-body">
-                                        <div class="local-imagen">
-                                            <?php
-                                            $local_id = $local['id'];
-                                            echo '<img src="../private/visualizar_imagen.php?local_id=' . $local_id . '" alt="Imagen de el local" class="img-fluid">';
-                                            ?>
-                                        </div>
+                                            <div class="card.image">
+                                                <?php
+                                                $local_id = $local['id'];
+                                                echo '<img src="../private/visualizar_imagen.php?local_id=' . $local_id . '" alt="Imagen de el local" class="img-fluid">';
+                                                ?>
+                                            </div>
                                             <h4 class="card-title"><?php echo $local['nombre']; ?></h4>
                                             <p class="card-text">
                                                 <?php echo $local['rubro']; ?><br>

@@ -5,11 +5,17 @@ function subirImagen($id, $archivo, $tabla, $conn) {
     }
 
     $tipoArchivo = mime_content_type($archivo);
-    if ($tipoArchivo !== 'image/png') {
-        die("Error: El archivo no es una imagen PNG.");
+    $tiposPermitidos = ['image/png', 'image/jpeg']; 
+    if (!in_array($tipoArchivo, $tiposPermitidos)) {
+        die("Error: El archivo no es una imagen PNG o JPEG.");
     }
 
     $contenido = file_get_contents($archivo);
+
+    if ($contenido === false) {
+        die("Error: No se pudo leer el contenido del archivo.");
+    }
+    
 
     if ($tabla === "locales") {
         $query = "UPDATE locales SET imagen = ? WHERE id = ?";
@@ -28,11 +34,12 @@ function subirImagen($id, $archivo, $tabla, $conn) {
     $stmt->bind_param("si", $contenido, $id);
     $stmt->send_long_data(0, $contenido);  
 
-    if ($stmt->execute()) {
+    if ($stmt->execute() && $stmt->affected_rows > 0) {
         echo "Imagen subida correctamente.";
     } else {
-        echo "Error al subir la imagen: " . $stmt->error;
+        echo "No se realizó ningún cambio en la imagen.";
     }
+    
 
     $stmt->close();
 }

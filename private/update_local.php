@@ -8,58 +8,69 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 include "../env/shopping_db.php";
 include "functions_usuarios.php";
 include "functions_locales.php";
+include '../private/subirImagen.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $ids_locales = $_POST['id_local'];
-    $nombres_antiguos = $_POST['nombre_antiguo_local'];
-    $nombres = $_POST['nombre_local'];
-    $ubicaciones = $_POST['ubicacion_local'];
-    $rubros = $_POST['rubro_local'];
-    $ids_dueños = $_POST['id_dueño'];
+    $id_local = $_POST['id_local'];
+    $nombre_antiguo = $_POST['nombre_antiguo_local'];
+    $nombre = $_POST['nombre_local'];
+    $ubicacion = $_POST['ubicacion_local'];
+    $rubro = $_POST['rubro_local'];
+    $id_dueño = $_POST['id_dueño'];
+   
+    if (empty($id_local) || empty($nombre) || empty($ubicacion) || empty($rubro) || empty($id_dueño)) {
+        die("Error: Todos los campos son obligatorios.");
+    }
+    
 
-    // Actualiza cada local en la base de datos
-    foreach ($ids_locales as $index => $id_local) {
+    $dueño = get_dueño($id_dueño);
 
-        $nombre_antiguo = $nombres_antiguos[$index];
-        $nombre_local = $nombres[$index];
-        $ubicacion = $ubicaciones[$index];
-        $rubro = $rubros[$index];
-        $id_dueño = $ids_dueños[$index];
+    if (!($dueño)) {
 
-        $dueño = get_dueño($id_dueño);
+        echo "El usuario ingresado para el local: " . htmlspecialchars($nombre_local, ENT_QUOTES, 'UTF-8') . " no es dueño.";
+        exit();
 
-        if (!($dueño)) {
+    } else {
 
-            echo "El usuario ingresado para el local: " . htmlspecialchars($nombre_local, ENT_QUOTES, 'UTF-8') . " no es dueño.";
+        $local = get_local_by_nombre($nombre_local);
+
+        if (($local) && $nombre_antiguo != $nombre_local) {
+
+            echo "Ya existe un local con éste nombre: " . htmlspecialchars($nombre_local, ENT_QUOTES, 'UTF-8');
             exit();
 
         } else {
 
-            $local = get_local_by_nombre($nombre_local);
+            $id_dueño = $dueño['id'];
 
-            if (($local) && $nombre_antiguo != $nombre_local) {
+            // Usar sentencias preparadas para evitar errores de sintaxis y mejorar la seguridad
+            $stmt = $conn->prepare("UPDATE locales SET nombre = ?, ubicacion = ?, rubro = ?, idUsuario = ? WHERE id = ?");
+            $stmt->bind_param('ssssi', $nombre, $ubicacion, $rubro, $id_dueño, $id_local);
 
-                echo "Ya existe un local con éste nombre: " . htmlspecialchars($nombre_local, ENT_QUOTES, 'UTF-8');
-                exit();
-
-            } else {
-
-                $id_dueño = $dueño['id'];
-
-                // Usar sentencias preparadas para evitar errores de sintaxis y mejorar la seguridad
-                $query = $conn->prepare("UPDATE locales SET nombre = ?, ubicacion = ?, rubro = ?, idUsuario = ? WHERE id = ?");
-                $query->bind_param('ssssi', $nombre_local, $ubicacion, $rubro, $id_dueño, $id_local);
-
-                if ($query->execute() === FALSE) {
-
-                    echo "Error: " . $query->error;
-
+            if ($stmt->execute()) {
+                $stmt->close();
+        
+                if (isset($_FILES['imagen_local']) && $_FILES['imagen_local']['error'] == 0) {
+                    $imagen_tmp = $_FILES['imagen_local']['tmp_name'];
+                    subirImagen($id_local, $imagen_tmp, "locales", $conn);
+                } else {
+                    echo "No se modificó la imagen.";
                 }
-
+                
+        
+        
+                header("Location: ../public/admin_locales.php?success=1");
+                exit();
+            } else {
+                echo "Error al registrar el local: " . $stmt->error;
+                $stmt->close();
+                exit();
             }
 
+
         }
+
     }
     echo "Locales actualizados con éxito";
     header("Location: ../public/admin_locales.php");
