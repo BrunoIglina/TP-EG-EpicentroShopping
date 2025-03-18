@@ -25,7 +25,6 @@ function get_novedad($id){
 function get_novedades_permitidas($id_usuario, $tipo_usuario, $categoria_usuario) {
     include '../env/shopping_db.php';
 
-    // Función para convertir el nombre del mes al español
     function mesEnEspañol($mesIngles) {
         $meses = [
             'January' => 'Enero',
@@ -59,10 +58,10 @@ function get_novedades_permitidas($id_usuario, $tipo_usuario, $categoria_usuario
     } else {
         $novedades = $result_novedad->fetch_all(MYSQLI_ASSOC);
         foreach ($novedades as &$novedad) {        
-            // Fecha en formato Y-m-d
+
             $fecha_original = $novedad['fecha_desde'];
     
-            // Crear un objeto DateTime a partir de la fecha original
+
             $fecha_obj = DateTime::createFromFormat('Y-m-d', $fecha_original);
             
             $fecha_formateada = $fecha_obj->format('d') . " de " . mesEnEspañol($fecha_obj->format('F')) . " de " . $fecha_obj->format('Y');

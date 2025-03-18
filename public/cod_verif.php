@@ -25,6 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../css/cod_verif.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Verificar Código</title>
 </head>
 <body>
@@ -32,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php include '../includes/header.php'; ?>  
             
         <div class="d-flex flex-column align-items-center justify-content-center">
-            <h1>Verificar Código</h1>
+            <h2 class="text-center my-4">Verificar Código</h2>
 
             <form method="POST" class="p-4 border rounded shadow-sm bg-white w-100" style="max-width: 400px;">
                 <div class="form-group">
@@ -47,9 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <?php include '../includes/footer.php'; ?> 
     </div>
-    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

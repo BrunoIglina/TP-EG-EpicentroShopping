@@ -9,7 +9,7 @@ $usuario_id = $_SESSION['user_id'];
 include '../env/shopping_db.php';
 
 
-$items_per_page = 5;
+$items_per_page = 6;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $items_per_page;
 
@@ -78,9 +78,9 @@ if (!$result) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!--    <link rel="stylesheet" href="../css/styles.css"> -->
-    <link rel="stylesheet" href="../css/gestion_promos.css">
-    <title>Epicentro Shopping - Gestión de Promociones</title>
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <title>Gestión de Promociones</title>
     <script>
         function confirmarAccion(promoId, accion) {
             let mensaje = "¿Estás seguro de que deseas " + accion + " esta promoción?";
@@ -91,68 +91,67 @@ if (!$result) {
     </script>
 </head>
 <body>
-    <div class="wrapper">   
-    <?php include '../includes/header.php'; ?>
-        <main class="container my-4">
-            <h1>Gestión de Promociones</h1>
-            <div id="promocionesContainer">
-                <?php
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<div class='card'>";
-                        echo "<div class='card-body'>";
-                        echo "<h2>" . $row["local_nombre"] . "</h2>";
-                        echo "<p><strong>" . $row["textoPromo"] . "</strong></p>";
-                        echo "<p>Fecha de Inicio: " . $row["fecha_inicio"] . "</p>";
-                        echo "<p>Fecha de Fin: " . $row["fecha_fin"] . "</p>";
-                        echo "<p>Días de la Semana: " . $row["diasSemana"] . "</p>";
-                        echo "<p>Estado: " . $row["estado"] . "</p>";
-                        echo "<p>Email: " . $row["email"] . "</p>";
-                        if ($row["estado"] == 'enviada') {
-                            echo "<div class='button-container'>";
-                            echo "<form id='promoForm_" . $row["idPromocion"] . "_aceptar' method='POST' action='../private/gestionar_promocion.php'>";
-                            echo "<input type='hidden' name='promo_id' value='" . $row["idPromocion"] . "'>";
-                            echo "<input type='hidden' name='accion' value='aceptar'>";
-                            echo "<button type='button' class='accept' onclick='confirmarAccion(" . $row["idPromocion"] . ", \"aceptar\")'>Aceptar</button>";
-                            echo "</form>";
-                            echo "<form id='promoForm_" . $row["idPromocion"] . "_rechazar' method='POST' action='../private/gestionar_promocion.php'>";
-                            echo "<input type='hidden' name='promo_id' value='" . $row["idPromocion"] . "'>";
-                            echo "<input type='hidden' name='accion' value='rechazar'>";
-                            echo "<button type='button' class='reject' onclick='confirmarAccion(" . $row["idPromocion"] . ", \"rechazar\")'>Rechazar</button>";
-                            echo "</form>";
-                            echo "</div>";
-                        }
-                        echo "</div>";
-                        echo "</div>";
-                    }
-                } else {
-                    echo "<p>No hay promociones solicitadas para tus locales.</p>";
-                }
-                ?>
-            </div>
-            </div>
-            <div class="pagination">
-                <?php if ($page > 1): ?>
-                    <a href="?page=<?php echo $page - 1; ?>">Anterior</a>
-                <?php else: ?>
-                    <a class="disabled">Anterior</a>
-                <?php endif; ?>
+    <?php  include '../includes/header.php'; ?> 
+    
+    <div class="container my-4">
+      
+        
+        <div class="row">
+            <?php if ($result->num_rows > 0): ?>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $row["local_nombre"]; ?></h5>
+                                <p class="card-text"><strong><?php echo $row["textoPromo"]; ?></strong></p>
+                                <p>Inicio: <?php echo $row["fecha_inicio"]; ?></p>
+                                <p>Fin: <?php echo $row["fecha_fin"]; ?></p>
+                                <p>Días: <?php echo $row["diasSemana"]; ?></p>
+                                <p><strong>Estado:</strong> <?php echo $row["estado"]; ?></p>
+                                <p>Email: <?php echo $row["email"]; ?></p>
+                                <?php if ($row["estado"] == 'enviada'): ?>
+                                    <div class="d-flex justify-content-between">
+                                        <form id="promoForm_<?php echo $row["idPromocion"]; ?>_aceptar" method="POST" action="../private/gestionar_promocion.php">
+                                            <input type="hidden" name="promo_id" value="<?php echo $row["idPromocion"]; ?>">
+                                            <input type="hidden" name="accion" value="aceptar">
+                                            <button type="button" class="btn btn-success" onclick="confirmarAccion(<?php echo $row["idPromocion"]; ?>, 'aceptar')">Aceptar</button>
+                                        </form>
+                                        <form id="promoForm_<?php echo $row["idPromocion"]; ?>_rechazar" method="POST" action="../private/gestionar_promocion.php">
+                                            <input type="hidden" name="promo_id" value="<?php echo $row["idPromocion"]; ?>">
+                                            <input type="hidden" name="accion" value="rechazar">
+                                            <button type="button" class="btn btn-danger" onclick="confirmarAccion(<?php echo $row["idPromocion"]; ?>, 'rechazar')">Rechazar</button>
+                                        </form>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p class="text-center">No hay promociones disponibles.</p>
+            <?php endif; ?>
+        </div>
 
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item <?php echo $page == 1 ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo $page - 1; ?>">Anterior</a>
+                </li>
                 <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                    <a href="?page=<?php echo $i; ?>" class="<?php if ($i == $page) echo 'active'; ?>"><?php echo $i; ?></a>
+                    <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </li>
                 <?php endfor; ?>
-
-                <?php if ($page < $total_pages): ?>
-                    <a href="?page=<?php echo $page + 1; ?>">Siguiente</a>
-                <?php else: ?>
-                    <a class="disabled">Siguiente</a>
-                <?php endif; ?>
-            </div>
-        </main>
-        <?php include '../includes/footer.php'; ?>
+                <li class="page-item <?php echo $page == $total_pages ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo $page + 1; ?>">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
     </div>
+    <?php include '../includes/footer.php'; ?>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -86,13 +86,15 @@ if (isset($_GET['generate_pdf'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Reportes de Promociones</title>
 </head>
 <body>
     <div class="wrapper">
     <?php include '../includes/header.php'; ?>
         <main class="container my-4">
-            <h1>Reportes de Promociones</h1>
+            <h2 class="text-center my-4">Reportes de Promociones</h2>
             <form method="GET" action="reportesDueño.php">
                 <div class="form-row">
                     <div class="form-group col-md-4">
@@ -158,5 +160,6 @@ if (isset($_GET['generate_pdf'])) {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
