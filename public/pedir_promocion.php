@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario_id = $_SESSION['user_id'];
     $promo_id = $_POST['promo_id'];
 
-    include '../env/shopping_db.php';
+    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 
     $sql = "INSERT INTO promociones_cliente (idCliente, idPromocion, fechaUsoPromo, estado) VALUES ($usuario_id, $promo_id, NOW(), 'enviada')";
 

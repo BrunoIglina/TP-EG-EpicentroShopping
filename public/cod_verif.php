@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../env/shopping_db.php'; 
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 
 $email = isset($_GET['email']) ? $_GET['email'] : null;
 

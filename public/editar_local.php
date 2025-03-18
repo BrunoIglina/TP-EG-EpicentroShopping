@@ -10,7 +10,7 @@ include '../private/functions_usuarios.php';
 include '../private/rubros.php';
 
 if (isset($_GET['ids'])) {
-    $ids = explode(',', $_GET['ids']); // Convertir la cadena de IDs en un array
+    $ids = explode(',', $_GET['ids']);
     foreach ($ids as $id_local){
         $locales[] = get_local($id_local);
     }

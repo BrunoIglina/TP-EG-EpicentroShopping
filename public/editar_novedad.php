@@ -9,7 +9,7 @@ include '../private/functions_novedades.php';
 include '../private/functions_usuarios.php';
 
 if (isset($_GET['ids'])) {
-    $ids = explode(',', $_GET['ids']); // Convertir la cadena de IDs en un array
+    $ids = explode(',', $_GET['ids']); 
     foreach ($ids as $id_novedad){
         $novedades[] = get_novedad($id_novedad);
     }

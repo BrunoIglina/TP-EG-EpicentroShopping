@@ -5,7 +5,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include "../env/shopping_db.php";
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+
 include "functions_usuarios.php";
 include "functions_locales.php";
 
@@ -18,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rubros = $_POST['rubro_local'];
     $ids_dueños = $_POST['id_dueño'];
 
-    // Actualiza cada local en la base de datos
     foreach ($ids_locales as $index => $id_local) {
 
         $nombre_antiguo = $nombres_antiguos[$index];
@@ -47,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $id_dueño = $dueño['id'];
 
-                // Usar sentencias preparadas para evitar errores de sintaxis y mejorar la seguridad
                 $query = $conn->prepare("UPDATE locales SET nombre = ?, ubicacion = ?, rubro = ?, idUsuario = ? WHERE id = ?");
                 $query->bind_param('ssssi', $nombre_local, $ubicacion, $rubro, $id_dueño, $id_local);
 

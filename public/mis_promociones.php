@@ -7,7 +7,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Cliente') {
 
 $usuario_id = $_SESSION['user_id'];
 
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 
 
 $limit = 4; 

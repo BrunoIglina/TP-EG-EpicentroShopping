@@ -5,7 +5,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $novedades = isset($_POST['novedades']) ? $_POST['novedades'] : [];
@@ -13,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $select_all = isset($_POST['select_all']) ? $_POST['select_all'] : '0';
 
     if ($action == 'toggle') {
-        // Alternar selección de todas las casillas
         header("Location: ../public/admin_novedades.php?select_all=$select_all");
         exit();
     }

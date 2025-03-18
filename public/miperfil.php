@@ -5,7 +5,7 @@ if(!isset($_SESSION['user_id']) ) {
     exit();
 }
 
-require '../env/shopping_db.php'; 
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 
 $user_id = $_SESSION['user_id'];
 $query = "SELECT * FROM usuarios WHERE id = ?";

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../env/shopping_db.php'; 
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 require '../lib/vendor/autoload.php'; 
 require '../private/gen_code_verif.php';
 

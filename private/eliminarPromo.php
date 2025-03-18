@@ -6,11 +6,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    include '../env/shopping_db.php';
+    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+
 
     $promo_id = $_POST['promo_id'];
 
-    // Realizamos la consulta para eliminar la promoción
     $sql = "DELETE FROM promociones WHERE id = ? AND local_id IN (SELECT id FROM locales WHERE idUsuario = ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $promo_id, $_SESSION['user_id']);

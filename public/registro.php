@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 include '../private/envio_mail.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

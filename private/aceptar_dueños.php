@@ -1,5 +1,6 @@
 <?php
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+
 
 $id = $_POST['id'];
 

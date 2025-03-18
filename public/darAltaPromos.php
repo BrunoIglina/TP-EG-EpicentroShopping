@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 
 if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueño') {
     header("Location: index.php");

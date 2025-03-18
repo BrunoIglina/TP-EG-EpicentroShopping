@@ -6,7 +6,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueño') {
 }
 $usuario_id = $_SESSION['user_id'];
 
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 
 
 $items_per_page = 6;
