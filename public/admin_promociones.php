@@ -14,14 +14,16 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/admin_promociones.css">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Epicentro Shopping - Administración de Promociones</title>
 </head>
 <body>
     <div class="wrapper">
         <?php include '../includes/header.php'; ?>
-        
+        <h2 class="text-center my-4">Aprobar Promociones Pendientes</h2>
         <main class="container">
-            <h1>Aprobar Promociones Pendientes</h1>
+            
             <form action="../private/controAcepPromo.php" method="POST">
                 <table class="table table-striped">
                     <thead>
@@ -53,8 +55,8 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                         echo "<td>" . $row['fecha_inicio'] . "</td>";
                         echo "<td>" . $row['fecha_fin'] . "</td>";
                         echo "<td>" . $row['categoriaCliente'] . "</td>";
-                        echo "<td><button type='submit' name='aprobar' value='" . $row['id'] . "'>Aprobar</button></td>";
-                        echo "<td><button type='submit' name='rechazar' value='" . $row['id'] . "'>Rechazar</button></td>";
+                        echo "<td><button type='submit' class='green' name='aprobar' value='" . $row['id'] . "'>Aprobar</button></td>";
+                        echo "<td><button type='submit' class='red' name='rechazar'  value='" . $row['id'] . "'>Rechazar</button></td>";
                         
                         echo "</tr>";
                     }
@@ -69,4 +71,8 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
         <?php include '../includes/footer.php'; ?>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </html>

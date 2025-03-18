@@ -1,3 +1,4 @@
+/* Ajustes generales */
 .admin-section {
     width: 100%;
     max-width: 100%;
@@ -7,6 +8,7 @@
     flex-direction: column;
 }
 
+/* Contenedor de la tabla */
 .table-responsive {
     width: 100%;
     overflow-x: auto;
@@ -15,68 +17,37 @@
 
 .table {
     width: 100%;
-    table-layout: auto;
+    table-layout: fixed;
 }
 
-.table th,
-.table td {
+.table th, .table td {
     white-space: normal;
     word-wrap: break-word;
     text-overflow: ellipsis;
+    padding: 0.75rem;
+    text-align: left;
 }
 
 .table img {
+
     max-width: 80px; 
     height: auto;
 }
 
 .container {
-    width: 100%;
     max-width: 100%;
-    margin: 0;
-    padding: 0;
+    height: auto;
+    display: block;
 }
 
-.admin-section table {
-    width: 100%;  
-    border-collapse: collapse;
-    margin-top: 1rem;
-}
-
-.admin-section th, .admin-section td {
-    border: 1px solid #ccc;
-    padding: 1rem; 
-    text-align: left; 
-}
-
-.admin-section th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-}
-
-.admin-section td {
-    max-width: 200px;  
-    word-wrap: break-word; 
-    white-space: normal;
-}
-
-.admin-section td img {
-    max-width: 100%; 
-    height: auto; 
-}
-
-.wrapper {
-    display: grid;
-    min-height: 100vh;
-    grid-template-rows: auto 1fr auto;
-}
-
+/* Botones */
 .admin-section button {
     margin-right: 0.5rem;
     padding: 0.5rem 1rem; 
     border: none;
     border-radius: 3px;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .btn-limited {
@@ -85,6 +56,7 @@
     max-width: 250px; 
 }
 
+/* Colores personalizados */
 button.green {
     background-color: #4CAF50;
     color: #fff;
@@ -103,14 +75,15 @@ button.select-toggle {
 .image-note {
     margin-top: 10px;
     font-size: 0.9rem;
-    color: #6c757d;  
+    color: #6c757d;
 }
 
+/* Asegurar que se vea bien en pantallas pequeñas */
 @media (max-width: 768px) {
     .admin-section {
         padding: 10px;
     }
-    
+
     .table th, .table td {
         font-size: 14px;
         padding: 8px;
@@ -128,8 +101,18 @@ button.select-toggle {
         padding: 0.5rem;
     }
     
-    .admin-section td {
-        word-wrap: break-word;
-        white-space: normal;
+    .table img {
+        max-width: 80px; /* Limitar tamaño de imagen para móviles */
     }
+}
+
+.wrapper {
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+}
+
+.d-flex {
+    display: flex;
+    justify-content: space-between;
 }

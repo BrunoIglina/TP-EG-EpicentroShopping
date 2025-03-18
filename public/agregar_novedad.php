@@ -16,6 +16,8 @@ $categorias = get_categorias();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
     <title>Epicentro Shopping - Agregar Novedad</title>
 </head>
 <body>
@@ -23,7 +25,7 @@ $categorias = get_categorias();
     <div class="container mt-5">
         <main>
             <section class="admin-section">
-                <h1 class="mb-4">Agregar Novedad</h1>
+                
 
                 <?php
                 if (isset($_SESSION['error'])) {
@@ -35,12 +37,12 @@ $categorias = get_categorias();
                 <form action="../private/alta_novedad.php" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="titulo_novedad"><strong>Titulo de la Novedad</strong></label>
-                        <input type="text" id="titulo_novedad" name="titulo_novedad" class="form-control" required>
+                        <input type="text" id="titulo_novedad" name="titulo_novedad" class="form-control" placeholder="Ingrese título de la novedad" required>
                     </div>
 
                     <div class="form-group">
                         <label for="texto_novedad"><b>Texto de la Novedad</b></label>
-                        <textarea id="texto_novedad" name="texto_novedad" class="form-control" rows="4" required></textarea>
+                        <textarea id="texto_novedad" name="texto_novedad" class="form-control" rows="4" placeholder="Ingrese descripcion de la novedad" required></textarea>
                     </div>
 
                     <div class="form-group">
@@ -56,6 +58,7 @@ $categorias = get_categorias();
                     <div class="form-group">
                         <label for="categoria"><b>Categoría</b></label>
                         <select id="categoria" name="categoria" class="form-control" required>
+                        <option value="" disabled selected>Seleccione una categoria</option>
                             <?php
                                 foreach ($categorias as $categoria) {
                                     echo "<option value='{$categoria}'>{$categoria}</option>";
@@ -75,7 +78,9 @@ $categorias = get_categorias();
         </main>
     </div>
     <?php include '../includes/footer.php'; ?>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
