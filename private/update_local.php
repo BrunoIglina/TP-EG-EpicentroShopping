@@ -5,7 +5,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include "../env/shopping_db.php";
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+
 include "functions_usuarios.php";
 include "functions_locales.php";
 include '../private/subirImagen.php';
@@ -73,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }
     echo "Locales actualizados con éxito";
-    header("Location: ../public/admin_locales.php");
+    header("Location: ../admin_locales.php");
     exit();
 }
 ?>

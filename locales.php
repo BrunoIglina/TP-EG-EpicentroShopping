@@ -1,7 +1,7 @@
 <?php
 
-include '../private/functions_locales.php';
-include '../private/rubros.php';
+include './private/functions_locales.php';
+include './private/rubros.php';
 
 $locales = get_all_locales();
 $filtered_locales = $locales;
@@ -38,15 +38,15 @@ if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/locales.css">
-    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/locales.css">
+    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="./assets/logo.png">
     <title>Epicentro Shopping - Locales</title>
 </head>
 <body>
 <div class = "wrapper">
-    <?php include '../includes/header.php'; ?>
+    <?php include './includes/header.php'; ?>
     <main>
 
         <div class="container-fluid">
@@ -96,7 +96,7 @@ if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
                                             <div class="card.image">
                                                 <?php
                                                 $local_id = $local['id'];
-                                                echo '<img src="../private/visualizar_imagen.php?local_id=' . $local_id . '" alt="Imagen de el local" class="img-fluid">';
+                                                echo '<img src="./private/visualizar_imagen.php?local_id=' . $local_id . '" alt="Imagen de el local" class="img-fluid">';
                                                 ?>
                                             </div>
                                             <h4 class="card-title"><?php echo $local['nombre']; ?></h4>
@@ -116,7 +116,7 @@ if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
         </div>
 
     </main>
-    <?php include '../includes/footer.php'; ?>
+    <?php include './includes/footer.php'; ?>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

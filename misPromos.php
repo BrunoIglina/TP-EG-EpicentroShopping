@@ -1,11 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueño') {
+if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     header("Location: index.php");
     exit();
 }
 
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 
 $user_id = $_SESSION['user_id'];
 
@@ -45,14 +45,14 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/mispromos.css">
-    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="stylesheet" href="./css/mispromos.css">
+    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="./assets/logo.png">
     <title>Mis Promociones</title>
 </head>
 <body>
     <div class="wrapper">
-        <?php include '../includes/header.php'; ?>
+        <?php include './includes/header.php'; ?>
         <main class="container my-4">
             
             <p>
@@ -121,7 +121,7 @@ $conn->close();
             </nav>
         </main>
         
-        <?php include '../includes/footer.php'; ?>
+        <?php include './includes/footer.php'; ?>
     </div>
     
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

@@ -11,7 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $promo_id = $_POST['promo_id'];
     $accion = $_POST['accion'];
 
-    include '../env/shopping_db.php';
+    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+
 
     if ($accion == 'aceptar') {
         $sql = "UPDATE promociones_cliente SET estado = 'aceptada' WHERE idPromocion = $promo_id";

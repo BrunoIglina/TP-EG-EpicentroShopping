@@ -1,8 +1,8 @@
 <?php
 session_start();
-require '../env/shopping_db.php'; 
-require '../lib/vendor/autoload.php'; 
-require '../private/gen_code_verif.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+require './lib/vendor/autoload.php'; 
+require './private/gen_code_verif.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -42,16 +42,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <!--    <link rel="stylesheet" href="../css/styles.css"> -->
-    <link rel="stylesheet" href="../css/mod_perfil.css">
+    <link rel="stylesheet" href="./css/mod_perfil.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="./assets/logo.png">
     <title>Editar Perfil</title>
 </head>
 <body>
     <div class="wrapper">
 
-        <?php include '../includes/header.php'; ?>
+        <?php include './includes/header.php'; ?>
         <main class="form-container">
             <h1 class="text-center my-4">Editar Perfil</h1>
             <form method="POST">
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </form>
             <?php if (isset($error)) echo "<p>$error</p>"; ?>
         </main>
-        <?php include '../includes/footer.php'; ?>
+        <?php include './includes/footer.php'; ?>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

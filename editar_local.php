@@ -5,12 +5,14 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include '../private/functions_locales.php';
-include '../private/functions_usuarios.php';
-include '../private/rubros.php';
+include './private/functions_locales.php';
+include './private/functions_usuarios.php';
+include './private/rubros.php';
+
 
 if (isset($_GET['id'])) {
     $local = get_local($_GET['id']);
+
     $dueños = get_all_dueños();
 }
 
@@ -22,16 +24,16 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="./assets/logo.png">
     <title>Epicentro Shopping - Modificación de Locales</title>
 </head>
 <body>
     <div class="wrapper">
 
-        <?php include '../includes/header.php'; ?>
-
+    <?php include './includes/header.php'; ?>
+    <h2 class="text-center my-4">Modificar locales</h2>
         <main>
             <section class="admin-section">
                 <h1 class="admin-title">Modificar Local</h1>
@@ -99,8 +101,7 @@ if (isset($_GET['id'])) {
             </section>
 
         </main>
-
-        <?php include '../includes/footer.php'; ?>
+        <?php include './includes/footer.php'; ?>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

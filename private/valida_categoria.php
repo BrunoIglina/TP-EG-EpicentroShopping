@@ -8,7 +8,8 @@ if (!isset($_SESSION['user_id'])) {
 
 $promo_id = $_GET['promo_id'];
 
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+
 
 
 $sql = "SELECT idCliente FROM promociones_cliente WHERE idPromocion = $promo_id";
@@ -36,7 +37,6 @@ if ($result->num_rows == 1) {
     }
 
 
-    // Actualizar la categoría del cliente si ha cambiado
     if ($nueva_categoria != $categoria_actual) {
         $sql = "UPDATE usuarios SET categoria = '$nueva_categoria' WHERE id = $cliente_id";
         if ($conn->query($sql) === TRUE) {

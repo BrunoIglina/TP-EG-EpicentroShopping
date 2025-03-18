@@ -1,8 +1,8 @@
 <?php
 session_start();
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 
-if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueño') {
+if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     header("Location: index.php");
     exit();
 }
@@ -30,13 +30,13 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/darAltaPromos.css">
-    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="stylesheet" href="./css/darAltaPromos.css">
+    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="./assets/logo.png">
     <title>Alta de Promociones</title>
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
+    <?php include './includes/header.php'; ?>
     
     <main class="container my-4">
         <h2 class="text-center my-4">Agregar Nueva Promoción</h2>
@@ -51,7 +51,7 @@ $conn->close();
             <?php unset($_SESSION['mensaje']); ?>
         <?php endif; ?>
 
-        <form action="../private/controladorPromos.php" method="POST">
+        <form action="./private/controladorPromos.php" method="POST">
             <div class="form-group">
                 <label for="local_id">Nombre del Local:</label>
                 <select id="local_id" name="local_id" class="form-control" required>
@@ -104,7 +104,7 @@ $conn->close();
         </form>
     </main>
     
-    <?php include '../includes/footer.php'; ?>
+    <?php include './includes/footer.php'; ?>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

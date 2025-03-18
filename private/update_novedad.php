@@ -5,8 +5,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include "../env/shopping_db.php";
-include "../private/subirImagen.php";
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+include "./subirImagen.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_novedad = $_POST['id_novedad'];
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $conn->close();
-    header("Location: ../public/admin_novedades.php");
+    header("Location: ../admin_novedades.php");
     exit();
 }
 ?>

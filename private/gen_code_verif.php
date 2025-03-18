@@ -1,7 +1,7 @@
 <?php
 session_start();
-require '../env/shopping_db.php'; 
-require '../lib/vendor/autoload.php'; 
+require './env/shopping_db.php'; 
+require './lib/vendor/autoload.php'; 
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

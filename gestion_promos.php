@@ -1,12 +1,12 @@
 <?php
 session_start();
-if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueño') {
+if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     header("Location: login.php");
     exit();
 }
 $usuario_id = $_SESSION['user_id'];
 
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 
 
 $items_per_page = 6;
@@ -78,8 +78,8 @@ if (!$result) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="icon" type="image/png" href="../assets/logo.png">
-    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <title>Gestión de Promociones</title>
     <script>
         function confirmarAccion(promoId, accion) {
@@ -91,7 +91,7 @@ if (!$result) {
     </script>
 </head>
 <body>
-    <?php  include '../includes/header.php'; ?> 
+    <?php  include './includes/header.php'; ?> 
     
     <div class="container my-4">
       
@@ -111,12 +111,12 @@ if (!$result) {
                                 <p>Email: <?php echo $row["email"]; ?></p>
                                 <?php if ($row["estado"] == 'enviada'): ?>
                                     <div class="d-flex justify-content-between">
-                                        <form id="promoForm_<?php echo $row["idPromocion"]; ?>_aceptar" method="POST" action="../private/gestionar_promocion.php">
+                                        <form id="promoForm_<?php echo $row["idPromocion"]; ?>_aceptar" method="POST" action="./private/gestionar_promocion.php">
                                             <input type="hidden" name="promo_id" value="<?php echo $row["idPromocion"]; ?>">
                                             <input type="hidden" name="accion" value="aceptar">
                                             <button type="button" class="btn btn-success" onclick="confirmarAccion(<?php echo $row["idPromocion"]; ?>, 'aceptar')">Aceptar</button>
                                         </form>
-                                        <form id="promoForm_<?php echo $row["idPromocion"]; ?>_rechazar" method="POST" action="../private/gestionar_promocion.php">
+                                        <form id="promoForm_<?php echo $row["idPromocion"]; ?>_rechazar" method="POST" action="./private/gestionar_promocion.php">
                                             <input type="hidden" name="promo_id" value="<?php echo $row["idPromocion"]; ?>">
                                             <input type="hidden" name="accion" value="rechazar">
                                             <button type="button" class="btn btn-danger" onclick="confirmarAccion(<?php echo $row["idPromocion"]; ?>, 'rechazar')">Rechazar</button>
@@ -148,7 +148,7 @@ if (!$result) {
             </ul>
         </nav>
     </div>
-    <?php include '../includes/footer.php'; ?>
+    <?php include './includes/footer.php'; ?>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

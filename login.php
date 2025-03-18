@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
@@ -57,14 +57,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/login.css">
-    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="./assets/logo.png">
     <title>Epicentro Shopping - Iniciar Sesión</title>
 </head>
 <body>
     <div class="wrapper">
-        <?php include '../includes/header.php'; ?>
+        <?php include './includes/header.php'; ?>
         <div class="auth-container">
             <section class="auth-form">
                 <h2 class="text-center my-4">Iniciar Sesión</h2>
@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a href="recuperar_cuenta.php">¿Olvidaste tu contraseña?</a>
             </section>
         </div>
-        <?php include '../includes/footer.php'; ?>
+        <?php include './includes/footer.php'; ?>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

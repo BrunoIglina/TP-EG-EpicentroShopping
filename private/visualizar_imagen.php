@@ -1,5 +1,6 @@
 <?php
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+
 
 $local_id = isset($_GET['local_id']) ? $_GET['local_id'] : null;
 $novedad_id = isset($_GET['novedad_id']) ? $_GET['novedad_id'] : null;

@@ -1,11 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueño') {
+if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     header("Location: index.php");
     exit();
 }
 
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 
 $user_id = $_SESSION['user_id'];
 
@@ -35,7 +35,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if (isset($_GET['generate_pdf'])) {
-    require('../lib/vendor/setasign/fpdf/fpdf.php');
+    require('./lib/vendor/setasign/fpdf/fpdf.php');
 
     class PDF extends FPDF {
         function Header() {
@@ -85,14 +85,14 @@ if (isset($_GET['generate_pdf'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="./assets/logo.png">
     <title>Reportes de Promociones</title>
 </head>
 <body>
     <div class="wrapper">
-    <?php include '../includes/header.php'; ?>
+    <?php include './includes/header.php'; ?>
         <main class="container my-4">
             <h2 class="text-center my-4">Reportes de Promociones</h2>
             <form method="GET" action="reportesDueño.php">
@@ -155,7 +155,7 @@ if (isset($_GET['generate_pdf'])) {
                 </table>
             </div>
         </main>
-        <?php include '../includes/footer.php'; ?>
+        <?php include './includes/footer.php'; ?>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

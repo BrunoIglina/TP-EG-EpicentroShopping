@@ -5,7 +5,8 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include '../env/shopping_db.php'; 
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_POST['id'];

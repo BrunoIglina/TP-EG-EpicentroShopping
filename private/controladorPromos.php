@@ -1,12 +1,8 @@
 <?php
 session_start();
+require_once('../env/shopping_db.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $conn = new mysqli("127.0.0.1", "root", "", "shopping_db", 3309);
-
-    if ($conn->connect_error) {
-        die("Conexión fallida: " . $conn->connect_error);
-    }
 
     $errores = [];
 
@@ -48,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!empty($errores)) {
         $_SESSION['error'] = implode("<br>", $errores);
-        header("Location: ../public/darAltaPromos.php");
+        header("Location: ../darAltaPromos.php");
         exit();
     }
 
@@ -60,16 +56,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
         $_SESSION['mensaje'] = "Promoción agregada exitosamente. El Administrador debe evaluarla.";
-        header("Location: ../public/misPromos.php");
+        header("Location: ../misPromos.php");
     } else {
         $_SESSION['error'] = "Error al agregar la promoción: " . $conn->error;
-        header("Location: ../public/darAltaPromos.php");
+        header("Location: ../darAltaPromos.php");
     }
 
     $stmt->close();
     $conn->close();
 } else {
     $_SESSION['error'] = "Método de solicitud no válido.";
-    header("Location: ../public/darAltaPromos.php");
+    header("Location: ../darAltaPromos.php");
 }
 ?>

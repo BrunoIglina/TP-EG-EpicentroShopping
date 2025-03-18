@@ -6,7 +6,7 @@ if(!isset($_SESSION['user_id'])) {
     exit();
 }
 
-include '../private/functions_novedades.php';
+include './private/functions_novedades.php';
 
 $novedades = get_novedades_permitidas($_SESSION['user_id'],$_SESSION['user_tipo'],$_SESSION['user_categoria']);
 
@@ -18,14 +18,14 @@ $novedades = get_novedades_permitidas($_SESSION['user_id'],$_SESSION['user_tipo'
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="./assets/logo.png">
     <title>Epicentro Shopping - Novedades</title>
 </head>
 <body>
     <div class="wrapper">
-        <?php include '../includes/header.php'; ?>
+        <?php include './includes/header.php'; ?>
         <main>
             <section class="novedades">
                 <h2 class="text-center my-4">Novedades</h2>
@@ -43,7 +43,7 @@ $novedades = get_novedades_permitidas($_SESSION['user_id'],$_SESSION['user_tipo'
                         <div class="novedad-imagen">
                             <?php
                             $novedad_id = $novedad['id'];
-                            echo '<img src="../private/visualizar_imagen.php?novedad_id=' . $novedad_id . '" alt="Imagen de la novedad" class="img-fluid">';
+                            echo '<img src="./private/visualizar_imagen.php?novedad_id=' . $novedad_id . '" alt="Imagen de la novedad" class="img-fluid">';
                             ?>
                         </div>
                     </article>
@@ -52,7 +52,7 @@ $novedades = get_novedades_permitidas($_SESSION['user_id'],$_SESSION['user_tipo'
                 </div>
             </section>
         </main>
-        <?php include '../includes/footer.php'; ?>
+        <?php include './includes/footer.php'; ?>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

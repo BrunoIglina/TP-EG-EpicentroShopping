@@ -5,7 +5,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $locales = isset($_POST['locales']) ? $_POST['locales'] : [];
@@ -40,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "Error al eliminar el local: " . $conn->error;
             }
         }
-        header("Location: ../public/admin_locales.php");
+        header("Location: ../admin_locales.php");
         exit();
     } else {
         die("Se puede seleccionar un solo local para modificar");

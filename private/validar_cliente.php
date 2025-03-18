@@ -1,5 +1,6 @@
 <?php
-include '../env/shopping_db.php';
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+
 $token = $_GET['token'];
 
 $sql = "UPDATE usuarios SET validado = 1 WHERE token_validacion = '$token'";

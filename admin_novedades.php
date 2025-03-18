@@ -4,7 +4,7 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     header("Location: index.php");
     exit();
 }
-include '../private/functions_novedades.php';
+include './private/functions_novedades.php';
 $novedades = get_all_novedades();
 ?>
 
@@ -14,14 +14,14 @@ $novedades = get_all_novedades();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/admin_novedades.css">
-    <link rel="stylesheet" href="../css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="stylesheet" href="./css/admin_novedades.css">
+    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="icon" type="image/png" href="./assets/logo.png">
     <title>Epicentro Shopping - Administración de Novedades</title>
 </head>
 <body>
     <div class="wrapper">
-        <?php include '../includes/header.php'; ?>
+        <?php include './includes/header.php'; ?>
         <main class="container">
             <section class="admin-section">
                 <h2 class="text-center my-4">Administración de Novedades</h2>
@@ -30,7 +30,9 @@ $novedades = get_all_novedades();
                     if(!$novedades){?>
                         <div class="alert alert-warning">No hay novedades cargadas</div>
                     <?php }else{?>                
-                    <form id="localesNovedadesForm" method="POST" action="../private/procesar_novedad.php">
+
+                    <form id="novedadesForm" method="POST" action="./private/procesar_novedad.php">
+
                         <button type="submit" name="action" class="btn btn-secondary mb-3" value="toggle">
                             <?php echo (isset($_GET['select_all']) && $_GET['select_all'] == '1') ? 'Deseleccionar Todo' : 'Seleccionar Todo'; ?>
                         </button>
@@ -61,7 +63,7 @@ $novedades = get_all_novedades();
                                             <td>
                                                 <?php
                                                 if (isset($novedad['imagen']) && !empty($novedad['imagen'])) {?>
-                                                    <img src="../private/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>" alt="Imagen de la novedad">
+                                                    <img src="./private/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>" alt="Imagen de la novedad">
                                                 <?php } else {echo "No hay imagen";}
                                                 ?>
                                             </td>
@@ -80,7 +82,7 @@ $novedades = get_all_novedades();
                 <?php } ?>
             </section>
         </main>
-        <?php include '../includes/footer.php'; ?>
+        <?php include './includes/footer.php'; ?>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
