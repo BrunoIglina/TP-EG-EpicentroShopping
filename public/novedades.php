@@ -1,6 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['user_id'])) {
+    $_SESSION['mensaje_error'] = "Iniciar sesión para observar las novedades";
     header("Location: index.php");
     exit();
 }

@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_GET['local_id'])) {
+if (!isset($_GET['local_id'])) {
     header("Location: locales.php");
 }
 
@@ -24,16 +24,18 @@ $sql = "
         promociones.estadoPromo = 'Aprobada'
 ";
 
+// Filtrar categorías basadas en la categoría del cliente
 if ($categoriaCliente) {
     $indice_categoria_cliente = array_search($categoriaCliente, $categorias);
-    $sql .= " AND promociones.categoriaCliente IN (";
-    for ($i = 0; $i <= $indice_categoria_cliente; $i++) {
-        $sql .= "'" . $categorias[$i] . "'";
-        if ($i < $indice_categoria_cliente) {
-            $sql .= ", ";
-        }
+
+    // Verificar si la categoría del cliente es válida
+    if ($indice_categoria_cliente !== false) {
+        $categorias_permitidas = array_slice($categorias, 0, $indice_categoria_cliente + 1);
+        $categorias_permitidas_sql = implode("', '", $categorias_permitidas);
+        $sql .= " AND promociones.categoriaCliente IN ('$categorias_permitidas_sql')";
+    } else {
+        $sql .= " AND 1=0"; // Bloquear resultados si la categoría no es válida
     }
-    $sql .= ")";
 }
 
 if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
@@ -53,7 +55,6 @@ if (!$result) {
     die("Error en la consulta: " . $conn->error);
 }
 
-
 $total_result_sql = "
     SELECT COUNT(*) AS total
     FROM 
@@ -62,14 +63,7 @@ $total_result_sql = "
         promociones.estadoPromo = 'Aprobada'
 ";
 if ($categoriaCliente) {
-    $total_result_sql .= " AND promociones.categoriaCliente IN (";
-    for ($i = 0; $i <= $indice_categoria_cliente; $i++) {
-        $total_result_sql .= "'" . $categorias[$i] . "'";
-        if ($i < $indice_categoria_cliente) {
-            $total_result_sql .= ", ";
-        }
-    }
-    $total_result_sql .= ")";
+    $total_result_sql .= " AND promociones.categoriaCliente IN ('$categorias_permitidas_sql')";
 }
 
 if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
@@ -97,7 +91,7 @@ $total_pages = ceil($total_rows / $limit);
         <?php include '../includes/header.php'; ?>
         <main class="container-fluid">
             <div class="row">
-                <div class="col 12">
+                <div class="col-12">
                     <div id="promocionesContainer">
                         <?php
                         $currentLocal = '';
@@ -108,18 +102,16 @@ $total_pages = ceil($total_rows / $limit);
                                         echo "</div>";
                                     }
                                     echo "<div class='card mb-3'>";
-                                    echo "<div class='card-header'><h2 class='card-title'>" . $_GET["local_nombre"] . "</h2></div>";
+                                    echo "<div class='card-header'><h2 class='card-title'>" . htmlspecialchars($_GET["local_nombre"]) . "</h2></div>";
                                     $currentLocal = $_GET["local_nombre"];
                                 }
                                 echo "<div class='card-body'>";
-                                echo "<p><strong>" . $row["textoPromo"] . "</strong></p>";
-                                echo "<p>Fecha de Inicio: " . $row["fecha_inicio"] . "</p>";
-                                echo "<p>Fecha de Fin: " . $row["fecha_fin"] . "</p>";
-                                echo "<p>Días de la Semana: " . $row["diasSemana"] . "</p>";
-                                echo "<p>Rubro: " . $_GET["local_rubro"] . "</p>";
-                                echo "<p>ID del Local: " . $_GET["local_id"] . "</p>";
+                                echo "<p><strong>" . htmlspecialchars($row["textoPromo"]) . "</strong></p>";
+                                echo "<p>Fecha de Inicio: " . htmlspecialchars($row["fecha_inicio"]) . "</p>";
+                                echo "<p>Fecha de Fin: " . htmlspecialchars($row["fecha_fin"]) . "</p>";
+                                echo "<p>Días de la Semana: " . htmlspecialchars($row["diasSemana"]) . "</p>";
                                 echo "<form method='POST' action='pedir_promocion.php'>";
-                                echo "<input type='hidden' name='promo_id' value='" . $row["promo_id"] . "'>";
+                                echo "<input type='hidden' name='promo_id' value='" . (int)$row["promo_id"] . "'>";
                                 echo "<button type='submit' class='btn btn-success'>Pedir Promoción</button>";
                                 echo "</form>";
                                 echo "</div>";
@@ -132,16 +124,16 @@ $total_pages = ceil($total_rows / $limit);
                     </div>
                     <nav aria-label="Page navigation">
                         <ul class="pagination justify-content-center">
-                            <li class="page-item <?php if($page <= 1){ echo 'disabled'; } ?>">
-                                <a class="page-link" href="<?php if($page > 1){ echo "?page=" . ($page - 1); } ?>">Anterior</a>
+                            <li class="page-item <?php if ($page <= 1) { echo 'disabled'; } ?>">
+                                <a class="page-link" href="<?php if ($page > 1) { echo "?page=" . ($page - 1); } ?>">Anterior</a>
                             </li>
-                            <?php for($i = 1; $i <= $total_pages; $i++): ?>
-                                <li class="page-item <?php if($page == $i){ echo 'active'; } ?>">
+                            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                <li class="page-item <?php if ($page == $i) { echo 'active'; } ?>">
                                     <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
                                 </li>
                             <?php endfor; ?>
-                            <li class="page-item <?php if($page >= $total_pages){ echo 'disabled'; } ?>">
-                                <a class="page-link" href="<?php if($page < $total_pages){ echo "?page=" . ($page + 1); } ?>">Siguiente</a>
+                            <li class="page-item <?php if ($page >= $total_pages) { echo 'disabled'; } ?>">
+                                <a class="page-link" href="<?php if ($page < $total_pages) { echo "?page=" . ($page + 1); } ?>">Siguiente</a>
                             </li>
                         </ul>
                     </nav>
