@@ -16,7 +16,7 @@ function generate_verification_code($email) {
         $mail->Host = 'smtp.gmail.com'; 
         $mail->SMTPAuth = true;
         $mail->Username = 'biprueba1@gmail.com'; 
-        $mail->Password = 'cvqhwxgolwgjskdt'; 
+        $mail->Password = 'stjdtyeisegzpqmw'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
 

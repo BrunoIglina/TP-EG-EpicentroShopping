@@ -22,13 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($fecha_desde < $today) {
         $_SESSION['error'] = "La fecha desde no puede ser anterior a hoy.";
-        header("Location: ../public/agregar_novedad.php");
+        header("Location: ../agregar_novedad.php");
         exit();
     }
 
     if ($fecha_hasta < $today) {
         $_SESSION['error'] = "La fecha hasta ingresada ya caducó.";
-        header("Location: ../public/agregar_novedad.php"); 
+        header("Location: ../agregar_novedad.php"); 
         exit();
     } else {
         
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt === false) {
             $_SESSION['error'] = "Error al preparar la consulta: " . $conn->error;
-            header("Location: ../public/agregar_novedad.php");
+            header("Location: ../agregar_novedad.php");
             exit();
         }
 
@@ -55,11 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
             $_SESSION['success'] = "Novedad dada de alta con éxito.";
-            header("Location: ../public/admin_novedades.php");
+            header("Location: ../admin_novedades.php");
             exit();
         } else {
             $_SESSION['error'] = "Error: " . $query->error;
-            header("Location: ../public/agregar_novedad.php");
+            header("Location: ../agregar_novedad.php");
             exit();
         }
     }

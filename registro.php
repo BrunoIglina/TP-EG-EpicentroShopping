@@ -39,7 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         if($tipo == "Cliente")
         {
+            error_log("📧 Intentando enviar correo a: " . $email . " con token: " . $token);
             sendValidationEmail($email, $token);
+            error_log("✅ Función sendValidationEmail ejecutada.");
+
         }
         $_SESSION['success'] = "Registro exitoso. Ahora puedes iniciar sesión. Si deseas ser cliente debes validar tu cuenta con el link que te enviamos a tu correo electrónico.";
     } else {

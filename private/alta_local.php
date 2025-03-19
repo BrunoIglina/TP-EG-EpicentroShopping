@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
 
-        header("Location: ../public/admin_locales.php?success=1");
+        header("Location: ../admin_locales.php?success=1");
         exit();
     } else {
         echo "Error al registrar el local: " . $stmt->error;
