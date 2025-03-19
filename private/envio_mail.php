@@ -24,8 +24,10 @@ function sendValidationEmail($email, $token) {
         
         $mail->isHTML(true);
         $mail->Subject = 'Validacion de cuenta en Epicentro Shopping';
-        $mail->Body    = "Haz clic en el siguiente enlace para validar tu cuenta: <a href='http://localhost/tp/private/validar_cliente.php?token=$token'>Validar cuenta</a>";
-        $mail->AltBody = "Haz clic en el siguiente enlace para validar tu cuenta: http://localhost/tp/private/validar_cliente.php?token=$token";
+        $mail->Body = "Haz clic en el siguiente enlace para validar tu cuenta: <a href='http://epicentro-shopping.lovestoblog.com/private/validar_cliente.php?token=$token'>Validar cuenta</a>";
+
+        $mail->AltBody = "Haz clic en el siguiente enlace para validar tu cuenta: http://epicentro-shopping.lovestoblog.com/private/validar_cliente.php?token=$token";
+
 
         $mail->send();
         echo 'El mensaje ha sido enviado, haz click en el enlace que te hemos enviado a tu correo para validar tu cuenta.';

@@ -38,7 +38,7 @@ $user = $result->fetch_assoc();
                     <h3>Email: <?php echo htmlspecialchars($user['email']); ?></h3>
                 </div>
                 <div class="card-body">
-                    <a href="./public/mod_perfil.php" class="btn btn-primary">Cambiar Contraseña</a>
+                    <a href="./mod_perfil.php" class="btn btn-primary">Cambiar Contraseña</a>
                 </div>
             </div>
         </main>
