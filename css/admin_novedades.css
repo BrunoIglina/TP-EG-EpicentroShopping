@@ -29,6 +29,12 @@
 }
 
 .table img {
+
+    max-width: 80px; 
+    height: auto;
+}
+
+.container {
     max-width: 100%;
     height: auto;
     display: block;
@@ -85,6 +91,10 @@ button.select-toggle {
 
     .admin-section table {
         font-size: 0.9rem;
+    }
+
+    .table img {
+        max-width: 60px;
     }
 
     .admin-section th, .admin-section td {

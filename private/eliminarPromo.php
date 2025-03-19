@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
     $conn->close();
 
-    header("Location: ../public/misPromos.php");
+    header("Location: ../misPromos.php");
     exit();
 } else {
     header("Location: index.php");
