@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante';
 ?>
-<link rel="stylesheet" href="../css/header.css">
+<link rel="stylesheet" href="__DIR__ ./../css/header.css">
 <header class="bg-dark text-white p-3">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
