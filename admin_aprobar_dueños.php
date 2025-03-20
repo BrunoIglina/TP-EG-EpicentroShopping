@@ -5,7 +5,8 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    include('./env/shopping_db.php');
 
 $query = "SELECT * FROM usuarios WHERE tipo = 'Dueño' and validado = 0";
 $result = mysqli_query($conn, $query);

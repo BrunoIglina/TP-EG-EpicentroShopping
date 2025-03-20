@@ -1,4 +1,10 @@
 <?php
+
+    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    include(__DIR__ . '/../env/shopping_db.php');
+
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['aprobar'])) {
         $promocion_id = $_POST['aprobar'];

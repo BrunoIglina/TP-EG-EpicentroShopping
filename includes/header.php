@@ -9,7 +9,9 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <div class="logo">
-                <a href="index.php"><img src="../assets/logo.png" alt="Epicentro Shopping Logo" class="img-fluid"></a>
+            <a href="index.php"><img src="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/assets/logo.png" alt="Epicentro Shopping Logo" class="img-fluid" width="120" height="auto"></a>
+
+
             </div>
             <nav class="navbar navbar-expand-lg navbar-dark">
                 <div class="collapse navbar-collapse" id="navbarNav">

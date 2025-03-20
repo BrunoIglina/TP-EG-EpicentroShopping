@@ -1,5 +1,7 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    include(__DIR__ . '/../env/shopping_db.php');
+
 
 
 $local_id = isset($_GET['local_id']) ? $_GET['local_id'] : null;

@@ -4,7 +4,8 @@ if (!isset($_GET['local_id'])) {
     header("Location: locales.php");
 }
 
-include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+// include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+include('./env/shopping_db.php');
 include './private/rubros.php';
 
 $categoriaCliente = isset($_SESSION['user_categoria']) ? $_SESSION['user_categoria'] : null;

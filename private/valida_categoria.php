@@ -8,7 +8,9 @@ if (!isset($_SESSION['user_id'])) {
 
 $promo_id = $_GET['promo_id'];
 
-include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    include(__DIR__ . '/../env/shopping_db.php');
+
 
 
 

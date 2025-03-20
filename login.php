@@ -1,6 +1,7 @@
 <?php
 session_start();
-include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    include('./env/shopping_db.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);

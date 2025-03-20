@@ -1,6 +1,8 @@
 <?php
 session_start();
-require './env/shopping_db.php'; 
+    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    include(__DIR__ . '/../env/shopping_db.php');
+
 require './lib/vendor/autoload.php'; 
 
 use PHPMailer\PHPMailer\PHPMailer;

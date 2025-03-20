@@ -1,7 +1,9 @@
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    include(__DIR__ . '/../env/shopping_db.php');
+
 
 require 'envio_mail.php';
 

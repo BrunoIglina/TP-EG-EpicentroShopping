@@ -1,7 +1,9 @@
 <?php
 
 function get_all_novedades(){
-    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+        // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+        include(__DIR__ . '/../env/shopping_db.php');
+
 
     $qry_novedad = "SELECT * FROM novedades";
     if(!($result_novedad = $conn->query($qry_novedad))){
@@ -13,7 +15,10 @@ function get_all_novedades(){
 }
 
 function get_novedad($id){
-    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+        // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+        include(__DIR__ . '/../env/shopping_db.php');
+
+
 
     $qry_novedad = "SELECT * FROM novedades WHERE id = '$id'";
     if(!($result_novedad = $conn->query($qry_novedad))){
@@ -25,7 +30,8 @@ function get_novedad($id){
 }
 
 function get_novedades_permitidas($id_usuario, $tipo_usuario, $categoria_usuario) {
-    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+        // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+        include(__DIR__ . '/../env/shopping_db.php');
 
 
     function mesEnEspañol($mesIngles) {

@@ -1,7 +1,9 @@
 <?php
 
 function get_dueño($idUsuario){
-    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+        // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+        include(__DIR__ . '/../env/shopping_db.php');
+
 
     $qry_dueño = "SELECT * FROM usuarios WHERE id = '$idUsuario' AND tipo LIKE 'Dueno'";
     if(!($result_dueño = $conn->query($qry_dueño))){
@@ -30,7 +32,9 @@ function get_dueño_by_email($email) {
 }
 
 function get_all_dueños(){
-    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+        // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+        include(__DIR__ . '/../env/shopping_db.php');
+
 
     $qry_dueño = "SELECT * FROM usuarios WHERE tipo LIKE 'Dueno'";
     if(!($result_dueño = $conn->query($qry_dueño))){
@@ -42,7 +46,9 @@ function get_all_dueños(){
 }
 
 function get_usuario($id){
-    include '../en/shopping_db.php';
+        // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+        include(__DIR__ . '/../env/shopping_db.php');
+
     $qry = "SELECT * FROM usuarios WHERE id = '$id'";
     if(!($result_usuario = $conn->query($qry))){
         echo "Error: " . $sql . "<br>" . $conn->error;

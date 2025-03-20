@@ -5,7 +5,9 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    include(__DIR__ . '/../env/shopping_db.php');
+
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -16,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("i", $id);
     $stmt->execute();
 
-    header("Location: ../public/admin_aprobar_dueños.php");
+    header("Location: ../admin_aprobar_dueños.php");
     exit();
 }
 ?>

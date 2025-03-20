@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
-    header("Location: ../public/index.php");
+    header("Location: ../index.php");
     exit();
 }
 
@@ -11,7 +11,9 @@ error_reporting(E_ALL);
 
 require('../lib/vendor/autoload.php');
 require('../lib/vendor/setasign/fpdf/fpdf.php');
-require('../env/shopping_db.php');
+    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    include(__DIR__ . '/../env/shopping_db.php');
+
 
 if (!isset($_GET['local_id'])) {
     die('ID del local no proporcionado');

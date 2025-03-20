@@ -6,7 +6,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+        // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+        include(__DIR__ . '/../env/shopping_db.php');
+
 
 
     $promo_id = $_POST['promo_id'];

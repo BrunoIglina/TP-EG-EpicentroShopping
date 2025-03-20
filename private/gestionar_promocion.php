@@ -11,7 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $promo_id = $_POST['promo_id'];
     $accion = $_POST['accion'];
 
-    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    include(__DIR__ . '/../env/shopping_db.php');
 
 
     if ($accion == 'aceptar') {
@@ -37,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <body>
                 <script>
                     alert('$mensaje');
-                    window.location.href = '../public/gestion_promos.php';
+                    window.location.href = '../gestion_promos.php';
                 </script>
             </body>
             </html>";

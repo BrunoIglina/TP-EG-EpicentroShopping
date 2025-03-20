@@ -5,7 +5,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    include(__DIR__ . '/../env/shopping_db.php');
+
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -14,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $select_all = isset($_POST['select_all']) ? $_POST['select_all'] : '0';
 
     if ($action == 'toggle') {
-        header("Location: ../public/admin_locales.php?select_all=$select_all");
+        header("Location: ../admin_locales.php?select_all=$select_all");
         exit();
     }
 
@@ -30,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action == 'edit' && count($locales) < 2) {
         $id = $locales[0];
-        header("Location: ../public/editar_local.php?id=$id");
+        header("Location: ../editar_local.php?id=$id");
         exit();
     } elseif ($action == 'delete') {
         foreach ($locales as $local_id) {
