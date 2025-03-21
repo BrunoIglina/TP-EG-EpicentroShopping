@@ -45,7 +45,7 @@ $novedades = array_slice($novedades, 0, 5);
                             <?php foreach ($novedades as $index => $novedad): ?>
                                 <div class="slide <?php echo $index === 0 ? 'active' : ''; ?>" 
                                     style="background-image: url('./private/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>');">
-                                    <a href="/novedades.php" class="slide-link">
+                                    <a href="./novedades.php" class="slide-link">
                                         <div class="caption text-center p-2">
                                             <h3><?php echo htmlspecialchars($novedad['tituloNovedad']); ?></h3>
                                         </div>
