@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "ID de promoción no proporcionado.<br>";
         }
-        header("Location: ../public/admin_promociones.php"); 
+        header("Location: ../admin_promociones.php"); 
         exit();
     }
 
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "ID de promoción no proporcionado.<br>";
         }
-        header("Location: ../public/admin_promociones.php"); 
+        header("Location: ../admin_promociones.php"); 
         exit();
     }
 } else {

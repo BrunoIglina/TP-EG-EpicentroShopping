@@ -1,6 +1,11 @@
-
 .admin-section {
     padding: 20px;
+}
+
+.admin-section button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .admin-section table {
@@ -30,13 +35,11 @@
     height: auto;
 }
 
-
 .wrapper {
     display: grid;
     min-height: 100vh;
     grid-template-rows: auto 1fr auto;
 }
-
 
 .admin-section button {
     margin-right: 0.5rem;
@@ -61,32 +64,28 @@ button.select-toggle {
     color: #fff;
 }
 
-
 .table-responsive {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
 
-
 .table td, .table th {
     white-space: nowrap;
 }
-
 
 .table img {
     max-width: 80px;
     height: auto;
 }
 
-
 @media (max-width: 768px) {
     .table th, .table td {
-        font-size: 14px;
+        font-size: 12px;  
         padding: 8px;
     }
 
     .btn {
-        font-size: 14px;
+        font-size: 12px; 
         padding: 5px 10px;
     }
 
@@ -97,5 +96,12 @@ button.select-toggle {
     .admin-section td {
         word-wrap: break-word;
         white-space: normal;
+    }
+
+
+    .admin-section button {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
     }
 }

@@ -24,7 +24,6 @@ if (isset($_GET['id'])) {
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="icon" type="image/png" href="./assets/logo.png">
     <title>Epicentro Shopping - Modificación de Novedades</title>
-    <?php include_once '../private/functions_novedades.php'; ?>
 </head>
 <body>
     <div class="wrapper">
@@ -34,7 +33,7 @@ if (isset($_GET['id'])) {
 
             <section class="admin-section">
                 <h1>Modificar Novedad</h1>
-                <form id="localesNovedadesForm" method="POST" action="../private/update_novedad.php" enctype="multipart/form-data" class="form-style">
+                <form id="localesNovedadesForm" method="POST" action="./private/update_novedad.php" enctype="multipart/form-data" class="form-style">
                     <!-- Código Novedad (Solo lectura) -->
                     <div class="form-group">
                         <label for="codigo_novedad">Código Novedad</label>
@@ -82,7 +81,7 @@ if (isset($_GET['id'])) {
                     <div class="form-group">
                         <label for="imagen_novedad">Imagen</label>
                         <?php if (!empty($novedad['imagen'])): ?>
-                            <img src="../private/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>" alt="Imagen de la novedad" style="max-width: 80px;
+                            <img src="./private/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>" alt="Imagen de la novedad" style="max-width: 80px;
                             height: auto;">
                         <?php else: ?>
                             <p>No hay imagen disponible</p>

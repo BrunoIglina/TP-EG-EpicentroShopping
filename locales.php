@@ -44,7 +44,7 @@ if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
     <title>Epicentro Shopping - Locales</title>
 </head>
 <body>
-<div class = "wrapper">
+<div class="wrapper">
     <?php include './includes/header.php'; ?>
     <main>
 
