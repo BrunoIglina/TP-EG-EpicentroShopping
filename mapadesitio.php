@@ -61,6 +61,12 @@
             </ul>
         </div>
     </div>
+
+    <div class="map-container">
+            <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-60.62850773334504%2C-32.960718554326746%2C-60.62496721744538%2C-32.95877410891247&amp;layer=mapnik&amp;marker=-32.95974633696806%2C-60.6267374753952"></iframe><br/>
+            <small><a href="https://www.openstreetmap.org/?mlat=-32.959746&amp;mlon=-60.626737#map=19/-32.959746/-60.626737">Ver el mapa más grande</a></small>
+    </div>
+
 </main>
 
     <?php include './includes/footer.php'; ?>
