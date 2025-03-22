@@ -25,8 +25,9 @@ $result = mysqli_query($conn, $query);
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
-        <h2 class="text-center my-4">Aprobar Dueños de Locales</h2>
+        
         <main class="container">
+        <h2 class="text-center my-4">Aprobar Dueños de Locales</h2>
             
             <table class="table table-striped">
                 <thead>
