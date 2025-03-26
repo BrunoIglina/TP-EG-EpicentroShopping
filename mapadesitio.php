@@ -20,6 +20,7 @@
                 <li><a href="locales.php">Promociones</a></li>
                 <li><a href="novedades.php">Novedades</a></li>
                 <li><a href="mapadesitio.php">Mapa De Sitio</a></li>
+                <li><a href="contacto.php">Contacto</a></li>
             </ul>
         </div>
         
