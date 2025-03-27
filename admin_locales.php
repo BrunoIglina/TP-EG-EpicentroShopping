@@ -23,16 +23,16 @@ $total_pages = ceil($total_locales / $limit);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/admin_locales.css">
+    <link rel="stylesheet" href="./css/admin.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Administración de Locales</title>
 </head>
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
         
-        <main class="container">
+        <main class="container-fluid">
             <section class="admin-section">
                 <h2 class="text-center my-4">Administración de Locales</h2>
 
@@ -52,8 +52,8 @@ $total_pages = ceil($total_locales / $limit);
                     <div class="alert alert-warning">No hay locales cargados</div>
                 <?php } else { ?>
 
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
+                    <div class="table-responsive-lg">
+                        <table class="table">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Código</th>
@@ -151,24 +151,24 @@ $total_pages = ceil($total_locales / $limit);
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-    function confirmAction(action, localId) {
-        $('#confirmModal').modal('show');
-        $('#modalAction').text(action === 'edit' ? 'modificar' : 'eliminar');
+        function confirmAction(action, localId) {
+            $('#confirmModal').modal('show');
+            $('#modalAction').text(action === 'edit' ? 'modificar' : 'eliminar');
 
-        $('#confirmActionBtn').off('click').on('click', function() {
-            // Si es 'edit', redirige a la página de edición con el ID del local
-            if (action === 'edit') {
-                window.location.href = './editar_local.php?id=' + localId;
-            } 
-            // Si es 'delete', redirige al archivo procesar_local.php para eliminar el local
-            else if (action === 'delete') {
-                // Confirmación de eliminación solo una vez
-                $('#confirmModal').modal('hide');  // Cerrar modal antes de redirigir
-                window.location.href = './private/procesar_local.php?action=delete&local_id=' + localId;
-            }
-        });
-    }
-</script>
+            $('#confirmActionBtn').off('click').on('click', function() {
+                // Si es 'edit', redirige a la página de edición con el ID del local
+                if (action === 'edit') {
+                    window.location.href = './editar_local.php?id=' + localId;
+                } 
+                // Si es 'delete', redirige al archivo procesar_local.php para eliminar el local
+                else if (action === 'delete') {
+                    // Confirmación de eliminación solo una vez
+                    $('#confirmModal').modal('hide');  // Cerrar modal antes de redirigir
+                    window.location.href = './private/procesar_local.php?action=delete&local_id=' + localId;
+                }
+            });
+        }
+    </script>
 
 
 </body>

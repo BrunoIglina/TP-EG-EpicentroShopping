@@ -56,22 +56,6 @@
     max-width: 250px; 
 }
 
-/* Colores personalizados */
-button.green {
-    background-color: #4CAF50;
-    color: #fff;
-}
-
-button.red {
-    background-color: #f44336;
-    color: #fff;
-}
-
-button.select-toggle {
-    background-color: #008CBA;
-    color: #fff;
-}
-
 .image-note {
     margin-top: 10px;
     font-size: 0.9rem;

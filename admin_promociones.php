@@ -12,19 +12,19 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/admin_promociones.css">
+    <link rel="stylesheet" href="./css/admin.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Administración de Promociones</title>
 </head>
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
-        <h2 class="text-center my-4">Aprobar Promociones Pendientes</h2>
-        <main class="container">
-            <form id="actionForm" action="./private/controAcepPromo.php" method="POST">
-                <table class="table table-striped">
-                    <thead>
+        <main class="container-fluid">
+            <section class="admin-section">
+                <h2 class="text-center my-4">Aprobar promociones pendientes</h2>
+                <table class="table-responsive-lg">
+                    <thead class="thead-dark">
                         <tr>
                             <th>ID</th>
                             <th>Texto de la Promoción</th>
@@ -35,35 +35,37 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                     </thead>
                     <tbody>
                         <?php
-                        $conn = new mysqli("127.0.0.1", "root", "", "shopping_db", 3309);
-                        if ($conn->connect_error) {
-                            die("Conexión fallida: " . $conn->connect_error);
-                        }
-
-                        $sql = "SELECT id, textoPromo, fecha_inicio, fecha_fin FROM promociones WHERE estadoPromo = 'Pendiente'";
-                        $result = $conn->query($sql);
-
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>" . $row['id'] . "</td>";
-                                echo "<td>" . $row['textoPromo'] . "</td>";
-                                echo "<td>" . $row['fecha_inicio'] . "</td>";
-                                echo "<td>" . $row['fecha_fin'] . "</td>";
-                                echo "<td>
-                                    <button type='button' class='btn btn-success' data-toggle='modal' data-target='#confirmModal' data-id='" . $row['id'] . "' data-action='aprobar'>Aprobar</button>
-                                    <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#confirmModal' data-id='" . $row['id'] . "' data-action='rechazar'>Rechazar</button>
-                                </td>";
-                                echo "</tr>";
+                            $conn = new mysqli("127.0.0.1", "root", "", "shopping_db", 3309);
+                            if ($conn->connect_error) {
+                                die("Conexión fallida: " . $conn->connect_error);
                             }
-                        } else {
-                            echo "<tr><td colspan='5'>No hay promociones pendientes</td></tr>";
-                        }
-                        $conn->close();
-                        ?>
-                    </tbody>
-                </table>
-            </form>
+                            
+                            $sql = "SELECT id, textoPromo, fecha_inicio, fecha_fin FROM promociones WHERE estadoPromo = 'Pendiente'";
+                            $result = $conn->query($sql);
+                            
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<td>" . $row['id'] . "</td>";
+                                    echo "<td>" . $row['textoPromo'] . "</td>";
+                                    echo "<td>" . $row['fecha_inicio'] . "</td>";
+                                    echo "<td>" . $row['fecha_fin'] . "</td>";
+                                    echo '<form id="actionForm" action="./private/controAcepPromo.php" method="POST">';
+                                    echo "<td>
+                                        <button type='button' class='btn btn-success' data-toggle='modal' data-target='#confirmModal' data-id='" . $row['id'] . "' data-action='aprobar'>Aprobar</button>
+                                        <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#confirmModal' data-id='" . $row['id'] . "' data-action='rechazar'>Rechazar</button>
+                                        </td>";
+                                    echo '</form>';
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='5'>No hay promociones pendientes</td></tr>";
+                            }
+                            $conn->close();
+                            ?>
+                        </tbody>
+                    </table>
+            </section>
         </main>
         <?php include './includes/footer.php'; ?>
     </div>

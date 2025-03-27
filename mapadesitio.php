@@ -6,13 +6,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/mapadesitio.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Mapa del Sitio - Epicentro Shopping</title>
 </head>
 <body>
     <?php include './includes/header.php'; ?>
     <h2 class="text-center my-4">Mapa del Sitio</h2>
-    <main class="container my-4">
+    <main class="container my-4 mapa">
         
         <div class="row">
             <div class="col-12 col-md-6 col-lg-4">
