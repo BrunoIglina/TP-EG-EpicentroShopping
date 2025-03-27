@@ -1,10 +1,33 @@
+.card {
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
 .card:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: 0.3s;
 }
 
-.card {
-    cursor: pointer;
+.card-image {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.card-text {
+    margin-top: auto;
 }
 
 .card-link {
@@ -20,6 +43,7 @@
     border-top-left-radius: calc(.25rem - 1px);
     border-top-right-radius: calc(.25rem - 1px);
 }
+
 .wrapper {
     display: grid;
     min-height: 100vh;

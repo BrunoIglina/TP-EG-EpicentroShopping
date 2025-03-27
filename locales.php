@@ -38,9 +38,9 @@ if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/locales.css">
+    <link rel="stylesheet" href="./css/tarjetas.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Locales</title>
 </head>
 <body>
@@ -63,9 +63,10 @@ if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
 
             </div>
 
-            <div class="row" style="padding: 0.5rem">
-                <div class="col-md-3">
-                    <form class="d-flex flex-column gap-2">
+            <div class="row">
+                <div class="col-md-3" style="padding: 0.5rem;">
+                    <h3>Filtrar por:</h3>
+                    <form>
 
                         <div class="form-group">
                             <select name="rubro" class="form-control">
@@ -92,10 +93,10 @@ if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
                                 <a href="promociones.php?local_id=<?php echo $local['id']; ?>&local_nombre=<?php echo urlencode($local['nombre']); ?>&local_rubro=<?php echo urlencode($local['rubro']); ?>" class="card-link">
                                     <div class="card text-center">
                                         <div class="card-body">
-                                            <div class="card.image">
+                                            <div class="card-image">
                                                 <?php
                                                 $local_id = $local['id'];
-                                                echo '<img src="./private/visualizar_imagen.php?local_id=' . $local_id . '" alt="Imagen de el local" class="img-fluid">';
+                                                echo '<img src="./private/visualizar_imagen.php?local_id=' . $local_id . '" alt="Imagen de el local">';
                                                 ?>
                                             </div>
                                             <h4 class="card-title"><?php echo $local['nombre']; ?></h4>

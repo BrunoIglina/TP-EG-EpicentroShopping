@@ -1,114 +1,19 @@
-/* Estilo global del header */
-header {
-    background-color: #343a40;
-    color: #ffb400;
+.barra{
+    background-color: #202833 !important;
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+    font-size: 20px;
     padding: 0.5rem 0;
 }
 
-/* Tamaño del logo */
-header .logo img {
-    max-width: 120px;
-    height: auto;
+.offcanvas{
+    background-color: #202833 !important;
 }
 
-/* Estilo de los enlaces del navbar */
-.navbar-dark .navbar-nav .nav-link {
-    color: #ffb400;
-    font-weight: bold;
-    font-size: 14px;  /* Reducimos un poco el tamaño de la fuente */
+.navbar-toggler{
+    background-color: #fff !important;
     padding: 0.5rem 0;
-}
-
-/* Estilos para el hover de los enlaces */
-.navbar-dark .navbar-nav .nav-link:hover {
-    color: #fff;
-}
-
-/* Asegurarnos de que el icono del menú sea más pequeño */
-.navbar-toggler-icon-custom {
-    width: 25px;
-    height: 25px;
-}
-
-/* Estilo para el dropdown en el navbar */
-.navbar-nav .dropdown-menu {
-    background-color: #343a40;
-    border: none;
-}
-
-/* Ajustes en el dropdown */
-.navbar-nav .dropdown-item {
-    color: #ffb400;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.navbar-nav .dropdown-item:hover {
-    color: #fff;
-    background-color: transparent;
-}
-
-/* Ajustes para pantallas pequeñas */
-@media (max-width: 992px) {
-    .navbar-collapse {
-        display: flex !important;
-        justify-content: flex-start; /* Mantener la fila en lugar de cambiar a columna */
-        align-items: center;
-        background-color: #343a40;
-        padding: 0 5px;
-        flex-wrap: nowrap; /* Evita que los elementos se envuelvan */
-    }
-
-    .navbar-nav {
-        display: flex !important;
-        flex-direction: row !important;  /* Todo en una fila */
-        justify-content: flex-start; /* Alinear todo a la izquierda */
-        width: 100%;
-        overflow-x: auto; /* Añadimos scroll horizontal si se desbordan */
-    }
-
-    .navbar-nav .nav-item {
-        text-align: left;
-        padding: 0 8px; /* Reducir el padding entre elementos */
-    }
-
-    .navbar-nav .nav-item:last-child {
-        margin-left: 10px;  /* Añadir espacio entre el último ítem */
-    }
-
-    /* Aseguramos que el dropdown se vea bien */
-    .dropdown-menu {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        left: auto;
-        text-align: left;
-    }
-
-    .dropdown-menu .dropdown-item {
-        white-space: nowrap;
-        padding: 8px 12px;
-        font-size: 13px;
-    }
-
-    .dropdown-menu .dropdown-item:hover {
-        background-color: #343a40;
-    }
-
-    .navbar-toggler-icon-custom {
-        display: none;
-    }
-}
-
-/* Estilos para pantallas grandes */
-@media (min-width: 993px) {
-    .navbar-nav {
-        display: flex;
-        justify-content: flex-end;
-        width: 100%;
-    }
-
-    .navbar-nav .nav-item {
-        margin-left: 10px;
-    }
+    border-radius: 5px;
 }

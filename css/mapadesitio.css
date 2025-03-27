@@ -52,7 +52,7 @@ ul li {
     margin-bottom: 0.5rem;
 }
 
-ul li a {
+.mapa ul li a {
     color: #4a4e69;
     text-decoration: none;
     font-weight: bold;

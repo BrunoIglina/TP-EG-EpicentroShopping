@@ -25,7 +25,7 @@ $novedades = array_slice($novedades, 0, 5);
     <link rel="stylesheet" href="./css/wrapper.css"> 
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     
     <title>Epicentro Shopping - Inicio</title>
 
@@ -33,33 +33,37 @@ $novedades = array_slice($novedades, 0, 5);
 <body>
 
     <div class="wrapper">
-    <?php include './includes/header.php'; ?>
-        <main class="container">
-            <section class="carrusel my-4">
-                <h2 class="text-center my-4" >Novedades Recientes</h2>
-                
-                <div class="row justify-content-center">
-                    <div class="col-10 col-md-8">
-                    <button class="prev" onclick="prevSlide()">&#10094;</button>
-                        <div class="carrusel-container position-relative">
-                            <?php foreach ($novedades as $index => $novedad): ?>
-                                <div class="slide <?php echo $index === 0 ? 'active' : ''; ?>" 
-                                    style="background-image: url('./private/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>');">
-                                    <a href="./novedades.php" class="slide-link">
-                                        <div class="caption text-center p-2">
-                                            <h3><?php echo htmlspecialchars($novedad['tituloNovedad']); ?></h3>
-                                        </div>
-                                    </a>
-                                </div>
-                            <?php endforeach; ?>
+        <?php include './includes/header.php'; ?>
+        <main class="container-fluid">
+
+        <h2 class="text-center my-4" >Novedades Recientes</h2>
+
+        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+            <?php foreach ($novedades as $index => $novedad): 
+                if ($index == 0): ?>
+                <div class="carousel-item active">
+                <?php else: ?>
+                <div class="carousel-item">
+                <?php endif; ?>
+                    <a href="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/novedades.php" class="slide-link">                
+                        <img src='./private/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>' class="image-carousel d-block w-100 " alt="...">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h3><?php echo htmlspecialchars($novedad['tituloNovedad']); ?></h3>
                         </div>
-                    </div>
-                    <div class="col-auto d-flex align-items-center">
-                        
-                        <button class="next" onclick="nextSlide()">&#10095;</button>
-                    </div>
+                    </a>        
                 </div>
-            </section>
+            <?php endforeach; ?>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
         </main>
 
         <?php include './includes/footer.php'; ?>
@@ -68,8 +72,6 @@ $novedades = array_slice($novedades, 0, 5);
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
-    <script src="./carrusel.js"></script>
 </body>
 </html>
 
