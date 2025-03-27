@@ -20,8 +20,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
-        <h2 class="text-center my-4">Aprobar Promociones Pendientes</h2>
+        
         <main class="container">
+        <h2 class="text-center my-4">Aprobar Promociones Pendientes</h2>
             <form id="actionForm" action="./private/controAcepPromo.php" method="POST">
                 <table class="table table-striped">
                     <thead>

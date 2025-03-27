@@ -11,10 +11,10 @@ h2 {
     font-family: 'Arial', sans-serif;
     font-size: 36px;
     color: #000;
-    text-align: center; 
+    text-align: center !important; 
     text-transform: uppercase; 
     position: relative;
-    display: inline-block;
+    display: block;
     margin: 20px 0;
     padding: 10px;
     letter-spacing: 2px;
@@ -23,18 +23,6 @@ h2 {
 }
 
 
-h2::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.2); 
-    z-index: -1;
-    filter: blur(10px); 
-    animation: shadowMove 4s infinite alternate; 
-}
 
 @keyframes fadeIn {
     0% {

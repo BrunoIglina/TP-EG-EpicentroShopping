@@ -37,27 +37,27 @@ if (isset($_GET['id'])) {
         <main>
             <section class="admin-section">
                 <h1 class="admin-title">Modificar Local</h1>
-                <form id="localesForm" method="POST" action="../private/update_local.php" enctype="multipart/form-data" class="form-style">
-                    <!-- Código del Local -->
+                <form id="localesForm" method="POST" action="./private/update_local.php" enctype="multipart/form-data" class="form-style">
+
                     <div class="form-group">
                         <label for="codigo_local">Código Local</label>
                         <input type="text" id="codigo_local" name="id_local" value="<?php echo $local['id']; ?>" readonly class="form-control">
                     </div>
 
 
-                    <!-- Nombre -->
+
                     <div class="form-group">
                         <label for="nombre_local">Nombre</label>
                         <input type="text" id="nombre_local" name="nombre_local" value="<?php echo $local['nombre']; ?>" required class="form-control">
                     </div>
 
-                    <!-- Ubicación -->
+
                     <div class="form-group">
                         <label for="ubicacion_local">Ubicación</label>
                         <input type="text" id="ubicacion_local" name="ubicacion_local" value="<?php echo $local['ubicacion']; ?>" required class="form-control">
                     </div>
 
-                    <!-- Rubro -->
+
                     <div class="form-group">
                         <label for="rubro_local">Rubro</label>
                         <select id="rubro_local" name="rubro_local" required class="form-control">
@@ -69,7 +69,7 @@ if (isset($_GET['id'])) {
                         </select>
                     </div>
 
-                    <!-- Email Dueño -->
+
                     <div class="form-group">
                         <label for="email_dueño">Email Dueño</label>
                         <select id="email_dueño" name="id_dueño" required class="form-control">
@@ -81,11 +81,11 @@ if (isset($_GET['id'])) {
                         </select>
                     </div>
 
-                    <!-- Imagen del Local -->
+
                     <div class="form-group">
                         <label for="imagen_local">Imagen</label>
                         <?php if (!empty($local['imagen'])): ?>
-                            <img src="../private/visualizar_imagen.php?local_id=<?php echo $local['id']; ?>" alt="Imagen del local" style="max-width: 80px;
+                            <img src="./private/visualizar_imagen.php?local_id=<?php echo $local['id']; ?>" alt="Imagen del local" style="max-width: 80px;
                             height: auto;">
                         <?php else: ?>
                             <p>No hay imagen disponible</p>
@@ -93,7 +93,7 @@ if (isset($_GET['id'])) {
                         <input type="file" id="imagen_local" name="imagen_local" class="form-control mt-2" accept=".png, .jpeg, .jpg">
                     </div>
 
-                    <!-- Botón Aplicar Cambios -->
+
                     <div class="form-group text-center">
                         <button type="submit" class="btn btn-success">Aplicar cambios</button>
                     </div>
