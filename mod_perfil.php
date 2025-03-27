@@ -1,5 +1,5 @@
 <?php
-session_start();
+
     // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
     include('./env/shopping_db.php');
 require './lib/vendor/autoload.php'; 

@@ -81,6 +81,7 @@ if (!$result) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="stylesheet" href="./css/wrapper.css"> 
     <title>Gestión de Promociones</title>
     <script>
         function confirmarAccion(promoId, accion) {
@@ -92,10 +93,11 @@ if (!$result) {
     </script>
 </head>
 <body>
+    <div class="wrapper">
     <?php  include './includes/header.php'; ?> 
     
     <div class="container my-4">
-      
+    <h2 class="text-center my-4">Gestionar Promociones</h2>
         
         <div class="row">
             <?php if ($result->num_rows > 0): ?>
@@ -150,6 +152,7 @@ if (!$result) {
         </nav>
     </div>
     <?php include './includes/footer.php'; ?>
+    </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

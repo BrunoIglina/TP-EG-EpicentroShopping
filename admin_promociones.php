@@ -20,6 +20,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
+
         <main class="container-fluid">
             <section class="admin-section">
                 <h2 class="text-center my-4">Aprobar promociones pendientes</h2>

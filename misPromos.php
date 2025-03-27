@@ -55,6 +55,7 @@ $conn->close();
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
         <main class="container my-4">
+            <h2 class="text-center my-4">Mis Promociones</h2>
             
             <p>
             <button class="btn btn-primary mb-3" onclick="location.href='darAltaPromos.php'">Agregar Promoción</button>
