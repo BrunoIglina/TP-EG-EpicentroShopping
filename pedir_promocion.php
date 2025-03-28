@@ -3,7 +3,7 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_SESSION['user_id'])) {
-        echo "<p>Debes estar registrado para pedir una promoción.</p>";
+        $_SESSION['mensaje_error'] = "Debes estar registrado para pedir una promoción.";
         header("Location: login.php");
         exit();
     }
@@ -14,30 +14,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
     include('./env/shopping_db.php');
 
+
+    $referer = $_SERVER['HTTP_REFERER'] ?? 'promociones.php';
+
     $check_sql = "SELECT COUNT(*) AS count FROM promociones_cliente WHERE idCliente = $usuario_id AND idPromocion = $promo_id";
     $check_result = $conn->query($check_sql);
 
     if ($check_result) {
         $row = $check_result->fetch_assoc();
         if ($row['count'] > 0) {
-            echo "<div style='color: red; font-weight: bold;'>Ya se solicitó esta promoción con anterioridad.</div>";
+            $_SESSION['mensaje_error'] = "Ya has solicitado esta promoción anteriormente.";
+            header("Location: $referer");
             exit();
         }
     } else {
-        echo "<p>Error al verificar la promoción: " . $conn->error . "</p>";
+        $_SESSION['mensaje_error'] = "Error al verificar la promoción: " . $conn->error;
+        header("Location: $referer");
         exit();
     }
 
     $sql = "INSERT INTO promociones_cliente (idCliente, idPromocion, fechaUsoPromo, estado) VALUES ($usuario_id, $promo_id, NOW(), 'enviada')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "<div style='color: green; font-weight: bold;'>Promoción pedida exitosamente. El local debe aprobar tu promoción. La encontrarás en la sección Mis Promociones.</div>";
+        $_SESSION['mensaje_exito'] = "Promoción pedida exitosamente. La encontrarás en la sección Mis Promociones.";
     } else {
-        echo "<p>Error al pedir la promoción: " . $conn->error . "</p>";
+        $_SESSION['mensaje_error'] = "Error al pedir la promoción: " . $conn->error;
     }
 
     $conn->close();
-} else {
-    echo "<p>Método de solicitud no válido.</p>";
+    header("Location: $referer");
+    exit();
 }
+
+
 ?>

@@ -3,10 +3,7 @@
 session_start();
 
 
-if (isset($_SESSION['mensaje_error'])) {
-    echo "<div class='alert alert-danger text-center'>" . $_SESSION['mensaje_error'] . "</div>";
-    unset($_SESSION['mensaje_error']); 
-}
+
 
 
 
@@ -35,6 +32,12 @@ $novedades = array_slice($novedades, 0, 5);
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
         <main class="container-fluid">
+            <?php
+            if (isset($_SESSION['mensaje_error'])) {
+                echo "<div class='alert alert-danger text-center'>" . $_SESSION['mensaje_error'] . "</div>";
+                unset($_SESSION['mensaje_error']); 
+            }
+            ?>
 
         <h2 class="text-center my-4" >Novedades Recientes</h2>
 
