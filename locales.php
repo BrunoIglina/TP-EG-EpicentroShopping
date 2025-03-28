@@ -48,9 +48,9 @@ $total_pages = ceil($total_locales / $limit);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/locales.css">
+    <link rel="stylesheet" href="./css/tarjetas.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Locales</title>
 </head>
 <body>
@@ -70,6 +70,7 @@ $total_pages = ceil($total_locales / $limit);
                     </div>
                 </form>
             </div>
+
 
             <div class="row" style="padding: 0.5rem">
                 <!-- Filtros -->
@@ -96,6 +97,7 @@ $total_pages = ceil($total_locales / $limit);
 
                 <div class="col-md-9">
                     <div class="row">
+
                         <?php if ($filtered_locales): ?>
                             <?php foreach ($filtered_locales as $local) { ?>
                                 <div class="col-md-4 col-sm-12" style="padding: .5rem;">

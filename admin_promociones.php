@@ -31,19 +31,20 @@ $total_pages = ceil($total_promociones / $limit);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/admin_promociones.css">
+    <link rel="stylesheet" href="./css/admin.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Administración de Promociones</title>
 </head>
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
-        <h2 class="text-center my-4">Aprobar Promociones Pendientes</h2>
-        <main class="container">
-            <form id="actionForm" action="./private/controAcepPromo.php" method="POST">
-                <table class="table table-striped">
-                    <thead>
+
+        <main class="container-fluid">
+            <section class="admin-section">
+                <h2 class="text-center my-4">Aprobar promociones pendientes</h2>
+                <table class="table-responsive-lg">
+                    <thead class="thead-dark">
                         <tr>
                             <th>ID</th>
                             <th>Texto de la Promoción</th>
@@ -54,6 +55,7 @@ $total_pages = ceil($total_promociones / $limit);
                     </thead>
                     <tbody>
                         <?php
+
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                                 echo "<tr>";
@@ -95,6 +97,7 @@ $total_pages = ceil($total_promociones / $limit);
                     </li>
                 </ul>
             </div>
+
         </main>
         <?php include './includes/footer.php'; ?>
     </div>

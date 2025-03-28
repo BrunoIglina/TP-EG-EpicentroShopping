@@ -4,6 +4,7 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_SESSION['user_id'])) {
         echo "<p>Debes estar registrado para pedir una promoción.</p>";
+        header("Location: login.php");
         exit();
     }
 

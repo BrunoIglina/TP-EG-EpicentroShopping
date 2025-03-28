@@ -26,13 +26,13 @@ $user = $result->fetch_assoc();
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="stylesheet" href="./css/miperfil.css">
-    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Mi Perfil</title>
 </head>
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
-        
+        <h2 class="text-center my-4">Mi Perfil</h2>
         <main class="perfil-container">
             <div class="perfil-card card">
                 <div class="card-header">

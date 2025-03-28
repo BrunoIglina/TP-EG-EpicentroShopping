@@ -11,54 +11,13 @@ h2 {
     font-family: 'Arial', sans-serif;
     font-size: 36px;
     color: #000;
-    text-align: center; 
+    text-align: center !important; 
     text-transform: uppercase; 
     position: relative;
-    display: inline-block;
+    display: block;
     margin: 20px 0;
     padding: 10px;
     letter-spacing: 2px;
     font-weight: bold;
-    animation: fadeIn 2s ease-in-out;
-}
 
-
-h2::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.2); 
-    z-index: -1;
-    filter: blur(10px); 
-    animation: shadowMove 4s infinite alternate; 
-}
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-@keyframes shadowMove {
-    0% {
-        transform: translate(4px, 4px);
-    }
-    100% {
-        transform: translate(-4px, -4px);
-    }
-}
-
-
-h2:hover {
-    color: #333; 
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); 
 }

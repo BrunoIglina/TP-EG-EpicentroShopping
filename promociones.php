@@ -9,6 +9,7 @@ include('./env/shopping_db.php');
 include './private/rubros.php';
 
 $categoriaCliente = isset($_SESSION['user_categoria']) ? $_SESSION['user_categoria'] : null;
+$tipoUsuario = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : null;
 
 $categorias = ['Inicial', 'Medium', 'Premium'];
 $sql = "
@@ -25,17 +26,17 @@ $sql = "
         promociones.estadoPromo = 'Aprobada'
 ";
 
-// Filtrar categorías basadas en la categoría del cliente
+
 if ($categoriaCliente) {
     $indice_categoria_cliente = array_search($categoriaCliente, $categorias);
 
-    // Verificar si la categoría del cliente es válida
+
     if ($indice_categoria_cliente !== false) {
         $categorias_permitidas = array_slice($categorias, 0, $indice_categoria_cliente + 1);
         $categorias_permitidas_sql = implode("', '", $categorias_permitidas);
         $sql .= " AND promociones.categoriaCliente IN ('$categorias_permitidas_sql')";
     } else {
-        $sql .= " AND 1=0"; // Bloquear resultados si la categoría no es válida
+        $sql .= " AND 1=0"; 
     }
 }
 
@@ -84,13 +85,13 @@ $total_pages = ceil($total_rows / $limit);
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="stylesheet" href="./css/promociones.css">
-    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Promociones</title>
 </head>
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
-        <main class="container-fluid">
+        <main class="container mt-5">
             <div class="row">
                 <div class="col-12">
                     <div id="promocionesContainer">
@@ -111,10 +112,18 @@ $total_pages = ceil($total_rows / $limit);
                                 echo "<p>Fecha de Inicio: " . htmlspecialchars($row["fecha_inicio"]) . "</p>";
                                 echo "<p>Fecha de Fin: " . htmlspecialchars($row["fecha_fin"]) . "</p>";
                                 echo "<p>Días de la Semana: " . htmlspecialchars($row["diasSemana"]) . "</p>";
-                                echo "<form method='POST' action='pedir_promocion.php'>";
-                                echo "<input type='hidden' name='promo_id' value='" . (int)$row["promo_id"] . "'>";
-                                echo "<button type='submit' class='btn btn-success'>Pedir Promoción</button>";
-                                echo "</form>";
+
+
+                                if ($tipoUsuario !== 'Dueno' && $tipoUsuario !== 'Administrador') {
+                                    if ($tipoUsuario === 'Visitante') {
+                                        echo "<a href='login.php' class='btn btn-success'>Pedir Promoción</a>";
+                                    } else {
+                                        echo "<form method='POST' action='pedir_promocion.php'>";
+                                        echo "<input type='hidden' name='promo_id' value='" . (int)$row["promo_id"] . "'>";
+                                        echo "<button type='submit' class='btn btn-success'>Pedir Promoción</button>";
+                                        echo "</form>";
+                                    }
+                                }
                                 echo "</div>";
                             }
                             echo "</div>";

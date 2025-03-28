@@ -1,6 +1,6 @@
 body {
     background-color: #fff;
-    color: #333;
+    color: #202833;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -22,7 +22,7 @@ body {
 }
 
 .auth-form button {
-    background-color: #4a4e69;
+    background-color: #202833;
     color: #fff;
     padding: 0.5rem;
     border: none;
@@ -42,14 +42,22 @@ body {
     margin-right: 1rem;
 }
 
-#registrarse {
-    background-color: #fff;
-    color: #333;
+.registrar{
+    text-decoration: none !important;
+}
+
+.btn-register {
+    background-color: #D4E8FB !important;
+    color: #202833 !important;
+}
+
+.btn-register:hover {
+    text-decoration: none !important;
 }
 
 .actions button {
     background-color: #c9ada7;
-    color: #4a4e69;
+    color: #202833;
 }
 
 .wrapper {

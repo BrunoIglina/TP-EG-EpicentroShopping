@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/login.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Iniciar Sesión</title>
 </head>
 <body>
@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <button type="submit" class="btn btn-login">Ingresar</button>
                 </form>
-                <a href="registro.php"><button class="btn btn-register">Registrarse</button></a>
+                <a class="registrar" href="registro.php"><button class="btn btn-register">Registrarse</button></a>
                 <a href="recuperar_cuenta.php">¿Olvidaste tu contraseña?</a>
             </section>
         </div>

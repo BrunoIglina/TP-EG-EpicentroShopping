@@ -22,9 +22,9 @@ $total_pages = ceil($total_novedades / $limit);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/admin_novedades.css">
+    <link rel="stylesheet" href="./css/admin.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Administración de Novedades</title>
 </head>
 <body>
@@ -51,7 +51,7 @@ $total_pages = ceil($total_novedades / $limit);
                     <div class="alert alert-warning">No hay novedades cargadas</div>
                 <?php } else { ?>
 
-                    <div class="table-responsive">
+                    <div class="table-responsive-lg">
                         <table class="table table-striped table-bordered">
                             <thead class="thead-dark">
                                 <tr>
@@ -80,8 +80,8 @@ $total_pages = ceil($total_novedades / $limit);
                                         </td>
                                         <td><?php echo htmlspecialchars($novedad['categoria']); ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-warning btn-sm" onclick="confirmAction('edit', <?php echo $novedad['id']; ?>)">Modificar</button>
-                                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmAction('delete', <?php echo $novedad['id']; ?>)">Eliminar</button>
+                                            <button type="button" class="btn btn-warning btn-sm mb-1" onclick="confirmAction('edit', <?php echo $novedad['id']; ?>)">Modificar</button>
+                                            <button type="button" class="btn btn-danger btn-sm mb-1" onclick="confirmAction('delete', <?php echo $novedad['id']; ?>)">Eliminar</button>
                                         </td>
                                     </tr>
                                 <?php } ?>
