@@ -1,16 +1,25 @@
 <?php
 session_start();
-if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
+if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     header("Location: login.php");
     exit();
 }
 
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include('./env/shopping_db.php');
+include('./env/shopping_db.php');
 
-$query = "SELECT * FROM usuarios WHERE tipo = 'Dueño' and validado = 0";
+$limit = 6; 
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
+$offset = ($page - 1) * $limit; 
+
+$query = "SELECT id, email FROM usuarios WHERE tipo = 'Dueño' AND validado = 0 LIMIT $limit OFFSET $offset";
 $result = mysqli_query($conn, $query);
 
+$total_query = "SELECT COUNT(*) AS total FROM usuarios WHERE tipo = 'Dueño' AND validado = 0";
+$total_result = mysqli_query($conn, $total_query);
+$total_row = mysqli_fetch_assoc($total_result);
+$total_dueños = $total_row['total'];
+
+$total_pages = ceil($total_dueños / $limit);
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +38,6 @@ $result = mysqli_query($conn, $query);
         <?php include './includes/header.php'; ?>
         <h2 class="text-center my-4">Aprobar Dueños de Locales</h2>
         <main class="container">
-            
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -39,20 +47,48 @@ $result = mysqli_query($conn, $query);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($row['id']); ?></td>
-                        <td><?php echo htmlspecialchars($row['email']); ?></td>
-                        <td>
-                            <form action="./private/dueños_pendientes_aprobacion.php" method="post">
-                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
-                                <button type="submit" class="btn btn-success">Aprobar</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <?php endwhile; ?>
+                    <?php if ($result && mysqli_num_rows($result) > 0): ?>
+                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($row['id']); ?></td>
+                                <td><?php echo htmlspecialchars($row['email']); ?></td>
+                                <td>
+                                    <form action="./private/dueños_pendientes_aprobacion.php" method="post">
+                                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+                                        <button type="submit" class="btn btn-success">Aprobar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="3" class="text-center">No hay dueños pendientes de aprobación</td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
+
+            <!-- Controles de paginación -->
+            <div class="pagination-container mt-4">
+                <ul class="pagination justify-content-center">
+                    <!-- Botón "Anterior" -->
+                    <li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $page - 1; ?>">Anterior</a>
+                    </li>
+                    
+                    <!-- Números de página -->
+                    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                        <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                            <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </li>
+                    <?php endfor; ?>
+
+                    <!-- Botón "Siguiente" -->
+                    <li class="page-item <?php echo ($page >= $total_pages) ? 'disabled' : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $page + 1; ?>">Siguiente</a>
+                    </li>
+                </ul>
+            </div>
         </main>
         <?php include './includes/footer.php'; ?>
     </div>

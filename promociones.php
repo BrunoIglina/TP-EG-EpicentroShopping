@@ -44,7 +44,7 @@ if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
     $sql .= " AND promociones.local_id = $local_id";
 }
 
-$limit = 5; 
+$limit = 9; 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 

@@ -4,6 +4,25 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     header("Location: index.php");
     exit();
 }
+
+
+$conn = new mysqli("127.0.0.1", "root", "", "shopping_db", 3309);
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+$limit = 6; 
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
+$offset = ($page - 1) * $limit; 
+
+$sql = "SELECT id, textoPromo, fecha_inicio, fecha_fin FROM promociones WHERE estadoPromo = 'Pendiente' LIMIT $limit OFFSET $offset";
+$result = $conn->query($sql);
+
+$total_promociones_sql = "SELECT COUNT(*) AS total FROM promociones WHERE estadoPromo = 'Pendiente'";
+$total_result = $conn->query($total_promociones_sql);
+$total_row = $total_result->fetch_assoc();
+$total_promociones = $total_row['total'];
+$total_pages = ceil($total_promociones / $limit); 
 ?>
 
 <!DOCTYPE html>
@@ -35,14 +54,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                     </thead>
                     <tbody>
                         <?php
-                        $conn = new mysqli("127.0.0.1", "root", "", "shopping_db", 3309);
-                        if ($conn->connect_error) {
-                            die("Conexión fallida: " . $conn->connect_error);
-                        }
-
-                        $sql = "SELECT id, textoPromo, fecha_inicio, fecha_fin FROM promociones WHERE estadoPromo = 'Pendiente'";
-                        $result = $conn->query($sql);
-
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                                 echo "<tr>";
@@ -59,15 +70,34 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                         } else {
                             echo "<tr><td colspan='5'>No hay promociones pendientes</td></tr>";
                         }
-                        $conn->close();
                         ?>
                     </tbody>
                 </table>
             </form>
+            <!-- Controles de paginación -->
+            <div class="pagination-container mt-4">
+                <ul class="pagination justify-content-center">
+                    <!-- Botón "Anterior" -->
+                    <li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $page - 1; ?>">Anterior</a>
+                    </li>
+                    
+                    <!-- Números de página -->
+                    <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
+                        <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                            <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </li>
+                    <?php } ?>
+
+                    <!-- Botón "Siguiente" -->
+                    <li class="page-item <?php echo ($page >= $total_pages) ? 'disabled' : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $page + 1; ?>">Siguiente</a>
+                    </li>
+                </ul>
+            </div>
         </main>
         <?php include './includes/footer.php'; ?>
     </div>
-
 
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -100,10 +130,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
                 var action = button.data('action'); 
                 var modal = $(this);
 
-                
                 modal.find('#modalAction').text(action === 'aprobar' ? 'aprobar' : 'rechazar');
 
-                
                 $('#confirmActionBtn').off('click').on('click', function() {
                     var form = $('#actionForm');
                     var input = $('<input>').attr('type', 'hidden').attr('name', action).val(promocionId);
