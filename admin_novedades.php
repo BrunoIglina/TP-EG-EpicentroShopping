@@ -12,7 +12,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
 $novedades = get_all_novedades($limit, $offset);
-$total_novedades = count(get_all_novedades()); 
+$total_novedades = get_total_novedades();
 $total_pages = ceil($total_novedades / $limit);
 ?>
 

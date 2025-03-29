@@ -1,11 +1,16 @@
 <?php
 
-function get_all_novedades(){
+function get_all_novedades($limit = null, $offset = null){
         // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
         include(__DIR__ . '/../env/shopping_db.php');
-
+        
 
     $qry_novedad = "SELECT * FROM novedades";
+
+    if ($limit !== null && $offset !== null) {
+        $qry_novedad .= " LIMIT $limit OFFSET $offset";
+    }
+
     if(!($result_novedad = $conn->query($qry_novedad))){
         echo "Error: " . $sql . "<br>" . $conn->error;
     }else{
@@ -79,4 +84,19 @@ function get_novedades_permitidas($id_usuario, $tipo_usuario, $categoria_usuario
         return $novedades;
     }
 }
+
+function get_total_novedades(){
+    include(__DIR__ . '/../env/shopping_db.php');
+
+    $qry_count = "SELECT COUNT(*) as total FROM novedades";
+    $result = $conn->query($qry_count);
+    
+    if ($result) {
+        $row = $result->fetch_assoc();
+        return $row['total'];
+    } else {
+        return 0; 
+    }
+}
+
 ?>
