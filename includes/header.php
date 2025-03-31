@@ -20,7 +20,7 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
   <div class="container-fluid barra">
     <div class="logo">
         <a href="index.php">
-            <img src="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/assets/logo2.png" alt="Epicentro Shopping Logo" class="img-fluid" width="120" height="auto">
+            <img src="./assets/logo2.png" alt="Epicentro Shopping Logo" class="img-fluid" width="120" height="auto">
         </a>
     </div>
     <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
