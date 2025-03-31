@@ -1,19 +1,19 @@
-.barra{
-    background-color: #202833 !important;
-}
-
 .navbar-nav .nav-link {
-    color: #fff;
-    font-size: 20px;
-    padding: 0.5rem 0;
+  color: #fff;
+  font-size: 20px;
+  padding: 0.5rem 0;
 }
 
-.offcanvas{
-    background-color: #202833 !important;
+.offcanvas {
+  background-color: #202833 !important;
 }
 
-.navbar-toggler{
-    background-color: #fff !important;
-    padding: 0.5rem 0;
-    border-radius: 5px;
+.navbar-toggler {
+  background-color: #fff !important;
+  padding: 0.5rem 0;
+  border-radius: 5px;
+}
+
+body {
+  padding-top: 120px;
 }

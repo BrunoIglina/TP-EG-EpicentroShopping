@@ -14,10 +14,10 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
 <title>Bootstrap Example</title>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<header class="p-3 m-0 border-0 bd-example m-0 border-0">
+<header class="p-3 m-0 border-0 ">
   
-<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
-  <div class="container-fluid barra">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #202833;">
+  <div class="container-fluid">
     <div class="logo">
         <a href="index.php">
             <img src="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/assets/logo2.png" alt="Epicentro Shopping Logo" class="img-fluid" width="120" height="auto">

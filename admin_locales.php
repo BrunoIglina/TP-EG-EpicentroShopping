@@ -53,7 +53,7 @@ $total_pages = ceil($total_locales / $limit);
                 <?php } else { ?>
 
                     <div class="table-responsive-lg">
-                        <table class="table">
+                        <table class="table table-striped table-bordered">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Código</th>
