@@ -1,19 +1,67 @@
-.barra{
-    background-color: #202833 !important;
+/* Ajuste para evitar que el header tape los títulos */
+body {
+    padding-top: 70px; /* Ajusta según la altura de tu navbar */
 }
 
-.navbar-nav .nav-link {
-    color: #fff;
+/* Navbar */
+.navbar {
+    display: flex;
+    flex-wrap: wrap; /* Permite el colapso del contenido */
+    align-items: center;
+    justify-content: space-between;
+    width: 100%; /* Asegura que la barra de navegación no desborde */
+    overflow: visible !important; /* Permite que el dropdown se extienda fuera del header */
+}
+
+/* Menú de navegación */
+.navbar-nav {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.navbar-nav .nav-link,
+.offcanvas .nav-link {
+    color: #ffffff !important; /* Fuerza el texto blanco */
     font-size: 20px;
     padding: 0.5rem 0;
 }
 
-.offcanvas{
-    background-color: #202833 !important;
-}
-
-.navbar-toggler{
+.navbar-toggler {
     background-color: #fff !important;
     padding: 0.5rem 0;
     border-radius: 5px;
+}
+
+.navbar-toggler-icon {
+    background-color: #fff;
+    color: #fff;
+}
+
+/* Dropdown específico */
+.dropdown-menu {
+    position: absolute !important; /* Asegura que el dropdown sobresalga del header */
+    top: 100%; /* Coloca el menú justo debajo del botón del dropdown */
+    left: 0; /* Alinea el menú al lado izquierdo del botón */
+    z-index: 1050; /* Mantiene el menú visible encima de otros elementos */
+    background-color: #ffffff; /* Fondo blanco */
+    padding: 10px 0; /* Espaciado interno */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra estética */
+    border: 1px solid #ddd; /* Borde del menú */
+}
+
+/* Estilo de los items del dropdown */
+.dropdown-item {
+    white-space: nowrap; /* Evita que el texto se corte o salte de línea */
+    color: #000 !important; /* Color del texto */
+}
+
+/* Hover y Active para los enlaces */
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:active,
+.offcanvas .nav-link:hover,
+.offcanvas .nav-link:active {
+    color: #ffffff !important; /* Garantiza el blanco en interacciones */
 }

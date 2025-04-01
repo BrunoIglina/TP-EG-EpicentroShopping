@@ -32,7 +32,7 @@ $user = $result->fetch_assoc();
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
-        <h2 class="text-center my-4">Mi Perfil</h2>
+        <h2 class="text-center my-5">Mi Perfil</h2>
         <main class="perfil-container">
             <div class="perfil-card card">
                 <div class="card-header">
