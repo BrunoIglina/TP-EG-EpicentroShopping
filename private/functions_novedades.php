@@ -34,28 +34,29 @@ function get_novedad($id){
     };
 }
 
+function mesEnEspañol($mesIngles) {
+    $meses = [
+        'January' => 'Enero',
+        'February' => 'Febrero',
+        'March' => 'Marzo',
+        'April' => 'Abril',
+        'May' => 'Mayo',
+        'June' => 'Junio',
+        'July' => 'Julio',
+        'August' => 'Agosto',
+        'September' => 'Septiembre',
+        'October' => 'Octubre',
+        'November' => 'Noviembre',
+        'December' => 'Diciembre'
+    ];
+    return $meses[$mesIngles];
+}
+
 function get_novedades_permitidas($id_usuario, $tipo_usuario, $categoria_usuario) {
         // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
         include(__DIR__ . '/../env/shopping_db.php');
 
 
-    function mesEnEspañol($mesIngles) {
-        $meses = [
-            'January' => 'Enero',
-            'February' => 'Febrero',
-            'March' => 'Marzo',
-            'April' => 'Abril',
-            'May' => 'Mayo',
-            'June' => 'Junio',
-            'July' => 'Julio',
-            'August' => 'Agosto',
-            'September' => 'Septiembre',
-            'October' => 'Octubre',
-            'November' => 'Noviembre',
-            'December' => 'Diciembre'
-        ];
-        return $meses[$mesIngles];
-    }
 
     $today = date("Y-m-d");
 

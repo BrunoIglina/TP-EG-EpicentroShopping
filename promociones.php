@@ -24,6 +24,7 @@ $sql = "
         promociones 
     WHERE 
         promociones.estadoPromo = 'Aprobada'
+        AND CURRENT_DATE() BETWEEN fecha_inicio AND fecha_fin
 ";
 
 
@@ -63,6 +64,7 @@ $total_result_sql = "
         promociones 
     WHERE 
         promociones.estadoPromo = 'Aprobada'
+        AND CURRENT_DATE() BETWEEN fecha_inicio AND fecha_fin
 ";
 if ($categoriaCliente) {
     $total_result_sql .= " AND promociones.categoriaCliente IN ('$categorias_permitidas_sql')";

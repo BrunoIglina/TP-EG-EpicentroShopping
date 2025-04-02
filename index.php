@@ -2,15 +2,10 @@
 
 session_start();
 
+include './private/functions_promociones.php';
 
-
-
-
-
-include './private/functions_novedades.php';
-
-$novedades = get_all_novedades();
-$novedades = array_slice($novedades, 0, 5);
+$promociones = get_all_promociones_activas();
+$promociones = array_slice($promociones, 0, 5);
 ?>
 
 <!DOCTYPE html>
@@ -38,21 +33,20 @@ $novedades = array_slice($novedades, 0, 5);
                 unset($_SESSION['mensaje_error']); 
             }
             ?>
+        <h2 class="text-center my-4" >PROMOCIONES ACTUALES</h2>
 
-        <h2 class="text-center my-5" >Novedades Recientes</h2>
-
-        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-            <?php foreach ($novedades as $index => $novedad): 
+            <?php foreach ($promociones as $index => $promocion): 
                 if ($index == 0): ?>
                 <div class="carousel-item active">
                 <?php else: ?>
                 <div class="carousel-item">
                 <?php endif; ?>
-                    <a href="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/novedades.php" class="slide-link">                
-                        <img src='./private/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>' class="image-carousel d-block w-100 " alt="...">
+                    <a href="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/locales.php" class="slide-link">                
+                        <img src='./private/visualizar_imagen.php?local_id=<?php echo $promocion['local_id']; ?>' class="image-carousel d-block w-100 " alt="Promociones">
                         <div class="carousel-caption d-none d-md-block">
-                            <h3><?php echo htmlspecialchars($novedad['tituloNovedad']); ?></h3>
+                            <h3 style = "color: #000"><?php echo htmlspecialchars($promocion['textoPromo']); ?></h3>
                         </div>
                     </a>        
                 </div>

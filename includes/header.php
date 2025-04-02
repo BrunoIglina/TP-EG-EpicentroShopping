@@ -12,8 +12,11 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
 <link rel="stylesheet" href="DIR ./../css/header.css">
 <title>Epicentro Shopping</title>
 </head>
+<header class="p-3 m-0 border-0 ">
+  
+
 <body>
-<header class="p-3 m-0 border-0">
+
 <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #202833;">
   <div class="container-fluid">
     <div class="logo">

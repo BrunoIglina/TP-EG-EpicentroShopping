@@ -12,8 +12,8 @@ $limit = 5;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
 $offset = ($page - 1) * $limit; 
 
-$novedades = array_slice(get_all_novedades(), $offset, $limit);
-$total_novedades = count(get_all_novedades());
+$novedades = array_slice(get_novedades_permitidas($_SESSION['user_id'], $_SESSION['user_tipo'],$_SESSION['user_categoria']), $offset, $limit);
+$total_novedades = count(get_novedades_permitidas($_SESSION['user_id'], $_SESSION['user_tipo'],$_SESSION['user_categoria']));
 $total_pages = ceil($total_novedades / $limit);
 ?>
 
