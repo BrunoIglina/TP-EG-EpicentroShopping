@@ -39,7 +39,7 @@ $novedades = array_slice($novedades, 0, 5);
             }
             ?>
 
-        <h2 class="text-center my-4" >Novedades Recientes</h2>
+        <h2 class="text-center my-5" >Novedades Recientes</h2>
 
         <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">

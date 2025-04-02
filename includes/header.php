@@ -8,27 +8,25 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="__DIR__ ./../css/header.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
-<title>Bootstrap Example</title>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="DIR ./../css/header.css">
+<title>Epicentro Shopping</title>
 </head>
-<header class="p-3 m-0 border-0 bd-example m-0 border-0">
-  
-<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
-  <div class="container-fluid barra">
+<body>
+<header class="p-3 m-0 border-0">
+<nav class="navbar navbar-expand-lg fixed-top" style="background-color: #202833;">
+  <div class="container-fluid">
     <div class="logo">
         <a href="index.php">
-            <img src="./assets/logo2.png" alt="Epicentro Shopping Logo" class="img-fluid" width="120" height="auto">
+            <img src="./assets/logo2.png" alt="Epicentro Shopping Logo" class="img-fluid" width="120">
         </a>
     </div>
-    <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+    <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar">
       <div class="offcanvas-header">
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
@@ -54,17 +52,18 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
           <?php if ($user_tipo == 'Administrador'): ?>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Gestionar Shopping</a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="admin_locales.php">Gestionar Locales</a></li>
               <li><a class="dropdown-item" href="admin_novedades.php">Gestionar Novedades</a></li>
               <li><a class="dropdown-item" href="admin_promociones.php">Gestionar Promociones</a></li>
             </ul>
           </li>
+          <?php endif; ?>
 
-          <?php elseif ($user_tipo == 'Dueno'): ?>
+          <?php if ($user_tipo == 'Dueno'): ?>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Gestionar Promociones</a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="misPromos.php">Mis Promociones</a></li>
               <li><a class="dropdown-item" href="gestion_promos.php">Administrar Solicitudes</a></li>
             </ul>
@@ -84,9 +83,14 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
               <a class="nav-link" href="login.php">Iniciar Sesión</a>
             </li>
           <?php endif; ?>
+        </ul>
       </div>
     </div>
   </div>
 </nav>
-
 </header>
+
+<!-- Incluye los scripts de Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

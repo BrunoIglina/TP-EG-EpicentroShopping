@@ -1,27 +1,42 @@
 body {
-    background-color: #f8f9fa;
+    background-color: #fff;
+    color: #202833;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.auth-container {
+    margin-top: 4rem; /* Margen superior para mover el formulario hacia abajo */
 }
 
 .auth-form {
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-.auth-form h1 {
-    color: #4a4e69;
-}
-
-.auth-form .form-control {
+    max-width: 400px;
+    margin: auto;
+    padding: 2rem;
+    border: 1px solid #ccc;
     border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form label, .auth-form input, .auth-form select, .auth-form button {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 .auth-form button {
-    background-color: #4a4e69;
-    color: white;
+    background-color: #202833;
+    color: #fff;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Cambio de color suave */
 }
 
-.message {
-    font-size: 0.9rem;
+.auth-form button:hover {
+    background-color: #3a475e; /* Color diferente al hacer hover */
 }
 
 .wrapper {
