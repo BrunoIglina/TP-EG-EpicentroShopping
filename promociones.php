@@ -91,6 +91,16 @@ $total_pages = ceil($total_rows / $limit);
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
+                    <?php
+            if (isset($_SESSION['mensaje_error'])) {
+                echo "<div class='alert alert-danger text-center'>" . $_SESSION['mensaje_error'] . "</div>";
+                unset($_SESSION['mensaje_error']); 
+            }
+            if (isset($_SESSION['mensaje_exito'])) {
+                echo "<div class='alert alert-success text-center'>" . $_SESSION['mensaje_exito'] . "</div>";
+                unset($_SESSION['mensaje_exito']); }
+            ?>
+
         <main class="container mt-5">
             <div class="row">
                 <div class="col-12">

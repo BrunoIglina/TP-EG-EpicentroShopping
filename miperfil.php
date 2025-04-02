@@ -1,20 +1,16 @@
 <?php
 session_start();
-if(!isset($_SESSION['user_id']) ) {
+if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include('./env/shopping_db.php');
+// include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+include(__DIR__ . '/private/functions_usuarios.php');
 
 $user_id = $_SESSION['user_id'];
-$query = "SELECT * FROM usuarios WHERE id = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param('i', $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
+$user = get_usuario($user_id);
+
 ?>
 
 <!DOCTYPE html>
@@ -33,17 +29,26 @@ $user = $result->fetch_assoc();
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
         <h2 class="text-center my-5">Mi Perfil</h2>
+
         <main class="perfil-container">
             <div class="perfil-card card">
                 <div class="card-header">
-                    <h3>Email: <?php echo htmlspecialchars($user['email']); ?></h3>
+                    <h3>Email: <?php echo htmlspecialchars($user['email'] ?? 'No disponible'); ?></h3>
                 </div>
                 <div class="card-body">
-                    <a href="./mod_perfil.php" class="btn btn-primary">Cambiar Contraseña</a>
+                    <?php if (!empty($user) && isset($user['tipo']) && strtolower($user['tipo']) === 'cliente' && isset($user['categoria'])) : ?>
+                        <div class="categoria-cliente text-center">
+                            <p>Categoria: 
+                            <?php echo htmlspecialchars($user['categoria']); ?>
+                            </p>
+                        </div>
+                    <?php else: ?>
+                        <p class="text-danger">No se encontró categoría para este usuario.</p>
+                    <?php endif; ?>
+                    <a href="./mod_perfil.php" class="btn btn-primary mt-3">Cambiar Contraseña</a>
                 </div>
             </div>
         </main>
-        
         <?php include './includes/footer.php'; ?>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

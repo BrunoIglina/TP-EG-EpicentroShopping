@@ -1,11 +1,16 @@
 <?php
 
-function get_all_locales(){
+function get_all_locales($limit = null, $offset = null){
         // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
         include(__DIR__ . '/../env/shopping_db.php');
 
 
     $qry_locales = "SELECT * FROM locales ORDER BY nombre";
+
+    if ($limit !== null && $offset !== null) {
+        $qry_locales .= " LIMIT $limit OFFSET $offset";
+    }
+
     if(!($result_locales = $conn->query($qry_locales))){
         echo "Error: " . $sql . "<br>" . $conn->error;
     }else{
@@ -40,6 +45,20 @@ function get_local_by_nombre($nombre){
         $local = $result_local -> fetch_assoc();
         return $local;
     };
+}
+
+function get_total_locales(){
+    include(__DIR__ . '/../env/shopping_db.php');
+
+    $qry_count = "SELECT COUNT(*) as total FROM locales";
+    $result = $conn->query($qry_count);
+    
+    if ($result) {
+        $row = $result->fetch_assoc();
+        return $row['total'];
+    } else {
+        return 0; 
+    }
 }
 
 ?>

@@ -6,10 +6,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 }
 
 
-$conn = new mysqli("127.0.0.1", "root", "", "shopping_db", 3309);
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+include './env/shopping_db.php';
 
 $limit = 6; 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
