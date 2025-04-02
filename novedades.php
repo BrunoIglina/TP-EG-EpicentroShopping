@@ -33,7 +33,7 @@ $total_pages = ceil($total_novedades / $limit);
         <?php include './includes/header.php'; ?>
         <main class="container">
             <section class="novedades-section">
-                <h2 class="text-center my-4">Novedades</h2>
+                <h2 class="text-center my-5">Novedades</h2>
                 <p>Explora las últimas novedades y noticias de Epicentro Shopping.</p>
 
                 <?php if (!$novedades) { ?>

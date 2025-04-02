@@ -33,7 +33,6 @@ $promociones = array_slice($promociones, 0, 5);
                 unset($_SESSION['mensaje_error']); 
             }
             ?>
-
         <h2 class="text-center my-4" >PROMOCIONES ACTUALES</h2>
 
         <div class="carousel slide" data-bs-ride="carousel">
