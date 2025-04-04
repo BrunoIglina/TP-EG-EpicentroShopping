@@ -24,6 +24,7 @@ $sql = "
         promociones 
     WHERE 
         promociones.estadoPromo = 'Aprobada'
+        AND CURRENT_DATE() BETWEEN fecha_inicio AND fecha_fin
 ";
 
 
@@ -45,7 +46,7 @@ if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
     $sql .= " AND promociones.local_id = $local_id";
 }
 
-$limit = 5; 
+$limit = 9; 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
@@ -63,6 +64,7 @@ $total_result_sql = "
         promociones 
     WHERE 
         promociones.estadoPromo = 'Aprobada'
+        AND CURRENT_DATE() BETWEEN fecha_inicio AND fecha_fin
 ";
 if ($categoriaCliente) {
     $total_result_sql .= " AND promociones.categoriaCliente IN ('$categorias_permitidas_sql')";
@@ -91,6 +93,16 @@ $total_pages = ceil($total_rows / $limit);
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
+                    <?php
+            if (isset($_SESSION['mensaje_error'])) {
+                echo "<div class='alert alert-danger text-center'>" . $_SESSION['mensaje_error'] . "</div>";
+                unset($_SESSION['mensaje_error']); 
+            }
+            if (isset($_SESSION['mensaje_exito'])) {
+                echo "<div class='alert alert-success text-center'>" . $_SESSION['mensaje_exito'] . "</div>";
+                unset($_SESSION['mensaje_exito']); }
+            ?>
+
         <main class="container mt-5">
             <div class="row">
                 <div class="col-12">

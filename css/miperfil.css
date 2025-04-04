@@ -9,6 +9,18 @@
     min-height: 100dvh;
     grid-template-rows: auto 1fr auto;
 }
+
+.categoria-cliente {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background-color: #202833;
+    padding: 10px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-top: 15px;
+}
+
 .perfil-card {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);

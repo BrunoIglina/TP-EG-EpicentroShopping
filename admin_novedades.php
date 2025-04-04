@@ -7,13 +7,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 
 include './private/functions_novedades.php';
 
-// Paginación
-$limit = 5;
+$limit = 6;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
 $novedades = get_all_novedades($limit, $offset);
-$total_novedades = count(get_all_novedades()); 
+$total_novedades = get_total_novedades();
 $total_pages = ceil($total_novedades / $limit);
 ?>
 

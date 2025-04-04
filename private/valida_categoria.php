@@ -43,11 +43,14 @@ if ($result->num_rows == 1) {
         $sql = "UPDATE usuarios SET categoria = '$nueva_categoria' WHERE id = $cliente_id";
         if ($conn->query($sql) === TRUE) {
             echo "Categoría del cliente actualizada a $nueva_categoria.";
+            header("Location: ../gestion_promos.php");
+
         } else {
             echo "Error al actualizar la categoría del cliente: " . $conn->error;
         }
     } else {
         echo "La categoría del cliente no ha cambiado.";
+        header("Location: ../gestion_promos.php");
     }
 } else {
     echo "No se encontró la promoción o el cliente asociado.";

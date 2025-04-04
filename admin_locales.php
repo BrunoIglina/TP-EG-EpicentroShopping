@@ -13,7 +13,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
 $locales = get_all_locales($limit, $offset);
-$total_locales = count(get_all_locales()); 
+$total_locales = get_total_locales();
 $total_pages = ceil($total_locales / $limit);
 ?>
 
@@ -53,7 +53,7 @@ $total_pages = ceil($total_locales / $limit);
                 <?php } else { ?>
 
                     <div class="table-responsive-lg">
-                        <table class="table">
+                        <table class="table table-striped table-bordered">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Código</th>

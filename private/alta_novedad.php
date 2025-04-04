@@ -20,6 +20,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fecha_hasta = $_POST['fecha_hasta'];
     $categoria = $_POST['categoria'];
 
+    $query_check = "SELECT id FROM novedades WHERE tituloNovedad = ?";
+    $stmt_check = $conn->prepare($query_check);
+    $stmt_check->bind_param("s", $titulo_novedad);
+    $stmt_check->execute();
+    $stmt_check->store_result();
+
+    if ($stmt_check->num_rows > 0) {
+        $_SESSION['mensaje_error1'] = "Error: Ya existe una novedad con ese nombre.";
+        header("Location: ../agregar_novedad.php");
+        exit();
+    }
+    
+    $stmt_check->close();
+
     $today = date("Y-m-d");
 
     if ($fecha_desde < $today) {
@@ -53,8 +67,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             if (isset($_FILES['imagen_novedad']) && $_FILES['imagen_novedad']['error'] == 0) {
                 $imagen_tmp = $_FILES['imagen_novedad']['tmp_name'];
-                subirImagen($id_novedad, $imagen_tmp, "novedades", $conn);
+                if (!subirImagen($id_novedad, $imagen_tmp, "novedades", $conn)) {
+                    $delete_stmt = $conn->prepare("DELETE FROM novedades WHERE id = ?");
+                    $delete_stmt->bind_param("i", $id_novedad);
+                    if ($delete_stmt->execute()) {
+                        echo "Error: No se pudo subir la imagen. Puede que el archivo sea demasiado grande. La novedad ha sido eliminada.";
+                    } else {
+                        echo "Error: No se pudo subir la imagen y no se logró eliminar la novedad. ";
+                    }
+                    $delete_stmt->close();
+                    $_SESSION['mensaje_error1'] = "No se pudo subir la imagen. Puede que el archivo sea demasiado grande.";
+                    header("Location: ../agregar_novedad.php");
+                    exit();
+                }
             }
+    
             
             $_SESSION['success'] = "Novedad dada de alta con éxito.";
             header("Location: ../admin_novedades.php");
