@@ -10,6 +10,7 @@ $sql = "UPDATE usuarios SET validado = 1 WHERE id = $id";
 
 if ($conn->query($sql) === TRUE) {
     echo "Dueño aprobado correctamente.";
+    header("Location: ../admin_aprobar_dueños.php");
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }

@@ -59,6 +59,8 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
               <li><a class="dropdown-item" href="admin_locales.php">Gestionar Locales</a></li>
               <li><a class="dropdown-item" href="admin_novedades.php">Gestionar Novedades</a></li>
               <li><a class="dropdown-item" href="admin_promociones.php">Gestionar Promociones</a></li>
+
+              <li><a class="dropdown-item" href="admin_aprobar_clientes.php">Administrar Clientes</a></li>
             </ul>
           </li>
           <?php endif; ?>
