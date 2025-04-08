@@ -51,7 +51,7 @@ $paginated_locales = array_slice($filtered_locales, $start_index, $items_per_pag
     <main>
         <div class="container-fluid">
 
-            <div class="row" style="padding: 2.5rem">
+            <div class="row">
                 <form class="d-flex w-100" method="GET">
                     <div class="flex-grow-1 me-2">
                         <input type="text" name="nombre_local" class="form-control" placeholder="Buscar por nombre del local..." value="<?php echo isset($_GET['nombre_local']) ? $_GET['nombre_local'] : ''; ?>">
@@ -85,7 +85,7 @@ $paginated_locales = array_slice($filtered_locales, $start_index, $items_per_pag
                     <div class="row">
                         <?php foreach ($paginated_locales as $local) { ?>
                             <div class="col-md-4 col-sm-12" style="padding: .5rem;">
-                                <a href="promociones.php?local_id=<?php echo $local['id']; ?>&local_nombre=<?php echo urlencode($local['nombre']); ?>&local_rubro=<?php echo urlencode($local['rubro']); ?>" class="card-link">
+                                <a href="promociones.php?local_id=<?php echo $local['id']; ?>" class="card-link">
                                     <div class="card text-center">
                                         <div class="card-body">
                                             <div class="card-image">
@@ -102,7 +102,7 @@ $paginated_locales = array_slice($filtered_locales, $start_index, $items_per_pag
                             </div>
                         <?php } ?>
                     </div>
-                    <nav>
+                    <nav class="d-flex justify-content-center">
                         <ul class="pagination">
                             <li class="page-item <?php echo $current_page <= 1 ? 'disabled' : ''; ?>">
                                 <a class="page-link" href="?page=<?php echo $current_page - 1; ?>">Anterior</a>
