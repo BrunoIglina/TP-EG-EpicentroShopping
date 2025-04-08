@@ -61,4 +61,29 @@ function get_total_locales(){
     }
 }
 
+function get_locales_solicitados(){
+  // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+  include(__DIR__ . '/../env/shopping_db.php');
+
+  $qry_promociones = "SELECT pro.local_id, COUNT(pxc.idPromocion) AS solicitudes 
+                        FROM promociones_cliente pxc 
+                        INNER JOIN promociones pro ON pro.id = pxc.idPromocion 
+                        GROUP BY pro.local_id
+                        ORDER BY solicitudes DESC";
+
+  if(!($result_promociones = $conn->query($qry_promociones))){
+    echo "Error: " . $sql . "<br>" . $conn->error;
+  }else{
+    $promociones = $result_promociones -> fetch_all(MYSQLI_ASSOC);
+    $promociones = array_slice($promociones, 0, 4);
+    $locales = array();
+
+    foreach ($promociones as $index => $local) {
+      array_push($locales, get_local($local['local_id']));
+    }
+
+    return $locales;
+  }
+}
+
 ?>

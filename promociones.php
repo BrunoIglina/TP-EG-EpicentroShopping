@@ -7,6 +7,9 @@ if (!isset($_GET['local_id'])) {
 // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 include('./env/shopping_db.php');
 include './private/rubros.php';
+include './private/functions_locales.php';
+
+$local = get_local($_GET['local_id']);
 
 $categoriaCliente = isset($_SESSION['user_categoria']) ? $_SESSION['user_categoria'] : null;
 $tipoUsuario = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : null;
@@ -111,13 +114,13 @@ $total_pages = ceil($total_rows / $limit);
                         $currentLocal = '';
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
-                                if ($currentLocal != $_GET["local_nombre"]) {
+                                if ($currentLocal != $local["id"]) {
                                     if ($currentLocal != '') {
                                         echo "</div>";
                                     }
                                     echo "<div class='card mb-3'>";
-                                    echo "<div class='card-header'><h2 class='card-title'>" . htmlspecialchars($_GET["local_nombre"]) . "</h2></div>";
-                                    $currentLocal = $_GET["local_nombre"];
+                                    echo "<div class='card-header'><h2 class='card-title'>" . htmlspecialchars($local["nombre"]) . "</h2></div>";
+                                    $currentLocal = $local["nombre"];
                                 }
                                 echo "<div class='card-body'>";
                                 echo "<p><strong>" . htmlspecialchars($row["textoPromo"]) . "</strong></p>";
