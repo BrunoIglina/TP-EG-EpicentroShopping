@@ -38,17 +38,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssss", $email, $hashedPassword, $tipo, $token);
 
     if ($stmt->execute()) {
-        if($tipo == "Cliente")
-        {
+        if ($tipo == "Cliente") {
             error_log("📧 Intentando enviar correo a: " . $email . " con token: " . $token);
             sendValidationEmail($email, $token);
             error_log("✅ Función sendValidationEmail ejecutada.");
-
+            $_SESSION['success'] = "Registro exitoso. Le hemos enviado un mail de confirmación a su dirección.";
+        } elseif ($tipo == "Dueño") {
+            $_SESSION['success'] = "Registro exitoso. Espere a ser aceptado.";
         }
-        $_SESSION['success'] = "Registro exitoso. Ahora puedes iniciar sesión. Si deseas ser cliente debes validar tu cuenta con el link que te enviamos a tu correo electrónico.";
     } else {
         $_SESSION['error'] = "Error al registrarse. Inténtalo nuevamente.";
     }
+    
 
     $stmt->close();
     $conn->close();
@@ -64,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/registro.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"> <!-- Fuente añadida -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"> 
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Registrarse</title>
 </head>
@@ -73,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php include './includes/header.php'; ?>
         <div class="auth-container">
             <section class="auth-form">
-                <h2 class="text-center my-4" style="font-family: 'Poppins', sans-serif;">Registrarse</h2> <!-- Fuente aplicada -->
+                <h2 class="text-center my-4" style="font-family: 'Poppins', sans-serif;">Registrarse</h2> 
                 <?php
                 if (isset($_SESSION['error'])) {
                     echo "<p class='text-danger text-center'>" . $_SESSION['error'] . "</p>";
