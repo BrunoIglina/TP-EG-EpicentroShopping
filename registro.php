@@ -1,8 +1,5 @@
 <?php
 session_start();
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include('./env/shopping_db.php');
-include './private/envio_mail.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
@@ -15,48 +12,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $sql = "SELECT id FROM usuarios WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
+    // Cargar datos como si fueran enviados por POST
+    $_POST['email'] = $email;
+    $_POST['password'] = $password;
 
-    if ($stmt->num_rows > 0) {
-        $_SESSION['error'] = "El correo electrónico ya está registrado.";
-        $stmt->close();
-        $conn->close();
-        header("Location: registro.php");
-        exit();
+    ob_start(); // Iniciar buffer de salida
+
+    if ($tipo === 'Cliente') {
+        include('./private/alta_cliente.php');
+    } else {
+        include('./private/alta_dueño.php');
     }
 
-    $stmt->close();
 
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $token = bin2hex(random_bytes(16));
-    $sql = "INSERT INTO usuarios (email, password, tipo, token_validacion) VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $email, $hashedPassword, $tipo, $token);
+    $response = ob_get_clean(); 
 
-    if ($stmt->execute()) {
-        if ($tipo == "Cliente") {
-            error_log("📧 Intentando enviar correo a: " . $email . " con token: " . $token);
-            sendValidationEmail($email, $token);
-            error_log("✅ Función sendValidationEmail ejecutada.");
-            $_SESSION['success'] = "Registro exitoso. Le hemos enviado un mail de confirmación a su dirección.";
-        } elseif ($tipo == "Dueño") {
-            $_SESSION['success'] = "Registro exitoso. Espere a ser aceptado.";
-        }
+    if (stripos($response, "exitoso") !== false) {
+        $_SESSION['success'] = $response;
     } else {
-        $_SESSION['error'] = "Error al registrarse. Inténtalo nuevamente.";
+        $_SESSION['error'] = $response;
     }
     
 
-    $stmt->close();
-    $conn->close();
     header("Location: registro.php");
     exit();
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -95,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="tipo">Tipo:</label>
                     <select id="tipo" name="tipo" required>
                         <option value="Cliente">Cliente</option>
-                        <option value="Dueño">Dueño</option>
+                        <option value="Dueno">Dueño</option>
                     </select>
 
                     <button type="submit" class="btn btn-register">Registrarse</button>
