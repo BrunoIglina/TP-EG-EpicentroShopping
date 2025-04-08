@@ -21,16 +21,15 @@
 
 @media (min-width: 1024px) {
   .image-carousel {
-    height: 70vh; 
+      height: 70vh;
   }
 }
-
 
 .image-carousel img.active {
   opacity: 1;
 }
 
-.image-carousel .prev,
+.image-carousel .prev, 
 .image-carousel .next {
   position: absolute;
   top: 50%;
@@ -44,9 +43,7 @@
   transition: background-color 0.5s;
 }
 
-.image-carousel .prev:hover,
+.image-carousel .prev:hover, 
 .image-carousel .next:hover {
   background-color: rgba(0, 0, 0, 0.7);
 }
-
- 

@@ -36,9 +36,7 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
           <li class="nav-item">
             <a class="nav-link" href="index.php">Inicio</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="novedades.php">Novedades</a>
-          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="locales.php">Promociones</a>
           </li>
@@ -47,25 +45,36 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
           </li>
 
           <?php if ($user_tipo == 'Cliente'): ?>
+          <li class="nav-item">
+            <a class="nav-link" href="novedades.php">Novedades</a>
+          </li>
             <li class="nav-item">
               <a class="nav-link" href="mis_promociones.php">Solicitudes</a>
             </li>
           <?php endif; ?>
 
           <?php if ($user_tipo == 'Administrador'): ?>
+          <li class="nav-item">
+            <a class="nav-link" href="novedades.php">Novedades</a>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Gestionar Shopping</a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="admin_locales.php">Gestionar Locales</a></li>
               <li><a class="dropdown-item" href="admin_novedades.php">Gestionar Novedades</a></li>
               <li><a class="dropdown-item" href="admin_promociones.php">Gestionar Promociones</a></li>
-
               <li><a class="dropdown-item" href="admin_aprobar_clientes.php">Administrar Clientes</a></li>
+              <li><a class="dropdown-item" href="admin_aprobar_dueños.php">Gestionar Dueños</a></li>
+
             </ul>
+            
           </li>
           <?php endif; ?>
 
           <?php if ($user_tipo == 'Dueno'): ?>
+          <li class="nav-item">
+            <a class="nav-link" href="novedades.php">Novedades</a>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Gestionar Promociones</a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

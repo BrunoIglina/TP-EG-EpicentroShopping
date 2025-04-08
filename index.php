@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 include './private/functions_promociones.php';
@@ -18,9 +17,7 @@ $promociones = array_slice($promociones, 0, 5);
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
-    
     <title>Epicentro Shopping - Inicio</title>
-
 </head>
 <body>
 
@@ -33,34 +30,30 @@ $promociones = array_slice($promociones, 0, 5);
                 unset($_SESSION['mensaje_error']); 
             }
             ?>
-        <h2 class="text-center my-4" >PROMOCIONES ACTUALES</h2>
+            <h2 class="text-center my-3,8">PROMOCIONES ACTUALES</h2>
 
-        <div class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-            <?php foreach ($promociones as $index => $promocion): 
-                if ($index == 0): ?>
-                <div class="carousel-item active">
-                <?php else: ?>
-                <div class="carousel-item">
-                <?php endif; ?>
-                    <a href="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/locales.php" class="slide-link">                
-                        <img src='./private/visualizar_imagen.php?local_id=<?php echo $promocion['local_id']; ?>' class="image-carousel d-block w-100 " alt="Promociones">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h3 style = "color: #000"><?php echo htmlspecialchars($promocion['textoPromo']); ?></h3>
+            <div id="carouselExample" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <?php foreach ($promociones as $index => $promocion): ?>
+                        <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                            <a href="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/locales.php" class="slide-link">
+                                <img src='./private/visualizar_imagen.php?local_id=<?= $promocion['local_id']; ?>' class="image-carousel d-block w-100" alt="Promociones">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h3 style="color: #000"><?= htmlspecialchars($promocion['textoPromo']); ?></h3>
+                                </div>
+                            </a>
                         </div>
-                    </a>        
+                    <?php endforeach; ?>
                 </div>
-            <?php endforeach; ?>
+                <button class="carousel-control-prev" type="button" data-target="#carouselExample" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-target="#carouselExample" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
         </main>
 
         <?php include './includes/footer.php'; ?>
@@ -71,5 +64,3 @@ $promociones = array_slice($promociones, 0, 5);
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-

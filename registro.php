@@ -24,13 +24,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         include('./private/alta_dueño.php');
     }
 
-    $response = ob_get_clean(); // Captura todo el output generado
+
+    $response = ob_get_clean(); 
 
     if (stripos($response, "exitoso") !== false) {
         $_SESSION['success'] = $response;
     } else {
         $_SESSION['error'] = $response;
     }
+    
 
     header("Location: registro.php");
     exit();
@@ -46,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/registro.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"> 
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Registrarse</title>
 </head>
