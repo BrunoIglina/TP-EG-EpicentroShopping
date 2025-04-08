@@ -3,7 +3,10 @@
   font-size: 20px;
   padding: 0.5rem 0;
 }
-
+.navbar-toggler-icon {
+  color: #fff !important;
+  background-color: #fff !important;
+}
 .offcanvas {
   background-color: #202833 !important;
 }

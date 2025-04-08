@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 include './private/functions_locales.php';
@@ -20,9 +19,7 @@ $locales = get_locales_solicitados();
     <link rel="stylesheet" href="./css/tarjetas.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
-    
     <title>Epicentro Shopping - Inicio</title>
-
 </head>
 <div class="ratio ratio-16x9 position-relative">
     <video src="./assets/file.mp4" class="w-100" autoplay muted loop playsinline></video>
@@ -35,6 +32,7 @@ $locales = get_locales_solicitados();
 
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
+
         <main>
 
 
@@ -71,6 +69,7 @@ $locales = get_locales_solicitados();
 
             </div>
 
+
         </main>
 
         <?php include './includes/footer.php'; ?>
@@ -81,5 +80,3 @@ $locales = get_locales_solicitados();
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-

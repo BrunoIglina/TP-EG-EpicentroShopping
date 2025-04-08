@@ -1,8 +1,5 @@
 <?php
 session_start();
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include('./env/shopping_db.php');
-include './private/envio_mail.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
@@ -15,47 +12,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $sql = "SELECT id FROM usuarios WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
+    // Cargar datos como si fueran enviados por POST
+    $_POST['email'] = $email;
+    $_POST['password'] = $password;
 
-    if ($stmt->num_rows > 0) {
-        $_SESSION['error'] = "El correo electrónico ya está registrado.";
-        $stmt->close();
-        $conn->close();
-        header("Location: registro.php");
-        exit();
-    }
+    ob_start(); // Iniciar buffer de salida
 
-    $stmt->close();
-
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $token = bin2hex(random_bytes(16));
-    $sql = "INSERT INTO usuarios (email, password, tipo, token_validacion) VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $email, $hashedPassword, $tipo, $token);
-
-    if ($stmt->execute()) {
-        if($tipo == "Cliente")
-        {
-            error_log("📧 Intentando enviar correo a: " . $email . " con token: " . $token);
-            sendValidationEmail($email, $token);
-            error_log("✅ Función sendValidationEmail ejecutada.");
-
-        }
-        $_SESSION['success'] = "Registro exitoso. Ahora puedes iniciar sesión. Si deseas ser cliente debes validar tu cuenta con el link que te enviamos a tu correo electrónico.";
+    if ($tipo === 'Cliente') {
+        include('./private/alta_cliente.php');
     } else {
-        $_SESSION['error'] = "Error al registrarse. Inténtalo nuevamente.";
+        include('./private/alta_dueño.php');
     }
 
-    $stmt->close();
-    $conn->close();
+
+    $response = ob_get_clean(); 
+
+    if (stripos($response, "exitoso") !== false) {
+        $_SESSION['success'] = $response;
+    } else {
+        $_SESSION['error'] = $response;
+    }
+    
+
     header("Location: registro.php");
     exit();
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -64,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/registro.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"> <!-- Fuente añadida -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"> 
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Registrarse</title>
 </head>
@@ -73,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php include './includes/header.php'; ?>
         <div class="auth-container">
             <section class="auth-form">
-                <h2 class="text-center my-4" style="font-family: 'Poppins', sans-serif;">Registrarse</h2> <!-- Fuente aplicada -->
+                <h2 class="text-center my-4" style="font-family: 'Poppins', sans-serif;">Registrarse</h2> 
                 <?php
                 if (isset($_SESSION['error'])) {
                     echo "<p class='text-danger text-center'>" . $_SESSION['error'] . "</p>";
@@ -94,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="tipo">Tipo:</label>
                     <select id="tipo" name="tipo" required>
                         <option value="Cliente">Cliente</option>
-                        <option value="Dueño">Dueño</option>
+                        <option value="Dueno">Dueño</option>
                     </select>
 
                     <button type="submit" class="btn btn-register">Registrarse</button>

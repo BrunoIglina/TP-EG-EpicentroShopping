@@ -43,7 +43,7 @@ $user = get_usuario($user_id);
                             </p>
                         </div>
                     <?php else: ?>
-                        <p class="text-danger">No se encontró categoría para este usuario.</p>
+                        <p class="text-danger"></p>
                     <?php endif; ?>
                     <a href="./mod_perfil.php" class="btn btn-primary mt-3">Cambiar Contraseña</a>
                 </div>
