@@ -34,7 +34,7 @@ $total_pages = ceil($total_clientes / $limit);
 </head>
 <body>
     <div class="wrapper">
-        <?php include './includes/header.php'; ?>
+    <?php include './includes/header.php'; ?>
         
         <main class="container">
             <h2 class="text-center my-4">Aprobar Clientes</h2>
@@ -86,7 +86,7 @@ $total_pages = ceil($total_clientes / $limit);
             </div>
         </main>
 
-        <?php include './includes/footer.php'; ?>
+    <?php include './includes/footer.php'; ?>
     </div>
 
     <!-- Modal -->

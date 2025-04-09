@@ -20,6 +20,7 @@ $total_query = "SELECT COUNT(*) AS total FROM usuarios WHERE tipo = 'Dueño' AND
 $total_result = mysqli_query($conn, $total_query);
 $total_row = mysqli_fetch_assoc($total_result);
 $total_dueños = $total_row['total'];
+$total_pages = ceil($total_dueños / $limit);
 
 ?>
 
