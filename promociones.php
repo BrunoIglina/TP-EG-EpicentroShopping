@@ -4,7 +4,6 @@ if (!isset($_GET['local_id'])) {
     header("Location: locales.php");
 }
 
-// include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 include('./env/shopping_db.php');
 include './private/rubros.php';
 include './private/functions_locales.php';
@@ -22,27 +21,14 @@ $sql = "
         promociones.fecha_inicio, 
         promociones.fecha_fin,
         promociones.diasSemana,
-        promociones.local_id
+        promociones.local_id,
+        promociones.categoriaCliente
     FROM
         promociones 
     WHERE 
         promociones.estadoPromo = 'Aprobada'
         AND CURRENT_DATE() BETWEEN fecha_inicio AND fecha_fin
 ";
-
-
-if ($categoriaCliente) {
-    $indice_categoria_cliente = array_search($categoriaCliente, $categorias);
-
-
-    if ($indice_categoria_cliente !== false) {
-        $categorias_permitidas = array_slice($categorias, 0, $indice_categoria_cliente + 1);
-        $categorias_permitidas_sql = implode("', '", $categorias_permitidas);
-        $sql .= " AND promociones.categoriaCliente IN ('$categorias_permitidas_sql')";
-    } else {
-        $sql .= " AND 1=0"; 
-    }
-}
 
 if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
     $local_id = (int)$_GET['local_id'];
@@ -52,11 +38,9 @@ if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
 $limit = 9; 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
-
 $sql .= " LIMIT $limit OFFSET $offset";
 
 $result = $conn->query($sql);
-
 if (!$result) {
     die("Error en la consulta: " . $conn->error);
 }
@@ -69,15 +53,9 @@ $total_result_sql = "
         promociones.estadoPromo = 'Aprobada'
         AND CURRENT_DATE() BETWEEN fecha_inicio AND fecha_fin
 ";
-if ($categoriaCliente) {
-    $total_result_sql .= " AND promociones.categoriaCliente IN ('$categorias_permitidas_sql')";
-}
-
 if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
-    $local_id = (int)$_GET['local_id'];
     $total_result_sql .= " AND promociones.local_id = $local_id";
 }
-
 $total_result = $conn->query($total_result_sql);
 $total_rows = $total_result->fetch_assoc()['total'];
 $total_pages = ceil($total_rows / $limit);
@@ -96,49 +74,61 @@ $total_pages = ceil($total_rows / $limit);
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
-                    <?php
-            if (isset($_SESSION['mensaje_error'])) {
-                echo "<div class='alert alert-danger text-center'>" . $_SESSION['mensaje_error'] . "</div>";
-                unset($_SESSION['mensaje_error']); 
-            }
-            if (isset($_SESSION['mensaje_exito'])) {
-                echo "<div class='alert alert-success text-center'>" . $_SESSION['mensaje_exito'] . "</div>";
-                unset($_SESSION['mensaje_exito']); }
-            ?>
+
+        <?php
+        if (isset($_SESSION['mensaje_error'])) {
+            echo "<div class='alert alert-danger text-center'>" . $_SESSION['mensaje_error'] . "</div>";
+            unset($_SESSION['mensaje_error']); 
+        }
+        if (isset($_SESSION['mensaje_exito'])) {
+            echo "<div class='alert alert-success text-center'>" . $_SESSION['mensaje_exito'] . "</div>";
+            unset($_SESSION['mensaje_exito']); 
+        }
+        ?>
 
         <main class="container mt-5">
             <div class="row">
                 <div class="col-12">
                     <div id="promocionesContainer">
                         <?php
-                        $currentLocal = '';
                         if ($result->num_rows > 0) {
+                            echo "<div class='card mb-3'>";
+                            echo "<div class='card-header'><h2 class='card-title'>" . htmlspecialchars($local["nombre"]) . "</h2></div>";
                             while ($row = $result->fetch_assoc()) {
-                                if ($currentLocal != $local["id"]) {
-                                    if ($currentLocal != '') {
-                                        echo "</div>";
-                                    }
-                                    echo "<div class='card mb-3'>";
-                                    echo "<div class='card-header'><h2 class='card-title'>" . htmlspecialchars($local["nombre"]) . "</h2></div>";
-                                    $currentLocal = $local["nombre"];
-                                }
                                 echo "<div class='card-body'>";
                                 echo "<p><strong>" . htmlspecialchars($row["textoPromo"]) . "</strong></p>";
                                 echo "<p>Fecha de Inicio: " . htmlspecialchars($row["fecha_inicio"]) . "</p>";
                                 echo "<p>Fecha de Fin: " . htmlspecialchars($row["fecha_fin"]) . "</p>";
                                 echo "<p>Días de la Semana: " . htmlspecialchars($row["diasSemana"]) . "</p>";
 
-
-                                if ($tipoUsuario !== 'Dueno' && $tipoUsuario !== 'Administrador') {
-                                    if ($tipoUsuario === 'Visitante') {
-                                        echo "<a href='login.php' class='btn btn-success'>Pedir Promoción</a>";
+                                if ($tipoUsuario === 'Visitante') {
+                                    echo "<a href='login.php' class='btn btn-success mb-3'>Pedir Promoción</a>";
+                                } elseif ($tipoUsuario === 'Cliente') {
+                                    $promoId = (int)$row["promo_id"];
+                                    $promoCategoria = $row["categoriaCliente"];
+                                    $clienteCategoria = $_SESSION['user_categoria'];
+                                    $clienteId = (int)$_SESSION['user_id'];
+                                
+                                    $indiceCliente = array_search($clienteCategoria, $categorias);
+                                    $indicePromo = array_search($promoCategoria, $categorias);
+                                
+                                    $checkSql = "SELECT COUNT(*) AS ya_pedido FROM promociones_cliente WHERE idCliente = $clienteId AND idPromocion = $promoId";
+                                    $checkResult = $conn->query($checkSql);
+                                    $yaPidio = $checkResult->fetch_assoc()['ya_pedido'] > 0;
+                                
+                                    if ($indicePromo > $indiceCliente || $yaPidio) {
+                                        echo "<button class='btn btn-secondary mb-3' style='background-color: gray; cursor: not-allowed;' disabled>No Disponible</button>";
                                     } else {
                                         echo "<form method='POST' action='pedir_promocion.php'>";
-                                        echo "<input type='hidden' name='promo_id' value='" . (int)$row["promo_id"] . "'>";
-                                        echo "<button type='submit' class='btn btn-success'>Pedir Promoción</button>";
+                                        echo "<input type='hidden' name='promo_id' value='" . $promoId . "'>";
+                                        echo "<button type='submit' class='btn btn-success mb-3'>Pedir Promoción</button>";
                                         echo "</form>";
                                     }
+                                } else {
+                                    // Dueño o Administrador
+                                    echo "<button class='btn btn-secondary mb-3' style='background-color: gray; cursor: not-allowed;' disabled>No Disponible</button>";
                                 }
+
                                 echo "</div>";
                             }
                             echo "</div>";
@@ -147,18 +137,19 @@ $total_pages = ceil($total_rows / $limit);
                         }
                         ?>
                     </div>
+
                     <nav aria-label="Page navigation">
                         <ul class="pagination justify-content-center">
-                            <li class="page-item <?php if ($page <= 1) { echo 'disabled'; } ?>">
-                                <a class="page-link" href="<?php if ($page > 1) { echo "?page=" . ($page - 1); } ?>">Anterior</a>
+                            <li class="page-item <?php if ($page <= 1) echo 'disabled'; ?>">
+                                <a class="page-link" href="<?php if ($page > 1) echo "?page=" . ($page - 1); ?>">Anterior</a>
                             </li>
                             <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                                <li class="page-item <?php if ($page == $i) { echo 'active'; } ?>">
+                                <li class="page-item <?php if ($page == $i) echo 'active'; ?>">
                                     <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
                                 </li>
                             <?php endfor; ?>
-                            <li class="page-item <?php if ($page >= $total_pages) { echo 'disabled'; } ?>">
-                                <a class="page-link" href="<?php if ($page < $total_pages) { echo "?page=" . ($page + 1); } ?>">Siguiente</a>
+                            <li class="page-item <?php if ($page >= $total_pages) echo 'disabled'; ?>">
+                                <a class="page-link" href="<?php if ($page < $total_pages) echo "?page=" . ($page + 1); ?>">Siguiente</a>
                             </li>
                         </ul>
                     </nav>
@@ -167,6 +158,7 @@ $total_pages = ceil($total_rows / $limit);
         </main>
         <?php include './includes/footer.php'; ?>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
