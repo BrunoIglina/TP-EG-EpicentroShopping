@@ -15,7 +15,6 @@ $locales = get_locales_solicitados();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/wrapper.css"> 
-    <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/tarjetas.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
@@ -45,8 +44,9 @@ $locales = get_locales_solicitados();
                 }
                 ?>
 
-                <div class="row">
-                    <h2>NUESTROS LOCALES MAS SOLICITADOS</h2>
+                <h2>NUESTROS LOCALES MAS SOLICITADOS</h2>
+
+                <div class="row" style="background-color:rgba(32, 40, 51, 0.06); padding: 1rem; border-radius: 20px;">
                     <?php foreach ($locales as $local) { ?>
                         <div class="col-md-3 col-sm-12" style="padding: .5rem;">
                             <a href="promociones.php?local_id=<?php echo $local['id']; ?>&local_nombre=<?php echo urlencode($local['nombre']); ?>&local_rubro=<?php echo urlencode($local['rubro']); ?>" class="card-link">

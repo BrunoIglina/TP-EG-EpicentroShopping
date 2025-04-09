@@ -97,7 +97,7 @@ $conn->close();
                         echo "<p><strong>" . $row["textoPromo"] . "</strong></p>";
                         echo "<p>Fecha de Inicio: " . $row["fecha_inicio"] . "</p>";
                         echo "<p>Fecha de Fin: " . $row["fecha_fin"] . "</p>";
-                        echo "<p>Días de la Semana: " . $row["diasSemana"] . "</p>";
+                        echo "<p>Días de la Semana: " . str_replace(',', ', ', $row["diasSemana"]) . "</p>";
                         echo "<p>Estado: " . $row["estado"] . "</p>";
                         echo "</div>";
                         echo "</div>";

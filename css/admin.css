@@ -1,34 +1,31 @@
-.admin-section {
-    padding: 120px;
-}
-
-.admin-section th, .admin-section td {
-    border: 1px solid #ccc;
-    padding: 1rem;
-    text-align: left;
+.admin-section th,
+.admin-section td {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  text-align: left;
 }
 
 .admin-section td {
-    max-width: 200px;
-    word-wrap: break-word;
+  max-width: 200px;
+  word-wrap: break-word;
 }
 
 .admin-section td img {
-    width: 100px;
-    height: auto;
+  width: 100px;
+  height: auto;
 }
 
 .admin-section button {
-    margin-right: 0.5rem;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
+  margin-right: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
-table{
-    width: 100%;
+table {
+  width: 100%;
 }
