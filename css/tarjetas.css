@@ -7,8 +7,8 @@
 }
 
 .card-body {
-  word-wrap: break-word; /* Permite que las palabras largas se dividan */
-  overflow-wrap: break-word; /* Compatibilidad adicional */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .card:hover {
