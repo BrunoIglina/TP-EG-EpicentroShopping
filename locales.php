@@ -82,6 +82,7 @@ $paginated_locales = array_slice($filtered_locales, $start_index, $items_per_pag
                 </div>
 
                 <div class="col-md-9">
+
                     <div class="row">
                         <?php foreach ($paginated_locales as $local) { ?>
                             <div class="col-md-4 col-sm-12" style="padding: .5rem;">
@@ -102,6 +103,7 @@ $paginated_locales = array_slice($filtered_locales, $start_index, $items_per_pag
                             </div>
                         <?php } ?>
                     </div>
+
                     <nav class="d-flex justify-content-center">
                         <ul class="pagination">
                             <li class="page-item <?php echo $current_page <= 1 ? 'disabled' : ''; ?>">
@@ -117,6 +119,7 @@ $paginated_locales = array_slice($filtered_locales, $start_index, $items_per_pag
                             </li>
                         </ul>
                     </nav>
+                    
                 </div>
             </div>
 
