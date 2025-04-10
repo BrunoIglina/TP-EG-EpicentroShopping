@@ -31,49 +31,45 @@ $total_pages = ceil($total_novedades / $limit);
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
-        <main class="container">
-            <section class="novedades-section">
-                <h2 class="text-center my-5">Novedades</h2>
-                <p>Explora las últimas novedades y noticias de Epicentro Shopping.</p>
+        <main class="container-fluid">
+            <h2 class="text-center my-5">Novedades</h2>
+            <p>Explora las últimas novedades y noticias de Epicentro Shopping.</p>
 
-                <?php if (!$novedades) { ?>
-                    <div class="alert alert-warning">No hay novedades disponibles</div>
-                <?php } else { ?>
-                    <div class="novedades-lista">
-                        <?php foreach ($novedades as $novedad) { ?>
-                            <div class="novedad-item mb-4">
-                                <div class="card w-100">
-                                    <div class="card-img-top bg-light" style="height: 250px;">
-                                        <img src="./private/visualizar_imagen.php?novedad_id=<?php echo htmlspecialchars($novedad['id']); ?>" 
-                                             alt="Imagen de la novedad" class="img-fluid h-100 w-100" style="object-fit: cover;">
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="mb-2"><strong>Desde:</strong> <?php echo htmlspecialchars($novedad['fecha_desde']); ?></p>
-                                        <p class="mb-2"><strong>Hasta:</strong> <?php echo htmlspecialchars($novedad['fecha_hasta']); ?></p>
-                                        <p class="mb-0"><?php echo htmlspecialchars($novedad['textoNovedad']); ?></p>
-                                    </div>
-                                </div>
+            <?php if (!$novedades) { ?>
+                <div class="alert alert-warning">No hay novedades disponibles</div>
+            <?php } else { ?>
+                <?php foreach ($novedades as $novedad) { ?>
+                    <div class="mb-4">
+                        <div class="card w-100">
+                            <div class="card-img-top bg-light" style="height: 250px;">
+                                <img src="./private/visualizar_imagen.php?novedad_id=<?php echo htmlspecialchars($novedad['id']); ?>" 
+                                        alt="Imagen de la novedad" class="img-fluid h-100 w-100" style="object-fit: cover;">
                             </div>
-                        <?php } ?>
-                    </div>
-
-                    <div class="pagination-container">
-                        <ul class="pagination justify-content-center mt-4">
-                            <li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
-                                <a class="page-link" href="?page=<?php echo $page - 1; ?>">Anterior</a>
-                            </li>
-                            <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
-                                <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-                                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                                </li>
-                            <?php } ?>
-                            <li class="page-item <?php echo ($page == $total_pages) ? 'disabled' : ''; ?>">
-                                <a class="page-link" href="?page=<?php echo $page + 1; ?>">Siguiente</a>
-                            </li>
-                        </ul>
+                            <div class="card-body">
+                                <p class="mb-2"><strong>Desde:</strong> <?php echo htmlspecialchars($novedad['fecha_desde']); ?></p>
+                                <p class="mb-2"><strong>Hasta:</strong> <?php echo htmlspecialchars($novedad['fecha_hasta']); ?></p>
+                                <p class="mb-0"><?php echo htmlspecialchars($novedad['textoNovedad']); ?></p>
+                            </div>
+                        </div>
                     </div>
                 <?php } ?>
-            </section>
+
+                <div class="pagination-container">
+                    <ul class="pagination justify-content-center mt-4">
+                        <li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="?page=<?php echo $page - 1; ?>">Anterior</a>
+                        </li>
+                        <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
+                            <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                                <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                            </li>
+                        <?php } ?>
+                        <li class="page-item <?php echo ($page == $total_pages) ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="?page=<?php echo $page + 1; ?>">Siguiente</a>
+                        </li>
+                    </ul>
+                </div>
+            <?php } ?>
         </main>
 
         <?php include './includes/footer.php'; ?>
