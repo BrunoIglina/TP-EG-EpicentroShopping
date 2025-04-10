@@ -6,30 +6,21 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$promo_id = $_GET['promo_id'];
+$cliente_id = $_GET['cliente_id'];
 
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include(__DIR__ . '/../env/shopping_db.php');
+$sql = "SELECT usu.categoria, COUNT(pxc.idCliente) AS total_aceptadas FROM promociones_cliente pxc
+    INNER JOIN usuarios usu ON pxc.idCliente = usu.id
+    WHERE pxc.idCliente = $cliente_id AND estado = 'aceptada'
+    GROUP BY usu.categoria";
 
+// include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+include(__DIR__ . '/../env/shopping_db.php');
 
-
-
-$sql = "SELECT idCliente FROM promociones_cliente WHERE idPromocion = $promo_id";
-$result = $conn->query($sql);
-
-if ($result->num_rows == 1) {
-    $row = $result->fetch_assoc();
-    $cliente_id = $row['idCliente'];
-
-    $sql = "SELECT COUNT(*) AS total_aceptadas FROM promociones_cliente WHERE idCliente = $cliente_id AND estado = 'aceptada'";
-    $result = $conn->query($sql);
+if($result = $conn->query($sql)) {
     $row = $result->fetch_assoc();
     $total_aceptadas = $row['total_aceptadas'];
-
-    $sql = "SELECT categoria FROM usuarios WHERE id = $cliente_id";
-    $result = $conn->query($sql);
-    $row = $result->fetch_assoc();
     $categoria_actual = $row['categoria'];
+
 
     $nueva_categoria = $categoria_actual;
     if ($categoria_actual == 'Inicial' && $total_aceptadas >= 3) {
@@ -42,19 +33,21 @@ if ($result->num_rows == 1) {
     if ($nueva_categoria != $categoria_actual) {
         $sql = "UPDATE usuarios SET categoria = '$nueva_categoria' WHERE id = $cliente_id";
         if ($conn->query($sql) === TRUE) {
+            $conn->close();
             echo "Categoría del cliente actualizada a $nueva_categoria.";
             header("Location: ../gestion_promos.php");
 
         } else {
             echo "Error al actualizar la categoría del cliente: " . $conn->error;
+            $conn->close();
         }
     } else {
         echo "La categoría del cliente no ha cambiado.";
         header("Location: ../gestion_promos.php");
     }
 } else {
-    echo "No se encontró la promoción o el cliente asociado.";
+    echo "Error en la consulta: " . $conn->error;
+    exit();
 }
 
-$conn->close();
 ?>
