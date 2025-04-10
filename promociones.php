@@ -5,7 +5,6 @@ if (!isset($_GET['local_id'])) {
     exit;
 }
 
-// include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
 include('./env/shopping_db.php');
 include './private/rubros.php';
 include './private/functions_locales.php';
@@ -13,7 +12,7 @@ include './private/functions_locales.php';
 $local = get_local($_GET['local_id']);
 
 $categoriaCliente = isset($_SESSION['user_categoria']) ? $_SESSION['user_categoria'] : null;
-$tipoUsuario = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : null;
+$tipoUsuario = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante';
 
 $categorias = ['Inicial', 'Medium', 'Premium'];
 $sql = "
@@ -23,25 +22,14 @@ $sql = "
         promociones.fecha_inicio, 
         promociones.fecha_fin,
         promociones.diasSemana,
-        promociones.local_id
+        promociones.local_id,
+        promociones.categoriaCliente
     FROM
         promociones 
     WHERE 
         promociones.estadoPromo = 'Aprobada'
         AND CURRENT_DATE() BETWEEN fecha_inicio AND fecha_fin
 ";
-
-if ($categoriaCliente) {
-    $indice_categoria_cliente = array_search($categoriaCliente, $categorias);
-
-    if ($indice_categoria_cliente !== false) {
-        $categorias_permitidas = array_slice($categorias, 0, $indice_categoria_cliente + 1);
-        $categorias_permitidas_sql = implode("', '", $categorias_permitidas);
-        $sql .= " AND promociones.categoriaCliente IN ('$categorias_permitidas_sql')";
-    } else {
-        $sql .= " AND 1=0"; 
-    }
-}
 
 if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
     $local_id = (int)$_GET['local_id'];
@@ -51,11 +39,9 @@ if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
 $limit = 9; 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
-
 $sql .= " LIMIT $limit OFFSET $offset";
 
 $result = $conn->query($sql);
-
 if (!$result) {
     die("Error en la consulta: " . $conn->error);
 }
@@ -68,15 +54,9 @@ $total_result_sql = "
         promociones.estadoPromo = 'Aprobada'
         AND CURRENT_DATE() BETWEEN fecha_inicio AND fecha_fin
 ";
-if ($categoriaCliente) {
-    $total_result_sql .= " AND promociones.categoriaCliente IN ('$categorias_permitidas_sql')";
-}
-
 if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
-    $local_id = (int)$_GET['local_id'];
     $total_result_sql .= " AND promociones.local_id = $local_id";
 }
-
 $total_result = $conn->query($total_result_sql);
 $total_rows = $total_result->fetch_assoc()['total'];
 $total_pages = ceil($total_rows / $limit);
@@ -95,6 +75,7 @@ $total_pages = ceil($total_rows / $limit);
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
+
         <?php
         if (isset($_SESSION['mensaje_error'])) {
             echo "<div class='alert alert-danger text-center'>" . $_SESSION['mensaje_error'] . "</div>";
@@ -119,20 +100,38 @@ $total_pages = ceil($total_rows / $limit);
                             <div class="card w-100 mb-4">
                                 <div class="card-body">
                                     <p><strong><?php echo $row["textoPromo"]; ?></strong></p>
+                                    <p><strong>Categoría del Cliente: <?php echo $row["categoriaCliente"]; ?></strong></p>
                                     <p>Fecha de Inicio: <?php echo $row["fecha_inicio"]; ?></p>
                                     <p>Fecha de Fin: <?php echo $row["fecha_fin"]; ?></p>
                                     <p>Días de la Semana: <?php echo str_replace(',', ', ', $row["diasSemana"]); ?></p>
                                     <?php
-                                    if ($tipoUsuario !== 'Dueno' && $tipoUsuario !== 'Administrador') {
-                                        if ($tipoUsuario === 'Visitante') { ?>
-                                            <a href='login.php' class='btn btn-success'>Pedir Promoción</a>
-                                        <?php } else { ?>
-                                            <form method='POST' action='pedir_promocion.php'>
-                                                <input type='hidden' name='promo_id' value='<?php echo $row["promo_id"]; ?>'>
-                                                <button type='submit' class='btn btn-success'>Pedir Promoción</button>
-                                            </form>
-                                        <?php }
-                                    } ?>
+                                    if ($tipoUsuario === 'Visitante') {
+                                      echo "<a href='login.php' class='btn btn-success mb-3'>Pedir Promoción</a>";
+                                    } elseif ($tipoUsuario === 'Cliente') {
+                                      $promoId = (int)$row["promo_id"];
+                                      $promoCategoria = $row["categoriaCliente"];
+                                      $clienteCategoria = $_SESSION['user_categoria'];
+                                      $clienteId = (int)$_SESSION['user_id'];
+
+                                      $indiceCliente = array_search($clienteCategoria, $categorias);
+                                      $indicePromo = array_search($promoCategoria, $categorias);
+
+                                      $checkSql = "SELECT COUNT(*) AS ya_pedido FROM promociones_cliente WHERE idCliente = $clienteId AND idPromocion = $promoId";
+                                      $checkResult = $conn->query($checkSql);
+                                      $yaPidio = $checkResult->fetch_assoc()['ya_pedido'] > 0;
+
+                                      if ($indicePromo > $indiceCliente || $yaPidio) {
+                                          echo "<button class='btn btn-secondary mb-3' style='background-color: gray; cursor: not-allowed;' disabled>No Disponible</button>";
+                                      } else {
+                                          echo "<form method='POST' action='pedir_promocion.php'>";
+                                          echo "<input type='hidden' name='promo_id' value='" . $promoId . "'>";
+                                          echo "<button type='submit' class='btn btn-success mb-3'>Pedir Promoción</button>";
+                                          echo "</form>";
+                                        }
+                                    } else {
+                                        // Dueño o Administrador
+                                        echo "<button class='btn btn-secondary mb-3' style='background-color: gray; cursor: not-allowed;' disabled>No Disponible</button>";
+                                    }?>
                                 </div>
                             </div>
                         </div>
@@ -159,11 +158,11 @@ $total_pages = ceil($total_rows / $limit);
                         </li>
                     </ul>
                 </nav>
-
             </div>
         </main>
         <?php include './includes/footer.php'; ?>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
