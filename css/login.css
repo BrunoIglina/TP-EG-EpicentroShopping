@@ -6,9 +6,13 @@ body {
     padding: 0;
 }
 
+.auth-container {
+    margin-top: 4rem; /* Ajuste para mover toda la caja hacia abajo */
+}
+
 .auth-form {
     max-width: 400px;
-    margin: 2rem auto;
+    margin: auto;
     padding: 2rem;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -28,21 +32,14 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease; /* Cambio de color suave */
 }
 
-.auth-form input[type="radio"] {
-    display: inline-block;
-    width: auto;
-    margin-right: 0.5rem;
+.auth-form button:hover {
+    background-color: #3a475e; /* Color diferente al hacer hover */
 }
 
-[for="cliente"], .auth-form label[for="dueno"] {
-    display: inline-block;
-    width: auto;
-    margin-right: 1rem;
-}
-
-.registrar{
+.registrar {
     text-decoration: none !important;
 }
 
@@ -53,11 +50,7 @@ body {
 
 .btn-register:hover {
     text-decoration: none !important;
-}
-
-.actions button {
-    background-color: #c9ada7;
-    color: #202833;
+    background-color: #bcdcf5 !important; /* Color más claro al hacer hover */
 }
 
 .wrapper {

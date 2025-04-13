@@ -47,6 +47,7 @@ $sql = "
         promociones.fecha_fin,
         promociones.diasSemana,
         locales.nombre AS local_nombre,
+        usuarios.id AS idCliente,
         usuarios.email AS email
     FROM 
         promociones_cliente 
@@ -109,18 +110,20 @@ if (!$result) {
                                 <p class="card-text"><strong><?php echo $row["textoPromo"]; ?></strong></p>
                                 <p>Inicio: <?php echo $row["fecha_inicio"]; ?></p>
                                 <p>Fin: <?php echo $row["fecha_fin"]; ?></p>
-                                <p>Días: <?php echo $row["diasSemana"]; ?></p>
+                                <p>Días: <?php echo str_replace(',', ', ', $row["diasSemana"]); ?></p>
                                 <p><strong>Estado:</strong> <?php echo $row["estado"]; ?></p>
                                 <p>Email: <?php echo $row["email"]; ?></p>
                                 <?php if ($row["estado"] == 'enviada'): ?>
                                     <div class="d-flex justify-content-between">
                                         <form id="promoForm_<?php echo $row["idPromocion"]; ?>_aceptar" method="POST" action="./private/gestionar_promocion.php">
                                             <input type="hidden" name="promo_id" value="<?php echo $row["idPromocion"]; ?>">
+                                            <input type="hidden" name="cliente_id" value="<?php echo $row["idCliente"]; ?>">
                                             <input type="hidden" name="accion" value="aceptar">
                                             <button type="button" class="btn btn-success" onclick="confirmarAccion(<?php echo $row["idPromocion"]; ?>, 'aceptar')">Aceptar</button>
                                         </form>
                                         <form id="promoForm_<?php echo $row["idPromocion"]; ?>_rechazar" method="POST" action="./private/gestionar_promocion.php">
                                             <input type="hidden" name="promo_id" value="<?php echo $row["idPromocion"]; ?>">
+                                            <input type="hidden" name="cliente_id" value="<?php echo $row["idCliente"]; ?>">
                                             <input type="hidden" name="accion" value="rechazar">
                                             <button type="button" class="btn btn-danger" onclick="confirmarAccion(<?php echo $row["idPromocion"]; ?>, 'rechazar')">Rechazar</button>
                                         </form>

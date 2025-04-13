@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->execute();
 
             unset($_SESSION['verification_code']);
-            header('Location: ../logout.php');
+            header('Location: login.php');
             exit();
         } else {
             $error = "Correo electrónico no proporcionado.";

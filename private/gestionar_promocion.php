@@ -9,6 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $usuario_id = $_SESSION['user_id'];
     $promo_id = $_POST['promo_id'];
+    $cliente_id = $_POST['cliente_id'];
     $accion = $_POST['accion'];
 
     // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
@@ -16,14 +17,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     if ($accion == 'aceptar') {
-        $sql = "UPDATE promociones_cliente SET estado = 'aceptada' WHERE idPromocion = $promo_id";
+        $sql = "UPDATE promociones_cliente SET estado = 'aceptada' 
+            WHERE idPromocion = $promo_id AND  idCliente = $cliente_id";
     } else if ($accion == 'rechazar') {
-        $sql = "UPDATE promociones_cliente SET estado = 'rechazada' WHERE idPromocion = $promo_id";
+        $sql = "UPDATE promociones_cliente SET estado = 'rechazada' 
+            WHERE idPromocion = $promo_id AND  idCliente = $cliente_id";
     }
 
     if ($conn->query($sql) === TRUE) {
         if ($accion == 'aceptar') {
-            header("Location: valida_categoria.php?promo_id=$promo_id");
+            header("Location: valida_categoria.php?cliente_id=$cliente_id");
             exit();
         } else {
             $mensaje = "Promoción rechazada exitosamente.";

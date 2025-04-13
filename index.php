@@ -1,19 +1,11 @@
 <?php
-
 session_start();
 
+include './private/functions_locales.php';
+include './private/rubros.php';
 
-if (isset($_SESSION['mensaje_error'])) {
-    echo "<div class='alert alert-danger text-center'>" . $_SESSION['mensaje_error'] . "</div>";
-    unset($_SESSION['mensaje_error']); 
-}
+$locales = get_locales_solicitados();
 
-
-
-include './private/functions_novedades.php';
-
-$novedades = get_all_novedades();
-$novedades = array_slice($novedades, 0, 5);
 ?>
 
 <!DOCTYPE html>
@@ -23,47 +15,61 @@ $novedades = array_slice($novedades, 0, 5);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/wrapper.css"> 
-    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/tarjetas.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
-    
     <title>Epicentro Shopping - Inicio</title>
-
 </head>
+<div class="ratio ratio-16x9 position-relative">
+    <video src="./assets/file.mp4" class="w-100" autoplay muted loop playsinline></video>
+        <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 text-white text-center" style="background: rgba(0, 0, 0, 0.5);">
+<h1>BIENVENIDO A SHOPPING EPICENTRO</h1>
+</div>
+</div>
+
 <body>
 
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
-        <main class="container-fluid">
 
-        <h2 class="text-center my-4" >Novedades Recientes</h2>
+        <main>
 
-        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-            <?php foreach ($novedades as $index => $novedad): 
-                if ($index == 0): ?>
-                <div class="carousel-item active">
-                <?php else: ?>
-                <div class="carousel-item">
-                <?php endif; ?>
-                    <a href="<?= dirname($_SERVER['SCRIPT_NAME']) ?>/novedades.php" class="slide-link">                
-                        <img src='./private/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>' class="image-carousel d-block w-100 " alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h3><?php echo htmlspecialchars($novedad['tituloNovedad']); ?></h3>
+
+            <div class="container-fluid">
+
+                <?php
+                if (isset($_SESSION['mensaje_error'])) {
+                    echo "<div class='alert alert-danger text-center'>" . $_SESSION['mensaje_error'] . "</div>";
+                    unset($_SESSION['mensaje_error']); 
+                }
+                ?>
+
+                <h2>NUESTROS LOCALES MAS SOLICITADOS</h2>
+
+                <div class="row" style="background-color:rgba(32, 40, 51, 0.06); padding: 1rem; border-radius: 20px;">
+                    <?php foreach ($locales as $local) { ?>
+                        <div class="col-md-3 col-sm-12" style="padding: .5rem;">
+                            <a href="promociones.php?local_id=<?php echo $local['id']; ?>&local_nombre=<?php echo urlencode($local['nombre']); ?>&local_rubro=<?php echo urlencode($local['rubro']); ?>" class="card-link">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <div class="card-image">
+                                            <?php echo '<img src="./private/visualizar_imagen.php?local_id=' . $local['id'] . '" alt="Imagen de el local">'; ?>
+                                        </div>
+                                        <h4 class="card-title"><?php echo $local['nombre']; ?></h4>
+                                        <p class="card-text">
+                                            <?php echo $local['rubro']; ?><br>
+                                            <?php echo $local['ubicacion']; ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </a>        
+                    <?php } ?>
                 </div>
-            <?php endforeach; ?>
+
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
+
+
         </main>
 
         <?php include './includes/footer.php'; ?>
@@ -74,5 +80,3 @@ $novedades = array_slice($novedades, 0, 5);
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-

@@ -15,13 +15,19 @@ $categorias = get_categorias();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/admin.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Agregar Novedad</title>
 </head>
 <body>
     <?php include './includes/header.php'; ?>
+    <?php
+            if (isset($_SESSION['mensaje_error1'])) {
+                echo "<div class='alert alert-danger text-center'>" . $_SESSION['mensaje_error1'] . "</div>";
+                unset($_SESSION['mensaje_error1']); 
+            }
+    ?>
     <div class="container mt-5">
         <main>
             <section class="admin-section">

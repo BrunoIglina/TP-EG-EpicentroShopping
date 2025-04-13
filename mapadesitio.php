@@ -11,7 +11,7 @@
 </head>
 <body>
     <?php include './includes/header.php'; ?>
-    <h2 class="text-center my-4">Mapa del Sitio</h2>
+    <h2 class="text-center my-5">Mapa del Sitio</h2>
     <main class="container my-4 mapa">
     <div class="row justify-content-center">
         <div class="col-md-4">
