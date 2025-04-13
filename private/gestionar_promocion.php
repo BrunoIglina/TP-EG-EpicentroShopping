@@ -11,9 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $promo_id = $_POST['promo_id'];
     $cliente_id = $_POST['cliente_id'];
     $accion = $_POST['accion'];
-
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include(__DIR__ . '/../env/shopping_db.php');
+    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include(__DIR__ . '/../env/shopping_db.php');
 
 
     if ($accion == 'aceptar') {

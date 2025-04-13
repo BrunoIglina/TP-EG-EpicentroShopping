@@ -5,7 +5,8 @@ if (!isset($_GET['local_id'])) {
     exit;
 }
 
-include('./env/shopping_db.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+// include('./env/shopping_db.php');
 include './private/rubros.php';
 include './private/functions_locales.php';
 

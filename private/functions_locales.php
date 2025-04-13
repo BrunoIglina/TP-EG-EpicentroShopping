@@ -1,8 +1,8 @@
 <?php
 
 function get_all_locales($limit = null, $offset = null){
-        // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-        include(__DIR__ . '/../env/shopping_db.php');
+    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include(__DIR__ . '/../env/shopping_db.php');
 
 
     $qry_locales = "SELECT * FROM locales ORDER BY nombre";
@@ -20,8 +20,8 @@ function get_all_locales($limit = null, $offset = null){
 }
 
 function get_local($id_local){
-        // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-        include(__DIR__ . '/../env/shopping_db.php');
+    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include(__DIR__ . '/../env/shopping_db.php');
 
 
     $qry_local = "SELECT * FROM locales WHERE id = '$id_local'";
@@ -34,8 +34,8 @@ function get_local($id_local){
 }
 
 function get_local_by_nombre($nombre){
-        // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-        include(__DIR__ . '/../env/shopping_db.php');
+    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include(__DIR__ . '/../env/shopping_db.php');
 
 
     $qry_local = "SELECT * FROM locales WHERE nombre = '$nombre'";
@@ -48,7 +48,8 @@ function get_local_by_nombre($nombre){
 }
 
 function get_total_locales(){
-    include(__DIR__ . '/../env/shopping_db.php');
+    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include(__DIR__ . '/../env/shopping_db.php');
 
     $qry_count = "SELECT COUNT(*) as total FROM locales";
     $result = $conn->query($qry_count);
@@ -62,8 +63,8 @@ function get_total_locales(){
 }
 
 function get_locales_solicitados(){
-  // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-  include(__DIR__ . '/../env/shopping_db.php');
+    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include(__DIR__ . '/../env/shopping_db.php');
 
   $qry_promociones = "SELECT pro.local_id, COUNT(pxc.idPromocion) AS solicitudes 
                         FROM promociones_cliente pxc 

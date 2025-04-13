@@ -11,8 +11,8 @@ error_reporting(E_ALL);
 
 require('../lib/vendor/autoload.php');
 require('../lib/vendor/setasign/fpdf/fpdf.php');
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include(__DIR__ . '/../env/shopping_db.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+// include(__DIR__ . '/../env/shopping_db.php');
 
 
 if (!isset($_GET['local_id'])) {

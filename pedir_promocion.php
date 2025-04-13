@@ -11,8 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario_id = $_SESSION['user_id'];
     $promo_id = $_POST['promo_id'];
 
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include('./env/shopping_db.php');
+    include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+    // include('./env/shopping_db.php');
 
 
     $referer = $_SERVER['HTTP_REFERER'] ?? 'promociones.php';

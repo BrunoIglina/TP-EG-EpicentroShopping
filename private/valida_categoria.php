@@ -13,8 +13,8 @@ $sql = "SELECT usu.categoria, COUNT(pxc.idCliente) AS total_aceptadas FROM promo
     WHERE pxc.idCliente = $cliente_id AND estado = 'aceptada'
     GROUP BY usu.categoria";
 
-// include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-include(__DIR__ . '/../env/shopping_db.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+// include(__DIR__ . '/../env/shopping_db.php');
 
 if($result = $conn->query($sql)) {
     $row = $result->fetch_assoc();

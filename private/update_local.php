@@ -5,8 +5,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include(__DIR__ . '/../env/shopping_db.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+// include(__DIR__ . '/../env/shopping_db.php');
 
 
 include "functions_usuarios.php";

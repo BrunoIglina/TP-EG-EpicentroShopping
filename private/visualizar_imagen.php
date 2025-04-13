@@ -1,7 +1,7 @@
 <?php
 ob_start(); 
-// include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-include(__DIR__ . '/../env/shopping_db.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+// include(__DIR__ . '/../env/shopping_db.php');
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);

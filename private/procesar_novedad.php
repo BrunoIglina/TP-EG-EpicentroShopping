@@ -4,8 +4,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     header("Location: index.php");
     exit();
 }
-// include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-include(__DIR__ . '/../env/shopping_db.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
+// include(__DIR__ . '/../env/shopping_db.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = isset($_POST['action']) ? $_POST['action'] : '';
