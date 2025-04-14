@@ -79,9 +79,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <label for="tipo">Tipo:</label>
                     <select id="tipo" name="tipo" required>
+                        <option value="" disabled selected>Selecciona un tipo</option> 
                         <option value="Cliente">Cliente</option>
                         <option value="Dueno">Dueño</option>
                     </select>
+
 
                     <button type="submit" class="btn btn-register">Registrarse</button>
                 </form>

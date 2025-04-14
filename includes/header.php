@@ -55,7 +55,7 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Gestionar Shopping</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="admin_locales.php">Gestionar Locales</a></li>
               <li><a class="dropdown-item" href="admin_novedades.php">Gestionar Novedades</a></li>
               <li><a class="dropdown-item" href="admin_promociones.php">Gestionar Promociones</a></li>
@@ -73,7 +73,7 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Gestionar Promociones</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="misPromos.php">Mis Promociones</a></li>
               <li><a class="dropdown-item" href="gestion_promos.php">Administrar Solicitudes</a></li>
             </ul>

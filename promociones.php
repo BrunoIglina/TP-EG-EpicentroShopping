@@ -90,8 +90,7 @@ $total_pages = ceil($total_rows / $limit);
         ?>
 
         <main class="container-fluid">
-            <h2><?php echo $local["nombre"]; ?></h2>
-            
+            <h2><?php echo $local["nombre"]; ?></h2>  
                 <?php
                 if ($result->num_rows > 0) {
                     
@@ -160,7 +159,7 @@ $total_pages = ceil($total_rows / $limit);
                         </li>
                     </ul>
                 </nav>
-            </div>
+            
         </main>
         <?php include './includes/footer.php'; ?>
     </div>

@@ -100,7 +100,7 @@ if (!$result) {
     <?php  include './includes/header.php'; ?> 
     
     <div class="container my-4">
-    <h2 class="text-center my-4">Gestionar Promociones</h2>
+    <h2 class="text-center my-4"></h2>
         
         <div class="row">
             <?php if ($result->num_rows > 0): ?>
@@ -136,7 +136,7 @@ if (!$result) {
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>
-                <p class="text-center">No hay promociones disponibles.</p>
+                <p class="text-center my-4">No hay promociones disponibles.</p>
             <?php endif; ?>
         </div>
 
