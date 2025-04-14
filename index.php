@@ -11,24 +11,27 @@ $locales = get_locales_solicitados();
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+<link rel="stylesheet" href="./css/footer.css">
+<link rel="stylesheet" href="./css/header.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/wrapper.css"> 
     <link rel="stylesheet" href="./css/tarjetas.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="stylesheet" href="./css/footer.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Inicio</title>
 </head>
+
+
+<body>
 <div class="ratio ratio-16x9 position-relative">
     <video src="./assets/file.mp4" class="w-100" autoplay muted loop playsinline></video>
         <div class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 text-white text-center" style="background: rgba(0, 0, 0, 0.5);">
 <h1>BIENVENIDO A SHOPPING EPICENTRO</h1>
 </div>
 </div>
-
-<body>
-
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
 

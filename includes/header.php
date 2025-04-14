@@ -4,18 +4,14 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante';
 ?>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="DIR ./../css/header.css">
-<title>Epicentro Shopping</title>
-</head>
-<header class="p-3 m-0 border-0 ">
-  
 
-<body>
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../css/header.css">
+
+
+<header class="p-3 m-0 border-0 ">
 
 <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #202833;">
   <div class="container-fluid">
@@ -104,7 +100,4 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
 </nav>
 </header>
 
-<!-- Incluye los scripts de Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

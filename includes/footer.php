@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="__DIR__ ./../css/footer.css">
+
 
 <footer>
     <p>Epicentro Shopping - Todos los derechos reservados © 2024</p>

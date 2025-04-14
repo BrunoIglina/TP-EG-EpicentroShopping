@@ -38,7 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+<link rel="stylesheet" href="./css/footer.css">
+<link rel="stylesheet" href="./css/header.css">
     <link rel="stylesheet" href="./css/cambiar_contraseña.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
