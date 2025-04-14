@@ -72,6 +72,7 @@ if (isset($_GET['id'])) {
                         <div class="form-group">
                             <label for="categoria">Categoría</label>
                             <select id="categoria" name="categoria" required class="form-control">
+                            <option value="" disabled <?php echo empty($novedad['categoria']) ? 'selected' : ''; ?>>Seleccione una categoría</option>
                                 <?php foreach ($categorias as $categoria): ?>
                                     <option value="<?php echo $categoria; ?>" <?php echo ($categoria == $novedad['categoria']) ? 'selected' : ''; ?>>
                                         <?php echo $categoria; ?>
