@@ -64,6 +64,7 @@ if (isset($_GET['id'])) {
                         <div class="form-group">
                             <label for="rubro_local">Rubro</label>
                             <select id="rubro_local" name="rubro_local" required class="form-control">
+                            <option value="" disabled <?php echo empty($local['rubro']) ? 'selected' : ''; ?>>Seleccione un rubro</option>
                                 <?php foreach ($rubros as $label => $value): ?>
                                     <option value="<?php echo $value; ?>" <?php echo ($value == $local['rubro']) ? 'selected' : ''; ?>>
                                         <?php echo $label; ?>
@@ -76,6 +77,7 @@ if (isset($_GET['id'])) {
                         <div class="form-group">
                             <label for="email_dueño">Email Dueño</label>
                             <select id="email_dueño" name="id_dueño" required class="form-control">
+                            <option value="" disabled <?php echo empty($local['idUsuario']) ? 'selected' : ''; ?>>Seleccione un dueño</option>
                                 <?php foreach ($dueños as $dueño): ?>
                                     <option value="<?php echo $dueño['id']; ?>" <?php echo ($dueño['id'] == $local['idUsuario']) ? 'selected' : ''; ?>>
                                         <?php echo $dueño['email']; ?>
