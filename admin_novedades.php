@@ -20,20 +20,19 @@ $total_pages = ceil($total_novedades / $limit);
 <html lang="es">
 <head>
     <meta charset="utf-8">
-<link rel="stylesheet" href="./css/footer.css">
-<link rel="stylesheet" href="./css/header.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/admin.css">
-    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/header.css">
     <title>Epicentro Shopping - Administración de Novedades</title>
 </head>
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
         
-        <main class="container">
+        <main class="container-fluid">
             <section class="admin-section">
                 <h2 class="text-center my-4">Administración de Novedades</h2>
 
@@ -53,7 +52,7 @@ $total_pages = ceil($total_novedades / $limit);
                     <div class="alert alert-warning">No hay novedades cargadas</div>
                 <?php } else { ?>
 
-                    <div class="table-responsive-lg">
+                    <div class="table-responsive">
                         <table class="table table-striped table-bordered">
                             <thead class="thead-dark">
                                 <tr>
@@ -141,7 +140,7 @@ $total_pages = ceil($total_novedades / $limit);
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function confirmAction(action, novedadId) {
             $('#confirmModal').modal('show');

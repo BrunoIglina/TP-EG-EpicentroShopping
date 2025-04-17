@@ -1,0 +1,29 @@
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Aplica scroll horizontal si hace falta */
+}
+
+.table-responsive {
+    min-width: 800px; /* Se adapta a contenido */
+    margin: auto;
+}
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+body {
+    overflow-x: hidden; /* Evita scroll en todo el body */
+}

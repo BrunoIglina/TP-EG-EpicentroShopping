@@ -31,7 +31,7 @@ $total_pages = ceil($total_dueños / $limit);
 <link rel="stylesheet" href="./css/footer.css">
 <link rel="stylesheet" href="./css/header.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/admin_aprobar_dueños.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
@@ -127,7 +127,7 @@ $total_pages = ceil($total_dueños / $limit);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     function confirmApproval(ownerId, email) {
         $('#modalEmail').text(email);

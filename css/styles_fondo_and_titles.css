@@ -1,23 +1,19 @@
 body {
-    background: #ecebebd7;
+    background: rgba(236, 235, 189, 0.84);
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-
 }
-
 
 h2 {
     font-family: 'Arial', sans-serif;
     font-size: 36px;
     color: #000;
-    text-align: center !important; 
-    text-transform: uppercase; 
-    position: relative;
+    text-align: center;
+    text-transform: uppercase;
     display: block;
     margin: 20px 0;
     padding: 10px;
     letter-spacing: 2px;
     font-weight: bold;
-
 }
