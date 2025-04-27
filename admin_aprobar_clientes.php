@@ -25,8 +25,8 @@ $total_pages = ceil($total_clientes / $limit);
 <html lang="es">
 <head>
     <meta charset="utf-8">
-<link rel="stylesheet" href="./css/footer.css">
-<link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/header.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
@@ -57,7 +57,7 @@ $total_pages = ceil($total_clientes / $limit);
                                     <td><?php echo htmlspecialchars($row['id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['email']); ?></td>
                                     <td>
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmModal" data-id="<?php echo $row['id']; ?>" data-email="<?php echo $row['email']; ?>">Aprobar</button>
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#confirmModal" data-id="<?php echo $row['id']; ?>" data-email="<?php echo $row['email']; ?>">Aprobar</button>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
@@ -92,28 +92,26 @@ $total_pages = ceil($total_clientes / $limit);
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="confirmModalLabel">Confirmar Aprobación</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ¿Está seguro de que desea aprobar al cliente con email <span id="modalEmail"></span>?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" id="confirmApprovalBtn">Confirmar</button>
-          </div>
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar Aprobación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Está seguro de que desea aprobar al cliente con email <span id="modalEmail"></span>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmActionBtn">Confirmar</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -126,7 +124,7 @@ $total_pages = ceil($total_clientes / $limit);
                 $('#modalEmail').text(email);
             });
 
-            $('#confirmApprovalBtn').on('click', function () {
+            $('#confirmActionBtn').on('click', function () {
                 if (selectedId) {
                     let form = $('#approvalForm');
                     $('<input>').attr({

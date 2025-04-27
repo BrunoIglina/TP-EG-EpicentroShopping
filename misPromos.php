@@ -93,7 +93,7 @@ $conn->close();
                                 echo "<td>" . $row['estadoPromo'] . "</td>";
                                 echo "<td>" . $row['totalPromos'] . "</td>";
                                 echo "<td>";
-                                echo "<form action='../private/eliminarPromo.php' method='POST' onsubmit='return confirm(\"¿Estás seguro de que deseas eliminar esta promoción?\");'>";
+                                echo "<form action='./private/eliminarPromo.php' method='POST' onsubmit='return confirm(\"¿Estás seguro de que deseas eliminar esta promoción?\");'>";
                                 echo "<input type='hidden' name='promo_id' value='" . $row['id'] . "'>";
                                 echo "<input type='submit' value='Eliminar' class='btn btn-danger'>";
                                 echo "</form>";
