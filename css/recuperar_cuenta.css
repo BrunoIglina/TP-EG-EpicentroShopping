@@ -1,0 +1,216 @@
+.auth-page {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100%;
+}
+
+.auth-page body {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100vh !important;
+}
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100%;
+}
+
+body {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100vh !important;
+}
+
+.wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100vh !important;
+}
+
+
+header {
+    flex-shrink: 0 !important;
+}
+
+footer {
+    flex-shrink: 0 !important;
+}
+
+
+main {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%) !important;
+    padding: 2rem 1rem;
+}
+
+
+.auth-form {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    max-width: 420px;
+    width: 100%;
+    margin: 0;
+}
+
+
+.auth-form h2 {
+    color: #2c3e50;
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+    font-size: 1.75rem;
+    text-align: center;
+}
+
+
+.auth-form label {
+    display: block;
+    color: #555;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+
+.auth-form input[type="email"],
+.auth-form input[type="text"],
+.auth-form input[type="password"],
+.auth-form select,
+.auth-form textarea {
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 1.5rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+.auth-form input:focus,
+.auth-form select:focus,
+.auth-form textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+
+.auth-form button,
+.auth-form .btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.auth-form button:hover,
+.auth-form .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+.auth-form button:active,
+.auth-form .btn:active {
+    transform: translateY(0);
+}
+
+
+.auth-form .btn-register {
+    background: linear-gradient(135deg, #4c34cfda 0%, #667eea 100%);
+    margin-top: 0.5rem;
+}
+
+
+.alert,
+.text-danger,
+.text-success {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.alert-danger,
+.text-danger {
+    background: #fee;
+    color: #c33;
+    border-left: 4px solid #c33;
+}
+
+.alert-success,
+.text-success {
+    background: #efe;
+    color: #2d7a2d;
+    border-left: 4px solid #2d7a2d;
+}
+
+
+.auth-form a {
+    color: #667eea;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.auth-form a:hover {
+    text-decoration: underline;
+}
+
+
+.auth-form select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 1.5rem 1rem;
+    }
+    
+    .auth-form {
+        padding: 2rem;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    main {
+        padding: 1rem;
+    }
+    
+    .auth-form {
+        padding: 1.5rem;
+    }
+    
+    .auth-form h2 {
+        font-size: 1.5rem;
+    }
+}
+
+
+@supports (-webkit-appearance: none) {
+    body {
+        min-height: -webkit-fill-available;
+    }
+}
