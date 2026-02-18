@@ -5,33 +5,46 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     exit();
 }
 
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include('./env/shopping_db.php');
+require_once './config/database.php';
+$conn = getDB();
 
 $user_id = $_SESSION['user_id'];
 
-$filters = [];
+$params = [$user_id];
+$types = "i";
+$conditions = [];
+
+$fecha_inicio = filter_input(INPUT_GET, 'fecha_inicio', FILTER_SANITIZE_STRING);
+$fecha_fin = filter_input(INPUT_GET, 'fecha_fin', FILTER_SANITIZE_STRING);
+$estadoPromo = filter_input(INPUT_GET, 'estadoPromo', FILTER_SANITIZE_STRING);
+
+if (!empty($fecha_inicio)) {
+    $conditions[] = "p.fecha_inicio >= ?";
+    $params[] = $fecha_inicio;
+    $types .= "s";
+}
+if (!empty($fecha_fin)) {
+    $conditions[] = "p.fecha_fin <= ?";
+    $params[] = $fecha_fin;
+    $types .= "s";
+}
+if (!empty($estadoPromo)) {
+    $conditions[] = "p.estadoPromo = ?";
+    $params[] = $estadoPromo;
+    $types .= "s";
+}
+
 $sql = "SELECT p.id, p.textoPromo, p.fecha_inicio, p.fecha_fin, p.categoriaCliente, p.local_id, p.estadoPromo,
                (SELECT COUNT(*) FROM promociones_cliente pc WHERE pc.idPromocion = p.id AND pc.estado = 'aceptada') AS totalPromos
         FROM promociones p
         WHERE p.local_id IN (SELECT id FROM locales WHERE idUsuario = ?)";
 
-if (isset($_GET['fecha_inicio']) && $_GET['fecha_inicio'] != '') {
-    $filters[] = "p.fecha_inicio >= '" . $conn->real_escape_string($_GET['fecha_inicio']) . "'";
-}
-if (isset($_GET['fecha_fin']) && $_GET['fecha_fin'] != '') {
-    $filters[] = "p.fecha_fin <= '" . $conn->real_escape_string($_GET['fecha_fin']) . "'";
-}
-if (isset($_GET['estadoPromo']) && $_GET['estadoPromo'] != '') {
-    $filters[] = "p.estadoPromo = '" . $conn->real_escape_string($_GET['estadoPromo']) . "'";
-}
-
-if (count($filters) > 0) {
-    $sql .= " AND " . implode(" AND ", $filters);
+if (count($conditions) > 0) {
+    $sql .= " AND " . implode(" AND ", $conditions);
 }
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id);
+$stmt->bind_param($types, ...$params);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -52,7 +65,7 @@ if (isset($_GET['generate_pdf'])) {
 
         function ReportTable($header, $data) {
             $this->SetFont('Arial', 'B', 12);
-            $widths = array(20, 60, 30, 30, 50, 30, 20, 30, 20); 
+            $widths = array(20, 60, 30, 30, 50, 30, 20, 30); 
             for ($i = 0; $i < count($header); $i++) {
                 $this->Cell($widths[$i], 7, $header[$i], 1);
             }
@@ -71,8 +84,19 @@ if (isset($_GET['generate_pdf'])) {
     $pdf->AddPage();
     $header = array('ID', 'Texto', 'Inicio', 'Fin', 'Categoria', 'Local', 'Estado', 'Usos');
     $data = [];
+    
+    $result->data_seek(0);
     while ($row = $result->fetch_assoc()) {
-        $data[] = array($row['id'], $row['textoPromo'], $row['fecha_inicio'], $row['fecha_fin'], $row['categoriaCliente'], $row['local_id'], $row['estadoPromo'], $row['totalPromos']);
+        $data[] = array(
+            $row['id'], 
+            substr($row['textoPromo'], 0, 30), 
+            $row['fecha_inicio'], 
+            $row['fecha_fin'], 
+            $row['categoriaCliente'], 
+            $row['local_id'], 
+            $row['estadoPromo'], 
+            $row['totalPromos']
+        );
     }
     $pdf->ReportTable($header, $data);
     $pdf->Output('D', 'Reporte_Promociones.pdf'); 
@@ -102,19 +126,19 @@ if (isset($_GET['generate_pdf'])) {
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="fecha_inicio">Fecha de Inicio</label>
-                        <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value="<?php echo isset($_GET['fecha_inicio']) ? $_GET['fecha_inicio'] : ''; ?>">
+                        <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value="<?php echo htmlspecialchars($fecha_inicio ?? ''); ?>">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="fecha_fin">Fecha de Fin</label>
-                        <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" value="<?php echo isset($_GET['fecha_fin']) ? $_GET['fecha_fin'] : ''; ?>">
+                        <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" value="<?php echo htmlspecialchars($fecha_fin ?? ''); ?>">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="estadoPromo">Estado</label>
                         <select class="form-control" id="estadoPromo" name="estadoPromo">
                             <option value="">Todos</option>
-                            <option value="Aprobada" <?php echo (isset($_GET['estadoPromo']) && $_GET['estadoPromo'] == 'Aprobada') ? 'selected' : ''; ?>>Aprobada</option>
-                            <option value="Pendiente" <?php echo (isset($_GET['estadoPromo']) && $_GET['estadoPromo'] == 'Pendiente') ? 'selected' : ''; ?>>Pendiente</option>
-                            <option value="Denegada" <?php echo (isset($_GET['estadoPromo']) && $_GET['estadoPromo'] == 'Denegada') ? 'selected' : ''; ?>>Denegada</option>
+                            <option value="Aprobada" <?php echo ($estadoPromo == 'Aprobada') ? 'selected' : ''; ?>>Aprobada</option>
+                            <option value="Pendiente" <?php echo ($estadoPromo == 'Pendiente') ? 'selected' : ''; ?>>Pendiente</option>
+                            <option value="Denegada" <?php echo ($estadoPromo == 'Denegada') ? 'selected' : ''; ?>>Denegada</option>
                         </select>
                     </div>
                 </div>
@@ -140,19 +164,20 @@ if (isset($_GET['generate_pdf'])) {
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                                 echo "<tr>";
-                                echo "<td>" . $row['id'] . "</td>";
-                                echo "<td>" . $row['textoPromo'] . "</td>";
-                                echo "<td>" . $row['fecha_inicio'] . "</td>";
-                                echo "<td>" . $row['fecha_fin'] . "</td>";
-                                echo "<td>" . $row['categoriaCliente'] . "</td>";
-                                echo "<td>" . $row['local_id'] . "</td>";
-                                echo "<td>" . $row['estadoPromo'] . "</td>";
-                                echo "<td>" . $row['totalPromos'] . "</td>";
+                                echo "<td>" . htmlspecialchars($row['id']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['textoPromo']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['fecha_inicio']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['fecha_fin']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['categoriaCliente']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['local_id']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['estadoPromo']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['totalPromos']) . "</td>";
                                 echo "</tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='9'>No hay promociones</td></tr>";
+                            echo "<tr><td colspan='8'>No hay promociones</td></tr>";
                         }
+                        $stmt->close();
                         ?>
                     </tbody>
                 </table>

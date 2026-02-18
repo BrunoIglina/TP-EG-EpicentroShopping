@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-include './private/functions_locales.php';
-include './private/rubros.php';
+require_once './private/functions/functions_locales.php';
+require_once './config/rubros.php';
 
 $locales = get_locales_solicitados();
 
@@ -42,7 +42,7 @@ $locales = get_locales_solicitados();
 
                 <?php
                 if (isset($_SESSION['mensaje_error'])) {
-                    echo "<div class='alert alert-danger text-center'>" . $_SESSION['mensaje_error'] . "</div>";
+                    echo "<div class='alert alert-danger text-center'>" . htmlspecialchars($_SESSION['mensaje_error']) . "</div>";
                     unset($_SESSION['mensaje_error']); 
                 }
                 ?>
@@ -56,12 +56,12 @@ $locales = get_locales_solicitados();
                                 <div class="card text-center">
                                     <div class="card-body">
                                         <div class="card-image">
-                                            <?php echo '<img src="./private/visualizar_imagen.php?local_id=' . $local['id'] . '" alt="Imagen de el local">'; ?>
+                                            <?php echo '<img src="./private/helpers/visualizar_imagen.php?local_id=' . $local['id'] . '" alt="Imagen de el local">'; ?>
                                         </div>
-                                        <h4 class="card-title"><?php echo $local['nombre']; ?></h4>
+                                        <h4 class="card-title"><?php echo htmlspecialchars($local['nombre']); ?></h4>
                                         <p class="card-text">
-                                            <?php echo $local['rubro']; ?><br>
-                                            <?php echo $local['ubicacion']; ?>
+                                            <?php echo htmlspecialchars($local['rubro']); ?><br>
+                                            <?php echo htmlspecialchars($local['ubicacion']); ?>
                                         </p>
                                     </div>
                                 </div>

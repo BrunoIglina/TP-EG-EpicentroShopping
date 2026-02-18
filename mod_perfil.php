@@ -1,39 +1,36 @@
 <?php
-
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include('./env/shopping_db.php');
-require './lib/vendor/autoload.php'; 
-require './private/gen_code_verif.php';
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+session_start();
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
+require_once './config/database.php';
+require_once './lib/vendor/autoload.php'; 
+require_once './private/helpers/email.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+$conn = getDB();
 $user_id = $_SESSION['user_id'];
-$query = "SELECT * FROM usuarios WHERE id = ?";
-$stmt = $conn->prepare($query);
+
+$stmt = $conn->prepare("SELECT * FROM usuarios WHERE id = ?");
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
-
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
- 
+$stmt->close();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $user['email']; 
-
     
-    $result = generate_verification_code($email);
-    
-    if ($result === true) {
+    if (enviar_codigo_verificacion($email)) {
         header('Location: cod_verif.php'); 
         exit();
     } else {
-        $error = $result; 
+        $error = "No se pudo enviar el código. Intente nuevamente.";
     }
 }
 ?>
@@ -42,31 +39,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="es">
 <head>
     <meta charset="utf-8">
-<link rel="stylesheet" href="./css/footer.css">
-<link rel="stylesheet" href="./css/header.css">
-    <!--    <link rel="stylesheet" href="../css/styles.css"> -->
-    <link rel="stylesheet" href="./css/mod_perfil.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/auth.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Editar Perfil</title>
 </head>
-<body>
+<body class="auth-page">
     <div class="wrapper">
-
         <?php include './includes/header.php'; ?>
-        <main class="form-container">
-            <h1 class="text-center my-4">Editar Perfil</h1>
-            <form method="POST">
-                <button type="submit">Enviar Código de Verificación</button>
-            </form>
-            <?php if (isset($error)) echo "<p>$error</p>"; ?>
+        <main>
+            <div class="auth-container">
+                <section class="form-container">
+                    <h1>Editar Perfil</h1>
+                    <?php if (isset($error)) echo "<p class='text-danger'>" . htmlspecialchars($error) . "</p>"; ?>
+                    <form method="POST">
+                        <button type="submit">Enviar Código de Verificación</button>
+                    </form>
+                </section>
+            </div>
         </main>
         <?php include './includes/footer.php'; ?>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

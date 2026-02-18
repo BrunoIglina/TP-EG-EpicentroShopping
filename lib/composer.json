@@ -2,6 +2,6 @@
     "require": {
         "setasign/fpdf": "^1.8",
         "filp/whoops": "^2.18",
-        "phpmailer/phpmailer": "^6.9"
+        "phpmailer/phpmailer": "^7.0"
     }
 }

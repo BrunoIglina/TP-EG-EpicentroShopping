@@ -1,5 +1,7 @@
 <?php
-include(__DIR__ . '/../env/shopping_db.php');
+/*
+include(__DIR__ . '/../env/require_once './config/database.php';
+$conn = getDB();');
 
 $id = $_POST['id'];
 
@@ -17,4 +19,5 @@ if ($stmt->execute()) {
 
 $stmt->close();
 $conn->close();
+*/
 ?>

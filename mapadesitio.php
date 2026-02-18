@@ -13,7 +13,7 @@
 </head>
 <body>
     <?php include './includes/header.php'; ?>
-    <h2 class="text-center my-5">Mapa del Sitio</h2>
+    <h1 class="text-center my-5">MAPA DEL SITIO</h1>
     <main class="container my-4 mapa">
     <div class="row justify-content-center">
         <div class="col-md-4">

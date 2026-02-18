@@ -1,6 +1,10 @@
+
 <?php
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include(__DIR__ . '/../env/shopping_db.php');
+/* 
+    // include($_SERVER['DOCUMENT_ROOT'] . '/env/require_once './config/database.php';
+$conn = getDB();');
+    include(__DIR__ . '/../env/require_once './config/database.php';
+$conn = getDB();');
 
 
 
@@ -17,4 +21,4 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->close();
 
-?>
+?>*/

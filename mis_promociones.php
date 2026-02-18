@@ -7,15 +7,14 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Cliente') {
 
 $usuario_id = $_SESSION['user_id'];
 
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include('./env/shopping_db.php');
-
+require_once './config/database.php';
+$conn = getDB();
 
 $limit = 4; 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
-$sql = "
+$stmt = $conn->prepare("
     SELECT 
         locales.nombre,
         promociones.textoPromo, 
@@ -23,42 +22,24 @@ $sql = "
         promociones.fecha_fin,
         promociones.diasSemana,
         promociones_cliente.estado
-    FROM 
-        promociones_cliente 
-    INNER JOIN 
-        promociones 
-    ON 
-        promociones_cliente.idPromocion = promociones.id 
-    INNER JOIN 
-        locales
-    ON
-        promociones.local_id = locales.id
-    WHERE 
-        promociones_cliente.idCliente = ?
+    FROM promociones_cliente 
+    INNER JOIN promociones ON promociones_cliente.idPromocion = promociones.id 
+    INNER JOIN locales ON promociones.local_id = locales.id
+    WHERE promociones_cliente.idCliente = ?
     LIMIT ? OFFSET ?
-";
+");
 
-$stmt = $conn->prepare($sql);
 $stmt->bind_param("iii", $usuario_id, $limit, $offset);
 $stmt->execute();
 $result = $stmt->get_result();
 
-$total_result_sql = "
+$total_stmt = $conn->prepare("
     SELECT COUNT(*) AS total
-    FROM 
-        promociones_cliente 
-    INNER JOIN 
-        promociones 
-    ON 
-        promociones_cliente.idPromocion = promociones.id 
-    INNER JOIN 
-        locales
-    ON
-        promociones.local_id = locales.id
-    WHERE 
-        promociones_cliente.idCliente = ?
-";
-$total_stmt = $conn->prepare($total_result_sql);
+    FROM promociones_cliente 
+    INNER JOIN promociones ON promociones_cliente.idPromocion = promociones.id 
+    INNER JOIN locales ON promociones.local_id = locales.id
+    WHERE promociones_cliente.idCliente = ?
+");
 $total_stmt->bind_param("i", $usuario_id);
 $total_stmt->execute();
 $total_result = $total_stmt->get_result();
@@ -67,7 +48,6 @@ $total_pages = ceil($total_rows / $limit);
 
 $stmt->close();
 $total_stmt->close();
-$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -95,12 +75,12 @@ $conn->close();
                         echo "<div class='col-lg-6 col-md-12 mb-4'>";
                         echo "<div class='card'>";
                         echo "<div class='card-body'>";
-                        echo "<h2 class='card-title'>" . $row["nombre"] . "</h2>";
-                        echo "<p><strong>" . $row["textoPromo"] . "</strong></p>";
-                        echo "<p>Fecha de Inicio: " . $row["fecha_inicio"] . "</p>";
-                        echo "<p>Fecha de Fin: " . $row["fecha_fin"] . "</p>";
-                        echo "<p>Días de la Semana: " . str_replace(',', ', ', $row["diasSemana"]) . "</p>";
-                        echo "<p>Estado: " . $row["estado"] . "</p>";
+                        echo "<h2 class='card-title'>" . htmlspecialchars($row["nombre"]) . "</h2>";
+                        echo "<p><strong>" . htmlspecialchars($row["textoPromo"]) . "</strong></p>";
+                        echo "<p>Fecha de Inicio: " . htmlspecialchars($row["fecha_inicio"]) . "</p>";
+                        echo "<p>Fecha de Fin: " . htmlspecialchars($row["fecha_fin"]) . "</p>";
+                        echo "<p>Días de la Semana: " . htmlspecialchars(str_replace(',', ', ', $row["diasSemana"])) . "</p>";
+                        echo "<p>Estado: " . htmlspecialchars($row["estado"]) . "</p>";
                         echo "</div>";
                         echo "</div>";
                         echo "</div>";

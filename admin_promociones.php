@@ -5,20 +5,27 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include './env/shopping_db.php';
+require_once './config/database.php';
+
+$conn = getDB();
 
 $limit = 6;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
-$sql = "SELECT id, textoPromo, fecha_inicio, fecha_fin FROM promociones WHERE estadoPromo = 'Pendiente' LIMIT $limit OFFSET $offset";
-$result = $conn->query($sql);
+$stmt = $conn->prepare("SELECT id, textoPromo, fecha_inicio, fecha_fin FROM promociones WHERE estadoPromo = 'Pendiente' LIMIT ? OFFSET ?");
+$stmt->bind_param("ii", $limit, $offset);
+$stmt->execute();
+$result = $stmt->get_result();
 
-$total_promociones_sql = "SELECT COUNT(*) AS total FROM promociones WHERE estadoPromo = 'Pendiente'";
-$total_result = $conn->query($total_promociones_sql);
+$stmt_total = $conn->prepare("SELECT COUNT(*) AS total FROM promociones WHERE estadoPromo = 'Pendiente'");
+$stmt_total->execute();
+$total_result = $stmt_total->get_result();
 $total_row = $total_result->fetch_assoc();
 $total_promociones = $total_row['total'];
 $total_pages = ceil($total_promociones / $limit);
+
+$stmt_total->close();
 ?>
 
 <!DOCTYPE html>
@@ -27,6 +34,7 @@ $total_pages = ceil($total_promociones / $limit);
     <meta charset="utf-8">
     <link rel="stylesheet" href="./css/footer.css">
     <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/admin_promociones.css">
@@ -65,10 +73,10 @@ $total_pages = ceil($total_promociones / $limit);
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
                                     echo "<tr>";
-                                    echo "<td>" . $row['id'] . "</td>";
-                                    echo "<td>" . $row['textoPromo'] . "</td>";
-                                    echo "<td>" . $row['fecha_inicio'] . "</td>";
-                                    echo "<td>" . $row['fecha_fin'] . "</td>";
+                                    echo "<td>" . htmlspecialchars($row['id']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($row['textoPromo']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($row['fecha_inicio']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($row['fecha_fin']) . "</td>";
                                     echo "<td>
                                         <button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#confirmModal' data-id='" . $row['id'] . "' data-action='aprobar'>Aprobar</button>
                                         <button type='button' class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#confirmModal' data-id='" . $row['id'] . "' data-action='rechazar'>Rechazar</button>
@@ -78,12 +86,12 @@ $total_pages = ceil($total_promociones / $limit);
                             } else {
                                 echo "<tr><td colspan='5'>No hay promociones pendientes</td></tr>";
                             }
+                            $stmt->close();
                             ?>
                         </tbody>
                     </table>
                 </div>
 
-                <!-- Controles de paginación -->
                 <div class="pagination-container mt-4">
                     <ul class="pagination justify-content-center">
                         <li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
@@ -104,7 +112,7 @@ $total_pages = ceil($total_promociones / $limit);
         <?php include './includes/footer.php'; ?>
     </div>
 
-    <form id="actionForm" method="POST" action="./private/controAcepPromo.php"></form>
+    <form id="actionForm" method="POST" action="./private/crud/promociones.php"></form>
 
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -140,11 +148,19 @@ $total_pages = ceil($total_promociones / $limit);
                 $('#confirmActionBtn').off('click').on('click', function() {
                     var form = $('#actionForm');
                     form.empty();
-                    var input = $('<input>')
+                    
+                    var inputAction = $('<input>')
                         .attr('type', 'hidden')
-                        .attr('name', action)
+                        .attr('name', 'action')
+                        .val(action);
+                    
+                    var inputId = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'promocion_id')
                         .val(promocionId);
-                    form.append(input);
+                    
+                    form.append(inputAction);
+                    form.append(inputId);
                     form.submit();
                 });
             });

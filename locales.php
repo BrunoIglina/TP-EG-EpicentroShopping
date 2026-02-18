@@ -1,6 +1,6 @@
 <?php
-include './private/functions_locales.php';
-include './private/rubros.php';
+require_once './private/functions/functions_locales.php';
+require_once './config/rubros.php';
 
 $locales = get_all_locales();
 $filtered_locales = $locales;
@@ -56,7 +56,7 @@ $paginated_locales = array_slice($filtered_locales, $start_index, $items_per_pag
             <div class="row">
                 <form class="d-flex w-100" method="GET">
                     <div class="flex-grow-1 me-2">
-                        <input type="text" name="nombre_local" class="form-control" placeholder="Buscar por nombre del local..." value="<?php echo isset($_GET['nombre_local']) ? $_GET['nombre_local'] : ''; ?>">
+                        <input type="text" name="nombre_local" class="form-control" placeholder="Buscar por nombre del local..." value="<?php echo isset($_GET['nombre_local']) ? htmlspecialchars($_GET['nombre_local']) : ''; ?>">
                     </div>
                     <div>
                         <button type="submit" class="btn btn-primary">Buscar</button>
@@ -72,7 +72,7 @@ $paginated_locales = array_slice($filtered_locales, $start_index, $items_per_pag
                             <select name="rubro" class="form-control">
                                 <option value="">Todos los rubros</option>
                                 <?php foreach ($rubros as $label => $value) { ?>
-                                    <option value="<?php echo $value; ?>"><?php echo $label; ?></option>
+                                    <option value="<?php echo htmlspecialchars($value); ?>"><?php echo htmlspecialchars($label); ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -92,12 +92,12 @@ $paginated_locales = array_slice($filtered_locales, $start_index, $items_per_pag
                                     <div class="card text-center">
                                         <div class="card-body">
                                             <div class="card-image">
-                                                <?php echo '<img src="./private/visualizar_imagen.php?local_id=' . $local['id'] . '" alt="Imagen de el local">'; ?>
+                                                <?php echo '<img src="./private/helpers/visualizar_imagen.php?local_id=' . $local['id'] . '" alt="Imagen de el local">'; ?>
                                             </div>
-                                            <h4 class="card-title"><?php echo $local['nombre']; ?></h4>
+                                            <h4 class="card-title"><?php echo htmlspecialchars($local['nombre']); ?></h4>
                                             <p class="card-text">
-                                                <?php echo $local['rubro']; ?><br>
-                                                <?php echo $local['ubicacion']; ?>
+                                                <?php echo htmlspecialchars($local['rubro']); ?><br>
+                                                <?php echo htmlspecialchars($local['ubicacion']); ?>
                                             </p>
                                         </div>
                                     </div>

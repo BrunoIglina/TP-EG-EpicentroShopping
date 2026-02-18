@@ -5,20 +5,26 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include('./env/shopping_db.php');
+require_once './config/database.php';
+$conn = getDB();
 
 $limit = 6; 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
 $offset = ($page - 1) * $limit; 
 
-$query = "SELECT id, email FROM usuarios WHERE tipo = 'Cliente' AND validado = 0 LIMIT $limit OFFSET $offset";
-$result = mysqli_query($conn, $query);
+$stmt = $conn->prepare("SELECT id, email FROM usuarios WHERE tipo = 'Cliente' AND validado = 0 LIMIT ? OFFSET ?");
+$stmt->bind_param("ii", $limit, $offset);
+$stmt->execute();
+$result = $stmt->get_result();
 
-$total_query = "SELECT COUNT(*) AS total FROM usuarios WHERE tipo = 'Cliente' AND validado = 0";
-$total_result = mysqli_query($conn, $total_query);
-$total_row = mysqli_fetch_assoc($total_result);
+$stmt_total = $conn->prepare("SELECT COUNT(*) AS total FROM usuarios WHERE tipo = 'Cliente' AND validado = 0");
+$stmt_total->execute();
+$total_result = $stmt_total->get_result();
+$total_row = $total_result->fetch_assoc();
 $total_clientes = $total_row['total'];
 $total_pages = ceil($total_clientes / $limit);
+
+$stmt_total->close();
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +47,8 @@ $total_pages = ceil($total_clientes / $limit);
         <main class="container-fluid">
             <h2 class="text-center my-4">Aprobar Clientes</h2>
             
-            <form id="approvalForm" method="POST" action="./private/aceptar_clientes.php">
+            <form id="approvalForm" method="POST" action="./private/crud/usuarios.php">
+                <input type="hidden" name="action" value="aprobar_cliente">
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -51,13 +58,13 @@ $total_pages = ceil($total_clientes / $limit);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if ($result && mysqli_num_rows($result) > 0): ?>
-                            <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                        <?php if ($result && $result->num_rows > 0): ?>
+                            <?php while ($row = $result->fetch_assoc()): ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars($row['id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['email']); ?></td>
                                     <td>
-                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#confirmModal" data-id="<?php echo $row['id']; ?>" data-email="<?php echo $row['email']; ?>">Aprobar</button>
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#confirmModal" data-id="<?php echo $row['id']; ?>" data-email="<?php echo htmlspecialchars($row['email']); ?>">Aprobar</button>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
@@ -66,11 +73,11 @@ $total_pages = ceil($total_clientes / $limit);
                                 <td colspan="3" class="text-center">No hay clientes pendientes de aprobación</td>
                             </tr>
                         <?php endif; ?>
+                        <?php $stmt->close(); ?>
                     </tbody>
                 </table>
             </form>
 
-            <!-- Paginación -->
             <div class="pagination-container mt-4">
                 <ul class="pagination justify-content-center">
                     <li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
@@ -91,7 +98,6 @@ $total_pages = ceil($total_clientes / $limit);
     <?php include './includes/footer.php'; ?>
     </div>
 
-    <!-- Modal -->
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -110,7 +116,6 @@ $total_pages = ceil($total_clientes / $limit);
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

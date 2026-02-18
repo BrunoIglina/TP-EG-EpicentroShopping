@@ -1,8 +1,3 @@
-<?php
-require './private/mail_contacto.php';
-
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -71,7 +66,7 @@ require './private/mail_contacto.php';
             </div>
         </div>
         
-        <form action="./private/mail_contacto.php" method="POST" class="mt-4">
+        <form action="./private/helpers/procesar_contacto.php" method="POST" class="mt-4">
             <div class="form-group">
                 <label for="nombre">Nombre</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" required>

@@ -1,7 +1,7 @@
 <?php
 session_start();
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include('./env/shopping_db.php');
+require_once './config/database.php';
+$conn = getDB();
 
 if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     header("Location: index.php");
@@ -10,8 +10,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
 
 $user_id = $_SESSION['user_id'];
 
-$sql = "SELECT id, nombre FROM locales WHERE idUsuario = ?";
-$stmt = $conn->prepare($sql);
+$stmt = $conn->prepare("SELECT id, nombre FROM locales WHERE idUsuario = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -22,7 +21,6 @@ while ($row = $result->fetch_assoc()) {
 }
 
 $stmt->close();
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -45,16 +43,17 @@ $conn->close();
         <h2 class="text-center my-4">Agregar Nueva Promoción</h2>
 
         <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger"><?= $_SESSION['error']; ?></div>
+            <div class="alert alert-danger"><?= htmlspecialchars($_SESSION['error']); ?></div>
             <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
 
         <?php if (isset($_SESSION['mensaje'])): ?>
-            <div class="alert alert-success"><?= $_SESSION['mensaje']; ?></div>
+            <div class="alert alert-success"><?= htmlspecialchars($_SESSION['mensaje']); ?></div>
             <?php unset($_SESSION['mensaje']); ?>
         <?php endif; ?>
 
-        <form action="./private/controladorPromos.php" method="POST">
+        <form action="./private/crud/promociones.php" method="POST">
+            <input type="hidden" name="action" value="create">
             <div class="form-group">
                 <label for="local_id">Nombre del Local:</label>
                 <select id="local_id" name="local_id" class="form-control" required>
