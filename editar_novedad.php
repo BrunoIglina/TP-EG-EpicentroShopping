@@ -5,108 +5,133 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include './private/functions_novedades.php';
-include './private/functions_usuarios.php';
+require_once './private/functions/functions_novedades.php';
+require_once './private/functions/functions_usuarios.php';
 
 if (isset($_GET['id'])) {
     $novedad = get_novedad($_GET['id']);
     $categorias = get_categorias();
+} else {
+    $_SESSION['error'] = "ID de novedad no proporcionado.";
+    header("Location: admin_novedades.php");
+    exit();
+}
+
+if (!$novedad) {
+    $_SESSION['error'] = "Novedad no encontrada.";
+    header("Location: admin_novedades.php");
+    exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8">
-<link rel="stylesheet" href="./css/footer.css">
-<link rel="stylesheet" href="./css/header.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/styles.css">
-    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/forms.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
-    <title>Epicentro Shopping - Modificación de Novedades</title>
+    <title>Epicentro Shopping - Modificar Novedad</title>
 </head>
 <body>
-    <div class="wrapper">
-        <?php include './includes/header.php'; ?>
-        <div class="container mt-5">
+    <?php include './includes/header.php'; ?>
+    
+    <div class="form-wrapper">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10">
+                    <div class="form-card">
+                        <h2>Modificar Novedad</h2>
+                        
+                        <?php if (isset($_SESSION['error'])): ?>
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                <?php echo htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        <?php endif; ?>
+                        
+                        <form method="POST" action="./private/crud/novedades.php" enctype="multipart/form-data">
+                            <input type="hidden" name="action" value="update">
+                            <input type="hidden" name="id_novedad" value="<?php echo htmlspecialchars($novedad['id']); ?>">
+                            
+                            <div class="mb-3">
+                                <label for="codigo_novedad" class="form-label">Código Novedad</label>
+                                <input type="text" class="form-control" id="codigo_novedad" 
+                                       value="<?php echo htmlspecialchars($novedad['id']); ?>" readonly disabled>
+                            </div>
 
-            <main>
+                            <div class="mb-3">
+                                <label for="titulo_novedad" class="form-label">Título</label>
+                                <input type="text" class="form-control" id="titulo_novedad" name="titulo_novedad" 
+                                       value="<?php echo htmlspecialchars($novedad['tituloNovedad']); ?>" 
+                                       required maxlength="100">
+                            </div>
 
-                <section class="admin-section">
-                    <h1>Modificar Novedad</h1>
-                    <form id="localesNovedadesForm" method="POST" action="./private/update_novedad.php" enctype="multipart/form-data" class="form-style">
-                        <!-- Código Novedad (Solo lectura) -->
-                        <div class="form-group">
-                            <label for="codigo_novedad">Código Novedad</label>
-                            <input type="text" id="codigo_novedad" name="id_novedad" value="<?php echo $novedad['id']; ?>" readonly class="form-control">
-                        </div>
+                            <div class="mb-3">
+                                <label for="texto_novedad" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="texto_novedad" name="texto_novedad" 
+                                          rows="5" required maxlength="500"><?php echo htmlspecialchars($novedad['textoNovedad']); ?></textarea>
+                            </div>
 
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="fecha_desde" class="form-label">Fecha Desde</label>
+                                    <input type="date" class="form-control" id="fecha_desde" name="fecha_desde" 
+                                           value="<?php echo htmlspecialchars($novedad['fecha_desde']); ?>" required>
+                                </div>
 
-                        <!-- Título -->
-                        <div class="form-group">
-                            <label for="titulo_novedad">Título</label>
-                            <input type="text" id="titulo_novedad" name="titulo_novedad" value="<?php echo $novedad['tituloNovedad']; ?>" required class="form-control">
-                        </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="fecha_hasta" class="form-label">Fecha Hasta</label>
+                                    <input type="date" class="form-control" id="fecha_hasta" name="fecha_hasta" 
+                                           value="<?php echo htmlspecialchars($novedad['fecha_hasta']); ?>" required>
+                                </div>
+                            </div>
 
-                        <!-- Descripción -->
-                        <div class="form-group">
-                            <label for="texto_novedad">Descripción</label>
-                            <textarea id="texto_novedad" name="texto_novedad" rows="4" required class="form-control"><?php echo $novedad['textoNovedad']; ?></textarea>
-                        </div>
+                            <div class="mb-3">
+                                <label for="categoria" class="form-label">Categoría</label>
+                                <select class="form-select" id="categoria" name="categoria" required>
+                                    <option value="" disabled>Seleccione una categoría</option>
+                                    <?php foreach ($categorias as $categoria): ?>
+                                        <option value="<?php echo htmlspecialchars($categoria); ?>" 
+                                                <?php echo ($categoria == $novedad['categoria']) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($categoria); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
 
-                        <!-- Fecha Desde -->
-                        <div class="form-group">
-                            <label for="fecha_desde">Fecha Desde</label>
-                            <input type="date" id="fecha_desde" name="fecha_desde" value="<?php echo $novedad['fecha_desde']; ?>" required class="form-control">
-                        </div>
+                            <div class="mb-3">
+                                <label class="form-label">Imagen Actual</label>
+                                <?php if (!empty($novedad['imagen'])): ?>
+                                    <img src="./private/helpers/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>" 
+                                         alt="Imagen de la novedad" class="preview-image d-block">
+                                <?php else: ?>
+                                    <p class="text-muted text-center">No hay imagen disponible</p>
+                                <?php endif; ?>
+                            </div>
 
-                        <!-- Fecha Hasta -->
-                        <div class="form-group">
-                            <label for="fecha_hasta">Fecha Hasta</label>
-                            <input type="date" id="fecha_hasta" name="fecha_hasta" value="<?php echo $novedad['fecha_hasta']; ?>" required class="form-control">
-                        </div>
+                            <div class="mb-4">
+                                <label for="imagen_novedad" class="form-label">Nueva Imagen (opcional)</label>
+                                <input type="file" class="form-control" id="imagen_novedad" name="imagen_novedad" 
+                                       accept="image/png, image/jpeg, image/jpg">
+                                <small class="text-muted">Si no selecciona una imagen, se mantendrá la actual.</small>
+                            </div>
 
-                        <!-- Categoría -->
-                        <div class="form-group">
-                            <label for="categoria">Categoría</label>
-                            <select id="categoria" name="categoria" required class="form-control">
-                            <option value="" disabled <?php echo empty($novedad['categoria']) ? 'selected' : ''; ?>>Seleccione una categoría</option>
-                                <?php foreach ($categorias as $categoria): ?>
-                                    <option value="<?php echo $categoria; ?>" <?php echo ($categoria == $novedad['categoria']) ? 'selected' : ''; ?>>
-                                        <?php echo $categoria; ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <!-- Imagen -->
-                        <div class="form-group">
-                            <label for="imagen_novedad">Imagen</label>
-                            <?php if (!empty($novedad['imagen'])): ?>
-                                <img src="./private/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>" alt="Imagen de la novedad" style="max-width: 80px;
-                                height: auto;">
-                            <?php else: ?>
-                                <p>No hay imagen disponible</p>
-                            <?php endif; ?>
-                            <input type="file" id="imagen_novedad" name="imagen_novedad" class="form-control mt-2" accept=".png, .jpeg, .jpg">
-                        </div>
-
-                        <!-- Botón Aplicar Cambios -->
-                        <div class="form-group text-center">
-                            <button type="submit" class="btn btn-success">Aplicar cambios</button>
-                        </div>
-                    </form>
-                </section>
-
-            </main>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-gradient">Aplicar Cambios</button>
+                                <button type="button" class="btn btn-secondary" 
+                                        onclick="window.location.href='admin_novedades.php'">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <?php include './includes/footer.php'; ?>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    
+    <?php include './includes/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

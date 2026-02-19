@@ -5,8 +5,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     exit();
 }
 
-    // include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-    include('./env/shopping_db.php');
+require_once './config/database.php';
+$conn = getDB();
 
 $user_id = $_SESSION['user_id'];
 
@@ -14,21 +14,19 @@ $limit = 5;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
-$sql = "SELECT p.id, p.textoPromo, p.fecha_inicio, p.fecha_fin, p.diasSemana, p.categoriaCliente, p.local_id, p.estadoPromo,
+$stmt = $conn->prepare("SELECT p.id, p.textoPromo, p.fecha_inicio, p.fecha_fin, p.diasSemana, p.categoriaCliente, p.local_id, p.estadoPromo,
                (SELECT COUNT(*) FROM promociones_cliente pc WHERE pc.idPromocion = p.id AND pc.estado = 'aceptada') AS totalPromos
         FROM promociones p
         WHERE p.local_id IN (SELECT id FROM locales WHERE idUsuario = ?)
-        LIMIT ? OFFSET ?";
+        LIMIT ? OFFSET ?");
 
-$stmt = $conn->prepare($sql);
 $stmt->bind_param("iii", $user_id, $limit, $offset);
 $stmt->execute();
 $result = $stmt->get_result();
 
-$total_result_sql = "SELECT COUNT(*) AS total
+$total_stmt = $conn->prepare("SELECT COUNT(*) AS total
                      FROM promociones
-                     WHERE local_id IN (SELECT id FROM locales WHERE idUsuario = ?)";
-$total_stmt = $conn->prepare($total_result_sql);
+                     WHERE local_id IN (SELECT id FROM locales WHERE idUsuario = ?)");
 $total_stmt->bind_param("i", $user_id);
 $total_stmt->execute();
 $total_result = $total_stmt->get_result();
@@ -37,7 +35,6 @@ $total_pages = ceil($total_rows / $limit);
 
 $stmt->close();
 $total_stmt->close();
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -46,6 +43,8 @@ $conn->close();
     <meta charset="utf-8">
 <link rel="stylesheet" href="./css/footer.css">
 <link rel="stylesheet" href="./css/header.css">
+<link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+<link rel="stylesheet" href="./css/wrapper.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 
@@ -56,7 +55,7 @@ $conn->close();
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
         <main class="container-fluid my-4">
-            <h2 class="text-center my-4">Mis Promociones</h2>
+            <h1 class="text-center my-4">MIS PROMOCIONES</h1>
             
             <p>
             <button class="btn btn-primary mb-3" onclick="location.href='darAltaPromos.php'">Agregar Promoción</button>
@@ -83,18 +82,19 @@ $conn->close();
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                                 echo "<tr>";
-                                echo "<td>" . $row['id'] . "</td>";
-                                echo "<td>" . $row['textoPromo'] . "</td>";
-                                echo "<td>" . $row['fecha_inicio'] . "</td>";
-                                echo "<td>" . $row['fecha_fin'] . "</td>";
-                                echo "<td>" . $row['diasSemana'] . "</td>";
-                                echo "<td>" . $row['categoriaCliente'] . "</td>";
-                                echo "<td>" . $row['local_id'] . "</td>";
-                                echo "<td>" . $row['estadoPromo'] . "</td>";
-                                echo "<td>" . $row['totalPromos'] . "</td>";
+                                echo "<td>" . htmlspecialchars($row['id']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['textoPromo']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['fecha_inicio']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['fecha_fin']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['diasSemana']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['categoriaCliente']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['local_id']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['estadoPromo']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['totalPromos']) . "</td>";
                                 echo "<td>";
-                                echo "<form action='./private/eliminarPromo.php' method='POST' onsubmit='return confirm(\"¿Estás seguro de que deseas eliminar esta promoción?\");'>";
-                                echo "<input type='hidden' name='promo_id' value='" . $row['id'] . "'>";
+                                echo "<form action='./private/crud/promociones.php' method='POST' onsubmit='return confirm(\"¿Estás seguro de que deseas eliminar esta promoción?\");'>";
+                                echo "<input type='hidden' name='action' value='delete'>";
+                                echo "<input type='hidden' name='promo_id' value='" . htmlspecialchars($row['id']) . "'>";
                                 echo "<input type='submit' value='Eliminar' class='btn btn-danger'>";
                                 echo "</form>";
                                 echo "</td>";
@@ -107,7 +107,9 @@ $conn->close();
                     </tbody>
                 </table>
             </div>
-            <nav aria-label="Page navigation">
+            
+        </main>
+        <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
                     <li class="page-item <?php if($page <= 1){ echo 'disabled'; } ?>">
                         <a class="page-link" href="<?php if($page > 1){ echo "?page=" . ($page - 1); } ?>">Anterior</a>
@@ -122,8 +124,6 @@ $conn->close();
                     </li>
                 </ul>
             </nav>
-        </main>
-        
         <?php include './includes/footer.php'; ?>
     </div>
     

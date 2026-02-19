@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-include './private/functions_novedades.php';
+require_once './private/functions/functions_novedades.php';
 
 $limit = 5; 
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
@@ -35,7 +35,6 @@ $total_pages = ceil($total_novedades / $limit);
         <?php include './includes/header.php'; ?>
         <main class="container-fluid">
             <h2 class="text-center my-5">Novedades</h2>
-            <p>Explora las últimas novedades y noticias de Epicentro Shopping.</p>
 
             <?php if (!$novedades) { ?>
                 <div class="alert alert-warning">No hay novedades disponibles</div>
@@ -44,7 +43,7 @@ $total_pages = ceil($total_novedades / $limit);
                     <div class="mb-4">
                         <div class="card w-100">
                             <div class="card-img-top bg-light" style="height: 250px;">
-                                <img src="./private/visualizar_imagen.php?novedad_id=<?php echo htmlspecialchars($novedad['id']); ?>" 
+                                <img src="./private/helpers/visualizar_imagen.php?novedad_id=<?php echo htmlspecialchars($novedad['id']); ?>" 
                                         alt="Imagen de la novedad" class="img-fluid h-100 w-100" style="object-fit: cover;">
                             </div>
                             <div class="card-body">

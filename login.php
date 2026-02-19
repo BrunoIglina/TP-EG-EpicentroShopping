@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('./env/shopping_db.php');
+require_once './config/database.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
@@ -18,8 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $sql = "SELECT id, password, tipo, categoria FROM usuarios WHERE email = ? AND validado = 1";
-    $stmt = $conn->prepare($sql);
+    $conn = getDB();
+
+    $stmt = $conn->prepare("SELECT id, password, tipo, categoria FROM usuarios WHERE email = ? AND validado = 1");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -32,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_tipo'] = $user['tipo'];
             $_SESSION['user_categoria'] = $user['categoria'];
 
+            $stmt->close();
             header("Location: index.php");
             exit();
         } else {
@@ -42,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $stmt->close();
-    $conn->close();
     header("Location: login.php");
     exit();
 }
@@ -52,28 +53,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="es">
 <head>
     <meta charset="utf-8">
-<link rel="stylesheet" href="./css/footer.css">
-<link rel="stylesheet" href="./css/header.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/login.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"> <!-- Fuente añadida -->
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Iniciar Sesión</title>
 </head>
-<body>
+<body class="auth-page">
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
         <main>
             <div class="auth-container">
                 <section class="auth-form">
-                    <h2 class="text-center my-4" style="font-family: 'Poppins', sans-serif;">Iniciar Sesión</h2> <!-- Fuente aplicada -->
-                    <?php
-                    if (isset($_SESSION['error'])) {
-                        echo "<p class='text-danger text-center'>" . $_SESSION['error'] . "</p>";
-                        unset($_SESSION['error']);
-                    }
-                    ?>
+                    <h2 style="font-family: 'Poppins', sans-serif;">Iniciar Sesión</h2>
+                    
+                    <?php if (isset($_SESSION['success'])): ?>
+                        <div class="alert alert-success">
+                            <?php 
+                            echo htmlspecialchars($_SESSION['success']); 
+                            unset($_SESSION['success']);
+                            ?>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <?php if (isset($_SESSION['error'])): ?>
+                        <div class="alert alert-danger">
+                            <?php 
+                            echo htmlspecialchars($_SESSION['error']); 
+                            unset($_SESSION['error']);
+                            ?>
+                        </div>
+                    <?php endif; ?>
+                    
                     <form action="login.php" method="post">
                         <label for="email">Correo Electrónico:</label>
                         <input type="email" id="email" name="email" required>
@@ -90,5 +104,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </main>
         <?php include './includes/footer.php'; ?>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

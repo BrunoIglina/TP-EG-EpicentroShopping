@@ -5,17 +5,31 @@ if (!isset($_GET['local_id'])) {
     exit;
 }
 
-include('./env/shopping_db.php');
-include './private/rubros.php';
-include './private/functions_locales.php';
+require_once './config/database.php';
+require_once './config/rubros.php';
+require_once './private/functions/functions_locales.php';
 
-$local = get_local($_GET['local_id']);
+$conn = getDB();
+
+$local_id = filter_input(INPUT_GET, 'local_id', FILTER_VALIDATE_INT);
+if (!$local_id) {
+    header("Location: locales.php");
+    exit;
+}
+
+$local = get_local($local_id);
 
 $categoriaCliente = isset($_SESSION['user_categoria']) ? $_SESSION['user_categoria'] : null;
 $tipoUsuario = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante';
+$clienteId = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 0;
 
 $categorias = ['Inicial', 'Medium', 'Premium'];
-$sql = "
+
+$limit = 9; 
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+$stmt = $conn->prepare("
     SELECT 
         promociones.id AS promo_id,
         promociones.textoPromo, 
@@ -24,42 +38,29 @@ $sql = "
         promociones.diasSemana,
         promociones.local_id,
         promociones.categoriaCliente
-    FROM
-        promociones 
-    WHERE 
-        promociones.estadoPromo = 'Aprobada'
+    FROM promociones 
+    WHERE promociones.estadoPromo = 'Aprobada'
         AND CURRENT_DATE() BETWEEN fecha_inicio AND fecha_fin
-";
+        AND promociones.local_id = ?
+    LIMIT ? OFFSET ?
+");
+$stmt->bind_param("iii", $local_id, $limit, $offset);
+$stmt->execute();
+$result = $stmt->get_result();
 
-if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
-    $local_id = (int)$_GET['local_id'];
-    $sql .= " AND promociones.local_id = $local_id";
-}
-
-$limit = 9; 
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-$sql .= " LIMIT $limit OFFSET $offset";
-
-$result = $conn->query($sql);
-if (!$result) {
-    die("Error en la consulta: " . $conn->error);
-}
-
-$total_result_sql = "
+$stmt_total = $conn->prepare("
     SELECT COUNT(*) AS total
-    FROM 
-        promociones 
-    WHERE 
-        promociones.estadoPromo = 'Aprobada'
+    FROM promociones 
+    WHERE promociones.estadoPromo = 'Aprobada'
         AND CURRENT_DATE() BETWEEN fecha_inicio AND fecha_fin
-";
-if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
-    $total_result_sql .= " AND promociones.local_id = $local_id";
-}
-$total_result = $conn->query($total_result_sql);
+        AND promociones.local_id = ?
+");
+$stmt_total->bind_param("i", $local_id);
+$stmt_total->execute();
+$total_result = $stmt_total->get_result();
 $total_rows = $total_result->fetch_assoc()['total'];
 $total_pages = ceil($total_rows / $limit);
+$stmt_total->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -80,17 +81,17 @@ $total_pages = ceil($total_rows / $limit);
 
         <?php
         if (isset($_SESSION['mensaje_error'])) {
-            echo "<div class='alert alert-danger text-center'>" . $_SESSION['mensaje_error'] . "</div>";
+            echo "<div class='alert alert-danger text-center'>" . htmlspecialchars($_SESSION['mensaje_error']) . "</div>";
             unset($_SESSION['mensaje_error']); 
         }
         if (isset($_SESSION['mensaje_exito'])) {
-            echo "<div class='alert alert-success text-center'>" . $_SESSION['mensaje_exito'] . "</div>";
+            echo "<div class='alert alert-success text-center'>" . htmlspecialchars($_SESSION['mensaje_exito']) . "</div>";
             unset($_SESSION['mensaje_exito']);
         }
         ?>
 
         <main class="container-fluid">
-            <h2><?php echo $local["nombre"]; ?></h2>  
+            <h2><?php echo htmlspecialchars($local["nombre"]); ?></h2>  
                 <?php
                 if ($result->num_rows > 0) {
                     
@@ -100,11 +101,11 @@ $total_pages = ceil($total_rows / $limit);
                         <div class="col-md-8 d-flex justify-content-center">
                             <div class="card w-100 mb-4">
                                 <div class="card-body">
-                                    <p><strong><?php echo $row["textoPromo"]; ?></strong></p>
-                                    <p><strong>Categoría del Cliente: <?php echo $row["categoriaCliente"]; ?></strong></p>
-                                    <p>Fecha de Inicio: <?php echo $row["fecha_inicio"]; ?></p>
-                                    <p>Fecha de Fin: <?php echo $row["fecha_fin"]; ?></p>
-                                    <p>Días de la Semana: <?php echo str_replace(',', ', ', $row["diasSemana"]); ?></p>
+                                    <p><strong><?php echo htmlspecialchars($row["textoPromo"]); ?></strong></p>
+                                    <p><strong>Categoría del Cliente: <?php echo htmlspecialchars($row["categoriaCliente"]); ?></strong></p>
+                                    <p>Fecha de Inicio: <?php echo htmlspecialchars($row["fecha_inicio"]); ?></p>
+                                    <p>Fecha de Fin: <?php echo htmlspecialchars($row["fecha_fin"]); ?></p>
+                                    <p>Días de la Semana: <?php echo htmlspecialchars(str_replace(',', ', ', $row["diasSemana"])); ?></p>
                                     <?php
                                     if ($tipoUsuario === 'Visitante') {
                                       echo "<a href='login.php' class='btn btn-success mb-3'>Pedir Promoción</a>";
@@ -112,14 +113,16 @@ $total_pages = ceil($total_rows / $limit);
                                       $promoId = (int)$row["promo_id"];
                                       $promoCategoria = $row["categoriaCliente"];
                                       $clienteCategoria = $_SESSION['user_categoria'];
-                                      $clienteId = (int)$_SESSION['user_id'];
 
                                       $indiceCliente = array_search($clienteCategoria, $categorias);
                                       $indicePromo = array_search($promoCategoria, $categorias);
 
-                                      $checkSql = "SELECT COUNT(*) AS ya_pedido FROM promociones_cliente WHERE idCliente = $clienteId AND idPromocion = $promoId";
-                                      $checkResult = $conn->query($checkSql);
+                                      $checkStmt = $conn->prepare("SELECT COUNT(*) AS ya_pedido FROM promociones_cliente WHERE idCliente = ? AND idPromocion = ?");
+                                      $checkStmt->bind_param("ii", $clienteId, $promoId);
+                                      $checkStmt->execute();
+                                      $checkResult = $checkStmt->get_result();
                                       $yaPidio = $checkResult->fetch_assoc()['ya_pedido'] > 0;
+                                      $checkStmt->close();
 
                                       if ($indicePromo > $indiceCliente || $yaPidio) {
                                           echo "<button class='btn btn-secondary mb-3' style='background-color: gray; cursor: not-allowed;' disabled>No Disponible</button>";
@@ -130,7 +133,6 @@ $total_pages = ceil($total_rows / $limit);
                                           echo "</form>";
                                         }
                                     } else {
-                                        // Dueño o Administrador
                                         echo "<button class='btn btn-secondary mb-3' style='background-color: gray; cursor: not-allowed;' disabled>No Disponible</button>";
                                     }?>
                                 </div>
@@ -138,7 +140,9 @@ $total_pages = ceil($total_rows / $limit);
                         </div>
                         <div class="col-md-2"></div>
                     </div>
-                    <?php } ?>
+                    <?php } 
+                    $stmt->close();
+                    ?>
 
                 <?php } else { ?>
                     <p>No hay promociones de este local.</p>
@@ -147,15 +151,15 @@ $total_pages = ceil($total_rows / $limit);
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
                         <li class="page-item <?php if ($page <= 1) { echo 'disabled'; } ?>">
-                            <a class="page-link" href="<?php if ($page > 1) { echo "?page=" . ($page - 1); } ?>">Anterior</a>
+                            <a class="page-link" href="?local_id=<?php echo $local_id; ?>&page=<?php echo $page - 1; ?>">Anterior</a>
                         </li>
                         <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                             <li class="page-item <?php if ($page == $i) { echo 'active'; } ?>">
-                                <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
+                                <a class="page-link" href="?local_id=<?php echo $local_id; ?>&page=<?= $i; ?>"><?= $i; ?></a>
                             </li>
                         <?php endfor; ?>
                         <li class="page-item <?php if ($page >= $total_pages) { echo 'disabled'; } ?>">
-                            <a class="page-link" href="<?php if ($page < $total_pages) { echo "?page=" . ($page + 1); } ?>">Siguiente</a>
+                            <a class="page-link" href="?local_id=<?php echo $local_id; ?>&page=<?php echo $page + 1; ?>">Siguiente</a>
                         </li>
                     </ul>
                 </nav>

@@ -5,8 +5,8 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// include($_SERVER['DOCUMENT_ROOT'] . '/env/shopping_db.php');
-include(__DIR__ . '/private/functions_usuarios.php');
+require_once './config/database.php';
+require_once './private/functions/functions_usuarios.php';
 
 $user_id = $_SESSION['user_id'];
 $user = get_usuario($user_id);
@@ -23,26 +23,33 @@ $user = get_usuario($user_id);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="stylesheet" href="./css/miperfil.css">
+    <link rel="stylesheet" href="./css/auth.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Mi Perfil</title>
 </head>
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
-        <h2 class="text-center my-5">Mi Perfil</h2>
-
+        <h1 class="text-center my-5">MI PERFIL</h1>
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="alert alert-success text-center">
+                <?php 
+                echo htmlspecialchars($_SESSION['success']); 
+                unset($_SESSION['success']);
+                ?>
+            </div>
+        <?php endif; ?>
         <main class="perfil-container">
             <div class="perfil-card card">
                 <div class="card-header">
-                    <h3>Email: <?php echo htmlspecialchars($user['email'] ?? 'No disponible'); ?></h3>
+                    <h2>EMAIL: <?php echo htmlspecialchars($user['email'] ?? 'No disponible'); ?></h2>
                 </div>
                 <div class="card-body">
                     <?php if (!empty($user) && isset($user['tipo']) && strtolower($user['tipo']) === 'cliente' && isset($user['categoria'])) : ?>
                         <div class="categoria-cliente text-center">
-                            <p>Categoria: 
+                            <h2>Categoria: 
                             <?php echo htmlspecialchars($user['categoria']); ?>
-                            </p>
+                            </h2>
                         </div>
                     <?php else: ?>
                         <p class="text-danger"></p>

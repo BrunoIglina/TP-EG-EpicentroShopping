@@ -5,8 +5,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     exit();
 }
 
-include './private/functions_locales.php';
-include './private/functions_usuarios.php';
+require_once './private/functions/functions_locales.php';
+require_once './private/functions/functions_usuarios.php';
 
 $limit = 5; 
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -81,12 +81,12 @@ $total_pages = ceil($total_locales / $limit);
                                         </td>
                                         <td>
                                             <?php if (!empty($local['imagen'])) { ?>
-                                                <img src="./private/visualizar_imagen.php?local_id=<?php echo $local['id']; ?>" alt="Imagen del local" class="img-fluid" style="max-width: 100px;">
+                                                <img src="./private/helpers/visualizar_imagen.php?local_id=<?php echo $local['id']; ?>" alt="Imagen del local" class="img-fluid" style="max-width: 100px;">
                                             <?php } else { echo "No hay imagen"; } ?>
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-info btn-sm mb-1" 
-                                                onclick="window.location.href='./private/generarInforme.php?local_id=<?php echo $local['id']; ?>'">
+                                                onclick="window.location.href='./private/reports/generarInforme.php?local_id=<?php echo $local['id']; ?>'">
                                                 Generar PDF
                                             </button>
                                             <button type="button" class="btn btn-warning btn-sm mb-1" 
@@ -142,11 +142,6 @@ $total_pages = ceil($total_locales / $limit);
         </div>
     </div>
 
-    <form id="localesForm" method="POST" action="agregar_local.php">
-        <input type="hidden" id="actionInput" name="action">
-        <input type="hidden" id="localIdInput" name="local_id">
-    </form>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -156,20 +151,14 @@ $total_pages = ceil($total_locales / $limit);
             $('#modalAction').text(action === 'edit' ? 'modificar' : 'eliminar');
 
             $('#confirmActionBtn').off('click').on('click', function() {
-                // Si es 'edit', redirige a la página de edición con el ID del local
                 if (action === 'edit') {
                     window.location.href = './editar_local.php?id=' + localId;
-                } 
-                // Si es 'delete', redirige al archivo procesar_local.php para eliminar el local
-                else if (action === 'delete') {
-                    // Confirmación de eliminación solo una vez
-                    $('#confirmModal').modal('hide');  // Cerrar modal antes de redirigir
-                    window.location.href = './private/procesar_local.php?action=delete&local_id=' + localId;
+                } else if (action === 'delete') {
+                    $('#confirmModal').modal('hide');
+                    window.location.href = './private/crud/locales.php?action=delete&local_id=' + localId;
                 }
             });
         }
     </script>
-
-
 </body>
 </html>
