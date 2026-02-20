@@ -1,5 +1,6 @@
 <?php
-session_start();
+
+require_once './includes/navigation_history.php';
 if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     header("Location: index.php");
     exit();
@@ -26,12 +27,16 @@ $total_pages = ceil($total_locales / $limit);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="stylesheet" href="./css/back_button.css">
+    <link rel="stylesheet" href="./css/fix_header.css">
+    <link rel="stylesheet" href="./css/buttons.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Administración de Locales</title>
 </head>
 <body>
     <div class="wrapper">
-        <?php include './includes/header.php'; ?>
+            <?php include './includes/header.php'; ?>
+        <?php include './includes/back_button.php'; ?>
         
         <main class="container-fluid">
             <section class="admin-section">
@@ -141,6 +146,23 @@ $total_pages = ceil($total_locales / $limit);
             </div>
         </div>
     </div>
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="errorModalLabel"> No se puede generar el PDF</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong id="errorLocalName"></strong> no tiene promociones registradas.</p>
+                    <p>Para generar un PDF, el local debe tener al menos una promoción activa.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -158,6 +180,26 @@ $total_pages = ceil($total_locales / $limit);
                     window.location.href = './private/crud/locales.php?action=delete&local_id=' + localId;
                 }
             });
+        }
+        function checkAndGeneratePDF(localId, localName) {
+            // Hacer petición AJAX para verificar si tiene promociones
+            fetch('./private/reports/check_promociones.php?local_id=' + localId)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.has_promociones) {
+                        // Si tiene promociones, generar el PDF
+                        window.location.href = './private/reports/generarInforme.php?local_id=' + localId;
+                    } else {
+                        // Si no tiene promociones, mostrar modal de error
+                        document.getElementById('errorLocalName').textContent = localName;
+                        const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                        errorModal.show();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al verificar las promociones del local');
+                });
         }
     </script>
 </body>

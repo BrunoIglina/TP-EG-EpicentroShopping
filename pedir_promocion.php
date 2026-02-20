@@ -1,6 +1,5 @@
 <?php
-session_start();
-
+require_once './includes/navigation_history.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!isset($_SESSION['user_id'])) {
         $_SESSION['mensaje_error'] = "Debes estar registrado para pedir una promoción.";

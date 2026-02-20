@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once './includes/navigation_history.php';
 if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     header("Location: login.php");
     exit();
@@ -62,13 +62,16 @@ $result = $stmt->get_result();
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="stylesheet" href="./css/wrapper.css"> 
+    <link rel="stylesheet" href="./css/back_button.css">
+    <link rel="stylesheet" href="./css/fix_header.css">
     <title>Gestión de Promociones</title>
 </head>
 <body>
     <div class="wrapper">
-        <?php include './includes/header.php'; ?> 
+            <?php include './includes/header.php'; ?>
         
         <div class="container my-4">
+                <?php include './includes/back_button.php'; ?> 
             <h2 class="text-center my-4">Gestión de Solicitudes de Promociones</h2>
             
             <div class="row">

@@ -1,5 +1,6 @@
 <?php
-session_start();
+require_once './includes/navigation_history.php';
+
 if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     header("Location: index.php");
     exit();
@@ -39,6 +40,8 @@ $stmt_total->close();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/admin_promociones.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
+    <link rel="stylesheet" href="./css/back_button.css">
+    <link rel="stylesheet" href="./css/fix_header.css">
     <title>Epicentro Shopping - Administración de Promociones</title>
     <style>
         .table-container {
@@ -52,11 +55,13 @@ $stmt_total->close();
 </head>
 <body>
     <div class="wrapper">
-        <?php include './includes/header.php'; ?>
+            <?php include './includes/header.php'; ?>
+
 
         <main class="container-fluid">
+                    <?php include './includes/back_button.php'; ?>
             <section class="admin-section">
-                <h2 class="text-center my-4">Aprobar promociones pendientes</h2>
+                <h2 class="text-center my-2">Aprobar promociones pendientes</h2>
                 <div class="table-container">
                     <table class="table table-bordered text-center align-middle">
                         <thead class="table-dark">

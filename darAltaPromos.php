@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once './includes/navigation_history.php';
 require_once './config/database.php';
 $conn = getDB();
 
@@ -22,94 +22,159 @@ while ($row = $result->fetch_assoc()) {
 
 $stmt->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8">
-<link rel="stylesheet" href="./css/footer.css">
-<link rel="stylesheet" href="./css/header.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/darAltaPromos.css">
-    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/forms.css">
+    <link rel="stylesheet" href="./css/back_button.css">
+    <link rel="stylesheet" href="./css/fix_header.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
-    <title>Alta de Promociones</title>
+    <title>Epicentro Shopping - Agregar Promoción</title>
 </head>
 <body>
-    <?php include './includes/header.php'; ?>
+        <?php include './includes/header.php'; ?>
+        <?php include './includes/back_button.php'; ?>
     
-    <main class="container my-4">
-        <h2 class="text-center my-4">Agregar Nueva Promoción</h2>
+    <div class="form-wrapper">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10">
+                    <div class="form-card">
+                        <h2>Agregar Nueva Promoción</h2>
 
-        <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger"><?= htmlspecialchars($_SESSION['error']); ?></div>
-            <?php unset($_SESSION['error']); ?>
-        <?php endif; ?>
+                        <?php if (isset($_SESSION['error'])): ?>
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                <?php echo htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        <?php endif; ?>
 
-        <?php if (isset($_SESSION['mensaje'])): ?>
-            <div class="alert alert-success"><?= htmlspecialchars($_SESSION['mensaje']); ?></div>
-            <?php unset($_SESSION['mensaje']); ?>
-        <?php endif; ?>
+                        <?php if (isset($_SESSION['mensaje'])): ?>
+                            <div class="alert alert-success alert-dismissible fade show">
+                                <?php echo htmlspecialchars($_SESSION['mensaje']); unset($_SESSION['mensaje']); ?>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        <?php endif; ?>
 
-        <form action="./private/crud/promociones.php" method="POST">
-            <input type="hidden" name="action" value="create">
-            <div class="form-group">
-                <label for="local_id">Nombre del Local:</label>
-                <select id="local_id" name="local_id" class="form-control" required>
-                    <option value="">Seleccione un local</option>
-                    <?php foreach ($locales as $local): ?>
-                        <option value="<?= htmlspecialchars($local['id']); ?>"><?= htmlspecialchars($local['nombre']); ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="textoPromo">Texto de la Promoción:</label>
-                <textarea id="textoPromo" name="textoPromo" class="form-control" required></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="fecha_inicio">Fecha de Inicio:</label>
-                <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="fecha_fin">Fecha de Fin:</label>
-                <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" required>
-            </div>
-            
-            <div class="form-group">
-                <label>Días de la Semana:</label>
-                <div class="form-check">
-                    <label><input type="checkbox" name="diasSemana[]" value="Lunes"> Lunes</label>
-                    <label><input type="checkbox" name="diasSemana[]" value="Martes"> Martes</label>
-                    <label><input type="checkbox" name="diasSemana[]" value="Miércoles"> Miércoles</label>
-                    <label><input type="checkbox" name="diasSemana[]" value="Jueves"> Jueves</label>
-                    <label><input type="checkbox" name="diasSemana[]" value="Viernes"> Viernes</label>
-                    <label><input type="checkbox" name="diasSemana[]" value="Sábado"> Sábado</label>
-                    <label><input type="checkbox" name="diasSemana[]" value="Domingo"> Domingo</label>
+                        <form action="./private/crud/promociones.php" method="POST">
+                            <input type="hidden" name="action" value="create">
+                            
+                            <div class="mb-3">
+                                <label for="local_id" class="form-label">Nombre del Local</label>
+                                <select id="local_id" name="local_id" class="form-select" required>
+                                    <option value="">Seleccione un local</option>
+                                    <?php foreach ($locales as $local): ?>
+                                        <option value="<?php echo htmlspecialchars($local['id']); ?>">
+                                            <?php echo htmlspecialchars($local['nombre']); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="textoPromo" class="form-label">Texto de la Promoción</label>
+                                <textarea id="textoPromo" name="textoPromo" class="form-control" 
+                                          rows="4" required maxlength="200"
+                                          placeholder="Ej: 2x1 en todos los productos"></textarea>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
+                                    <input type="date" id="fecha_inicio" name="fecha_inicio" 
+                                           class="form-control" required>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="fecha_fin" class="form-label">Fecha de Fin</label>
+                                    <input type="date" id="fecha_fin" name="fecha_fin" 
+                                           class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Días de la Semana</label>
+                                <div class="row">
+                                    <div class="col-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" 
+                                                   name="diasSemana[]" value="Lunes" id="lunes">
+                                            <label class="form-check-label" for="lunes">Lunes</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" 
+                                                   name="diasSemana[]" value="Martes" id="martes">
+                                            <label class="form-check-label" for="martes">Martes</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" 
+                                                   name="diasSemana[]" value="Miércoles" id="miercoles">
+                                            <label class="form-check-label" for="miercoles">Miércoles</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" 
+                                                   name="diasSemana[]" value="Jueves" id="jueves">
+                                            <label class="form-check-label" for="jueves">Jueves</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" 
+                                                   name="diasSemana[]" value="Viernes" id="viernes">
+                                            <label class="form-check-label" for="viernes">Viernes</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" 
+                                                   name="diasSemana[]" value="Sábado" id="sabado">
+                                            <label class="form-check-label" for="sabado">Sábado</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" 
+                                                   name="diasSemana[]" value="Domingo" id="domingo">
+                                            <label class="form-check-label" for="domingo">Domingo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="categoriaCliente" class="form-label">Categoría de Cliente</label>
+                                <select id="categoriaCliente" name="categoriaCliente" class="form-select" required>
+                                    <option value="">Seleccione una categoría</option>
+                                    <option value="Inicial">Inicial</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Premium">Premium</option>
+                                </select>
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-gradient">Agregar Promoción</button>
+                                <button type="button" class="btn btn-secondary" 
+                                        onclick="window.location.href='misPromos.php'">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                <label for="categoriaCliente">Categoría de Cliente:</label>
-                <select id="categoriaCliente" name="categoriaCliente" class="form-control" required>
-                    <option value="">Seleccione una categoría</option>
-                    <option value="Inicial">Inicial</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Premium">Premium</option>
-                </select>
-            </div>
-            
-            <input type="submit" value="Agregar Promoción" class="btn btn-primary">
-        </form>
-    </main>
+        </div>
+    </div>
     
     <?php include './includes/footer.php'; ?>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

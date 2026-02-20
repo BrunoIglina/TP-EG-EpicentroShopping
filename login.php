@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once './config/database.php';
+require_once './includes/navigation_history.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
@@ -58,13 +59,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="./css/header.css">
     <link rel="stylesheet" href="./css/footer.css">
     <link rel="stylesheet" href="./css/auth.css">
+    <link rel="stylesheet" href="./css/sytles_fondo_and_titles.css">
+    <link rel="stylesheet" href="./css/back_button.css">
+    <link rel="stylesheet" href="./css/fix_header.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Iniciar Sesión</title>
 </head>
 <body class="auth-page">
     <div class="wrapper">
-        <?php include './includes/header.php'; ?>
+            <?php include './includes/header.php'; ?>
+        
+        <?php include './includes/back_button.php'; ?>
+
         <main>
             <div class="auth-container">
                 <section class="auth-form">

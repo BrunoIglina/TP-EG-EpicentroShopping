@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once './includes/navigation_history.php';
 if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     header("Location: index.php");
     exit();
@@ -32,11 +32,15 @@ if (!$novedad) {
     <link rel="stylesheet" href="./css/header.css">
     <link rel="stylesheet" href="./css/footer.css">
     <link rel="stylesheet" href="./css/forms.css">
+    <link rel="stylesheet" href="./css/back_button.css">
+    <link rel="stylesheet" href="./css/fix_header.css">
+
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Modificar Novedad</title>
 </head>
 <body>
-    <?php include './includes/header.php'; ?>
+        <?php include './includes/header.php'; ?>
+        <?php include './includes/back_button.php'; ?>
     
     <div class="form-wrapper">
         <div class="container">

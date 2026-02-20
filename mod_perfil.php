@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once './includes/navigation_history.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -45,12 +45,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="./css/footer.css">
     <link rel="stylesheet" href="./css/auth.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+    <link rel="stylesheet" href="./css/back_button.css">
+    <link rel="stylesheet" href="./css/fix_header.css">
+    
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Editar Perfil</title>
 </head>
 <body class="auth-page">
     <div class="wrapper">
-        <?php include './includes/header.php'; ?>
+            <?php include './includes/header.php'; ?>
+
         <main>
             <div class="auth-container">
                 <section class="form-container">

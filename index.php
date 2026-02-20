@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 require_once './private/functions/functions_locales.php';
 require_once './config/rubros.php';
 
@@ -11,7 +10,8 @@ $locales = get_locales_solicitados();
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
+<meta charset="utf-8">
+<link rel="stylesheet" href="./css/fix_header.css">
 <link rel="stylesheet" href="./css/footer.css">
 <link rel="stylesheet" href="./css/header.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,6 @@ $locales = get_locales_solicitados();
     <link rel="stylesheet" href="./css/wrapper.css"> 
     <link rel="stylesheet" href="./css/tarjetas.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="stylesheet" href="./css/footer.css">
     <link rel="icon" type="image/png" href="./assets/logo2.png">
     <title>Epicentro Shopping - Inicio</title>
 </head>
@@ -33,8 +32,7 @@ $locales = get_locales_solicitados();
 </div>
 </div>
     <div class="wrapper">
-        <?php include './includes/header.php'; ?>
-
+            <?php include './includes/header.php'; ?>
         <main>
 
 

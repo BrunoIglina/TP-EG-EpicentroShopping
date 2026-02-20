@@ -1,6 +1,7 @@
 <?php
 require_once './private/functions/functions_locales.php';
 require_once './config/rubros.php';
+require_once './includes/navigation_history.php';
 
 $locales = get_all_locales();
 $filtered_locales = $locales;
@@ -40,17 +41,22 @@ $paginated_locales = array_slice($filtered_locales, $start_index, $items_per_pag
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/tarjetas.css">
     <link rel="stylesheet" href="./css/header.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/back_button.css">
+    <link rel="stylesheet" href="./css/tarjetas.css">
+    <link rel="stylesheet" href="./css/fix_header.css">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
+
     <title>Epicentro Shopping - Locales</title>
 </head>
 <body>
 <div class="wrapper">
-    <?php include './includes/header.php'; ?>
+        <?php include './includes/header.php'; ?>
+    
     <main>
+        <?php include './includes/back_button.php'; ?>
         <div class="container-fluid">
 
             <div class="row">
@@ -129,9 +135,6 @@ $paginated_locales = array_slice($filtered_locales, $start_index, $items_per_pag
     </main>
     <?php include './includes/footer.php'; ?>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

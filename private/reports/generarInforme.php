@@ -17,6 +17,21 @@ if (!$local_id) {
 
 $conn = getDB();
 
+$stmt = $conn->prepare("SELECT COUNT(*) as total FROM promociones WHERE local_id = ?");
+$stmt->bind_param('i', $local_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$stmt->close();
+
+if ($row['total'] == 0) {
+    $_SESSION['error'] = "El local no tiene promociones registradas. No se puede generar el PDF.";
+    header("Location: ../../admin_locales.php");
+    exit();
+}
+
+
+
 $stmt_local = $conn->prepare("SELECT nombre FROM locales WHERE id = ?");
 $stmt_local->bind_param("i", $local_id);
 $stmt_local->execute();
