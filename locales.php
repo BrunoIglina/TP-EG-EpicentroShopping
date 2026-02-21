@@ -2,6 +2,7 @@
 require_once './private/functions/functions_locales.php';
 require_once './config/rubros.php';
 require_once './includes/navigation_history.php';
+require_once './includes/security_headers.php';
 
 $locales = get_all_locales();
 $filtered_locales = $locales;
@@ -40,6 +41,8 @@ $paginated_locales = array_slice($filtered_locales, $start_index, $items_per_pag
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/header.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
@@ -47,7 +50,7 @@ $paginated_locales = array_slice($filtered_locales, $start_index, $items_per_pag
     <link rel="stylesheet" href="./css/back_button.css">
     <link rel="stylesheet" href="./css/tarjetas.css">
     <link rel="stylesheet" href="./css/fix_header.css">
-    <link rel="icon" type="image/png" href="./assets/logo2.png">
+
 
     <title>Epicentro Shopping - Locales</title>
 </head>

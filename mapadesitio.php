@@ -1,5 +1,6 @@
 <?php
 require_once './includes/navigation_history.php';
+require_once './includes/security_headers.php';
 ?>
 
 <!DOCTYPE html>
@@ -9,12 +10,14 @@ require_once './includes/navigation_history.php';
 <link rel="stylesheet" href="./css/footer.css">
 <link rel="stylesheet" href="./css/header.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/mapadesitio.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="stylesheet" href="./css/back_button.css">
     <link rel="stylesheet" href="./css/fix_header.css">
-    <link rel="icon" type="image/png" href="./assets/logo2.png">
+
     <title>Mapa del Sitio - Epicentro Shopping</title>
 </head>
 <body>

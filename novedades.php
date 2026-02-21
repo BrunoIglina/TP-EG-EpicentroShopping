@@ -1,11 +1,13 @@
 <?php
 require_once './includes/navigation_history.php';
+require_once './includes/security_headers.php';
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['mensaje_error'] = "Iniciar sesión para observar las novedades";
     header("Location: index.php");
     exit();
 }
 require_once './includes/navigation_history.php';
+require_once './includes/security_headers.php';
 require_once './private/functions/functions_novedades.php';
 
 $limit = 5; 
@@ -24,13 +26,15 @@ $total_pages = ceil($total_novedades / $limit);
 <link rel="stylesheet" href="./css/footer.css">
 <link rel="stylesheet" href="./css/header.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/tarjetas.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="stylesheet" href="./css/back_button.css">
     <link rel="stylesheet" href="./css/fix_header.css">
     <link rel="stylesheet" href="./css/wrapper.css">    
-    <link rel="icon" type="image/png" href="./assets/logo2.png">
+
     <title>Epicentro Shopping - Novedades</title>
 </head>
 <body>
