@@ -8,11 +8,11 @@ class Database {
     private $conn;
     
     private function __construct() {
-        $servername = "127.0.0.1";
+        $servername = "db";
         $username = "root";
         $password = "";
         $dbname = "shopping_db";
-        $port = 3309;
+        $port = 3306;
 
         $this->conn = new mysqli($servername, $username, $password, $dbname, $port);
 
