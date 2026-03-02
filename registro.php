@@ -4,10 +4,17 @@ require_once './includes/security_headers.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
+    $confirm_password = trim($_POST['confirm_password']);
     $tipo = trim($_POST['tipo']);
 
-    if (empty($email) || empty($password) || empty($tipo)) {
+    if (empty($email) || empty($password) || empty($confirm_password) || empty($tipo)) {
         $_SESSION['error'] = "Todos los campos son obligatorios.";
+        header("Location: registro.php");
+        exit();
+    }
+
+    if ($password !== $confirm_password) {
+        $_SESSION['error'] = "Las contraseñas no coinciden.";
         header("Location: registro.php");
         exit();
     }
@@ -38,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,18 +58,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="stylesheet" href="./css/back_button.css">
     <link rel="stylesheet" href="./css/fix_header.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <title>Epicentro Shopping - Registrarse</title>
 </head>
+
 <body class="auth-page">
     <div class="wrapper">
-            <?php include './includes/header.php'; ?>
+        <?php include './includes/header.php'; ?>
         <?php include './includes/back_button.php'; ?>
         <main>
             <div class="auth-container">
                 <section class="auth-form">
-                    <h2 style="font-family: 'Poppins', sans-serif;">Registrarse</h2> 
+                    <h2 style="font-family: 'Poppins', sans-serif;">Registrarse</h2>
                     <?php
                     if (isset($_SESSION['error'])) {
                         echo "<p class='text-danger'>" . htmlspecialchars($_SESSION['error']) . "</p>";
@@ -79,9 +88,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label for="password">Contraseña:</label>
                         <input type="password" id="password" name="password" required>
 
+                        <label for="confirm-password">Confirmar Contraseña:</label>
+                        <input type="password" id="confirm-password" name="confirm_password" required>
+
                         <label for="tipo">Tipo:</label>
                         <select id="tipo" name="tipo" required>
-                            <option value="" disabled selected>Selecciona un tipo</option> 
+                            <option value="" disabled selected>Selecciona un tipo</option>
                             <option value="Cliente">Cliente</option>
                             <option value="Dueno">Dueño</option>
                         </select>
@@ -94,5 +106,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php include './includes/footer.php'; ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password !== confirmPassword) {
+                event.preventDefault();
+                alert('Las contraseñas no coinciden. Por favor, verifica que ambas sean iguales.');
+                return false;
+            }
+        });
+    </script>
 </body>
+
 </html>

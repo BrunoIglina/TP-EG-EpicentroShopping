@@ -9,9 +9,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 require_once './config/database.php';
 $conn = getDB();
 
-$limit = 6; 
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
-$offset = ($page - 1) * $limit; 
+$limit = 6;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
 
 $stmt = $conn->prepare("SELECT id, email FROM usuarios WHERE tipo = 'Dueno' AND validado = 0 LIMIT ? OFFSET ?");
 $stmt->bind_param("ii", $limit, $offset);
@@ -30,6 +30,7 @@ $stmt_total->close();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -44,18 +45,18 @@ $stmt_total->close();
     <link rel="stylesheet" href="./css/fix_header.css">
     <title>Epicentro Shopping - Aprobar Dueños de Locales</title>
 </head>
+
 <body>
     <div class="wrapper">
-            <?php include './includes/header.php'; ?>
-        
+        <?php include './includes/header.php'; ?>
+
         <main class="container">
-                    <?php include './includes/back_button.php'; ?>
+            <?php include './includes/back_button.php'; ?>
             <h2 class="text-center my-4">Aprobar Dueños de Locales</h2>
-            
+
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Email</th>
                         <th>Acción</th>
                     </tr>
@@ -64,14 +65,13 @@ $stmt_total->close();
                     <?php if ($result && $result->num_rows > 0): ?>
                         <?php while ($row = $result->fetch_assoc()): ?>
                             <tr>
-                                <td><?php echo htmlspecialchars($row['id']); ?></td>
                                 <td><?php echo htmlspecialchars($row['email']); ?></td>
                                 <td>
-                                    <button type="button" class="btn btn-success" 
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#confirmModal" 
-                                            data-id="<?php echo htmlspecialchars($row['id']); ?>"
-                                            data-email="<?php echo htmlspecialchars($row['email']); ?>">
+                                    <button type="button" class="btn btn-success"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#confirmModal"
+                                        data-id="<?php echo htmlspecialchars($row['id']); ?>"
+                                        data-email="<?php echo htmlspecialchars($row['email']); ?>">
                                         Aprobar
                                     </button>
                                 </td>
@@ -130,14 +130,15 @@ $stmt_total->close();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const confirmModal = document.getElementById('confirmModal');
-        confirmModal.addEventListener('show.bs.modal', function (event) {
+        confirmModal.addEventListener('show.bs.modal', function(event) {
             const button = event.relatedTarget;
             const id = button.getAttribute('data-id');
             const email = button.getAttribute('data-email');
-            
+
             document.getElementById('modalId').value = id;
             document.getElementById('modalEmail').textContent = email;
         });
     </script>
 </body>
+
 </html>

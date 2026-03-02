@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 require_once './private/functions/functions_locales.php';
 require_once './private/functions/functions_usuarios.php';
 
-$limit = 5; 
+$limit = 5;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
@@ -21,6 +21,7 @@ $total_pages = ceil($total_locales / $limit);
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -36,11 +37,12 @@ $total_pages = ceil($total_locales / $limit);
 
     <title>Epicentro Shopping - Administración de Locales</title>
 </head>
+
 <body>
     <div class="wrapper">
-            <?php include './includes/header.php'; ?>
+        <?php include './includes/header.php'; ?>
         <?php include './includes/back_button.php'; ?>
-        
+
         <main class="container-fluid">
             <section class="admin-section">
                 <h2 class="text-center my-4">Administración de Locales</h2>
@@ -65,7 +67,6 @@ $total_pages = ceil($total_locales / $limit);
                         <table class="table table-striped table-bordered">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th>Código</th>
                                     <th>Nombre</th>
                                     <th>Ubicación</th>
                                     <th>Rubro</th>
@@ -77,29 +78,30 @@ $total_pages = ceil($total_locales / $limit);
                             <tbody>
                                 <?php foreach ($locales as $local) { ?>
                                     <tr>
-                                        <td><?php echo htmlspecialchars($local['id']); ?></td>
                                         <td><?php echo htmlspecialchars($local['nombre']); ?></td>
                                         <td><?php echo htmlspecialchars($local['ubicacion']); ?></td>
                                         <td><?php echo htmlspecialchars($local['rubro']); ?></td>
                                         <td>
-                                            <?php 
-                                                $dueño = get_dueño($local['idUsuario']);
-                                                echo htmlspecialchars($dueño['email']);
+                                            <?php
+                                            $dueño = get_dueño($local['idUsuario']);
+                                            echo htmlspecialchars($dueño['email']);
                                             ?>
                                         </td>
                                         <td>
                                             <?php if (!empty($local['imagen'])) { ?>
                                                 <img src="./private/helpers/visualizar_imagen.php?local_id=<?php echo $local['id']; ?>" alt="Imagen del local" class="img-fluid" style="max-width: 100px;">
-                                            <?php } else { echo "No hay imagen"; } ?>
+                                            <?php } else {
+                                                echo "No hay imagen";
+                                            } ?>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-info btn-sm mb-1" 
+                                            <button type="button" class="btn btn-info btn-sm mb-1"
                                                 onclick="window.location.href='./private/reports/generarInforme.php?local_id=<?php echo $local['id']; ?>'">
                                                 Generar PDF
                                             </button>
-                                            <button type="button" class="btn btn-warning btn-sm mb-1" 
+                                            <button type="button" class="btn btn-warning btn-sm mb-1"
                                                 onclick="confirmAction('edit', <?php echo $local['id']; ?>)">Modificar</button>
-                                            <button type="button" class="btn btn-danger btn-sm mb-1" 
+                                            <button type="button" class="btn btn-danger btn-sm mb-1"
                                                 onclick="confirmAction('delete', <?php echo $local['id']; ?>)">Eliminar</button>
                                         </td>
                                     </tr>
@@ -127,24 +129,24 @@ $total_pages = ceil($total_locales / $limit);
                 <?php } ?>
             </section>
         </main>
-        
+
         <?php include './includes/footer.php'; ?>
     </div>
 
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">Confirmar Acción</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-                ¿Está seguro de que desea <span id="modalAction"></span> este local?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="confirmActionBtn">Confirmar</button>
-            </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirmar Acción</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Está seguro de que desea <span id="modalAction"></span> este local?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmActionBtn">Confirmar</button>
+                </div>
 
             </div>
         </div>
@@ -184,6 +186,7 @@ $total_pages = ceil($total_locales / $limit);
                 }
             });
         }
+
         function checkAndGeneratePDF(localId, localName) {
             // Hacer petición AJAX para verificar si tiene promociones
             fetch('./private/reports/check_promociones.php?local_id=' + localId)
@@ -206,4 +209,5 @@ $total_pages = ceil($total_locales / $limit);
         }
     </script>
 </body>
+
 </html>
