@@ -38,31 +38,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <link rel="icon" type="image/png" href="./assets/logo2.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/header.css">
-    <link rel="stylesheet" href="./css/footer.css">
-    <link rel="stylesheet" href="./css/auth.css">
-    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="stylesheet" href="./css/back_button.css">
-    <link rel="stylesheet" href="./css/fix_header.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"> 
 
-    <title>Epicentro Shopping - Registrarse</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <link rel="icon" type="image/png" href="./assets/logo2.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="./css/footer.css">
+  <link rel="stylesheet" href="./css/auth.css">
+  <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+  <link rel="stylesheet" href="./css/back_button.css">
+  <link rel="stylesheet" href="./css/fix_header.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <title>Epicentro Shopping - Registrarse</title>
 </head>
+
 <body class="auth-page">
-    <div class="wrapper">
-            <?php include './includes/header.php'; ?>
-        <?php include './includes/back_button.php'; ?>
-        <main>
-            <div class="auth-container">
-                <section class="auth-form">
-                    <h2 style="font-family: 'Poppins', sans-serif;">Registrarse</h2> 
-                    <?php
+  <div class="wrapper">
+    <?php include './includes/header.php'; ?>
+    <?php include './includes/back_button.php'; ?>
+    <main>
+      <div class="auth-container">
+        <section class="auth-form">
+          <h2 style="font-family: 'Poppins', sans-serif;">Registrarse</h2>
+          <?php
                     if (isset($_SESSION['error'])) {
                         echo "<p class='text-danger'>" . htmlspecialchars($_SESSION['error']) . "</p>";
                         unset($_SESSION['error']);
@@ -72,27 +74,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         unset($_SESSION['success']);
                     }
                     ?>
-                    <form action="registro.php" method="post">
-                        <label for="email">Correo Electrónico:</label>
-                        <input type="email" id="email" name="email" required>
+          <form action="registro.php" method="post">
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" required>
 
-                        <label for="password">Contraseña:</label>
-                        <input type="password" id="password" name="password" required>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required>
 
-                        <label for="tipo">Tipo:</label>
-                        <select id="tipo" name="tipo" required>
-                            <option value="" disabled selected>Selecciona un tipo</option> 
-                            <option value="Cliente">Cliente</option>
-                            <option value="Dueno">Dueño</option>
-                        </select>
+            <label for="tipo">Tipo:</label>
+            <select id="tipo" name="tipo" required>
+              <option value="" disabled selected>Selecciona un tipo</option>
+              <option value="Cliente">Cliente</option>
+              <option value="Dueno">Dueño</option>
+            </select>
 
-                        <button type="submit" class="btn btn-register">Registrarse</button>
-                    </form>
-                </section>
-            </div>
-        </main>
-        <?php include './includes/footer.php'; ?>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            <button type="submit" class="btn btn-register">Registrarse</button>
+          </form>
+        </section>
+      </div>
+    </main>
+    <?php include './includes/footer.php'; ?>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

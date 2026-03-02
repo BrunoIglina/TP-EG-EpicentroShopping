@@ -65,28 +65,30 @@ $stmt_total->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="utf-8">
-<link rel="stylesheet" href="./css/footer.css">
-<link rel="stylesheet" href="./css/header.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <link rel="icon" type="image/png" href="./assets/logo2.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="stylesheet" href="./css/tarjetas.css">
-    <link rel="stylesheet" href="./css/back_button.css">
-    <link rel="stylesheet" href="./css/fix_header.css">
-    <link rel="stylesheet" href="./css/wrapper.css">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="./css/footer.css">
+  <link rel="stylesheet" href="./css/header.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <link rel="icon" type="image/png" href="./assets/logo2.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+  <link rel="stylesheet" href="./css/tarjetas.css">
+  <link rel="stylesheet" href="./css/back_button.css">
+  <link rel="stylesheet" href="./css/fix_header.css">
+  <link rel="stylesheet" href="./css/wrapper.css">
 
-    <title>Epicentro Shopping - Promociones</title>
+  <title>Epicentro Shopping - Promociones</title>
 </head>
+
 <body>
-    <div class="wrapper">
-            <?php include './includes/header.php'; ?>
+  <div class="wrapper">
+    <?php include './includes/header.php'; ?>
 
 
-        <?php
+    <?php
         if (isset($_SESSION['mensaje_error'])) {
             echo "<div class='alert alert-danger text-center'>" . htmlspecialchars($_SESSION['mensaje_error']) . "</div>";
             unset($_SESSION['mensaje_error']); 
@@ -97,24 +99,24 @@ $stmt_total->close();
         }
         ?>
 
-        <main class="container-fluid">
-                    <?php include './includes/back_button.php'; ?>
-            <h2><?php echo htmlspecialchars($local["nombre"]); ?></h2>  
-                <?php
+    <main class="container-fluid">
+      <?php include './includes/back_button.php'; ?>
+      <h2><?php echo htmlspecialchars($local["nombre"]); ?></h2>
+      <?php
                 if ($result->num_rows > 0) {
                     
                     while ($row = $result->fetch_assoc()) { ?>
-                    <div class="row d-flex align-items-stretch">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-8 d-flex justify-content-center">
-                            <div class="card w-100 mb-4">
-                                <div class="card-body">
-                                    <p><strong><?php echo htmlspecialchars($row["textoPromo"]); ?></strong></p>
-                                    <p><strong>Categoría del Cliente: <?php echo htmlspecialchars($row["categoriaCliente"]); ?></strong></p>
-                                    <p>Fecha de Inicio: <?php echo htmlspecialchars($row["fecha_inicio"]); ?></p>
-                                    <p>Fecha de Fin: <?php echo htmlspecialchars($row["fecha_fin"]); ?></p>
-                                    <p>Días de la Semana: <?php echo htmlspecialchars(str_replace(',', ', ', $row["diasSemana"])); ?></p>
-                                    <?php
+      <div class="row d-flex align-items-stretch">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 d-flex justify-content-center">
+          <div class="card w-100 mb-4">
+            <div class="card-body">
+              <p><strong><?php echo htmlspecialchars($row["textoPromo"]); ?></strong></p>
+              <p><strong>Categoría del Cliente: <?php echo htmlspecialchars($row["categoriaCliente"]); ?></strong></p>
+              <p>Fecha de Inicio: <?php echo htmlspecialchars($row["fecha_inicio"]); ?></p>
+              <p>Fecha de Fin: <?php echo htmlspecialchars($row["fecha_fin"]); ?></p>
+              <p>Días de la Semana: <?php echo htmlspecialchars(str_replace(',', ', ', $row["diasSemana"])); ?></p>
+              <?php
                                     if ($tipoUsuario === 'Visitante') {
                                       echo "<a href='login.php' class='btn btn-success mb-3'>Pedir Promoción</a>";
                                     } elseif ($tipoUsuario === 'Cliente') {
@@ -143,42 +145,43 @@ $stmt_total->close();
                                     } else {
                                         echo "<button class='btn btn-secondary mb-3' style='background-color: gray; cursor: not-allowed;' disabled>No Disponible</button>";
                                     }?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2"></div>
-                    </div>
-                    <?php } 
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+      <?php } 
                     $stmt->close();
                     ?>
 
-                <?php } else { ?>
-                    <p>No hay promociones de este local.</p>
-                <?php } ?>
+      <?php } else { ?>
+      <p>No hay promociones de este local.</p>
+      <?php } ?>
 
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item <?php if ($page <= 1) { echo 'disabled'; } ?>">
-                            <a class="page-link" href="?local_id=<?php echo $local_id; ?>&page=<?php echo $page - 1; ?>">Anterior</a>
-                        </li>
-                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                            <li class="page-item <?php if ($page == $i) { echo 'active'; } ?>">
-                                <a class="page-link" href="?local_id=<?php echo $local_id; ?>&page=<?= $i; ?>"><?= $i; ?></a>
-                            </li>
-                        <?php endfor; ?>
-                        <li class="page-item <?php if ($page >= $total_pages) { echo 'disabled'; } ?>">
-                            <a class="page-link" href="?local_id=<?php echo $local_id; ?>&page=<?php echo $page + 1; ?>">Siguiente</a>
-                        </li>
-                    </ul>
-                </nav>
-            
-        </main>
-        <?php include './includes/footer.php'; ?>
-    </div>
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item <?php if ($page <= 1) { echo 'disabled'; } ?>">
+            <a class="page-link" href="?local_id=<?php echo $local_id; ?>&page=<?php echo $page - 1; ?>">Anterior</a>
+          </li>
+          <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+          <li class="page-item <?php if ($page == $i) { echo 'active'; } ?>">
+            <a class="page-link" href="?local_id=<?php echo $local_id; ?>&page=<?= $i; ?>"><?= $i; ?></a>
+          </li>
+          <?php endfor; ?>
+          <li class="page-item <?php if ($page >= $total_pages) { echo 'disabled'; } ?>">
+            <a class="page-link" href="?local_id=<?php echo $local_id; ?>&page=<?php echo $page + 1; ?>">Siguiente</a>
+          </li>
+        </ul>
+      </nav>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    </main>
+    <?php include './includes/footer.php'; ?>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
