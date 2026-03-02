@@ -1,0 +1,76 @@
+.back-button-container {
+    top: 110px;
+    left: 20px;
+    z-index: 1020;
+    animation: slideInLeft 0.3s ease-out;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    transform: translateX(-5px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    color: white;
+    text-decoration: none;
+}
+
+.back-button svg {
+    flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .back-button-container {
+        top: 100px;
+        left: 10px;
+    }
+    
+    .back-button {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .back-button span {
+        display: none;
+    }
+    
+    .back-button svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 576px) {
+    .back-button-container {
+        top: 90px;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+body.auth-page .back-button-container {
+    top: 120px;
+}

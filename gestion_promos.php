@@ -1,5 +1,6 @@
 <?php
-session_start();
+require_once './includes/navigation_history.php';
+require_once './includes/security_headers.php';
 if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     header("Location: login.php");
     exit();
@@ -55,20 +56,24 @@ $result = $stmt->get_result();
 <html lang="es">
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/footer.css">
     <link rel="stylesheet" href="./css/header.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="stylesheet" href="./css/wrapper.css"> 
+    <link rel="stylesheet" href="./css/back_button.css">
+    <link rel="stylesheet" href="./css/fix_header.css">
     <title>Gestión de Promociones</title>
 </head>
 <body>
     <div class="wrapper">
-        <?php include './includes/header.php'; ?> 
+            <?php include './includes/header.php'; ?>
         
         <div class="container my-4">
+                <?php include './includes/back_button.php'; ?> 
             <h2 class="text-center my-4">Gestión de Solicitudes de Promociones</h2>
             
             <div class="row">

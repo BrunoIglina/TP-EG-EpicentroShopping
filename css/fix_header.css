@@ -1,0 +1,24 @@
+/* Espacio global para que nada quede detrás del header fixed-top */
+body:not(.auth-page) {
+    padding-top: 140px !important; /* Aumentamos para cubrir el logo y dar aire */
+}
+
+/* Convertimos el botón en un elemento del flujo (deja de ser fijo) */
+.back-button-container {
+    position: relative !important; /* Cambiado de fixed a relative */
+    top: 0 !important;
+    left: 0 !important;
+    margin-bottom: 20px !important; /* Espacio entre el botón y el buscador */
+    z-index: 1020 !important;
+    display: inline-block; /* Para que solo ocupe su ancho real */
+}
+
+/* Limpieza de márgenes en el main */
+body:not(.auth-page) main {
+    padding-top: 0 !important;
+}
+
+/* Aseguramos que el buscador (primer row) sea visible */
+main > .container-fluid > .row:first-child {
+    margin-top: 10px !important;
+}

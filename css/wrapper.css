@@ -3,3 +3,12 @@
     min-height: 100vh;
     grid-template-rows: auto 1fr auto;
 }
+
+body:not(.auth-page) main {
+    padding-top: 110px;
+}
+
+
+body.auth-page main {
+    padding-top: 0;
+}

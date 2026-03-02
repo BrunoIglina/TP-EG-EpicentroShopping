@@ -1,5 +1,6 @@
 <?php
-session_start();
+require_once './includes/navigation_history.php';
+require_once './includes/security_headers.php';
 if (!isset($_GET['local_id'])) {
     header("Location: locales.php");
     exit;
@@ -69,15 +70,21 @@ $stmt_total->close();
 <link rel="stylesheet" href="./css/footer.css">
 <link rel="stylesheet" href="./css/header.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
     <link rel="stylesheet" href="./css/tarjetas.css">
-    <link rel="icon" type="image/png" href="./assets/logo2.png">
+    <link rel="stylesheet" href="./css/back_button.css">
+    <link rel="stylesheet" href="./css/fix_header.css">
+    <link rel="stylesheet" href="./css/wrapper.css">
+
     <title>Epicentro Shopping - Promociones</title>
 </head>
 <body>
     <div class="wrapper">
-        <?php include './includes/header.php'; ?>
+            <?php include './includes/header.php'; ?>
+
 
         <?php
         if (isset($_SESSION['mensaje_error'])) {
@@ -91,6 +98,7 @@ $stmt_total->close();
         ?>
 
         <main class="container-fluid">
+                    <?php include './includes/back_button.php'; ?>
             <h2><?php echo htmlspecialchars($local["nombre"]); ?></h2>  
                 <?php
                 if ($result->num_rows > 0) {

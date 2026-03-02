@@ -1,12 +1,12 @@
 <?php
-session_start();
 if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Cliente') {
     header("Location: login.php");
     exit();
 }
 
 $usuario_id = $_SESSION['user_id'];
-
+require_once './includes/navigation_history.php';
+require_once './includes/security_headers.php';
 require_once './config/database.php';
 $conn = getDB();
 
@@ -56,18 +56,24 @@ $total_stmt->close();
 <link rel="stylesheet" href="./css/footer.css">
 <link rel="stylesheet" href="./css/header.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/mis_promociones.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="./assets/logo2.png">
+    <link rel="stylesheet" href="./css/back_button.css">
+    <link rel="stylesheet" href="./css/fix_header.css">
+
     <title>Epicentro Shopping - Mis Promociones</title>
 </head>
 <body>
     <div class="wrapper">
-    <?php include './includes/header.php'; ?>
-    <h2 class="text-center my-4">Mis Promociones</h2>
+        <?php include './includes/header.php'; ?>
+
+
         <main class="container">
-            
+                    <?php include './includes/back_button.php'; ?>
+                        <h2 class="text-center my-4">Mis Promociones</h2>
             <div id="misPromocionesContainer" class="row">
                 <?php
                 if ($result->num_rows > 0) {

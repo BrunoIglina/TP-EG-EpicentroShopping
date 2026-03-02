@@ -9,58 +9,58 @@ function Header()
 
 	// Arial bold 15
 	$this->SetFont('Arial','B',15);
-	// Calculate width of title and position
+	// Calculamos ancho y posición del título.
 	$w = $this->GetStringWidth($title)+6;
 	$this->SetX((210-$w)/2);
-	// Colors of frame, background and text
+	// Colores de los bordes, fondo y texto
 	$this->SetDrawColor(0,80,180);
 	$this->SetFillColor(230,230,0);
 	$this->SetTextColor(220,50,50);
-	// Thickness of frame (1 mm)
+	// Ancho del borde (1 mm)
 	$this->SetLineWidth(1);
-	// Title
+	// Título
 	$this->Cell($w,9,$title,1,1,'C',true);
-	// Line break
+	// Salto de línea
 	$this->Ln(10);
 }
 
 function Footer()
 {
-	// Position at 1.5 cm from bottom
+	// Posición a 1,5 cm del final
 	$this->SetY(-15);
-	// Arial italic 8
+	// Arial itálica 8
 	$this->SetFont('Arial','I',8);
-	// Text color in gray
+	// Color del texto en gris
 	$this->SetTextColor(128);
-	// Page number
-	$this->Cell(0,10,'Page '.$this->PageNo(),0,0,'C');
+	// Número de página
+	$this->Cell(0,10,'Página '.$this->PageNo(),0,0,'C');
 }
 
 function ChapterTitle($num, $label)
 {
 	// Arial 12
 	$this->SetFont('Arial','',12);
-	// Background color
+	// Color de fondo
 	$this->SetFillColor(200,220,255);
-	// Title
-	$this->Cell(0,6,"Chapter $num : $label",0,1,'L',true);
-	// Line break
+	// Título
+	$this->Cell(0,6,"Capítulo $num : $label",0,1,'L',true);
+	// Salto de línea
 	$this->Ln(4);
 }
 
 function ChapterBody($file)
 {
-	// Read text file
+	// Leemos el fichero
 	$txt = file_get_contents($file);
 	// Times 12
 	$this->SetFont('Times','',12);
-	// Output justified text
+	// Imprimimos el texto justificado
 	$this->MultiCell(0,5,$txt);
-	// Line break
+	// Salto de línea
 	$this->Ln();
-	// Mention in italics
+	// Cita en itálica
 	$this->SetFont('','I');
-	$this->Cell(0,5,'(end of excerpt)');
+	$this->Cell(0,5,'(fin del extracto)');
 }
 
 function PrintChapter($num, $title, $file)
@@ -72,10 +72,10 @@ function PrintChapter($num, $title, $file)
 }
 
 $pdf = new PDF();
-$title = '20000 Leagues Under the Seas';
+$title = '20000 Leguas de Viaje Submarino';
 $pdf->SetTitle($title);
-$pdf->SetAuthor('Jules Verne');
-$pdf->PrintChapter(1,'A RUNAWAY REEF','20k_c1.txt');
-$pdf->PrintChapter(2,'THE PROS AND CONS','20k_c2.txt');
+$pdf->SetAuthor('Julio Verne');
+$pdf->PrintChapter(1,'UN RIZO DE HUIDA','20k_c1.txt');
+$pdf->PrintChapter(2,'LOS PROS Y LOS CONTRAS','20k_c2.txt');
 $pdf->Output();
 ?>

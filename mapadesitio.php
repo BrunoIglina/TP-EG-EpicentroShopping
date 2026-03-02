@@ -1,3 +1,8 @@
+<?php
+require_once './includes/navigation_history.php';
+require_once './includes/security_headers.php';
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,15 +10,21 @@
 <link rel="stylesheet" href="./css/footer.css">
 <link rel="stylesheet" href="./css/header.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/mapadesitio.css">
     <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="icon" type="image/png" href="./assets/logo2.png">
+    <link rel="stylesheet" href="./css/back_button.css">
+    <link rel="stylesheet" href="./css/fix_header.css">
+
     <title>Mapa del Sitio - Epicentro Shopping</title>
 </head>
 <body>
-    <?php include './includes/header.php'; ?>
-    <h1 class="text-center my-5">MAPA DEL SITIO</h1>
+    <div class="wrapper">
+            <?php include './includes/header.php'; ?>
+        <?php include './includes/back_button.php'; ?>
+    <h2 class="text-center my-2">MAPA DEL SITIO</h2>
     <main class="container my-4 mapa">
     <div class="row justify-content-center">
         <div class="col-md-4">
@@ -70,9 +81,11 @@
             <small><a href="https://www.openstreetmap.org/?mlat=-32.959746&amp;mlon=-60.626737#map=19/-32.959746/-60.626737">Ver el mapa más grande</a></small>
     </div>
 
+    </div>
+        <?php include './includes/footer.php'; ?>
 </main>
 
-    <?php include './includes/footer.php'; ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

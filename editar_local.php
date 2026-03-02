@@ -1,5 +1,6 @@
 <?php
-session_start();
+require_once './includes/navigation_history.php';
+require_once './includes/security_headers.php';
 if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
     header("Location: index.php");
     exit();
@@ -29,17 +30,22 @@ if (!$local) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="icon" type="image/png" href="./assets/logo2.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/header.css">
     <link rel="stylesheet" href="./css/footer.css">
     <link rel="stylesheet" href="./css/forms.css">
-    <link rel="icon" type="image/png" href="./assets/logo2.png">
+    <link rel="stylesheet" href="./css/back_button.css">
+    <link rel="stylesheet" href="./css/fix_header.css">
+
     <title>Epicentro Shopping - Modificar Local</title>
 </head>
 <body>
-    <?php include './includes/header.php'; ?>
+        <?php include './includes/header.php'; ?>
+        <?php include './includes/back_button.php'; ?>
     
-    <div class="form-wrapper">
+    <div class="form">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-md-10">
@@ -48,12 +54,12 @@ if (!$local) {
                         
                         <form method="POST" action="./private/crud/locales.php" enctype="multipart/form-data">
                             <input type="hidden" name="action" value="update">
+                            <input type="hidden" name="id_local" value="<?php echo $local['id']; ?>">
                             <input type="hidden" name="nombre_antiguo_local" value="<?php echo htmlspecialchars($local['nombre']); ?>">
                             
                             <div class="mb-3">
-                                <label for="codigo_local" class="form-label">Código Local</label>
-                                <input type="text" class="form-control" id="codigo_local" name="id_local" 
-                                       value="<?php echo htmlspecialchars($local['id']); ?>" readonly disabled>
+                                <label class="form-label">Código Local</label>
+                                <input type="text" class="form-control" value="<?php echo $local['id']; ?>" disabled>
                             </div>
 
                             <div class="mb-3">

@@ -1,8 +1,6 @@
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
     font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
 }
 
 h2 {
@@ -11,9 +9,6 @@ h2 {
     color: #000;
     text-align: center;
     text-transform: uppercase;
-    display: block;
-    margin: 20px 0;
-    padding: 10px;
     letter-spacing: 2px;
     font-weight: bold;
 }
