@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require_once __DIR__ . '/../../config/database.php';
 
 $action = $_POST['action'] ?? $_GET['action'] ?? '';
@@ -50,7 +52,7 @@ function registrar_cliente() {
         echo "Error: El correo electrónico ya está registrado.";
         exit();
     }
-    $stmt->close();
+    $stmt_check->close();
     
     $password_hash = password_hash($password, PASSWORD_BCRYPT);
     
