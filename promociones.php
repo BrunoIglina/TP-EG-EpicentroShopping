@@ -87,78 +87,81 @@ $stmt_total->close();
   <div class="wrapper">
     <?php include './includes/header.php'; ?>
 
-
-    <?php
-        if (isset($_SESSION['mensaje_error'])) {
-            echo "<div class='alert alert-danger text-center'>" . htmlspecialchars($_SESSION['mensaje_error']) . "</div>";
-            unset($_SESSION['mensaje_error']); 
-        }
-        if (isset($_SESSION['mensaje_exito'])) {
-            echo "<div class='alert alert-success text-center'>" . htmlspecialchars($_SESSION['mensaje_exito']) . "</div>";
-            unset($_SESSION['mensaje_exito']);
-        }
-        ?>
-
-    <main class="container-fluid">
+    <main class="container-fluid" style="overflow-x: hidden;">
       <?php include './includes/back_button.php'; ?>
-      <h2><?php echo htmlspecialchars($local["nombre"]); ?></h2>
+
       <?php
+            if (isset($_SESSION['mensaje_error'])) {
+                echo "<div class='alert alert-danger text-center mt-2'>" . htmlspecialchars($_SESSION['mensaje_error']) . "</div>";
+                unset($_SESSION['mensaje_error']); 
+            }
+            if (isset($_SESSION['mensaje_exito'])) {
+                echo "<div class='alert alert-success text-center mt-2'>" . htmlspecialchars($_SESSION['mensaje_exito']) . "</div>";
+                unset($_SESSION['mensaje_exito']);
+            }
+            ?>
+
+      <h2 class="mb-4 text-center"><?php echo htmlspecialchars($local["nombre"]); ?></h2>
+
+      <div class="row g-4 mb-4">
+        <?php
                 if ($result->num_rows > 0) {
-                    
                     while ($row = $result->fetch_assoc()) { ?>
-      <div class="row d-flex align-items-stretch">
-        <div class="col-md-2"></div>
-        <div class="col-md-8 d-flex justify-content-center">
-          <div class="card w-100 mb-4">
-            <div class="card-body">
-              <p><strong><?php echo htmlspecialchars($row["textoPromo"]); ?></strong></p>
-              <p><strong>Categoría del Cliente: <?php echo htmlspecialchars($row["categoriaCliente"]); ?></strong></p>
-              <p>Fecha de Inicio: <?php echo htmlspecialchars($row["fecha_inicio"]); ?></p>
-              <p>Fecha de Fin: <?php echo htmlspecialchars($row["fecha_fin"]); ?></p>
-              <p>Días de la Semana: <?php echo htmlspecialchars(str_replace(',', ', ', $row["diasSemana"])); ?></p>
-              <?php
-                                    if ($tipoUsuario === 'Visitante') {
-                                      echo "<a href='login.php' class='btn btn-success mb-3'>Pedir Promoción</a>";
-                                    } elseif ($tipoUsuario === 'Cliente') {
-                                      $promoId = (int)$row["promo_id"];
-                                      $promoCategoria = $row["categoriaCliente"];
-                                      $clienteCategoria = $_SESSION['user_categoria'];
 
-                                      $indiceCliente = array_search($clienteCategoria, $categorias);
-                                      $indicePromo = array_search($promoCategoria, $categorias);
+        <div class="col-12 col-md-4 d-flex">
+          <div class="card w-100 shadow-sm h-100 text-center">
+            <div class="card-body d-flex flex-column">
+              <p class="fs-5"><strong><?php echo htmlspecialchars($row["textoPromo"]); ?></strong></p>
+              <p><strong>Categoría Requerida: <?php echo htmlspecialchars($row["categoriaCliente"]); ?></strong></p>
+              <p class="mb-1 text-muted">Válido del <?php echo htmlspecialchars($row["fecha_inicio"]); ?> al
+                <?php echo htmlspecialchars($row["fecha_fin"]); ?></p>
+              <p class="mb-3 text-muted">Días:
+                <?php echo htmlspecialchars(str_replace(',', ', ', $row["diasSemana"])); ?></p>
 
-                                      $checkStmt = $conn->prepare("SELECT COUNT(*) AS ya_pedido FROM promociones_cliente WHERE idCliente = ? AND idPromocion = ?");
-                                      $checkStmt->bind_param("ii", $clienteId, $promoId);
-                                      $checkStmt->execute();
-                                      $checkResult = $checkStmt->get_result();
-                                      $yaPidio = $checkResult->fetch_assoc()['ya_pedido'] > 0;
-                                      $checkStmt->close();
+              <div class="mt-auto">
+                <?php
+                                        if ($tipoUsuario === 'Visitante') {
+                                            echo "<a href='login.php' class='btn btn-success w-100'>Pedir Promoción</a>";
+                                        } elseif ($tipoUsuario === 'Cliente') {
+                                            $promoId = (int)$row["promo_id"];
+                                            $promoCategoria = $row["categoriaCliente"];
+                                            $clienteCategoria = $_SESSION['user_categoria'];
 
-                                      if ($indicePromo > $indiceCliente || $yaPidio) {
-                                          echo "<button class='btn btn-secondary mb-3' style='background-color: gray; cursor: not-allowed;' disabled>No Disponible</button>";
-                                      } else {
-                                          echo "<form method='POST' action='pedir_promocion.php'>";
-                                          echo "<input type='hidden' name='promo_id' value='" . $promoId . "'>";
-                                          echo "<button type='submit' class='btn btn-success mb-3'>Pedir Promoción</button>";
-                                          echo "</form>";
-                                        }
-                                    } else {
-                                        echo "<button class='btn btn-secondary mb-3' style='background-color: gray; cursor: not-allowed;' disabled>No Disponible</button>";
-                                    }?>
+                                            $indiceCliente = array_search($clienteCategoria, $categorias);
+                                            $indicePromo = array_search($promoCategoria, $categorias);
+
+                                            $checkStmt = $conn->prepare("SELECT COUNT(*) AS ya_pedido FROM promociones_cliente WHERE idCliente = ? AND idPromocion = ?");
+                                            $checkStmt->bind_param("ii", $clienteId, $promoId);
+                                            $checkStmt->execute();
+                                            $checkResult = $checkStmt->get_result();
+                                            $yaPidio = $checkResult->fetch_assoc()['ya_pedido'] > 0;
+                                            $checkStmt->close();
+
+                                            if ($indicePromo > $indiceCliente || $yaPidio) {
+                                                echo "<button class='btn btn-secondary w-100' style='background-color: gray; cursor: not-allowed;' disabled>No Disponible</button>";
+                                            } else {
+                                                echo "<form method='POST' action='pedir_promocion.php' class='d-inline w-100'>";
+                                                echo "<input type='hidden' name='promo_id' value='" . $promoId . "'>";
+                                                echo "<button type='submit' class='btn btn-success w-100'>Pedir Promoción</button>";
+                                                echo "</form>";
+                                            }
+                                        } else {
+                                            echo "<button class='btn btn-secondary w-100' style='background-color: gray; cursor: not-allowed;' disabled>No Disponible</button>";
+                                        }?>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-md-2"></div>
-      </div>
-      <?php } 
+        <?php } 
                     $stmt->close();
                     ?>
-
-      <?php } else { ?>
-      <p>No hay promociones de este local.</p>
-      <?php } ?>
-
-      <nav aria-label="Page navigation">
+        <?php } else { ?>
+        <div class="col-12 text-center">
+          <p>No hay promociones de este local.</p>
+        </div>
+        <?php } ?>
+      </div> <?php if ($total_pages > 1) { ?>
+      <nav aria-label="Page navigation" class="mt-4">
         <ul class="pagination justify-content-center">
           <li class="page-item <?php if ($page <= 1) { echo 'disabled'; } ?>">
             <a class="page-link" href="?local_id=<?php echo $local_id; ?>&page=<?php echo $page - 1; ?>">Anterior</a>
@@ -173,15 +176,13 @@ $stmt_total->close();
           </li>
         </ul>
       </nav>
+      <?php } ?>
 
     </main>
     <?php include './includes/footer.php'; ?>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
