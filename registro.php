@@ -1,8 +1,11 @@
 <?php
+session_start();
+require_once './config/database.php';
 require_once './includes/navigation_history.php';
 require_once './includes/security_headers.php';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = trim($_POST['email']);
+		$email = trim($_POST['email']);
     $password = trim($_POST['password']);
     $confirm_password = trim($_POST['confirm_password']);
     $tipo = trim($_POST['tipo']);
@@ -19,27 +22,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $_POST['email'] = $email;
-    $_POST['password'] = $password;
+		$conn = getDB();
 
-    if ($tipo === 'Cliente') {
-        $_POST['action'] = 'registrar_cliente';
-    } else {
-        $_POST['action'] = 'registrar_dueno';
-    }
+		$checkStmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
+		$checkStmt->bind_param("s", $email);
+		$checkStmt->execute();
+		$checkResult = $checkStmt->get_result();
 
-    ob_start();
-    include('./private/crud/usuarios.php');
-    $response = ob_get_clean();
+		if ($checkResult->num_rows > 0) {
+				$_SESSION['error'] = "El correo electrónico '$email' ya está registrado. Intenta con otro o inicia sesión.";
+				$checkStmt->close();
+				header("Location: registro.php");
+				exit();
+		}
+		$checkStmt->close();
 
-    if (stripos($response, "exitoso") !== false) {
-        $_SESSION['success'] = $response;
-    } else {
-        $_SESSION['error'] = $response;
-    }
+		$_POST['email'] = $email;
+		$_POST['password'] = $password;
 
-    header("Location: registro.php");
-    exit();
+		if ($tipo === 'Cliente') {
+				$_POST['action'] = 'registrar_cliente';
+		} else {
+				$_POST['action'] = 'registrar_dueno';
+		}
+
+		ob_start();
+		include('./private/crud/usuarios.php');
+		$response = ob_get_clean();
+
+		if (stripos($response, "exitoso") !== false) {
+				$_SESSION['success'] = $response;
+		} else {
+				$_SESSION['error'] = $response;
+		}
+
+		header("Location: registro.php");
+		exit();
 }
 ?>
 
