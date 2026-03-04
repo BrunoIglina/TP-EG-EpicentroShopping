@@ -22,27 +22,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $conn = getDB();
 
-    $stmt = $conn->prepare("SELECT id, password, tipo, categoria FROM usuarios WHERE email = ? AND validado = 1");
+
+    $stmt = $conn->prepare("SELECT id, password, tipo, categoria, validado FROM usuarios WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
+    // Verificamos si el correo existe en la base de datos
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
 
-        if (password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_tipo'] = $user['tipo'];
-            $_SESSION['user_categoria'] = $user['categoria'];
+        // Verificamos si la cuenta está pendiente de validación
+        if ($user['validado'] == 0) {
+            $_SESSION['error'] = "Tu cuenta todavía no ha sido aceptada por el administrador. Por favor, espera a ser validado para ingresar.";
+        } 
+        // Si está validada, procedemos con la contraseña
+        else {
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_tipo'] = $user['tipo'];
+                $_SESSION['user_categoria'] = $user['categoria'];
 
-            $stmt->close();
-            header("Location: index.php");
-            exit();
-        } else {
-            $_SESSION['error'] = "Contraseña incorrecta.";
+                $stmt->close();
+                header("Location: index.php");
+                exit();
+            } else {
+                $_SESSION['error'] = "Contraseña incorrecta.";
+            }
         }
     } else {
-        $_SESSION['error'] = "No se encontró una cuenta con ese correo electrónico o la cuenta no está validada.";
+        //Mensaje específico si el correo no existe
+        $_SESSION['error'] = "El correo electrónico ingresado no se encuentra registrado en el sistema.";
     }
 
     $stmt->close();

@@ -1,6 +1,9 @@
 <?php
+session_start(); // Asegurate de que esté iniciado para usar $_SESSION
+require_once './config/database.php';
 require_once './includes/navigation_history.php';
 require_once './includes/security_headers.php';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
@@ -11,6 +14,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: registro.php");
         exit();
     }
+
+    $conn = getDB();
+
+    //Verificar si el mail ya existe antes de procesar
+    $checkStmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
+    $checkStmt->bind_param("s", $email);
+    $checkStmt->execute();
+    $checkResult = $checkStmt->get_result();
+
+    if ($checkResult->num_rows > 0) {
+        $_SESSION['error'] = "El correo electrónico '$email' ya está registrado. Intenta con otro o inicia sesión.";
+        $checkStmt->close();
+        header("Location: registro.php");
+        exit();
+    }
+    $checkStmt->close();
 
     $_POST['email'] = $email;
     $_POST['password'] = $password;
@@ -56,22 +75,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body class="auth-page">
     <div class="wrapper">
-            <?php include './includes/header.php'; ?>
+        <?php include './includes/header.php'; ?>
         <?php include './includes/back_button.php'; ?>
         <main>
             <div class="auth-container">
                 <section class="auth-form">
                     <h2 style="font-family: 'Poppins', sans-serif;">Registrarse</h2> 
-                    <?php
-                    if (isset($_SESSION['error'])) {
-                        echo "<p class='text-danger'>" . htmlspecialchars($_SESSION['error']) . "</p>";
-                        unset($_SESSION['error']);
-                    }
-                    if (isset($_SESSION['success'])) {
-                        echo "<p class='text-success'>" . htmlspecialchars($_SESSION['success']) . "</p>";
-                        unset($_SESSION['success']);
-                    }
-                    ?>
+
+                    <?php if (isset($_SESSION['error'])): ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php echo htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (isset($_SESSION['success'])): ?>
+                        <div class="alert alert-success" role="alert">
+                            <?php echo htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?>
+                        </div>
+                    <?php endif; ?>
+
                     <form action="registro.php" method="post">
                         <label for="email">Correo Electrónico:</label>
                         <input type="email" id="email" name="email" required>
