@@ -9,9 +9,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Administrador') {
 require_once './config/database.php';
 $conn = getDB();
 
-$limit = 6; 
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; 
-$offset = ($page - 1) * $limit; 
+$limit = 6;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
 
 $stmt = $conn->prepare("SELECT id, email FROM usuarios WHERE tipo = 'Cliente' AND validado = 0 LIMIT ? OFFSET ?");
 $stmt->bind_param("ii", $limit, $offset);
@@ -30,6 +30,7 @@ $stmt_total->close();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta charset="utf-8">
@@ -45,21 +46,21 @@ $stmt_total->close();
 
     <title>Epicentro Shopping - Aprobar Clientes</title>
 </head>
+
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
 
-        
+
         <main class="container-fluid">
-                    <?php include './includes/back_button.php'; ?>
+            <?php include './includes/back_button.php'; ?>
             <h2 class="text-center my-4">Aprobar Clientes</h2>
-            
+
             <form id="approvalForm" method="POST" action="./private/crud/usuarios.php">
                 <input type="hidden" name="action" value="aprobar_cliente">
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Email</th>
                             <th>Acción</th>
                         </tr>
@@ -68,7 +69,6 @@ $stmt_total->close();
                         <?php if ($result && $result->num_rows > 0): ?>
                             <?php while ($row = $result->fetch_assoc()): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($row['id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['email']); ?></td>
                                     <td>
                                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#confirmModal" data-id="<?php echo $row['id']; ?>" data-email="<?php echo htmlspecialchars($row['email']); ?>">Aprobar</button>
@@ -102,7 +102,7 @@ $stmt_total->close();
             </div>
         </main>
 
-    <?php include './includes/footer.php'; ?>
+        <?php include './includes/footer.php'; ?>
     </div>
 
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
@@ -129,14 +129,14 @@ $stmt_total->close();
     <script>
         let selectedId = null;
         $(document).ready(function() {
-            $('#confirmModal').on('show.bs.modal', function (event) {
+            $('#confirmModal').on('show.bs.modal', function(event) {
                 let button = $(event.relatedTarget);
                 selectedId = button.data('id');
                 let email = button.data('email');
                 $('#modalEmail').text(email);
             });
 
-            $('#confirmActionBtn').on('click', function () {
+            $('#confirmActionBtn').on('click', function() {
                 if (selectedId) {
                     let form = $('#approvalForm');
                     $('<input>').attr({
@@ -150,4 +150,5 @@ $stmt_total->close();
         });
     </script>
 </body>
+
 </html>

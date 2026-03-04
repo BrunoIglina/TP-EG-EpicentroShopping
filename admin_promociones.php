@@ -32,6 +32,7 @@ $stmt_total->close();
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -50,25 +51,26 @@ $stmt_total->close();
             width: 100%;
             overflow-x: auto;
         }
+
         table {
             min-width: 800px;
         }
     </style>
 </head>
+
 <body>
     <div class="wrapper">
-            <?php include './includes/header.php'; ?>
+        <?php include './includes/header.php'; ?>
 
 
         <main class="container-fluid">
-                    <?php include './includes/back_button.php'; ?>
+            <?php include './includes/back_button.php'; ?>
             <section class="admin-section">
                 <h2 class="text-center my-2">Aprobar promociones pendientes</h2>
                 <div class="table-container">
                     <table class="table table-bordered text-center align-middle">
                         <thead class="table-dark">
                             <tr>
-                                <th>ID</th>
                                 <th>Texto de la Promoción</th>
                                 <th>Fecha de Inicio</th>
                                 <th>Fecha de Fin</th>
@@ -80,7 +82,6 @@ $stmt_total->close();
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
                                     echo "<tr>";
-                                    echo "<td>" . htmlspecialchars($row['id']) . "</td>";
                                     echo "<td>" . htmlspecialchars($row['textoPromo']) . "</td>";
                                     echo "<td>" . htmlspecialchars($row['fecha_inicio']) . "</td>";
                                     echo "<td>" . htmlspecialchars($row['fecha_fin']) . "</td>";
@@ -144,7 +145,7 @@ $stmt_total->close();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#confirmModal').on('show.bs.modal', function (event) {
+            $('#confirmModal').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget);
                 var promocionId = button.data('id');
                 var action = button.data('action');
@@ -155,17 +156,17 @@ $stmt_total->close();
                 $('#confirmActionBtn').off('click').on('click', function() {
                     var form = $('#actionForm');
                     form.empty();
-                    
+
                     var inputAction = $('<input>')
                         .attr('type', 'hidden')
                         .attr('name', 'action')
                         .val(action);
-                    
+
                     var inputId = $('<input>')
                         .attr('type', 'hidden')
                         .attr('name', 'promocion_id')
                         .val(promocionId);
-                    
+
                     form.append(inputAction);
                     form.append(inputId);
                     form.submit();
@@ -174,4 +175,5 @@ $stmt_total->close();
         });
     </script>
 </body>
+
 </html>

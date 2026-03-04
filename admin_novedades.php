@@ -19,6 +19,7 @@ $total_pages = ceil($total_novedades / $limit);
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,11 +34,12 @@ $total_pages = ceil($total_novedades / $limit);
     <link rel="stylesheet" href="./css/buttons.css">
     <title>Epicentro Shopping - Administración de Novedades</title>
 </head>
+
 <body>
     <div class="wrapper">
         <?php include './includes/header.php'; ?>
         <?php include './includes/back_button.php'; ?>
-        
+
         <main class="container-fluid">
             <section class="admin-section">
                 <h2 class="text-center my-4">Administración de Novedades</h2>
@@ -48,14 +50,16 @@ $total_pages = ceil($total_novedades / $limit);
 
                 <?php if (isset($_SESSION['success'])): ?>
                     <div class="alert alert-success alert-dismissible fade show">
-                        <?php echo htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?>
+                        <?php echo htmlspecialchars($_SESSION['success']);
+                        unset($_SESSION['success']); ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 <?php endif; ?>
 
                 <?php if (isset($_SESSION['error'])): ?>
                     <div class="alert alert-danger alert-dismissible fade show">
-                        <?php echo htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
+                        <?php echo htmlspecialchars($_SESSION['error']);
+                        unset($_SESSION['error']); ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 <?php endif; ?>
@@ -67,7 +71,6 @@ $total_pages = ceil($total_novedades / $limit);
                         <table class="table table-striped table-bordered">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th>Código</th>
                                     <th>Título</th>
                                     <th>Descripción</th>
                                     <th>Fecha desde</th>
@@ -80,34 +83,33 @@ $total_pages = ceil($total_novedades / $limit);
                             <tbody>
                                 <?php foreach ($novedades as $novedad): ?>
                                     <tr>
-                                        <td><?php echo htmlspecialchars($novedad['id']); ?></td>
                                         <td><?php echo htmlspecialchars($novedad['tituloNovedad']); ?></td>
                                         <td><?php echo htmlspecialchars(substr($novedad['textoNovedad'], 0, 100)) . '...'; ?></td>
                                         <td><?php echo htmlspecialchars($novedad['fecha_desde']); ?></td>
                                         <td><?php echo htmlspecialchars($novedad['fecha_hasta']); ?></td>
                                         <td>
                                             <?php if (!empty($novedad['imagen'])): ?>
-                                                <img src="./private/helpers/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>" 
-                                                     alt="Imagen de la novedad" 
-                                                     class="img-fluid" 
-                                                     style="max-width: 100px;">
+                                                <img src="./private/helpers/visualizar_imagen.php?novedad_id=<?php echo $novedad['id']; ?>"
+                                                    alt="Imagen de la novedad"
+                                                    class="img-fluid"
+                                                    style="max-width: 100px;">
                                             <?php else: ?>
                                                 Sin imagen
                                             <?php endif; ?>
                                         </td>
                                         <td><?php echo htmlspecialchars($novedad['categoria']); ?></td>
                                         <td>
-                                            <button type="button" 
-                                                    class="btn btn-warning btn-sm mb-1" 
-                                                    onclick="window.location.href='editar_novedad.php?id=<?php echo $novedad['id']; ?>'">
-                                                 Modificar
+                                            <button type="button"
+                                                class="btn btn-warning btn-sm mb-1"
+                                                onclick="window.location.href='editar_novedad.php?id=<?php echo $novedad['id']; ?>'">
+                                                Modificar
                                             </button>
-                                            <button type="button" 
-                                                    class="btn btn-danger btn-sm mb-1" 
-                                                    data-bs-toggle="modal" 
-                                                    data-bs-target="#confirmModal"
-                                                    data-id="<?php echo $novedad['id']; ?>"
-                                                    data-titulo="<?php echo htmlspecialchars($novedad['tituloNovedad']); ?>">
+                                            <button type="button"
+                                                class="btn btn-danger btn-sm mb-1"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#confirmModal"
+                                                data-id="<?php echo $novedad['id']; ?>"
+                                                data-titulo="<?php echo htmlspecialchars($novedad['tituloNovedad']); ?>">
                                                 Eliminar
                                             </button>
                                         </td>
@@ -135,7 +137,7 @@ $total_pages = ceil($total_novedades / $limit);
                 <?php endif; ?>
             </section>
         </main>
-        
+
         <?php include './includes/footer.php'; ?>
     </div>
 
@@ -165,14 +167,15 @@ $total_pages = ceil($total_novedades / $limit);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const confirmModal = document.getElementById('confirmModal');
-        confirmModal.addEventListener('show.bs.modal', function (event) {
+        confirmModal.addEventListener('show.bs.modal', function(event) {
             const button = event.relatedTarget;
             const id = button.getAttribute('data-id');
             const titulo = button.getAttribute('data-titulo');
-            
+
             document.getElementById('modalNovedadId').value = id;
             document.getElementById('modalTitulo').textContent = titulo;
         });
     </script>
 </body>
+
 </html>

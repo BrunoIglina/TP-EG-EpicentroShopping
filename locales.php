@@ -11,15 +11,22 @@ $filtered_locales = $locales;
 // FILTRO: Por Nombre
 if (isset($_GET['nombre_local']) && $_GET['nombre_local'] != '') {
     $nombre_local = $_GET['nombre_local'];
-    $filtered_locales = array_filter($filtered_locales, function($local) use ($nombre_local) {
+    $filtered_locales = array_filter($filtered_locales, function ($local) use ($nombre_local) {
         return stripos($local['nombre'], $nombre_local) !== false;
+    });
+}
+
+if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
+    $local_id = $_GET['local_id'];
+    $filtered_locales = array_filter($filtered_locales, function ($local) use ($local_id) {
+        return $local['id'] == $local_id;
     });
 }
 
 // FILTRO: Por Rubro (Categoría)
 if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
     $rubro = $_GET['rubro'];
-    $filtered_locales = array_filter($filtered_locales, function($local) use ($rubro) {
+    $filtered_locales = array_filter($filtered_locales, function ($local) use ($rubro) {
         return $local['rubro'] == $rubro;
     });
 }

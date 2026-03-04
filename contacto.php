@@ -4,6 +4,7 @@ require_once './includes/security_headers.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -17,19 +18,22 @@ require_once './includes/security_headers.php';
     <link rel="stylesheet" href="./css/contacto.css">
     <title>Contacto - Epicentro Shopping</title>
 </head>
-<body class="asd">
-        <?php include './includes/header.php'; ?>
-        <?php include './includes/back_button.php'; ?>
-            <?php
-            if (isset($_GET['success'])): ?>
-            <div class="alert alert-success">Tu mensaje ha sido enviado con éxito.</div>
-        <?php elseif (isset($_GET['error'])): ?>
-            <div class="alert alert-danger">Hubo un problema al enviar tu mensaje. Inténtalo de nuevo.</div>
-        <?php endif; ?>
+<?php include './includes/header.php'; ?>
+
+<body class="wrapper">
+
+
+    <?php
+    if (isset($_GET['success'])): ?>
+        <div class="alert alert-success">Tu mensaje ha sido enviado con éxito.</div>
+    <?php elseif (isset($_GET['error'])): ?>
+        <div class="alert alert-danger">Hubo un problema al enviar tu mensaje. Inténtalo de nuevo.</div>
+    <?php endif; ?>
 
     <main class="container compact-container my-4">
+        <?php include './includes/back_button.php'; ?>
         <h2 class="text-center">Contacto</h2>
-        
+
         <div class="accordion" id="faqAccordion">
             <div class="card">
                 <div class="card-header" id="faq1">
@@ -74,7 +78,7 @@ require_once './includes/security_headers.php';
                 </div>
             </div>
         </div>
-        
+
         <form action="./private/helpers/procesar_contacto.php" method="POST" class="mt-4">
             <div class="form-group">
                 <label for="nombre">Nombre</label>
@@ -91,13 +95,13 @@ require_once './includes/security_headers.php';
             <button type="submit" class="btn btn-primary btn-block">Enviar</button>
         </form>
     </main>
-    
+
     <?php include './includes/footer.php'; ?>
-    
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('.faq-btn').click(function() {
                 var target = $(this).attr('data-target');
                 if ($(target).hasClass('show')) {
@@ -110,4 +114,5 @@ require_once './includes/security_headers.php';
         });
     </script>
 </body>
+
 </html>

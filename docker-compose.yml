@@ -8,6 +8,7 @@ services:
       - "8080:80"
     volumes:
       - .:/var/www/html
+      - /var/www/html/lib/vendor
     depends_on:
       db:
         condition: service_healthy
