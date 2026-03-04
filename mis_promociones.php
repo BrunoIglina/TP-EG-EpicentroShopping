@@ -1,7 +1,10 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Cliente') {
-    header("Location: login.php");
-    exit();
+	header("Location: login.php");
+	exit();
 }
 
 $usuario_id = $_SESSION['user_id'];
@@ -51,31 +54,33 @@ $total_stmt->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="utf-8">
-<link rel="stylesheet" href="./css/footer.css">
-<link rel="stylesheet" href="./css/header.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <link rel="icon" type="image/png" href="./assets/logo2.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/mis_promociones.css">
-    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="stylesheet" href="./css/back_button.css">
-    <link rel="stylesheet" href="./css/fix_header.css">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="./css/footer.css">
+  <link rel="stylesheet" href="./css/header.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <link rel="icon" type="image/png" href="./assets/logo2.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/mis_promociones.css">
+  <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+  <link rel="stylesheet" href="./css/back_button.css">
+  <link rel="stylesheet" href="./css/fix_header.css">
 
-    <title>Epicentro Shopping - Mis Promociones</title>
+  <title>Epicentro Shopping - Mis Promociones</title>
 </head>
+
 <body>
-    <div class="wrapper">
-        <?php include './includes/header.php'; ?>
+  <div class="wrapper">
+    <?php include './includes/header.php'; ?>
 
 
-        <main class="container">
-                    <?php include './includes/back_button.php'; ?>
-                        <h2 class="text-center my-4">Mis Promociones</h2>
-            <div id="misPromocionesContainer" class="row">
-                <?php
+    <main class="container">
+      <?php include './includes/back_button.php'; ?>
+      <h2 class="text-center my-4">Mis Promociones</h2>
+      <div id="misPromocionesContainer" class="row">
+        <?php
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<div class='col-lg-6 col-md-12 mb-4'>";
@@ -95,29 +100,30 @@ $total_stmt->close();
                     echo "<p>No tienes promociones solicitadas.</p>";
                 }
                 ?>
-            </div>
-            
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item <?php if($page <= 1){ echo 'disabled'; } ?>">
-                        <a class="page-link" href="<?php if($page > 1){ echo "?page=" . ($page - 1); } ?>">Anterior</a>
-                    </li>
-                    <?php for($i = 1; $i <= $total_pages; $i++): ?>
-                        <li class="page-item <?php if($page == $i){ echo 'active'; } ?>">
-                            <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
-                        </li>
-                    <?php endfor; ?>
-                    <li class="page-item <?php if($page >= $total_pages){ echo 'disabled'; } ?>">
-                        <a class="page-link" href="<?php if($page < $total_pages){ echo "?page=" . ($page + 1); } ?>">Siguiente</a>
-                    </li>
-                </ul>
-            </nav>
-        </main>
-        <?php include './includes/footer.php'; ?>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+      </div>
+
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item <?php if($page <= 1){ echo 'disabled'; } ?>">
+            <a class="page-link" href="<?php if($page > 1){ echo "?page=" . ($page - 1); } ?>">Anterior</a>
+          </li>
+          <?php for($i = 1; $i <= $total_pages; $i++): ?>
+          <li class="page-item <?php if($page == $i){ echo 'active'; } ?>">
+            <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
+          </li>
+          <?php endfor; ?>
+          <li class="page-item <?php if($page >= $total_pages){ echo 'disabled'; } ?>">
+            <a class="page-link" href="<?php if($page < $total_pages){ echo "?page=" . ($page + 1); } ?>">Siguiente</a>
+          </li>
+        </ul>
+      </nav>
+    </main>
+    <?php include './includes/footer.php'; ?>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
