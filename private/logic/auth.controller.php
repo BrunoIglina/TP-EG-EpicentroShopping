@@ -7,9 +7,29 @@ switch ($accion) {
   case 'login':
     procesar_login();
     break;
-    // En el próximo paso agregaremos 'registro', 'recuperar', etc.
+  case 'registro':
+    procesar_registro();
+    break;
+  case 'registro':
+    procesar_registro();
+    break;
+  case 'recuperar':
+    procesar_recuperar();
+    break;
+  case 'cambiar_password':
+    procesar_cambiar_password();
+    break;
+  case 'verificar':
+    procesar_verificar_codigo();
+    break;
+  default:
+    header("Location: index.php?vista=login");
+    exit();
 }
 
+// =====================
+// FUNCIÓN PARA EL LOGIN
+// =====================
 function procesar_login()
 {
   $email = trim($_POST['email']);
@@ -38,6 +58,7 @@ function procesar_login()
         $_SESSION['user_tipo'] = $user['tipo'];
         $_SESSION['user_categoria'] = $user['categoria'];
         $stmt->close();
+
         header("Location: index.php?vista=landing");
         exit();
       } else {
@@ -51,4 +72,186 @@ function procesar_login()
   $stmt->close();
   header("Location: index.php?vista=login");
   exit();
+}
+
+// ========================
+// FUNCIÓN PARA EL REGISTRO
+// ========================
+function procesar_registro()
+{
+  $email = trim($_POST['email'] ?? '');
+  $password = trim($_POST['password'] ?? '');
+  $confirm_password = trim($_POST['confirm_password'] ?? '');
+  $tipo = trim($_POST['tipo'] ?? '');
+
+  if (empty($email) || empty($password) || empty($confirm_password) || empty($tipo)) {
+    $_SESSION['error'] = "Todos los campos son obligatorios.";
+    header("Location: index.php?vista=registro");
+    exit();
+  }
+
+  if ($password !== $confirm_password) {
+    $_SESSION['error'] = "Las contraseñas no coinciden.";
+    header("Location: index.php?vista=registro");
+    exit();
+  }
+
+  $conn = getDB();
+
+  $checkStmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
+  $checkStmt->bind_param("s", $email);
+  $checkStmt->execute();
+  $checkResult = $checkStmt->get_result();
+
+  if ($checkResult->num_rows > 0) {
+    $_SESSION['error'] = "El correo electrónico '$email' ya está registrado. Intenta con otro o inicia sesión.";
+    $checkStmt->close();
+    header("Location: index.php?vista=registro");
+    exit();
+  }
+  $checkStmt->close();
+
+  $_POST['email'] = $email;
+  $_POST['password'] = $password;
+
+  if ($tipo === 'Cliente') {
+    $_POST['action'] = 'registrar_cliente';
+  } else {
+    $_POST['action'] = 'registrar_dueno';
+  }
+
+  ob_start();
+  include(__DIR__ . '/crud/usuarios.php');
+  $response = ob_get_clean();
+
+  if (stripos($response, "exitoso") !== false) {
+    $_SESSION['success'] = $response;
+  } else {
+    $_SESSION['error'] = $response;
+  }
+
+  header("Location: index.php?vista=registro");
+  exit();
+}
+
+// ==========================================
+// FUNCIÓN PARA RECUPERAR CUENTA (Nueva)
+// ==========================================
+function procesar_recuperar()
+{
+
+  require_once __DIR__ . '/helpers/email.php';
+
+  $email = trim($_POST['email'] ?? '');
+
+  if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $_SESSION['error'] = "Correo electrónico inválido.";
+    header("Location: index.php?vista=recuperar");
+    exit();
+  }
+
+  $conn = getDB();
+
+  $stmt = $conn->prepare("SELECT * FROM usuarios WHERE email = ?");
+  $stmt->bind_param("s", $email);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $user = $result->fetch_assoc();
+  $stmt->close();
+
+  if ($user) {
+    $resultado = enviar_codigo_verificacion($email);
+
+    if ($resultado === true) {
+      // Si sale bien, lo mandamos a la vista de verificar pasándole el email por la URL
+      header("Location: index.php?vista=verificar&email=" . urlencode($email));
+      exit();
+    } else {
+      $_SESSION['error'] = $resultado;
+      header("Location: index.php?vista=recuperar");
+      exit();
+    }
+  } else {
+    $_SESSION['error'] = "Correo electrónico no registrado.";
+    header("Location: index.php?vista=recuperar");
+    exit();
+  }
+}
+
+// ===============================
+// FUNCIÓN PARA CAMBIAR CONTRASEÑA
+// ===============================
+function procesar_cambiar_password()
+{
+  $new_password_raw = trim($_POST['new_password'] ?? '');
+  $confirm_password = trim($_POST['confirm_password'] ?? '');
+  $email = trim($_POST['email'] ?? '');
+
+  if ($new_password_raw !== $confirm_password) {
+    $_SESSION['error'] = "Las contraseñas no coinciden.";
+    header("Location: index.php?vista=cambiar_password&email=" . urlencode($email));
+    exit();
+  }
+
+  $conn = getDB();
+  $new_password = password_hash($new_password_raw, PASSWORD_BCRYPT);
+
+  // Caso 1: El usuario está logueado y cambia su clave desde el perfil
+  if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $stmt = $conn->prepare("UPDATE usuarios SET password = ? WHERE id = ?");
+    $stmt->bind_param('si', $new_password, $user_id);
+    $stmt->execute();
+    $stmt->close();
+
+    unset($_SESSION['code_verified']);
+    $_SESSION['success'] = "Contraseña cambiada exitosamente.";
+
+
+    header('Location: index.php?vista=cliente_perfil');
+    exit();
+  }
+  // Caso 2: El usuario viene de recuperar cuenta por email
+  elseif ($email) {
+    $stmt = $conn->prepare("UPDATE usuarios SET password = ? WHERE email = ?");
+    $stmt->bind_param('ss', $new_password, $email);
+    $stmt->execute();
+    $stmt->close();
+
+    unset($_SESSION['verification_code']);
+    $_SESSION['success'] = "Contraseña cambiada exitosamente. Por favor, inicia sesión.";
+    header('Location: index.php?vista=login');
+    exit();
+  }
+  // Caso 3: Error de acceso
+  else {
+    $_SESSION['error'] = "Correo electrónico no proporcionado.";
+    header("Location: index.php?vista=cambiar_password");
+    exit();
+  }
+}
+
+// =============================
+// FUNCIÓN PARA VERIFICAR CÓDIGO
+// =============================
+function procesar_verificar()
+{
+  $entered_code = trim($_POST['verification_code'] ?? '');
+  $email = trim($_POST['email'] ?? '');
+
+  // Comparamos el código ingresado con el que guardamos en la sesión
+  if (isset($_SESSION['verification_code']) && $entered_code == $_SESSION['verification_code']) {
+    // Si es correcto, borramos el código y habilitamos el cambio de clave
+    unset($_SESSION['verification_code']);
+    $_SESSION['code_verified'] = true;
+
+    // Mandamos a la vista de cambiar contraseña a través del router
+    header("Location: index.php?vista=cambiar_password&email=" . urlencode($email));
+    exit();
+  } else {
+    // Si falla, volvemos a la vista de verificar con un error
+    $_SESSION['error'] = "Código de verificación incorrecto.";
+    header("Location: index.php?vista=verificar&email=" . urlencode($email));
+    exit();
+  }
 }
