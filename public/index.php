@@ -4,15 +4,12 @@ session_start();
 require_once __DIR__ . '/../includes/navigation_history.php';
 require_once __DIR__ . '/../includes/security_headers.php';
 
-// ==========================================
-// ROUTER DE ACCIONES (Procesa Formularios POST)
-// ==========================================
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $modulo = $_POST['modulo'] ?? '';
 
-  // -- Módulo de Autenticación --
   if ($modulo === 'auth') {
-    require_once __DIR__ . '/../private/logic/auth_controller.php';
+    require_once __DIR__ . '/../private/logic/auth.controller.php';
     exit();
   }
 
