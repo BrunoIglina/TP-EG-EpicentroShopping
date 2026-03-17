@@ -32,6 +32,18 @@ if (!$row || empty($row['imagen'])) {
     die("Imagen no encontrada.");
 }
 
-header("Content-Type: image/jpeg");
+
+if (ob_get_length()) {
+    ob_clean();
+}
+
+
+$finfo = new finfo(FILEINFO_MIME_TYPE);
+$mime = $finfo->buffer($row['imagen']);
+if (!$mime) {
+    $mime = 'image/jpeg';
+}
+
+header("Content-Type: " . $mime);
 header("Cache-Control: public, max-age=31536000");
 echo $row['imagen'];

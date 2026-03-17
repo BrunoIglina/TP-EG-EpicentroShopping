@@ -95,10 +95,10 @@ function getQueryString($page, $current_get)
                 <select name="rubro" class="form-control">
                   <option value="">Todos los rubros</option>
                   <?php foreach ($rubros as $label => $value) { ?>
-                    <option value="<?php echo htmlspecialchars($value); ?>"
-                      <?php echo (isset($_GET['rubro']) && $_GET['rubro'] == $value) ? 'selected' : ''; ?>>
-                      <?php echo htmlspecialchars($label); ?>
-                    </option>
+                  <option value="<?php echo htmlspecialchars($value); ?>"
+                    <?php echo (isset($_GET['rubro']) && $_GET['rubro'] == $value) ? 'selected' : ''; ?>>
+                    <?php echo htmlspecialchars($label); ?>
+                  </option>
                   <?php } ?>
                 </select>
               </div>
@@ -115,62 +115,62 @@ function getQueryString($page, $current_get)
                 <?php
                 // (Empty State)
                 if (empty($paginated_locales)) { ?>
-                  <div class="col-12 text-center py-5">
-                    <h4 class="text-muted">No se encontraron locales con los filtros aplicados.</h4>
-                  </div>
-                  <?php } else {
+                <div class="col-12 text-center py-5">
+                  <h4 class="text-muted">No se encontraron locales con los filtros aplicados.</h4>
+                </div>
+                <?php } else {
                   foreach ($paginated_locales as $local) { ?>
 
-                    <div class="col-md-4 col-sm-12" style="padding: .5rem;">
+                <div class="col-md-4 col-sm-12" style="padding: .5rem;">
 
-                      <div class="card h-100 shadow-sm text-center">
+                  <div class="card h-100 shadow-sm text-center">
 
-                        <div style="height: 200px; overflow: hidden;">
-                          <img src="../private/logic/helpers/visualizar_imagen.php?local_id=<?php echo $local['id']; ?>"
-                            class="card-img-top" alt="<?php echo htmlspecialchars($local['nombre']); ?>"
-                            style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-
-                        <div class="card-body d-flex flex-column">
-                          <h4 class="card-title"><?php echo htmlspecialchars($local['nombre']); ?></h4>
-
-                          <p class="card-text mb-2">
-                            <span class="badge bg-secondary"><?php echo htmlspecialchars($local['rubro']); ?></span>
-                          </p>
-
-                          <p class="card-text mt-auto text-muted" style="font-size: 0.9rem;">
-                            <small>Ubicación: <?php echo htmlspecialchars($local['ubicacion']); ?></small>
-                          </p>
-
-                          <a href="promociones.php?local_id=<?php echo $local['id']; ?>"
-                            class="btn btn-primary mt-3 w-100">Ver Promociones</a>
-                        </div>
-                      </div>
+                    <div style="height: 200px; overflow: hidden;">
+                      <img src="index.php?vista=imagen&local_id=<?php echo $local['id']; ?>" class="card-img-top"
+                        alt="<?php echo htmlspecialchars($local['nombre']); ?>"
+                        style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
-                  <?php } ?>
+
+                    <div class="card-body d-flex flex-column">
+                      <h4 class="card-title"><?php echo htmlspecialchars($local['nombre']); ?></h4>
+
+                      <p class="card-text mb-2">
+                        <span class="badge bg-secondary"><?php echo htmlspecialchars($local['rubro']); ?></span>
+                      </p>
+
+                      <p class="card-text mt-auto text-muted" style="font-size: 0.9rem;">
+                        <small>Ubicación: <?php echo htmlspecialchars($local['ubicacion']); ?></small>
+                      </p>
+
+                      <a href="promociones.php?local_id=<?php echo $local['id']; ?>"
+                        class="btn btn-primary mt-3 w-100">Ver Promociones</a>
+                    </div>
+                  </div>
+                </div>
+                <?php } ?>
                 <?php } ?>
               </div>
 
               <?php
               if ($total_pages > 1) { ?>
-                <nav class="d-flex justify-content-center mt-4">
-                  <ul class="pagination">
+              <nav class="d-flex justify-content-center mt-4">
+                <ul class="pagination">
 
-                    <li class="page-item <?php echo $current_page <= 1 ? 'disabled' : ''; ?>">
-                      <a class="page-link" href="?<?php echo getQueryString($current_page - 1, $_GET); ?>">Anterior</a>
-                    </li>
+                  <li class="page-item <?php echo $current_page <= 1 ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?<?php echo getQueryString($current_page - 1, $_GET); ?>">Anterior</a>
+                  </li>
 
-                    <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
-                      <li class="page-item <?php echo $i == $current_page ? 'active' : ''; ?>">
-                        <a class="page-link" href="?<?php echo getQueryString($i, $_GET); ?>"><?php echo $i; ?></a>
-                      </li>
-                    <?php } ?>
+                  <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
+                  <li class="page-item <?php echo $i == $current_page ? 'active' : ''; ?>">
+                    <a class="page-link" href="?<?php echo getQueryString($i, $_GET); ?>"><?php echo $i; ?></a>
+                  </li>
+                  <?php } ?>
 
-                    <li class="page-item <?php echo $current_page >= $total_pages ? 'disabled' : ''; ?>">
-                      <a class="page-link" href="?<?php echo getQueryString($current_page + 1, $_GET); ?>">Siguiente</a>
-                    </li>
-                  </ul>
-                </nav>
+                  <li class="page-item <?php echo $current_page >= $total_pages ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?<?php echo getQueryString($current_page + 1, $_GET); ?>">Siguiente</a>
+                  </li>
+                </ul>
+              </nav>
               <?php } ?>
 
             </div>

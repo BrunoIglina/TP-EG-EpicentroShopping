@@ -29,23 +29,20 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
             <li class="nav-item">
               <a class="nav-link text-white" href="index.php?vista=landing">Inicio</a>
             </li>
+
             <li class="nav-item">
               <a class="nav-link text-white" href="locales.php">Locales</a>
-              <!-- <a class="nav-link text-white" href="index.php?vista=locales">Locales</a>-->
             </li>
             <li class="nav-item">
               <a class="nav-link text-white" href="mapadesitio.php">Mapa</a>
-              <!--<a class="nav-link text-white" href="index.php?vista=mapadesitio">Mapa</a>-->
             </li>
             <li class="nav-item">
               <a class="nav-link text-white" href="novedades.php">Novedades</a>
-              <!--<a class="nav-link text-white" href="index.php?vista=novedades">Novedades</a>-->
             </li>
 
             <?php if ($user_tipo == 'Cliente'): ?>
               <li class="nav-item">
                 <a class="nav-link text-white" href="mis_promociones.php">Solicitudes</a>
-                <!--<a class="nav-link text-white" href="index.php?vista=mis_promociones">Solicitudes</a>-->
               </li>
             <?php endif; ?>
 
@@ -56,16 +53,11 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
                   Gestionar Shopping
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item" href="admin_locales.php">Gestionar Locales</a></li>
-                  <!--<a class="nav-link text-white" href="index.php?vista=admin-locales">Gestionar Locales</a>-->
-                  <li><a class="dropdown-item" href="admin_novedades.php">Gestionar Novedades</a></li>
-                  <!--<a class="nav-link text-white" href="index.php?vista=admin-novedades">Gestionar Novedades</a>-->
-                  <li><a class="dropdown-item" href="admin_promociones.php">Gestionar Promociones</a></li>
-                  <!--<a class="nav-link text-white" href="index.php?vista=admin-promociones">Gestionar Promociones</a>-->
-                  <li><a class="dropdown-item" href="admin_aprobar_clientes.php">Administrar Clientes</a></li>
-                  <!--<a class="nav-link text-white" href="index.php?vista=admin-aprobar-clientes">Administrar Clientes</a>-->
-                  <li><a class="dropdown-item" href="admin_aprobar_dueños.php">Gestionar Dueños</a></li>
-                  <!--<a class="nav-link text-white" href="index.php?vista=admin-aprobar-dueños">Gestionar Dueños</a>-->
+                  <li><a class="dropdown-item" href="index.php?vista=admin_locales">Gestionar Locales</a></li>
+                  <li><a class="dropdown-item" href="index.php?vista=admin_novedades">Gestionar Novedades</a></li>
+                  <li><a class="dropdown-item" href="index.php?vista=admin_promociones">Gestionar Promociones</a></li>
+                  <li><a class="dropdown-item" href="index.php?vista=admin_aprobar_clientes">Gestionar Clientes</a></li>
+                  <li><a class="dropdown-item" href="index.php?vista=admin_aprobar_duenos">Gestionar Dueños</a></li>
                 </ul>
               </li>
             <?php endif; ?>
@@ -78,7 +70,6 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
                   <li><a class="dropdown-item" href="misPromos.php">Mis Promociones</a></li>
-                  <!--<a class="nav-link text-white" href="index.php?vista=mis-p">Promociones</a>-->
                   <li><a class="dropdown-item" href="gestion_promos.php">Administrar Solicitudes</a></li>
                 </ul>
               </li>

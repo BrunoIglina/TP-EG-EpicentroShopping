@@ -55,28 +55,28 @@ $locales = get_locales_solicitados();
         style="background-color:rgba(32, 40, 51, 0.06); padding: 1.5rem 0.5rem; border-radius: 20px;">
 
         <?php foreach ($locales as $local) { ?>
-        <div class="col-12 col-md-6 col-lg-3">
-          <a href="promociones.php?local_id=<?php echo $local['id']; ?>&local_nombre=<?php echo urlencode($local['nombre']); ?>&local_rubro=<?php echo urlencode($local['rubro']); ?>"
-            class="card-link text-decoration-none">
+          <div class="col-12 col-md-6 col-lg-3">
+            <a href="promociones.php?local_id=<?php echo $local['id']; ?>&local_nombre=<?php echo urlencode($local['nombre']); ?>&local_rubro=<?php echo urlencode($local['rubro']); ?>"
+              class="card-link text-decoration-none">
 
-            <div class="card text-center h-100 shadow-sm">
-              <div class="card-body d-flex flex-column">
+              <div class="card text-center h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
 
-                <div class="card-image mb-3" style="height: 180px; overflow: hidden; border-radius: 5px;">
-                  <?php echo '<img src="../private/logic/helpers/visualizar_imagen.php?local_id=' . $local['id'] . '" alt="Imagen de ' . htmlspecialchars($local['nombre']) . '" class="w-100 h-100" style="object-fit: cover;">'; ?>
+                  <div class="card-image mb-3" style="height: 180px; overflow: hidden; border-radius: 5px;">
+                    <?php echo '<img src="index.php?vista=imagen&local_id=' . $local['id'] . '" alt="Imagen de ' . htmlspecialchars($local['nombre']) . '" class="w-100 h-100" style="object-fit: cover;">'; ?>
+                  </div>
+
+                  <h4 class="card-title text-dark"><?php echo htmlspecialchars($local['nombre']); ?></h4>
+
+                  <p class="card-text text-muted mt-auto">
+                    <strong><?php echo htmlspecialchars($local['rubro']); ?></strong><br>
+                    <?php echo htmlspecialchars($local['ubicacion']); ?>
+                  </p>
+
                 </div>
-
-                <h4 class="card-title text-dark"><?php echo htmlspecialchars($local['nombre']); ?></h4>
-
-                <p class="card-text text-muted mt-auto">
-                  <strong><?php echo htmlspecialchars($local['rubro']); ?></strong><br>
-                  <?php echo htmlspecialchars($local['ubicacion']); ?>
-                </p>
-
               </div>
-            </div>
-          </a>
-        </div>
+            </a>
+          </div>
         <?php } ?>
 
       </div>
