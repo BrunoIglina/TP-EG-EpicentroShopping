@@ -19,9 +19,7 @@ switch ($action) {
 	case 'aprobar_dueno':
 		aprobar_dueno();
 		break;
-	case 'validar_categoria':
-		validar_categoria();
-		break;
+
 	case 'aprobar_cliente':
 		aprobar_cliente();
 		break;
@@ -202,63 +200,4 @@ function aprobar_cliente()
 	exit();
 }
 
-function validar_categoria()
-{
-	if (!isset($_SESSION['user_id'])) {
-		die("Debes estar registrado para validar la categoría.");
-	}
 
-	$conn = getDB();
-
-	$cliente_id = filter_input(INPUT_GET, 'cliente_id', FILTER_VALIDATE_INT);
-
-	if (!$cliente_id) {
-		die("ID de cliente inválido");
-	}
-
-	$stmt = $conn->prepare("SELECT usu.categoria, COUNT(pxc.idCliente) AS total_aceptadas 
-														FROM promociones_cliente pxc
-														INNER JOIN usuarios usu ON pxc.idCliente = usu.id
-														WHERE pxc.idCliente = ? AND estado = 'aceptada'
-														GROUP BY usu.categoria");
-	$stmt->bind_param("i", $cliente_id);
-	$stmt->execute();
-	$result = $stmt->get_result();
-
-	if ($result->num_rows === 0) {
-		$stmt->close();
-		header("Location: ../../gestion_promos.php");
-		exit();
-	}
-
-	$row = $result->fetch_assoc();
-	$stmt->close();
-
-	$total_aceptadas = $row['total_aceptadas'];
-	$categoria_actual = $row['categoria'];
-
-	$nueva_categoria = $categoria_actual;
-	if ($categoria_actual == 'Inicial' && $total_aceptadas >= 3) {
-		$nueva_categoria = 'Medium';
-	} else if ($categoria_actual == 'Medium' && $total_aceptadas >= 5) {
-		$nueva_categoria = 'Premium';
-	}
-
-	if ($nueva_categoria != $categoria_actual) {
-		$stmt = $conn->prepare("UPDATE usuarios SET categoria = ? WHERE id = ?");
-		$stmt->bind_param("si", $nueva_categoria, $cliente_id);
-
-		if ($stmt->execute()) {
-			echo "Categoría del cliente actualizada a $nueva_categoria.";
-		} else {
-			error_log("Error al actualizar categoría: " . $stmt->error);
-			echo "Error al actualizar la categoría del cliente.";
-		}
-		$stmt->close();
-	} else {
-		echo "La categoría del cliente no ha cambiado.";
-	}
-
-	header("Location: ../../gestion_promos.php");
-	exit();
-}

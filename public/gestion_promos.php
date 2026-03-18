@@ -152,7 +152,8 @@ $result = $stmt->get_result();
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <form id="actionForm" action="../private/logic/crud/promociones.php" method="post" style="display: inline;">
+                    <form id="actionForm" action="index.php" method="post" style="display: inline;">
+                        <input type="hidden" name="modulo" value="dueno">
                         <input type="hidden" name="action" value="gestionar_solicitud">
                         <input type="hidden" name="promo_id" id="modalPromoId">
                         <input type="hidden" name="cliente_id" id="modalClienteId">

@@ -76,7 +76,8 @@ function getQueryString($page, $current_get)
       <?php include __DIR__ . '/../includes/back_button.php'; ?>
       <div class="container-fluid">
 
-        <form method="GET" action="locales.php">
+        <form method="GET" action="index.php">
+          <input type="hidden" name="vista" value="locales">
 
           <div class="row mb-4">
             <div class="col-12 d-flex">
@@ -106,7 +107,7 @@ function getQueryString($page, $current_get)
 
               <button type="submit" class="btn btn-secondary w-100">Aplicar Filtros</button>
 
-              <a href="locales.php" class="btn btn-outline-danger w-100 mt-2">Limpiar Filtros</a>
+              <a href="index.php?vista=locales" class="btn btn-outline-danger w-100 mt-2">Limpiar Filtros</a>
             </div>
 
             <div class="col-md-9">
@@ -142,7 +143,7 @@ function getQueryString($page, $current_get)
                         <small>Ubicación: <?php echo htmlspecialchars($local['ubicacion']); ?></small>
                       </p>
 
-                      <a href="promociones.php?local_id=<?php echo $local['id']; ?>"
+                      <a href="index.php?vista=promociones&local_id=<?php echo $local['id']; ?>"
                         class="btn btn-primary mt-3 w-100">Ver Promociones</a>
                     </div>
                   </div>

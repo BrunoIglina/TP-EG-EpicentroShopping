@@ -1,22 +1,17 @@
 <?php
-require_once __DIR__ . '/../includes/navigation_history.php';
-require_once __DIR__ . '/../includes/security_headers.php';
-
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: index.php?vista=login");
     exit();
 }
 
-require_once __DIR__ . '/../private/config/database.php';
-$conn = getDB();
+require_once __DIR__ . '/../../private/logic/functions/functions_usuarios.php';
 $user_id = $_SESSION['user_id'];
+$user = get_usuario($user_id);
 
-$stmt = $conn->prepare("SELECT * FROM usuarios WHERE id = ?");
-$stmt->bind_param('i', $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
-$stmt->close();
+if (!$user) {
+    header("Location: index.php?vista=login");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -37,8 +32,8 @@ $stmt->close();
     <title>Epicentro Shopping - Mi Perfil</title>
 </head>
 <body>
-    <?php include __DIR__ . './../includes/header.php'; ?>
-    <?php include __DIR__ . '/../includes/back_button.php'; ?>
+    <?php include __DIR__ . '/../../includes/header.php'; ?>
+    <?php include __DIR__ . '/../../includes/back_button.php'; ?>
     
     <div class="profile-wrapper">
         <div class="container">
@@ -93,12 +88,7 @@ $stmt->close();
                                     <div class="stat-card">
                                         <div class="stat-number">
                                             <?php 
-                                            $stmt = $conn->prepare("SELECT COUNT(*) as total FROM promociones_cliente WHERE idCliente = ?");
-                                            $stmt->bind_param('i', $user_id);
-                                            $stmt->execute();
-                                            $promo_count = $stmt->get_result()->fetch_assoc()['total'];
-                                            $stmt->close();
-                                            echo $promo_count;
+                                            echo get_total_promociones_usadas_cliente($user_id);
                                             ?>
                                         </div>
                                         <div class="stat-label">Promociones Usadas</div>
@@ -107,26 +97,26 @@ $stmt->close();
                             <?php endif; ?>
                             
                             <div class="action-buttons">
-                                <a href="mod_perfil.php" class="btn btn-gradient">
+                                <a href="index.php?vista=cliente_mod_perfil" class="btn btn-gradient">
                                     🔒 Cambiar Contraseña
                                 </a>
                                 
                                 <?php if ($user['tipo'] == 'Cliente'): ?>
-                                    <a href="mis_promociones.php" class="btn btn-primary">
+                                    <a href="index.php?vista=cliente_promociones" class="btn btn-primary">
                                         🎫 Ver Mis Promociones
                                     </a>
                                 <?php elseif ($user['tipo'] == 'Dueno'): ?>
-                                    <a href="misPromos.php" class="btn btn-primary">
+                                    <a href="index.php?vista=dueno_promociones" class="btn btn-primary">
                                         🏪 Mis Promociones
                                     </a>
-                                    <a href="reportesDueño.php" class="btn btn-secondary">
+                                    <a href="index.php?vista=dueno_reportes" class="btn btn-secondary">
                                         📊 Ver Reportes
                                     </a>
                                 <?php elseif ($user['tipo'] == 'Administrador'): ?>
-                                    <a href="admin_locales.php" class="btn btn-primary">
+                                    <a href="index.php?vista=admin_locales" class="btn btn-primary">
                                         🏢 Gestionar Locales
                                     </a>
-                                    <a href="admin_novedades.php" class="btn btn-primary">
+                                    <a href="index.php?vista=admin_novedades" class="btn btn-primary">
                                         📰 Gestionar Novedades
                                     </a>
                                 <?php endif; ?>
@@ -142,7 +132,7 @@ $stmt->close();
         </div>
     </div>
     
-    <?php include __DIR__ . './../includes/footer.php'; ?>
+    <?php include __DIR__ . '/../../includes/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

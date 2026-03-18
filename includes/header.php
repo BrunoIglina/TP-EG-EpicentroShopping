@@ -31,18 +31,18 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
             </li>
 
             <li class="nav-item">
-              <a class="nav-link text-white" href="locales.php">Locales</a>
+              <a class="nav-link text-white" href="index.php?vista=locales">Locales</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="mapadesitio.php">Mapa</a>
+              <a class="nav-link text-white" href="index.php?vista=mapadesitio">Mapa</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="novedades.php">Novedades</a>
+              <a class="nav-link text-white" href="index.php?vista=novedades">Novedades</a>
             </li>
 
             <?php if ($user_tipo == 'Cliente'): ?>
               <li class="nav-item">
-                <a class="nav-link text-white" href="mis_promociones.php">Solicitudes</a>
+                <a class="nav-link text-white" href="index.php?vista=cliente_promociones">Solicitudes</a>
               </li>
             <?php endif; ?>
 
@@ -69,8 +69,8 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
                   Gestionar Promociones
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item" href="misPromos.php">Mis Promociones</a></li>
-                  <li><a class="dropdown-item" href="gestion_promos.php">Administrar Solicitudes</a></li>
+                  <li><a class="dropdown-item" href="index.php?vista=dueno_promociones">Mis Promociones</a></li>
+                  <li><a class="dropdown-item" href="index.php?vista=dueno_gestion_promociones">Administrar Solicitudes</a></li>
                 </ul>
               </li>
             <?php endif; ?>
@@ -79,7 +79,7 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
           <ul class="navbar-nav ms-auto">
             <?php if (isset($_SESSION['user_id'])): ?>
               <li class="nav-item">
-                <a class="nav-link text-white" href="miperfil.php">Mi Perfil</a>
+                <a class="nav-link text-white" href="index.php?vista=cliente_perfil">Mi Perfil</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link text-white" href="logout.php">Cerrar Sesión</a>
