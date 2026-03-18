@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
   }
 
-  // if ($modulo === 'dueno') { require_once __DIR__ . '/../private/logic/dueno.controller.php'; exit(); }
+  if ($modulo === 'dueno') { require_once __DIR__ . '/../private/logic/dueno.controller.php'; exit(); }
   // if ($modulo === 'cliente') { require_once __DIR__ . '/../private/logic/cliente.controller.php'; exit(); }
 }
 
@@ -93,9 +93,21 @@ switch ($vista) {
     break;
 
   // --- MÓDULO DUEÑO (Luciano) ---
-  // case 'dueno_promociones': require_once __DIR__ . '/dueno/promociones.php'; break;
-  // case 'dueno_reportes': require_once __DIR__ . '/dueno/reportes.php'; break;
-
+  case 'dueno_promociones': 
+    require_once __DIR__ . '/dueno/promociones.php'; 
+    break;
+  case 'dueno_promocion_agregar': 
+    require_once __DIR__ . '/dueno/promocion_agregar.php'; 
+    break;
+  case 'dueno_solicitudes': 
+    require_once __DIR__ . '/dueno/solicitudes.php'; 
+    break;  
+  case 'dueno_reportes': 
+    require_once __DIR__ . '/dueno/reportes.php'; 
+    break;
+  case 'dueno_mi_local': 
+    require_once __DIR__ . '/dueno/mi_local.php'; 
+    break;
   // --- MÓDULO CLIENTE (Santiago) ---
   // case 'cliente_perfil': require_once __DIR__ . '/cliente/perfil.php'; break;
   // case 'cliente_promociones': require_once __DIR__ . '/cliente/promociones.php'; break;

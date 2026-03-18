@@ -69,8 +69,10 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
                   Gestionar Promociones
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                  <li><a class="dropdown-item" href="misPromos.php">Mis Promociones</a></li>
-                  <li><a class="dropdown-item" href="gestion_promos.php">Administrar Solicitudes</a></li>
+                  <li><a class="dropdown-item" href="index.php?vista=dueno_promociones">Mis Promociones</a></li>
+                  <li><a class="dropdown-item" href="index.php?vista=dueno_solicitudes">Administrar Solicitudes</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="index.php?vista=dueno_reportes">Reportes</a></li>
                 </ul>
               </li>
             <?php endif; ?>
