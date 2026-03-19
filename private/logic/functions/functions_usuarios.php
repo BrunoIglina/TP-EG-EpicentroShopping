@@ -107,3 +107,15 @@ function get_total_usuarios_pendientes($tipo)
 	$stmt->close();
 	return $row['total'];
 }
+
+function get_total_promociones_usadas_cliente($usuario_id)
+{
+	$conn = getDB();
+	$stmt = $conn->prepare("SELECT COUNT(*) as total FROM promociones_cliente WHERE idCliente = ?");
+	$stmt->bind_param('i', $usuario_id);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$row = $result->fetch_assoc();
+	$stmt->close();
+	return $row['total'];
+}

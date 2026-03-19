@@ -1,34 +1,25 @@
 <?php
-require_once __DIR__ . '/../includes/navigation_history.php';
-require_once __DIR__ . '/../includes/security_headers.php';
-
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: index.php?vista=login");
     exit();
 }
 
-require_once __DIR__ . '/../private/config/database.php';
-require_once __DIR__ . '/../private/lib/vendor/autoload.php'; 
-require_once __DIR__ . '/../private/logic/helpers/email.php';
+require_once __DIR__ . '/../../private/logic/functions/functions_usuarios.php';
+require_once __DIR__ . '/../../private/logic/helpers/email.php';
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-$conn = getDB();
 $user_id = $_SESSION['user_id'];
+$user = get_usuario($user_id);
 
-$stmt = $conn->prepare("SELECT * FROM usuarios WHERE id = ?");
-$stmt->bind_param('i', $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
-$stmt->close();
+if (!$user) {
+    header("Location: index.php?vista=login");
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $user['email']; 
     
     if (enviar_codigo_verificacion($email)) {
-        header('Location: cod_verif.php'); 
+        header('Location: index.php?vista=verificar'); 
         exit();
     } else {
         $error = "No se pudo enviar el código. Intente nuevamente.";
@@ -56,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body class="auth-page">
     <div class="wrapper">
-            <?php include __DIR__ . './../includes/header.php'; ?>
+            <?php include __DIR__ . '/../../includes/header.php'; ?>
 
         <main>
             <div class="auth-container">
@@ -69,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </section>
             </div>
         </main>
-        <?php include __DIR__ . './../includes/footer.php'; ?>
+        <?php include __DIR__ . '/../../includes/footer.php'; ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

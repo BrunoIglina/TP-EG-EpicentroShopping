@@ -19,6 +19,7 @@ $total_pages = ceil($total_items / $items_per_page);
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -28,19 +29,20 @@ $total_pages = ceil($total_items / $items_per_page);
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/styles_fondo_and_titles.css">
-    <link rel="stylesheet" href="css/wrapper.css"> 
+    <link rel="stylesheet" href="css/wrapper.css">
     <link rel="stylesheet" href="css/back_button.css">
     <link rel="stylesheet" href="css/fix_header.css">
     <title>Gestión de Promociones</title>
 </head>
+
 <body>
     <div class="wrapper">
         <?php include __DIR__ . '/../../includes/header.php'; ?>
-        
+
         <div class="container my-4">
-            <?php include __DIR__ . '/../../includes/back_button.php'; ?> 
+            <?php include __DIR__ . '/../../includes/back_button.php'; ?>
             <h2 class="text-center my-4">Gestión de Solicitudes de Promociones</h2>
-            
+
             <div class="row">
                 <?php if (!empty($solicitudes)): ?>
                     <?php foreach ($solicitudes as $row): ?>
@@ -54,21 +56,21 @@ $total_pages = ceil($total_items / $items_per_page);
                                     <p>Días: <?php echo htmlspecialchars(str_replace(',', ', ', $row["diasSemana"])); ?></p>
                                     <p><strong>Estado:</strong> <?php echo htmlspecialchars($row["estado"]); ?></p>
                                     <p>Email: <?php echo htmlspecialchars($row["email"]); ?></p>
-                                    
+
                                     <?php if ($row["estado"] == 'enviada'): ?>
                                         <div class="d-flex justify-content-between mt-3">
-                                            <button type="button" class="btn btn-success" 
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#confirmModal" 
+                                            <button type="button" class="btn btn-success"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#confirmModal"
                                                 data-promo-id="<?php echo $row["idPromocion"]; ?>"
                                                 data-cliente-id="<?php echo $row["idCliente"]; ?>"
                                                 data-accion="aceptar"
                                                 data-email="<?php echo htmlspecialchars($row["email"]); ?>">
                                                 Aceptar
                                             </button>
-                                            <button type="button" class="btn btn-danger" 
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#confirmModal" 
+                                            <button type="button" class="btn btn-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#confirmModal"
                                                 data-promo-id="<?php echo $row["idPromocion"]; ?>"
                                                 data-cliente-id="<?php echo $row["idCliente"]; ?>"
                                                 data-accion="rechazar"
@@ -133,17 +135,17 @@ $total_pages = ceil($total_items / $items_per_page);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const confirmModal = document.getElementById('confirmModal');
-        confirmModal.addEventListener('show.bs.modal', function (event) {
+        confirmModal.addEventListener('show.bs.modal', function(event) {
             const button = event.relatedTarget;
             document.getElementById('modalPromoId').value = button.getAttribute('data-promo-id');
             document.getElementById('modalClienteId').value = button.getAttribute('data-cliente-id');
             const accion = button.getAttribute('data-accion');
             document.getElementById('modalAccion').value = accion;
-            
+
             const email = button.getAttribute('data-email');
             const confirmBtn = document.getElementById('modalConfirmBtn');
             const message = document.getElementById('modalMessage');
-            
+
             if (accion === 'aceptar') {
                 message.textContent = '¿Estás seguro de que deseas aceptar la solicitud de ' + email + '?';
                 confirmBtn.className = 'btn btn-success';
@@ -156,4 +158,5 @@ $total_pages = ceil($total_items / $items_per_page);
         });
     </script>
 </body>
+
 </html>

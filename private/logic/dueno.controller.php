@@ -29,15 +29,16 @@ switch ($accion) {
 
 // --- FUNCIONES ---
 
-function procesar_eliminar_promo() {
+function procesar_eliminar_promo()
+{
     $promo_id = intval($_POST['promo_id'] ?? 0);
-    
+
     if ($promo_id > 0) {
         $conn = getDB();
         // Hacemos el borrado acá mismo para que el CRUD viejo no nos secuestre la página
         $stmt = $conn->prepare("DELETE FROM promociones WHERE id = ?");
         $stmt->bind_param("i", $promo_id);
-        
+
         if ($stmt->execute()) {
             $_SESSION['success'] = "La promoción fue eliminada correctamente.";
         } else {
@@ -47,26 +48,27 @@ function procesar_eliminar_promo() {
     } else {
         $_SESSION['error'] = "ID de promoción no válido.";
     }
-    
+
     // Ahora sí, lo mandamos adonde nosotros queremos
     header("Location: index.php?vista=dueno_promociones");
     exit();
 }
 
-function procesar_gestionar_solicitud() {
+function procesar_gestionar_solicitud()
+{
     $promo_id = intval($_POST['promo_id'] ?? 0);
     $cliente_id = intval($_POST['cliente_id'] ?? 0);
     $estado_nuevo = $_POST['estado_nuevo'] ?? ''; // 'aceptar' o 'rechazar'
 
     if ($promo_id > 0 && $cliente_id > 0 && ($estado_nuevo === 'aceptar' || $estado_nuevo === 'rechazar')) {
-        
+
         $estado_db = ($estado_nuevo === 'aceptar') ? 'aceptada' : 'rechazada';
-        
+
         $conn = getDB();
         // Actualizamos el estado de la solicitud directo en la base
         $stmt = $conn->prepare("UPDATE promociones_cliente SET estado = ? WHERE idPromocion = ? AND idCliente = ?");
         $stmt->bind_param("sii", $estado_db, $promo_id, $cliente_id);
-        
+
         if ($stmt->execute()) {
             $_SESSION['success'] = "La solicitud fue " . $estado_db . " correctamente.";
         } else {
@@ -76,19 +78,20 @@ function procesar_gestionar_solicitud() {
     } else {
         $_SESSION['error'] = "Datos de solicitud no válidos.";
     }
-    
+
     // Y volvemos al panel de solicitudes limpio
     header("Location: index.php?vista=dueno_solicitudes");
     exit();
 }
 
-function procesar_crear_promocion() {
+function procesar_crear_promocion()
+{
     $local_id = intval($_POST['local_id'] ?? 0);
     $textoPromo = $_POST['textoPromo'] ?? '';
     $fecha_inicio = $_POST['fecha_inicio'] ?? '';
     $fecha_fin = $_POST['fecha_fin'] ?? '';
     $categoriaCliente = $_POST['categoriaCliente'] ?? '';
-    
+
     // Procesamos el array de días a un string
     $diasArray = $_POST['diasSemana'] ?? [];
     $diasSemana = implode(", ", $diasArray);
@@ -113,7 +116,7 @@ function procesar_crear_promocion() {
         $_SESSION['error'] = "Error en la base de datos al crear la promoción.";
         header("Location: index.php?vista=dueno_promocion_agregar");
     }
-    
+
     $stmt->close();
     exit();
 }

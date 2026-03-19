@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once __DIR__ . '/../../config/database.php';
 
 $action = $_POST['action'] ?? $_GET['action'] ?? '';
@@ -11,9 +10,7 @@ switch ($action) {
 	case 'delete':
 		eliminar_promocion();
 		break;
-	case 'gestionar_solicitud':
-		gestionar_solicitud_cliente();
-		break;
+
 	case 'aprobar':
 		aprobar_promocion_admin();
 		break;
@@ -129,44 +126,7 @@ function eliminar_promocion()
 	exit();
 }
 
-function gestionar_solicitud_cliente()
-{
-	if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
-		die("Debes estar registrado como dueño para gestionar las promociones.");
-	}
 
-	$conn = getDB();
-
-	$promo_id = filter_input(INPUT_POST, 'promo_id', FILTER_VALIDATE_INT);
-	$cliente_id = filter_input(INPUT_POST, 'cliente_id', FILTER_VALIDATE_INT);
-	$accion = $_POST['accion'] ?? '';
-
-	if (!$promo_id || !$cliente_id || !in_array($accion, ['aceptar', 'rechazar'])) {
-		die("Datos inválidos.");
-	}
-
-	$estado = ($accion == 'aceptar') ? 'aceptada' : 'rechazada';
-
-	$stmt = $conn->prepare("UPDATE promociones_cliente SET estado = ? WHERE idPromocion = ? AND idCliente = ?");
-	$stmt->bind_param("sii", $estado, $promo_id, $cliente_id);
-
-	if ($stmt->execute()) {
-		$stmt->close();
-
-		if ($accion == 'aceptar') {
-			header("Location: ../crud/usuarios.php?action=validar_categoria&cliente_id=$cliente_id");
-			exit();
-		} else {
-			$_SESSION['success'] = "Promoción rechazada exitosamente.";
-			header("Location: ../../gestion_promos.php");
-			exit();
-		}
-	} else {
-		error_log("Error al gestionar solicitud: " . $stmt->error);
-		$stmt->close();
-		die("Error al gestionar la promoción.");
-	}
-}
 
 // =====================================
 // FUNCIONES ADMINISTRADOR (Corregidas las rutas al router)
