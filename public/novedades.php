@@ -6,8 +6,6 @@ if (!isset($_SESSION['user_id'])) {
 	header("Location: index.php");
 	exit();
 }
-require_once __DIR__ . '/../includes/navigation_history.php';
-require_once __DIR__ . '/../includes/security_headers.php';
 ?>
 
 <!DOCTYPE html>
