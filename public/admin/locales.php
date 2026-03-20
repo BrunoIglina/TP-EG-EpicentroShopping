@@ -1,7 +1,3 @@
-<?php
-// public/admin/locales.php
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -35,90 +31,87 @@
           onclick="location.href='index.php?vista=admin_local_agregar'">Agregar Local</button>
 
         <?php if (isset($_SESSION['success'])): ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-          <?php echo htmlspecialchars($_SESSION['success']);
-						unset($_SESSION['success']); ?>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo htmlspecialchars($_SESSION['success']);
+            unset($_SESSION['success']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
         <?php endif; ?>
 
         <?php if (isset($_SESSION['error'])): ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          <?php echo htmlspecialchars($_SESSION['error']);
-						unset($_SESSION['error']); ?>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo htmlspecialchars($_SESSION['error']);
+            unset($_SESSION['error']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
         <?php endif; ?>
 
         <?php if (!$locales) { ?>
-        <div class="alert alert-warning">No hay locales cargados</div>
+          <div class="alert alert-warning">No hay locales cargados</div>
         <?php } else { ?>
 
-        <div class="table-responsive-lg">
-          <table class="table table-striped table-bordered">
-            <thead class="thead-dark">
-              <tr>
-                <th>Nombre</th>
-                <th>Ubicación</th>
-                <th>Rubro</th>
-                <th>Email del dueño</th>
-                <th>Imagen</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($locales as $local) { ?>
-              <tr>
-                <td><?php echo htmlspecialchars($local['nombre']); ?></td>
-                <td><?php echo htmlspecialchars($local['ubicacion']); ?></td>
-                <td><?php echo htmlspecialchars($local['rubro']); ?></td>
-                <td>
-                  <?php
-											$dueño = get_dueño($local['idUsuario']);
-											echo $dueño ? htmlspecialchars($dueño['email']) : 'Sin dueño asignado';
-											?>
-                </td>
-                <td>
-                  <?php if (!empty($local['imagen'])) { ?>
-                  <img src="index.php?vista=imagen&local_id=<?php echo $local['id']; ?>" alt="Imagen del local"
-                    class="img-fluid" style="max-width: 100px;">
-                  <?php } else {
-												echo "No hay imagen";
-											} ?>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-info btn-sm mb-1"
-                    onclick="checkAndGeneratePDF(<?php echo $local['id']; ?>, '<?php echo addslashes($local['nombre']); ?>')">
-                    Generar PDF
-                  </button>
+          <div class="table-responsive-lg">
+            <table class="table table-striped table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Nombre</th>
+                  <th>Ubicación</th>
+                  <th>Rubro</th>
+                  <th>Email del dueño</th>
+                  <th>Imagen</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($locales as $local) { ?>
+                  <tr>
+                    <td><?php echo htmlspecialchars($local['nombre']); ?></td>
+                    <td><?php echo htmlspecialchars($local['ubicacion']); ?></td>
+                    <td><?php echo htmlspecialchars($local['rubro']); ?></td>
+                    <td>
+                      <?php
+                      $dueño = get_dueño($local['idUsuario']);
+                      echo $dueño ? htmlspecialchars($dueño['email']) : 'Sin dueño asignado';
+                      ?>
+                    </td>
+                    <td>
+                      <?php if (!empty($local['imagen'])) { ?>
+                        <img src="index.php?vista=imagen&local_id=<?php echo $local['id']; ?>" alt="Imagen del local"
+                          class="img-fluid" style="max-width: 100px;">
+                      <?php } else {
+                        echo "No hay imagen";
+                      } ?>
+                    </td>
+                    <td>
+                      <button class="btn btn-info btn-sm" onclick="checkAndGeneratePDF(<?= $local['id'] ?>, '<?= addslashes($local['nombre']) ?>')">PDF</button>
 
-                  <button type="button" class="btn btn-warning btn-sm mb-1"
-                    onclick="window.location.href='index.php?vista=admin_local_editar&id=<?php echo $local['id']; ?>'">Modificar</button>
+                      <button type="button" class="btn btn-warning btn-sm mb-1"
+                        onclick="window.location.href='index.php?vista=admin_local_editar&id=<?php echo $local['id']; ?>'">Modificar</button>
 
-                  <button type="button" class="btn btn-danger btn-sm mb-1"
-                    onclick="confirmAction('delete', <?php echo $local['id']; ?>)">Eliminar</button>
-                </td>
-              </tr>
+                      <button type="button" class="btn btn-danger btn-sm mb-1"
+                        onclick="confirmAction('delete', <?php echo $local['id']; ?>)">Eliminar</button>
+                    </td>
+                  </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pagination-container">
+            <ul class="pagination justify-content-center">
+              <li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
+                <a class="page-link" href="index.php?vista=admin_locales&page=<?php echo $page - 1; ?>">Anterior</a>
+              </li>
+              <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
+                <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                  <a class="page-link" href="index.php?vista=admin_locales&page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                </li>
               <?php } ?>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="pagination-container">
-          <ul class="pagination justify-content-center">
-            <li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
-              <a class="page-link" href="index.php?vista=admin_locales&page=<?php echo $page - 1; ?>">Anterior</a>
-            </li>
-            <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
-            <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-              <a class="page-link" href="index.php?vista=admin_locales&page=<?php echo $i; ?>"><?php echo $i; ?></a>
-            </li>
-            <?php } ?>
-            <li class="page-item <?php echo ($page == $total_pages) ? 'disabled' : ''; ?>">
-              <a class="page-link" href="index.php?vista=admin_locales&page=<?php echo $page + 1; ?>">Siguiente</a>
-            </li>
-          </ul>
-        </div>
+              <li class="page-item <?php echo ($page == $total_pages) ? 'disabled' : ''; ?>">
+                <a class="page-link" href="index.php?vista=admin_locales&page=<?php echo $page + 1; ?>">Siguiente</a>
+              </li>
+            </ul>
+          </div>
 
         <?php } ?>
       </section>
@@ -174,36 +167,32 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-  function confirmAction(action, localId) {
-    $('#confirmModal').modal('show');
+    function confirmAction(action, localId) {
+      $('#confirmModal').modal('show');
 
-    $('#confirmActionBtn').off('click').on('click', function() {
-      if (action === 'delete') {
-        // En lugar de redireccionar, llenamos el form oculto y lo enviamos
-        document.getElementById('delete_local_id').value = localId;
-        document.getElementById('deleteForm').submit();
-      }
-    });
-  }
-
-  function checkAndGeneratePDF(localId, localName) {
-    // Ruta corregida a la carpeta private/logic/reports/
-    fetch('../private/logic/reports/check_promociones.php?local_id=' + localId)
-      .then(response => response.json())
-      .then(data => {
-        if (data.has_promociones) {
-          window.location.href = '../private/logic/reports/generarInforme.php?local_id=' + localId;
-        } else {
-          document.getElementById('errorLocalName').textContent = localName;
-          const errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
-          errorModal.show();
+      $('#confirmActionBtn').off('click').on('click', function() {
+        if (action === 'delete') {
+          // En lugar de redireccionar, llenamos el form oculto y lo enviamos
+          document.getElementById('delete_local_id').value = localId;
+          document.getElementById('deleteForm').submit();
         }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Error al verificar las promociones del local');
       });
-  }
+    }
+
+    function checkAndGeneratePDF(localId, localName) {
+      // Llamamos al index.php con la vista de chequeo
+      fetch(`index.php?vista=check_promos&local_id=${localId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.has_promociones) {
+            window.location.href = `index.php?vista=generar_pdf&local_id=${localId}`;
+          } else {
+            document.getElementById('errorLocalName').textContent = localName;
+            new bootstrap.Modal(document.getElementById('errorModal')).show();
+          }
+        })
+        .catch(err => alert('Error de conexión con el router.'));
+    }
   </script>
 </body>
 

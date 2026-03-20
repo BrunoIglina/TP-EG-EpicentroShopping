@@ -28,10 +28,10 @@
           <h2>Recuperar Cuenta</h2>
 
           <?php if (isset($_SESSION['error'])): ?>
-          <div class="alert alert-danger">
-            <?php echo htmlspecialchars($_SESSION['error']);
-							unset($_SESSION['error']); ?>
-          </div>
+            <div class="alert alert-danger">
+              <?php echo htmlspecialchars($_SESSION['error']);
+              unset($_SESSION['error']); ?>
+            </div>
           <?php endif; ?>
 
           <form action="index.php" method="post">

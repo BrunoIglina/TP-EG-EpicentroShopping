@@ -13,10 +13,12 @@ switch ($vista) {
         break;
 
     case 'admin_novedad_agregar':
+        require_once __DIR__ . '/queries/usuarios.queries.php';
         $categorias = get_categorias() ?? [];
         break;
 
     case 'admin_novedad_editar':
+        require_once __DIR__ . '/queries/usuarios.queries.php';
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
         if (!$id) {
             header('Location: index.php?vista=admin_novedades');

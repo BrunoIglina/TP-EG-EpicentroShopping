@@ -101,6 +101,7 @@ function procesar_registro()
 
 function procesar_recuperar()
 {
+
     require_once __DIR__ . '/helpers/email.php';
 
     $email = trim($_POST['email'] ?? '');
@@ -119,12 +120,13 @@ function procesar_recuperar()
     $stmt->close();
 
     if ($user) {
-        $resultado = enviar_codigo_verificacion($email);
-        if ($resultado === true) {
+        // Ejecutamos el envío
+        if (enviar_codigo_verificacion($email)) {
             header("Location: index.php?vista=verificar&email=" . urlencode($email));
             exit();
         } else {
-            $_SESSION['error'] = $resultado;
+            // Si devuelve false, ponemos un mensaje genérico o revisamos logs
+            $_SESSION['error'] = "Hubo un problema al enviar el correo. Por favor, intenta más tarde.";
             header("Location: index.php?vista=recuperar");
             exit();
         }

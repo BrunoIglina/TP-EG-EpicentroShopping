@@ -1,4 +1,3 @@
-<?php
 <!DOCTYPE html>
 <html lang="es">
 
@@ -30,11 +29,11 @@
             <h2>Modificar Local</h2>
 
             <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger alert-dismissible fade show">
-              <?php echo htmlspecialchars($_SESSION['error']);
-								unset($_SESSION['error']); ?>
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
+              <div class="alert alert-danger alert-dismissible fade show">
+                <?php echo htmlspecialchars($_SESSION['error']);
+                unset($_SESSION['error']); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
             <?php endif; ?>
 
             <form method="POST" action="index.php" enctype="multipart/form-data">
@@ -68,10 +67,10 @@
                 <select class="form-select" id="rubro_local" name="rubro_local" required>
                   <option value="" disabled>Seleccione un rubro</option>
                   <?php foreach ($rubros as $label => $value): ?>
-                  <option value="<?php echo htmlspecialchars($value); ?>"
-                    <?php echo ($value == $local['rubro']) ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($label); ?>
-                  </option>
+                    <option value="<?php echo htmlspecialchars($value); ?>"
+                      <?php echo ($value == $local['rubro']) ? 'selected' : ''; ?>>
+                      <?php echo htmlspecialchars($label); ?>
+                    </option>
                   <?php endforeach; ?>
                 </select>
               </div>
@@ -81,10 +80,10 @@
                 <select class="form-select" id="email_dueño" name="id_dueño" required>
                   <option value="" disabled>Seleccione un dueño</option>
                   <?php foreach ($dueños as $dueño): ?>
-                  <option value="<?php echo htmlspecialchars($dueño['id']); ?>"
-                    <?php echo ($dueño['id'] == $local['idUsuario']) ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($dueño['email']); ?>
-                  </option>
+                    <option value="<?php echo htmlspecialchars($dueño['id']); ?>"
+                      <?php echo ($dueño['id'] == $local['idUsuario']) ? 'selected' : ''; ?>>
+                      <?php echo htmlspecialchars($dueño['email']); ?>
+                    </option>
                   <?php endforeach; ?>
                 </select>
               </div>
@@ -92,10 +91,10 @@
               <div class="mb-3">
                 <label class="form-label">Imagen Actual</label>
                 <?php if (!empty($local['imagen'])): ?>
-                <img src="index.php?vista=imagen&local_id=<?php echo $local['id']; ?>" alt="Imagen del local"
-                  class="preview-image d-block">
+                  <img src="index.php?vista=imagen&local_id=<?php echo $local['id']; ?>" alt="Imagen del local"
+                    class="preview-image d-block">
                 <?php else: ?>
-                <p class="text-muted text-center">No hay imagen disponible</p>
+                  <p class="text-muted text-center">No hay imagen disponible</p>
                 <?php endif; ?>
               </div>
 

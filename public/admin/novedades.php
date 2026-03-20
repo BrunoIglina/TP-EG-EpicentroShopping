@@ -1,4 +1,3 @@
-<?php
 <!DOCTYPE html>
 <html lang="es">
 
@@ -33,85 +32,85 @@
         </button>
 
         <?php if (isset($_SESSION['success'])): ?>
-        <div class="alert alert-success alert-dismissible fade show">
-          <?php echo htmlspecialchars($_SESSION['success']);
-						unset($_SESSION['success']); ?>
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
+          <div class="alert alert-success alert-dismissible fade show">
+            <?php echo htmlspecialchars($_SESSION['success']);
+            unset($_SESSION['success']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
         <?php endif; ?>
 
         <?php if (isset($_SESSION['error'])): ?>
-        <div class="alert alert-danger alert-dismissible fade show">
-          <?php echo htmlspecialchars($_SESSION['error']);
-						unset($_SESSION['error']); ?>
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
+          <div class="alert alert-danger alert-dismissible fade show">
+            <?php echo htmlspecialchars($_SESSION['error']);
+            unset($_SESSION['error']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
         <?php endif; ?>
 
         <?php if (!$novedades): ?>
-        <div class="alert alert-warning">No hay novedades cargadas</div>
+          <div class="alert alert-warning">No hay novedades cargadas</div>
         <?php else: ?>
-        <div class="table-responsive-lg">
-          <table class="table table-striped table-bordered">
-            <thead class="thead-dark">
-              <tr>
-                <th>Título</th>
-                <th>Descripción</th>
-                <th>Fecha desde</th>
-                <th>Fecha hasta</th>
-                <th>Imagen</th>
-                <th>Categoría</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($novedades as $novedad): ?>
-              <tr>
-                <td><?php echo htmlspecialchars($novedad['tituloNovedad']); ?></td>
-                <td><?php echo htmlspecialchars(substr($novedad['textoNovedad'], 0, 100)) . '...'; ?></td>
-                <td><?php echo htmlspecialchars($novedad['fecha_desde']); ?></td>
-                <td><?php echo htmlspecialchars($novedad['fecha_hasta']); ?></td>
-                <td>
-                  <?php if (!empty($novedad['imagen'])): ?>
-                  <img src="index.php?vista=imagen&novedad_id=<?php echo $novedad['id']; ?>" alt="Imagen de la novedad"
-                    class="img-fluid" style="max-width: 100px;">
-                  <?php else: ?>
-                  Sin imagen
-                  <?php endif; ?>
-                </td>
-                <td><?php echo htmlspecialchars($novedad['categoria']); ?></td>
-                <td>
-                  <button type="button" class="btn btn-warning btn-sm mb-1"
-                    onclick="window.location.href='index.php?vista=admin_novedad_editar&id=<?php echo $novedad['id']; ?>'">
-                    Modificar
-                  </button>
-                  <button type="button" class="btn btn-danger btn-sm mb-1" data-bs-toggle="modal"
-                    data-bs-target="#confirmModal" data-id="<?php echo $novedad['id']; ?>"
-                    data-titulo="<?php echo htmlspecialchars($novedad['tituloNovedad']); ?>">
-                    Eliminar
-                  </button>
-                </td>
-              </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
+          <div class="table-responsive-lg">
+            <table class="table table-striped table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Título</th>
+                  <th>Descripción</th>
+                  <th>Fecha desde</th>
+                  <th>Fecha hasta</th>
+                  <th>Imagen</th>
+                  <th>Categoría</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($novedades as $novedad): ?>
+                  <tr>
+                    <td><?php echo htmlspecialchars($novedad['tituloNovedad']); ?></td>
+                    <td><?php echo htmlspecialchars(substr($novedad['textoNovedad'], 0, 100)) . '...'; ?></td>
+                    <td><?php echo htmlspecialchars($novedad['fecha_desde']); ?></td>
+                    <td><?php echo htmlspecialchars($novedad['fecha_hasta']); ?></td>
+                    <td>
+                      <?php if (!empty($novedad['imagen'])): ?>
+                        <img src="index.php?vista=imagen&novedad_id=<?php echo $novedad['id']; ?>" alt="Imagen de la novedad"
+                          class="img-fluid" style="max-width: 100px;">
+                      <?php else: ?>
+                        Sin imagen
+                      <?php endif; ?>
+                    </td>
+                    <td><?php echo htmlspecialchars($novedad['categoria']); ?></td>
+                    <td>
+                      <button type="button" class="btn btn-warning btn-sm mb-1"
+                        onclick="window.location.href='index.php?vista=admin_novedad_editar&id=<?php echo $novedad['id']; ?>'">
+                        Modificar
+                      </button>
+                      <button type="button" class="btn btn-danger btn-sm mb-1" data-bs-toggle="modal"
+                        data-bs-target="#confirmModal" data-id="<?php echo $novedad['id']; ?>"
+                        data-titulo="<?php echo htmlspecialchars($novedad['tituloNovedad']); ?>">
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
 
-        <nav>
-          <ul class="pagination justify-content-center">
-            <li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
-              <a class="page-link" href="index.php?vista=admin_novedades&page=<?php echo $page - 1; ?>">Anterior</a>
-            </li>
-            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-            <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-              <a class="page-link" href="index.php?vista=admin_novedades&page=<?php echo $i; ?>"><?php echo $i; ?></a>
-            </li>
-            <?php endfor; ?>
-            <li class="page-item <?php echo ($page == $total_pages) ? 'disabled' : ''; ?>">
-              <a class="page-link" href="index.php?vista=admin_novedades&page=<?php echo $page + 1; ?>">Siguiente</a>
-            </li>
-          </ul>
-        </nav>
+          <nav>
+            <ul class="pagination justify-content-center">
+              <li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
+                <a class="page-link" href="index.php?vista=admin_novedades&page=<?php echo $page - 1; ?>">Anterior</a>
+              </li>
+              <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                  <a class="page-link" href="index.php?vista=admin_novedades&page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                </li>
+              <?php endfor; ?>
+              <li class="page-item <?php echo ($page == $total_pages) ? 'disabled' : ''; ?>">
+                <a class="page-link" href="index.php?vista=admin_novedades&page=<?php echo $page + 1; ?>">Siguiente</a>
+              </li>
+            </ul>
+          </nav>
         <?php endif; ?>
       </section>
     </main>
@@ -144,15 +143,15 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-  const confirmModal = document.getElementById('confirmModal');
-  confirmModal.addEventListener('show.bs.modal', function(event) {
-    const button = event.relatedTarget;
-    const id = button.getAttribute('data-id');
-    const titulo = button.getAttribute('data-titulo');
+    const confirmModal = document.getElementById('confirmModal');
+    confirmModal.addEventListener('show.bs.modal', function(event) {
+      const button = event.relatedTarget;
+      const id = button.getAttribute('data-id');
+      const titulo = button.getAttribute('data-titulo');
 
-    document.getElementById('modalNovedadId').value = id;
-    document.getElementById('modalTitulo').textContent = titulo;
-  });
+      document.getElementById('modalNovedadId').value = id;
+      document.getElementById('modalTitulo').textContent = titulo;
+    });
   </script>
 </body>
 

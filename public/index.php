@@ -1,4 +1,9 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require_once __DIR__ . '/../private/lib/vendor/autoload.php';
 session_start();
 
 require_once __DIR__ . '/../includes/navigation_history.php';
@@ -72,6 +77,7 @@ switch ($vista) {
   // Locales
   case 'admin_locales':
     require_once __DIR__ . '/../private/logic/locales.read.php';
+    require_once __DIR__ . '/../private/logic/usuarios.read.php';
     require_once __DIR__ . '/admin/locales.php';
     break;
   case 'admin_local_agregar':
@@ -80,6 +86,7 @@ switch ($vista) {
     break;
   case 'admin_local_editar':
     require_once __DIR__ . '/../private/logic/locales.read.php';
+    require_once __DIR__ . '/../private/logic/novedades.read.php';
     require_once __DIR__ . '/admin/local_editar.php';
     break;
 
@@ -154,6 +161,15 @@ switch ($vista) {
   // --- RUTA PARA MOSTRAR IMÁGENES ---
   case 'imagen':
     require_once __DIR__ . '/../private/logic/helpers/visualizar_imagen.php';
+    exit();
+
+    // --- RUTAS PARA REPORTES ---
+  case 'check_promos':
+    header('Content-Type: application/json');
+    require_once __DIR__ . '/../private/logic/reports/check_promociones.php';
+    exit(); // Cortamos la ejecución para que no cargue el footer/header
+  case 'generar_pdf':
+    require_once __DIR__ . '/../private/logic/reports/generarInforme.php';
     exit();
 
   default:

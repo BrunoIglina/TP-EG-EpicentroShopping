@@ -1,4 +1,3 @@
-<?php
 <!DOCTYPE html>
 <html lang="es">
 
@@ -28,11 +27,11 @@
             <h2>Modificar Novedad</h2>
 
             <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger alert-dismissible fade show">
-              <?php echo htmlspecialchars($_SESSION['error']);
-								unset($_SESSION['error']); ?>
-              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
+              <div class="alert alert-danger alert-dismissible fade show">
+                <?php echo htmlspecialchars($_SESSION['error']);
+                unset($_SESSION['error']); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
             <?php endif; ?>
 
             <form method="POST" action="index.php" enctype="multipart/form-data">
@@ -77,10 +76,10 @@
                 <select class="form-select" id="categoria" name="categoria" required>
                   <option value="" disabled>Seleccione una categoría</option>
                   <?php foreach ($categorias as $categoria): ?>
-                  <option value="<?php echo htmlspecialchars($categoria); ?>"
-                    <?php echo ($categoria == $novedad['categoria']) ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($categoria); ?>
-                  </option>
+                    <option value="<?php echo htmlspecialchars($categoria); ?>"
+                      <?php echo ($categoria == $novedad['categoria']) ? 'selected' : ''; ?>>
+                      <?php echo htmlspecialchars($categoria); ?>
+                    </option>
                   <?php endforeach; ?>
                 </select>
               </div>
@@ -88,10 +87,10 @@
               <div class="mb-3">
                 <label class="form-label">Imagen Actual</label>
                 <?php if (!empty($novedad['imagen'])): ?>
-                <img src="index.php?vista=imagen&novedad_id=<?php echo $novedad['id']; ?>" alt="Imagen de la novedad"
-                  class="preview-image d-block">
+                  <img src="index.php?vista=imagen&novedad_id=<?php echo $novedad['id']; ?>" alt="Imagen de la novedad"
+                    class="preview-image d-block">
                 <?php else: ?>
-                <p class="text-muted text-center">No hay imagen disponible</p>
+                  <p class="text-muted text-center">No hay imagen disponible</p>
                 <?php endif; ?>
               </div>
 
