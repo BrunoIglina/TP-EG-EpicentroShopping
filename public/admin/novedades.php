@@ -1,15 +1,4 @@
 <?php
-// Solo traemos las funciones para obtener los datos
-require_once __DIR__ . '/../../private/logic/functions/functions_novedades.php';
-
-$limit = 6;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-$novedades = get_all_novedades($limit, $offset);
-$total_novedades = get_total_novedades();
-$total_pages = ceil($total_novedades / $limit);
-?>
 <!DOCTYPE html>
 <html lang="es">
 

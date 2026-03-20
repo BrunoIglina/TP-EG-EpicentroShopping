@@ -106,11 +106,10 @@ require_once __DIR__ . '/../includes/security_headers.php';
                                 </div>
                                 <div class="card-body">
                                     <ul class="list-unstyled mb-0">
-                                        <li class="mb-2"><a href="admin/local_agregar.php" class="text-decoration-none">Agregar Local</a></li>
-                                        <li class="mb-2"><a href="misPromos.php" class="text-decoration-none">Mis Promociones</a></li>
-                                        <li class="mb-2"><a href="darAltaPromos.php" class="text-decoration-none">Crear Promoción</a></li>
-                                        <li class="mb-2"><a href="gestion_promos.php" class="text-decoration-none">Gestionar Solicitudes</a></li>
-                                        <li class="mb-2"><a href="reportesDueño.php" class="text-decoration-none">Reportes</a></li>
+                                        <li class="mb-2"><a href="index.php?vista=dueno_promociones" class="text-decoration-none">Mis Promociones</a></li>
+                                        <li class="mb-2"><a href="index.php?vista=dueno_promocion_agregar" class="text-decoration-none">Crear Promoción</a></li>
+                                        <li class="mb-2"><a href="index.php?vista=dueno_solicitudes" class="text-decoration-none">Gestionar Solicitudes</a></li>
+                                        <li class="mb-2"><a href="index.php?vista=dueno_reportes" class="text-decoration-none">Reportes</a></li>
                                     </ul>
                                 </div>
                             </div>

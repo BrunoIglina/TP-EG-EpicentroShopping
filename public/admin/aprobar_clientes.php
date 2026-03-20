@@ -1,15 +1,4 @@
 <?php
-require_once __DIR__ . '/../../private/logic/functions/functions_usuarios.php';
-
-$limit = 6;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-
-$clientes = get_usuarios_pendientes('Cliente', $limit, $offset);
-$total_clientes = get_total_usuarios_pendientes('Cliente');
-$total_pages = ceil($total_clientes / $limit);
-?>
 <!DOCTYPE html>
 <html lang="es">
 

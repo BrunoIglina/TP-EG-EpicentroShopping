@@ -6,20 +6,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     header("Location: index.php");
     exit();
 }
-
-// 2. Cargamos las funciones que esconden el SQL
-require_once __DIR__ . '/../../private/logic/functions/functions_dueno.php';
-
-// 3. Preparamos las variables para la vista
-$usuario_id = $_SESSION['user_id'];
-$limit = 5;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-// 4. Traemos los datos limpios desde la base de datos
-$promociones = get_promociones_dueno($usuario_id, $limit, $offset);
-$total_rows = get_total_promociones_dueno($usuario_id);
-$total_pages = ceil($total_rows / $limit);
 ?>
 <!DOCTYPE html>
 <html lang="es">

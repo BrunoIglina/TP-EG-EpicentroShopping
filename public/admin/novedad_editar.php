@@ -1,23 +1,4 @@
 <?php
-require_once __DIR__ . '/../../private/logic/functions/functions_usuarios.php';
-require_once __DIR__ . '/../../private/logic/functions/functions_novedades.php';
-
-
-if (isset($_GET['id'])) {
-	$novedad = get_novedad($_GET['id']);
-	$categorias = get_categorias();
-} else {
-	$_SESSION['error'] = "ID de novedad no proporcionado.";
-	header("Location: index.php?vista=admin_novedades");
-	exit();
-}
-
-if (!$novedad) {
-	$_SESSION['error'] = "Novedad no encontrada.";
-	header("Location: index.php?vista=admin_novedades");
-	exit();
-}
-?>
 <!DOCTYPE html>
 <html lang="es">
 

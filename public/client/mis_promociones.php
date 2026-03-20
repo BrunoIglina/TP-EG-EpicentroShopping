@@ -3,17 +3,6 @@ if(!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Cliente') {
 	header("Location: index.php?vista=login");
 	exit();
 }
-
-require_once __DIR__ . '/../../private/logic/functions/functions_promociones.php';
-
-$usuario_id = $_SESSION['user_id'];
-$limit = 4; 
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-$promos = get_promociones_cliente($usuario_id, $limit, $offset);
-$total_rows = get_total_promociones_cliente($usuario_id);
-$total_pages = ceil($total_rows / $limit);
 ?>
 <!DOCTYPE html>
 <html lang="es">

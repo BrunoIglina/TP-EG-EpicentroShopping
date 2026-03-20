@@ -1,24 +1,4 @@
 <?php
-
-require_once __DIR__ . '/../../private/logic/functions/functions_locales.php';
-require_once __DIR__ . '/../../private/logic/functions/functions_usuarios.php';
-require_once __DIR__ . '/../../private/config/rubros.php';
-
-if (isset($_GET['id'])) {
-	$local = get_local($_GET['id']);
-	$dueños = get_all_dueños();
-} else {
-	$_SESSION['error'] = "ID de local no proporcionado.";
-	header("Location: index.php?vista=admin_locales");
-	exit();
-}
-
-if (!$local) {
-	$_SESSION['error'] = "Local no encontrado.";
-	header("Location: index.php?vista=admin_locales");
-	exit();
-}
-?>
 <!DOCTYPE html>
 <html lang="es">
 

@@ -4,17 +4,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-require_once __DIR__ . '/../../private/logic/functions/functions_usuarios.php';
-require_once __DIR__ . '/../../private/logic/helpers/email.php';
-
-$user_id = $_SESSION['user_id'];
-$user = get_usuario($user_id);
-
-if (!$user) {
-    header("Location: index.php?vista=login");
-    exit();
-}
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $user['email']; 
     

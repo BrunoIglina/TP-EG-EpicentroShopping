@@ -1,11 +1,4 @@
 <?php
-require_once __DIR__ . '/../private/logic/functions/functions_locales.php';
-require_once __DIR__ . '/../private/config/rubros.php';
-require_once __DIR__ . '/../includes/navigation_history.php';
-require_once __DIR__ . '/../includes/security_headers.php';
-
-$locales = get_all_locales();
-
 $filtered_locales = $locales;
 
 // FILTRO: Por Nombre

@@ -2,11 +2,6 @@
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
-require_once __DIR__ . '/../private/logic/functions/functions_locales.php';
-require_once __DIR__ . '/../private/config/rubros.php';
-
-$locales = get_locales_solicitados();
-
 ?>
 
 <!DOCTYPE html>

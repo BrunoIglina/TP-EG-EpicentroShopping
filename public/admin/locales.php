@@ -1,17 +1,5 @@
 <?php
 // public/admin/locales.php
-
-// Solo llamamos a los helpers para obtener la data. Cero SQL directo.
-require_once __DIR__ . '/../../private/logic/functions/functions_locales.php';
-require_once __DIR__ . '/../../private/logic/functions/functions_usuarios.php';
-
-$limit = 10;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-$locales = get_all_locales($limit, $offset);
-$total_locales = get_total_locales();
-$total_pages = ceil($total_locales / $limit);
 ?>
 
 <!DOCTYPE html>

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/functions/functions_promociones.php';
+require_once __DIR__ . '/queries/promociones.queries.php';
 
 function handle_cliente_actions()
 {

@@ -1,14 +1,10 @@
 <?php
 // public/dueno/promocion_agregar.php
-require_once __DIR__ . '/../../private/logic/functions/functions_dueno.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     header("Location: index.php");
     exit();
 }
-
-// Traemos los locales del dueño para el select
-$locales = get_locales_por_dueno($_SESSION['user_id']);
 ?>
 <!DOCTYPE html>
 <html lang="es">

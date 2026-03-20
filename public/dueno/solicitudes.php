@@ -5,17 +5,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     header("Location: index.php");
     exit();
 }
-
-require_once __DIR__ . '/../../private/logic/functions/functions_dueno.php';
-
-$usuario_id = $_SESSION['user_id'];
-$items_per_page = 6;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $items_per_page;
-
-$solicitudes = get_solicitudes_dueno($usuario_id, $items_per_page, $offset);
-$total_items = get_total_solicitudes_dueno($usuario_id);
-$total_pages = ceil($total_items / $items_per_page);
 ?>
 <!DOCTYPE html>
 <html lang="es">

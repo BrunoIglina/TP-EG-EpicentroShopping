@@ -4,32 +4,9 @@ if (!isset($_GET['local_id'])) {
     exit;
 }
 
-require_once __DIR__ . '/../../private/config/rubros.php';
-require_once __DIR__ . '/../../private/logic/functions/functions_locales.php';
-require_once __DIR__ . '/../../private/logic/functions/functions_promociones.php';
-require_once __DIR__ . '/../../private/logic/functions/functions_usuarios.php';
-
-$local_id = filter_input(INPUT_GET, 'local_id', FILTER_VALIDATE_INT);
-if (!$local_id) {
-    header("Location: index.php?vista=locales");
-    exit;
-}
-
-$local = get_local($local_id);
-
 $categoriaCliente = $_SESSION['user_categoria'] ?? null;
 $tipoUsuario = $_SESSION['user_tipo'] ?? 'Visitante';
 $clienteId = $_SESSION['user_id'] ?? 0;
-
-$categorias = get_categorias();
-
-$limit = 9; 
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-$promos = get_promociones_by_local($local_id, $limit, $offset);
-$total_rows = get_total_promociones_by_local($local_id);
-$total_pages = ceil($total_rows / $limit);
 ?>
 <!DOCTYPE html>
 <html lang="es">

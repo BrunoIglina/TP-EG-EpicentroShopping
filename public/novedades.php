@@ -8,15 +8,6 @@ if (!isset($_SESSION['user_id'])) {
 }
 require_once __DIR__ . '/../includes/navigation_history.php';
 require_once __DIR__ . '/../includes/security_headers.php';
-require_once __DIR__ . '/../private/logic/functions/functions_novedades.php';
-
-$limit = 5;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-$novedades = array_slice(get_novedades_permitidas($_SESSION['user_id'], $_SESSION['user_tipo'], $_SESSION['user_categoria']), $offset, $limit);
-$total_novedades = count(get_novedades_permitidas($_SESSION['user_id'], $_SESSION['user_tipo'], $_SESSION['user_categoria']));
-$total_pages = ceil($total_novedades / $limit);
 ?>
 
 <!DOCTYPE html>

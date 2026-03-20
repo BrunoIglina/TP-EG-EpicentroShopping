@@ -1,13 +1,10 @@
 <?php
 // public/dueno/reportes.php
-require_once __DIR__ . '/../../private/logic/functions/functions_dueno.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     header("Location: index.php");
     exit();
 }
-
-$reporte = get_reporte_promos_dueno($_SESSION['user_id']);
 ?>
 <!DOCTYPE html>
 <html lang="es">

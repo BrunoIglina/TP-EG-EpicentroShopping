@@ -1,10 +1,4 @@
 <?php
-
-require_once __DIR__ . '/../../private/logic/functions/functions_usuarios.php';
-require_once __DIR__ . '/../../private/config/rubros.php';
-
-$dueños = get_all_dueños();
-?>
 <!DOCTYPE html>
 <html lang="es">
 

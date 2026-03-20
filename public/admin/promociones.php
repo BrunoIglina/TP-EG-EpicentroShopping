@@ -1,14 +1,4 @@
 <?php
-require_once __DIR__ . '/../../private/logic/functions/functions_promociones.php';
-
-$limit = 6;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-$promociones = get_promociones_pendientes($limit, $offset);
-$total_promociones = get_total_promociones_pendientes();
-$total_pages = ceil($total_promociones / $limit);
-?>
 <!DOCTYPE html>
 <html lang="es">
 

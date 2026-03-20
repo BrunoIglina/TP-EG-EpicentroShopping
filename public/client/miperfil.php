@@ -3,15 +3,6 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: index.php?vista=login");
     exit();
 }
-
-require_once __DIR__ . '/../../private/logic/functions/functions_usuarios.php';
-$user_id = $_SESSION['user_id'];
-$user = get_usuario($user_id);
-
-if (!$user) {
-    header("Location: index.php?vista=login");
-    exit();
-}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -88,7 +79,7 @@ if (!$user) {
                                     <div class="stat-card">
                                         <div class="stat-number">
                                             <?php 
-                                            echo get_total_promociones_usadas_cliente($user_id);
+                                            echo $total_promos_usadas;
                                             ?>
                                         </div>
                                         <div class="stat-label">Promociones Usadas</div>

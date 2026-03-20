@@ -1,14 +1,4 @@
 <?php
-require_once __DIR__ . '/../../private/logic/functions/functions_usuarios.php';
-
-$limit = 6;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
-$duenos = get_usuarios_pendientes('Dueno', $limit, $offset);
-$total_duenos = get_total_usuarios_pendientes('Dueno');
-$total_pages = ceil($total_duenos / $limit);
-?>
 <!DOCTYPE html>
 <html lang="es">
 

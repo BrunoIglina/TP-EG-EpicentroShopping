@@ -1,8 +1,4 @@
 <?php
-
-require_once __DIR__ . '/../../private/logic/functions/functions_usuarios.php';
-$categorias = get_categorias();
-?>
 <!DOCTYPE html>
 <html lang="es">
 
