@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/queries/promociones.queries.php';
+require_once __DIR__ . '/queries/locales.queries.php';
 
 switch ($vista) {
 
@@ -34,7 +35,15 @@ switch ($vista) {
 
     case 'dueno_reportes':
         $id_usuario = (int)$_SESSION['user_id'];
-        $reporte = get_reporte_promos_dueno($id_usuario) ?? [];
+        $filters = [
+            'fecha_inicio' => $_GET['fecha_inicio'] ?? '',
+            'fecha_fin'    => $_GET['fecha_fin']    ?? '',
+            'estadoPromo'  => $_GET['estadoPromo']  ?? '',
+            'local_id'     => $_GET['local_id']     ?? '',
+        ];
+        $reportes = getReportesPromos($id_usuario, $filters) ?? [];
+        $total = count($reportes);
+        $locales_dueno = get_locales_por_dueno($id_usuario);
         break;
 
     case 'cliente_promociones':
