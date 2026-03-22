@@ -20,11 +20,21 @@
 <body>
   <div class="wrapper">
     <?php include __DIR__ . '/../../includes/header.php'; ?>
-    <?php include __DIR__ . '/../../includes/back_button.php'; ?>
-
     <main class="container-fluid">
+      <div class="row align-items-center mb-5 mt-3">
+        <div class="col-2 col-md-1 text-start">
+          <?php include __DIR__ . '/../../includes/back_button.php'; ?>
+        </div>
+
+        <div class="col-8 col-md-10">
+          <h2 class="text-center m-0 fw-bold text-uppercase" style="letter-spacing: 1px;">
+            Administración de Novedades
+          </h2>
+        </div>
+
+        <div class="col-2 col-md-1"></div>
+      </div>
       <section class="admin-section">
-        <h2 class="text-center my-4">Administración de Novedades</h2>
 
         <button class="btn btn-primary btn-sm mb-3 d-block mx-auto"
           onclick="location.href='index.php?vista=admin_novedad_agregar'">

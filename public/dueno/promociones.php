@@ -1,7 +1,4 @@
 <?php
-// public/dueno/promociones.php
-
-// 1. Verificación de seguridad
 if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     header("Location: index.php");
     exit();
@@ -29,11 +26,21 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
 <body>
     <div class="wrapper">
         <?php include __DIR__ . '/../../includes/header.php'; ?>
-        <?php include __DIR__ . '/../../includes/back_button.php'; ?>
-
         <main class="container-fluid">
+            <div class="row align-items-center mb-5 mt-3">
+                <div class="col-2 col-md-1 text-start">
+                    <?php include __DIR__ . '/../../includes/back_button.php'; ?>
+                </div>
+
+                <div class="col-8 col-md-10">
+                    <h2 class="text-center m-0 fw-bold text-uppercase" style="letter-spacing: 1px;">
+                        Mis Promociones
+                    </h2>
+                </div>
+
+                <div class="col-2 col-md-1"></div>
+            </div>
             <section class="admin-section">
-                <h2 class="text-center my-4">Mis Promociones</h2>
 
                 <div class="d-flex justify-content-center gap-2 mb-3">
                     <button class="btn btn-primary btn-sm" onclick="location.href='index.php?vista=dueno_promocion_agregar'">
@@ -46,9 +53,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
 
                 <?php if (isset($_SESSION['success'])): ?>
                     <div class="alert alert-success alert-dismissible fade show">
-                        <?php 
+                        <?php
                         echo htmlspecialchars($_SESSION['success']);
-                        unset($_SESSION['success']); 
+                        unset($_SESSION['success']);
                         ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
@@ -56,9 +63,9 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
 
                 <?php if (isset($_SESSION['error'])): ?>
                     <div class="alert alert-danger alert-dismissible fade show">
-                        <?php 
+                        <?php
                         echo htmlspecialchars($_SESSION['error']);
-                        unset($_SESSION['error']); 
+                        unset($_SESSION['error']);
                         ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
@@ -168,7 +175,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    
+
                     <form id="deleteForm" action="index.php" method="POST" style="display: inline;">
                         <input type="hidden" name="modulo" value="dueno">
                         <input type="hidden" name="accion" value="eliminar_promo">

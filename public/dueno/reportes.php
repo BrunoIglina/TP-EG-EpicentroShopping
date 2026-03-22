@@ -20,9 +20,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     <?php include __DIR__ . '/../../includes/header.php'; ?>
     
     <div class="container mt-5 pt-5">
-        <?php include __DIR__ . '/../../includes/back_button.php'; ?>
-        
-        <h2 class="text-center mb-4">Reporte de Uso de Promociones</h2>
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <?php include __DIR__ . '/../../includes/back_button.php'; ?>
+          <h2 class="text-center mb-4 m-0">Reporte de Uso de Promociones</h2>
+        </div>
         
         <div class="row justify-content-center">
             <div class="col-md-10">

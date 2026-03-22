@@ -28,72 +28,82 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     <div class="wrapper">
         <?php include __DIR__ . '/../../includes/header.php'; ?>
 
-        <div class="container my-4">
-            <?php include __DIR__ . '/../../includes/back_button.php'; ?>
-            <h2 class="text-center my-4">Gestión de Solicitudes de Promociones</h2>
-
-            <div class="row">
-                <?php if (!empty($solicitudes)): ?>
-                    <?php foreach ($solicitudes as $row): ?>
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title"><?php echo htmlspecialchars($row["local_nombre"]); ?></h5>
-                                    <p class="card-text"><strong><?php echo htmlspecialchars($row["textoPromo"]); ?></strong></p>
-                                    <p>Inicio: <?php echo htmlspecialchars($row["fecha_inicio"]); ?></p>
-                                    <p>Fin: <?php echo htmlspecialchars($row["fecha_fin"]); ?></p>
-                                    <p>Días: <?php echo htmlspecialchars(str_replace(',', ', ', $row["diasSemana"])); ?></p>
-                                    <p><strong>Estado:</strong> <?php echo htmlspecialchars($row["estado"]); ?></p>
-                                    <p>Email: <?php echo htmlspecialchars($row["email"]); ?></p>
-
-                                    <?php if ($row["estado"] == 'enviada'): ?>
-                                        <div class="d-flex justify-content-between mt-3">
-                                            <button type="button" class="btn btn-success"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#confirmModal"
-                                                data-promo-id="<?php echo $row["idPromocion"]; ?>"
-                                                data-cliente-id="<?php echo $row["idCliente"]; ?>"
-                                                data-accion="aceptar"
-                                                data-email="<?php echo htmlspecialchars($row["email"]); ?>">
-                                                Aceptar
-                                            </button>
-                                            <button type="button" class="btn btn-danger"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#confirmModal"
-                                                data-promo-id="<?php echo $row["idPromocion"]; ?>"
-                                                data-cliente-id="<?php echo $row["idCliente"]; ?>"
-                                                data-accion="rechazar"
-                                                data-email="<?php echo htmlspecialchars($row["email"]); ?>">
-                                                Rechazar
-                                            </button>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p class="text-center my-4">No hay solicitudes pendientes.</p>
-                <?php endif; ?>
+        <div class="row align-items-center mb-5 mt-3">
+            <div class="col-2 col-md-1 text-start">
+                <?php include __DIR__ . '/../../includes/back_button.php'; ?>
             </div>
 
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item <?php echo $page == 1 ? 'disabled' : ''; ?>">
-                        <a class="page-link" href="index.php?vista=dueno_solicitudes&page=<?php echo $page - 1; ?>">Anterior</a>
-                    </li>
-                    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                        <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                            <a class="page-link" href="index.php?vista=dueno_solicitudes&page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                        </li>
-                    <?php endfor; ?>
-                    <li class="page-item <?php echo $page == $total_pages ? 'disabled' : ''; ?>">
-                        <a class="page-link" href="index.php?vista=dueno_solicitudes&page=<?php echo $page + 1; ?>">Siguiente</a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="col-8 col-md-10">
+                <h2 class="text-center m-0 fw-bold text-uppercase" style="letter-spacing: 1px;">
+                    Gestión de Solicitudes de Promociones
+                </h2>
+            </div>
+
+            <div class="col-2 col-md-1"></div>
         </div>
-        <?php include __DIR__ . '/../../includes/footer.php'; ?>
+
+        <div class="row">
+            <?php if (!empty($solicitudes)): ?>
+                <?php foreach ($solicitudes as $row): ?>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo htmlspecialchars($row["local_nombre"]); ?></h5>
+                                <p class="card-text"><strong><?php echo htmlspecialchars($row["textoPromo"]); ?></strong></p>
+                                <p>Inicio: <?php echo htmlspecialchars($row["fecha_inicio"]); ?></p>
+                                <p>Fin: <?php echo htmlspecialchars($row["fecha_fin"]); ?></p>
+                                <p>Días: <?php echo htmlspecialchars(str_replace(',', ', ', $row["diasSemana"])); ?></p>
+                                <p><strong>Estado:</strong> <?php echo htmlspecialchars($row["estado"]); ?></p>
+                                <p>Email: <?php echo htmlspecialchars($row["email"]); ?></p>
+
+                                <?php if ($row["estado"] == 'enviada'): ?>
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <button type="button" class="btn btn-success"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#confirmModal"
+                                            data-promo-id="<?php echo $row["idPromocion"]; ?>"
+                                            data-cliente-id="<?php echo $row["idCliente"]; ?>"
+                                            data-accion="aceptar"
+                                            data-email="<?php echo htmlspecialchars($row["email"]); ?>">
+                                            Aceptar
+                                        </button>
+                                        <button type="button" class="btn btn-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#confirmModal"
+                                            data-promo-id="<?php echo $row["idPromocion"]; ?>"
+                                            data-cliente-id="<?php echo $row["idCliente"]; ?>"
+                                            data-accion="rechazar"
+                                            data-email="<?php echo htmlspecialchars($row["email"]); ?>">
+                                            Rechazar
+                                        </button>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p class="text-center my-4">No hay solicitudes pendientes.</p>
+            <?php endif; ?>
+        </div>
+
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item <?php echo $page == 1 ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="index.php?vista=dueno_solicitudes&page=<?php echo $page - 1; ?>">Anterior</a>
+                </li>
+                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                    <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
+                        <a class="page-link" href="index.php?vista=dueno_solicitudes&page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </li>
+                <?php endfor; ?>
+                <li class="page-item <?php echo $page == $total_pages ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="index.php?vista=dueno_solicitudes&page=<?php echo $page + 1; ?>">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <?php include __DIR__ . '/../../includes/footer.php'; ?>
     </div>
 
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">

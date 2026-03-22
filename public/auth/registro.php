@@ -68,16 +68,16 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-  document.querySelector('form').addEventListener('submit', function(event) {
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
+    document.querySelector('form').addEventListener('submit', function(event) {
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
 
-    if (password !== confirmPassword) {
-      event.preventDefault();
-      alert('Las contraseñas no coinciden. Por favor, verifica que ambas sean iguales.');
-      return false;
-    }
-  });
+      if (password !== confirmPassword) {
+        event.preventDefault();
+        alert('Las contraseñas no coinciden. Por favor, verifica que ambas sean iguales.');
+        return false;
+      }
+    });
   </script>
 </body>
 

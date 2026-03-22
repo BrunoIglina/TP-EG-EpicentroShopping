@@ -2,9 +2,9 @@
 require_once __DIR__ . '/../includes/navigation_history.php';
 require_once __DIR__ . '/../includes/security_headers.php';
 if (!isset($_SESSION['user_id'])) {
-	$_SESSION['mensaje_error'] = "Iniciar sesión para observar las novedades";
-	header("Location: index.php");
-	exit();
+  $_SESSION['mensaje_error'] = "Iniciar sesión para observar las novedades";
+  header("Location: index.php");
+  exit();
 }
 ?>
 
@@ -34,43 +34,54 @@ if (!isset($_SESSION['user_id'])) {
 
 
     <main class="container-fluid">
-      <?php include __DIR__ . '/../includes/back_button.php'; ?>
-      <h2 class="text-center my-2">Novedades</h2>
+      <div class="row align-items-center mb-5 mt-3">
+        <div class="col-2 col-md-1 text-start">
+          <?php include __DIR__ . './../includes/back_button.php'; ?>
+        </div>
+
+        <div class="col-8 col-md-10">
+          <h2 class="text-center m-0 fw-bold text-uppercase" style="letter-spacing: 1px;">
+            Novedades
+          </h2>
+        </div>
+
+        <div class="col-2 col-md-1"></div>
+      </div>
 
       <?php if (!$novedades) { ?>
-      <div class="alert alert-warning">No hay novedades disponibles</div>
+        <div class="alert alert-warning">No hay novedades disponibles</div>
       <?php } else { ?>
-      <?php foreach ($novedades as $novedad) { ?>
-      <div class="mb-4">
-        <div class="card w-100">
-          <div class="card-img-top bg-light" style="height: 250px;">
-            <img src="index.php?vista=imagen&novedad_id=<?php echo htmlspecialchars($novedad['id']); ?>"
-              alt="Imagen de la novedad" class="img-fluid h-100 w-100" style="object-fit: cover;">
+        <?php foreach ($novedades as $novedad) { ?>
+          <div class="mb-4">
+            <div class="card w-100">
+              <div class="card-img-top bg-light" style="height: 250px;">
+                <img src="index.php?vista=imagen&novedad_id=<?php echo htmlspecialchars($novedad['id']); ?>"
+                  alt="Imagen de la novedad" class="img-fluid h-100 w-100" style="object-fit: cover;">
+              </div>
+              <div class="card-body">
+                <p class="mb-2"><strong>Desde:</strong> <?php echo htmlspecialchars($novedad['fecha_desde']); ?></p>
+                <p class="mb-2"><strong>Hasta:</strong> <?php echo htmlspecialchars($novedad['fecha_hasta']); ?></p>
+                <p class="mb-0"><?php echo htmlspecialchars($novedad['textoNovedad']); ?></p>
+              </div>
+            </div>
           </div>
-          <div class="card-body">
-            <p class="mb-2"><strong>Desde:</strong> <?php echo htmlspecialchars($novedad['fecha_desde']); ?></p>
-            <p class="mb-2"><strong>Hasta:</strong> <?php echo htmlspecialchars($novedad['fecha_hasta']); ?></p>
-            <p class="mb-0"><?php echo htmlspecialchars($novedad['textoNovedad']); ?></p>
-          </div>
-        </div>
-      </div>
-      <?php } ?>
+        <?php } ?>
 
-      <div class="pagination-container">
-        <ul class="pagination justify-content-center mt-4">
-          <li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
-            <a class="page-link" href="?page=<?php echo $page - 1; ?>">Anterior</a>
-          </li>
-          <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
-          <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-            <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-          </li>
-          <?php } ?>
-          <li class="page-item <?php echo ($page == $total_pages) ? 'disabled' : ''; ?>">
-            <a class="page-link" href="?page=<?php echo $page + 1; ?>">Siguiente</a>
-          </li>
-        </ul>
-      </div>
+        <div class="pagination-container">
+          <ul class="pagination justify-content-center mt-4">
+            <li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
+              <a class="page-link" href="?page=<?php echo $page - 1; ?>">Anterior</a>
+            </li>
+            <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
+              <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+              </li>
+            <?php } ?>
+            <li class="page-item <?php echo ($page == $total_pages) ? 'disabled' : ''; ?>">
+              <a class="page-link" href="?page=<?php echo $page + 1; ?>">Siguiente</a>
+            </li>
+          </ul>
+        </div>
       <?php } ?>
     </main>
 

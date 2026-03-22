@@ -18,14 +18,24 @@
 
 <body>
 	<?php include __DIR__ . '/../../includes/header.php'; ?>
-	<?php include __DIR__ . '/../../includes/back_button.php'; ?>
-
 	<div class="form-wrapper">
 		<div class="container">
+			<div class="row align-items-center mb-5 mt-3">
+				<div class="col-2 col-md-1 text-start">
+					<?php include __DIR__ . '/../../includes/back_button.php'; ?>
+				</div>
+
+				<div class="col-8 col-md-10">
+					<h2 class="text-center m-0 fw-bold text-uppercase" style="letter-spacing: 1px;">
+						Agregar Novedad
+					</h2>
+				</div>
+
+				<div class="col-2 col-md-1"></div>
+			</div>
 			<div class="row justify-content-center">
 				<div class="col-lg-8 col-md-10">
 					<div class="form-card">
-						<h2>Agregar Novedad</h2>
 
 						<?php if (isset($_SESSION['error'])): ?>
 							<div class="alert alert-danger alert-dismissible fade show">

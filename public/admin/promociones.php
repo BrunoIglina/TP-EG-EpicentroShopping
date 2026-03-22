@@ -20,9 +20,20 @@
 	<div class="wrapper">
 		<?php include __DIR__ . '/../../includes/header.php'; ?>
 		<main class="container-fluid">
-			<?php include __DIR__ . '/../../includes/back_button.php'; ?>
+			<div class="row align-items-center mb-5 mt-3">
+				<div class="col-2 col-md-1 text-start">
+					<?php include __DIR__ . '/../../includes/back_button.php'; ?>
+				</div>
+
+				<div class="col-8 col-md-10">
+					<h2 class="text-center m-0 fw-bold text-uppercase" style="letter-spacing: 1px;">
+						Administración de Promociones
+					</h2>
+				</div>
+
+				<div class="col-2 col-md-1"></div>
+			</div>
 			<section class="admin-section">
-				<h2 class="text-center my-2">Aprobar promociones pendientes</h2>
 
 				<?php if (isset($_SESSION['success'])): ?>
 					<div class="alert alert-success text-center">

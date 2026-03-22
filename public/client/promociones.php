@@ -33,7 +33,10 @@ $clienteId = $_SESSION['user_id'] ?? 0;
     <?php include __DIR__ . '/../../includes/header.php'; ?>
 
     <main class="container-fluid" style="overflow-x: hidden;">
-      <?php include __DIR__ . '/../../includes/back_button.php'; ?>
+      <div class="d-flex align-items-center gap-3 mb-4">
+        <?php include __DIR__ . '/../../includes/back_button.php'; ?>
+        <h2 class="mb-4 text-center m-0"><?php echo htmlspecialchars($local["nombre"]); ?></h2>
+      </div>
 
       <?php
             if (isset($_SESSION['mensaje_error'])) {
@@ -45,8 +48,6 @@ $clienteId = $_SESSION['user_id'] ?? 0;
                 unset($_SESSION['mensaje_exito']);
             }
             ?>
-
-      <h2 class="mb-4 text-center"><?php echo htmlspecialchars($local["nombre"]); ?></h2>
 
       <div class="row g-4 mb-4">
         <?php
