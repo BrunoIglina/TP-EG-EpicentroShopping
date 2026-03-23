@@ -58,10 +58,10 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="card-body d-flex flex-column">
 
                   <div class="card-image mb-3" style="height: 180px; overflow: hidden; border-radius: 5px;">
-                    <?php echo '<img src="index.php?vista=imagen&local_id=' . $local['id'] . '" alt="Imagen de ' . htmlspecialchars($local['nombre']) . '" class="w-100 h-100" style="object-fit: cover;">'; ?>
+                    <?php echo '<img src="index.php?vista=imagen&local_id=' . $local['id'] . '" alt="Imagen de ' . htmlspecialchars($local['nombre']) . '" class="w-100" style="object-fit: cover;">'; ?>
                   </div>
 
-                  <h4 class="card-title text-dark"><?php echo htmlspecialchars($local['nombre']); ?></h4>
+                  <h3 class="card-title text-dark"><?php echo htmlspecialchars($local['nombre']); ?></h3>
 
                   <p class="card-text text-muted mt-auto">
                     <strong><?php echo htmlspecialchars($local['rubro']); ?></strong><br>

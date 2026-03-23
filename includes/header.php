@@ -9,7 +9,7 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #202833;">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.php?vista=landing">
-        <img src="./assets/logo2.png" alt="Epicentro Shopping Logo" width="120" height="auto">
+        <img src="./assets/logo2.png" alt="Epicentro Shopping Logo" width="120">
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -18,9 +18,9 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
       </button>
 
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel"
-        style="background-color: #202833;">
+        role="dialog" style="background-color: #202833;">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title text-white" id="offcanvasNavbarLabel">Menú</h5>
+          <h2 class="offcanvas-title text-white" id="offcanvasNavbarLabel">Menú</h2>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
             aria-label="Cerrar"></button>
         </div>
