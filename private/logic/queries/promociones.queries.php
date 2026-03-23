@@ -206,6 +206,72 @@ function get_reporte_promos_dueno(int $usuario_id): array
     return $reporte;
 }
 
+function getReportesPromos(int $usuario_id, array $filters = []): array
+{
+    $conn = getDB();
+    
+    $params = [$usuario_id];
+    $types = "i";
+    $conditions = [];
+    
+    // Agregar condiciones de fecha inicio
+    if (!empty($filters['fecha_inicio'])) {
+        $conditions[] = "p.fecha_inicio >= ?";
+        $params[] = $filters['fecha_inicio'];
+        $types .= "s";
+    }
+    
+    // Agregar condiciones de fecha fin
+    if (!empty($filters['fecha_fin'])) {
+        $conditions[] = "p.fecha_fin <= ?";
+        $params[] = $filters['fecha_fin'];
+        $types .= "s";
+    }
+    
+    // Agregar condiciones de estado
+    if (!empty($filters['estadoPromo'])) {
+        $conditions[] = "p.estadoPromo = ?";
+        $params[] = $filters['estadoPromo'];
+        $types .= "s";
+    }
+    
+    // Agregar condiciones de local
+    if (!empty($filters['local_id'])) {
+        $conditions[] = "p.local_id = ?";
+        $params[] = (int)$filters['local_id'];
+        $types .= "i";
+    }
+    
+    $sql = "
+        SELECT p.id, p.textoPromo, p.fecha_inicio, p.fecha_fin, p.categoriaCliente, 
+               p.estadoPromo, l.nombre as local_nombre,
+               (SELECT COUNT(*) FROM promociones_cliente pc WHERE pc.idPromocion = p.id AND pc.estado = 'aceptada') AS usos
+        FROM promociones p
+        INNER JOIN locales l ON p.local_id = l.id
+        WHERE l.idUsuario = ?
+    ";
+    
+    if (count($conditions) > 0) {
+        $sql .= " AND " . implode(" AND ", $conditions);
+    }
+    
+    $sql .= " ORDER BY p.fecha_inicio DESC";
+    
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        error_log("Error al preparar query en getReportesPromos: " . $conn->error);
+        return [];
+    }
+    
+    $stmt->bind_param($types, ...$params);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $reportes = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+    
+    return $reportes;
+}
+
 function ya_pidio_promocion(int $usuario_id, int $promo_id): bool
 {
     $conn = getDB();
@@ -244,9 +310,12 @@ function eliminar_promocion_dueno(int $promo_id, int $usuario_id): bool
     $result = $stmt->execute();
     if (!$result) {
         error_log("Error al eliminar promoción (dueño): " . $stmt->error);
+        $stmt->close();
+        return false;
     }
+    $affected = $stmt->affected_rows;
     $stmt->close();
-    return $result && $stmt->affected_rows > 0;
+    return $affected > 0;
 }
 
 function eliminar_promocion_admin(int $promo_id): bool
