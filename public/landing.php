@@ -10,21 +10,21 @@ if (session_status() === PHP_SESSION_NONE) {
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-  <link rel="icon" type="image/png" href="./assets/logo2.png">
+  <link rel="icon" type="image/png" href="public/assets/logo2.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="./css/fix_header.css">
-  <link rel="stylesheet" href="./css/footer.css">
-  <link rel="stylesheet" href="./css/header.css">
-  <link rel="stylesheet" href="./css/wrapper.css">
-  <link rel="stylesheet" href="./css/tarjetas.css">
-  <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
+  <link rel="stylesheet" href="./public/css/fix_header.css">
+  <link rel="stylesheet" href="./public/css/footer.css">
+  <link rel="stylesheet" href="./public/css/header.css">
+  <link rel="stylesheet" href="./public/css/wrapper.css">
+  <link rel="stylesheet" href="./public/css/tarjetas.css">
+  <link rel="stylesheet" href="./public/css/styles_fondo_and_titles.css">
   <title>Epicentro Shopping - Inicio</title>
 </head>
 
 <body>
   <div class="ratio ratio-16x9 position-relative">
-    <video src="./assets/file.mp4" class="w-100" autoplay muted loop playsinline></video>
+    <video src="./public/assets/file.mp4" class="w-100" autoplay muted loop playsinline></video>
     <div
       class="d-flex justify-content-center align-items-center position-absolute top-0 start-0 w-100 h-100 text-white text-center"
       style="background: rgba(0, 0, 0, 0.5);">

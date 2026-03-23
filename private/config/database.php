@@ -3,11 +3,13 @@
 
 
 
-class Database {
+class Database
+{
     private static $instance = null;
     private $conn;
-    
-    private function __construct() {
+
+    private function __construct()
+    {
         $servername = "db";
         $username = "root";
         $password = "";
@@ -23,25 +25,29 @@ class Database {
 
         $this->conn->set_charset("utf8mb4");
     }
-    
-    public static function getInstance() {
+
+    public static function getInstance()
+    {
         if (self::$instance === null) {
             self::$instance = new Database();
         }
         return self::$instance;
     }
-    
-    public function getConnection() {
+
+    public function getConnection()
+    {
         return $this->conn;
     }
 
     private function __clone() {}
-    
-    public function __wakeup() {
+
+    public function __wakeup()
+    {
         throw new Exception("No se puede deserializar singleton");
     }
 }
 
-function getDB() {
+function getDB()
+{
     return Database::getInstance()->getConnection();
 }

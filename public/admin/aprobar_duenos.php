@@ -7,12 +7,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/png" href="assets/logo2.png">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/footer.css">
-	<link rel="stylesheet" href="css/header.css">
-	<link rel="stylesheet" href="css/admin_aprobar_dueños.css">
-	<link rel="stylesheet" href="css/styles_fondo_and_titles.css">
-	<link rel="stylesheet" href="css/back_button.css">
-	<link rel="stylesheet" href="css/fix_header.css">
+	<link rel="stylesheet" href="./public/css/footer.css">
+	<link rel="stylesheet" href="./public/css/header.css">
+	<link rel="stylesheet" href="./public/css/admin_aprobar_dueños.css">
+	<link rel="stylesheet" href="./public/css/styles_fondo_and_titles.css">
+	<link rel="stylesheet" href="./public/css/back_button.css">
+	<link rel="stylesheet" href="./public/css/fix_header.css">
 	<title>Epicentro Shopping - Aprobar Dueños de Locales</title>
 </head>
 

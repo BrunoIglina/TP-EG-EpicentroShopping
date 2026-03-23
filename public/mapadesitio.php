@@ -1,4 +1,5 @@
 <?php
+// PHP busca los archivos subiendo un nivel porque este archivo está en /public
 require_once __DIR__ . '/../includes/navigation_history.php';
 require_once __DIR__ . '/../includes/security_headers.php';
 ?>
@@ -8,26 +9,28 @@ require_once __DIR__ . '/../includes/security_headers.php';
 
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="./css/footer.css">
-    <link rel="stylesheet" href="./css/header.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <link rel="icon" type="image/png" href="./assets/logo2.png">
+
+    <link rel="icon" type="image/png" href="public/assets/logo2.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/mapadesitio.css">
-    <link rel="stylesheet" href="./css/styles_fondo_and_titles.css">
-    <link rel="stylesheet" href="./css/back_button.css">
-    <link rel="stylesheet" href="./css/fix_header.css">
+    <link rel="stylesheet" href="public/css/footer.css">
+    <link rel="stylesheet" href="public/css/header.css">
+    <link rel="stylesheet" href="public/css/mapadesitio.css">
+    <link rel="stylesheet" href="public/css/styles_fondo_and_titles.css">
+    <link rel="stylesheet" href="public/css/back_button.css">
+    <link rel="stylesheet" href="public/css/fix_header.css">
 
     <title>Mapa del Sitio - Epicentro Shopping</title>
 </head>
 
 <body>
     <div class="wrapper">
-        <?php include __DIR__ . './../includes/header.php'; ?>
+        <?php include __DIR__ . '/../includes/header.php'; ?>
+
         <div class="row align-items-center mb-5 mt-3">
             <div class="col-2 col-md-1 text-start">
-                <?php include __DIR__ . './../includes/back_button.php'; ?>
+                <?php include __DIR__ . '/../includes/back_button.php'; ?>
             </div>
 
             <div class="col-8 col-md-10">
@@ -38,6 +41,7 @@ require_once __DIR__ . '/../includes/security_headers.php';
 
             <div class="col-2 col-md-1"></div>
         </div>
+
         <main class="container my-4 mapa">
 
             <?php if (!isset($_SESSION['user_id'])): ?>
@@ -49,12 +53,12 @@ require_once __DIR__ . '/../includes/security_headers.php';
                             </div>
                             <div class="card-body">
                                 <ul class="list-unstyled mb-0">
-                                    <li class="mb-2"><a href="index.php" class="text-decoration-none">Inicio</a></li>
-                                    <li class="mb-2"><a href="locales.php" class="text-decoration-none">Locales</a></li>
-                                    <li class="mb-2"><a href="promociones.php" class="text-decoration-none">Promociones</a></li>
-                                    <li class="mb-2"><a href="novedades.php" class="text-decoration-none">Novedades</a></li>
-                                    <li class="mb-2"><a href="contacto.php" class="text-decoration-none">Contacto</a></li>
-                                    <li class="mb-2"><a href="mapadesitio.php" class="text-decoration-none">Mapa del Sitio</a></li>
+                                    <li class="mb-2"><a href="index.php?vista=landing" class="text-decoration-none">Inicio</a></li>
+                                    <li class="mb-2"><a href="index.php?vista=locales" class="text-decoration-none">Locales</a></li>
+                                    <li class="mb-2"><a href="index.php?vista=promociones" class="text-decoration-none">Promociones</a></li>
+                                    <li class="mb-2"><a href="index.php?vista=novedades" class="text-decoration-none">Novedades</a></li>
+                                    <li class="mb-2"><a href="index.php?vista=contacto" class="text-decoration-none">Contacto</a></li>
+                                    <li class="mb-2"><a href="index.php?vista=mapadesitio" class="text-decoration-none">Mapa del Sitio</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -66,9 +70,9 @@ require_once __DIR__ . '/../includes/security_headers.php';
                             </div>
                             <div class="card-body">
                                 <ul class="list-unstyled mb-0">
-                                    <li class="mb-2"><a href="auth/login.php" class="text-decoration-none">Iniciar Sesión</a></li>
-                                    <li class="mb-2"><a href="auth/registro.php" class="text-decoration-none">Registrarse</a></li>
-                                    <li class="mb-2"><a href="auth/recuperar-cuenta.php" class="text-decoration-none">Recuperar Cuenta</a></li>
+                                    <li class="mb-2"><a href="index.php?vista=login" class="text-decoration-none">Iniciar Sesión</a></li>
+                                    <li class="mb-2"><a href="index.php?vista=registro" class="text-decoration-none">Registrarse</a></li>
+                                    <li class="mb-2"><a href="index.php?vista=recuperar" class="text-decoration-none">Recuperar Cuenta</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -84,11 +88,11 @@ require_once __DIR__ . '/../includes/security_headers.php';
                             </div>
                             <div class="card-body">
                                 <ul class="list-unstyled mb-0">
-                                    <li class="mb-2"><a href="index.php" class="text-decoration-none">Inicio</a></li>
-                                    <li class="mb-2"><a href="locales.php" class="text-decoration-none">Locales</a></li>
-                                    <li class="mb-2"><a href="novedades.php" class="text-decoration-none">Novedades</a></li>
-                                    <li class="mb-2"><a href="contacto.php" class="text-decoration-none">Contacto</a></li>
-                                    <li class="mb-2"><a href="mapadesitio.php" class="text-decoration-none">Mapa del Sitio</a></li>
+                                    <li class="mb-2"><a href="index.php?vista=landing" class="text-decoration-none">Inicio</a></li>
+                                    <li class="mb-2"><a href="index.php?vista=locales" class="text-decoration-none">Locales</a></li>
+                                    <li class="mb-2"><a href="index.php?vista=novedades" class="text-decoration-none">Novedades</a></li>
+                                    <li class="mb-2"><a href="index.php?vista=contacto" class="text-decoration-none">Contacto</a></li>
+                                    <li class="mb-2"><a href="index.php?vista=mapadesitio" class="text-decoration-none">Mapa del Sitio</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -102,11 +106,11 @@ require_once __DIR__ . '/../includes/security_headers.php';
                                 </div>
                                 <div class="card-body">
                                     <ul class="list-unstyled mb-0">
-                                        <li class="mb-2"><a href="admin/locales.php" class="text-decoration-none">Gestionar Locales</a></li>
-                                        <li class="mb-2"><a href="admin/novedades.php" class="text-decoration-none">Gestionar Novedades</a></li>
-                                        <li class="mb-2"><a href="admin/promociones.php" class="text-decoration-none">Gestionar Promociones</a></li>
-                                        <li class="mb-2"><a href="admin/aprobar_duenos.php" class="text-decoration-none">Aprobar Dueños</a></li>
-                                        <li class="mb-2"><a href="admin/aprobar_clientes.php" class="text-decoration-none">Aprobar Clientes</a></li>
+                                        <li class="mb-2"><a href="index.php?vista=admin_locales" class="text-decoration-none">Gestionar Locales</a></li>
+                                        <li class="mb-2"><a href="index.php?vista=admin_novedades" class="text-decoration-none">Gestionar Novedades</a></li>
+                                        <li class="mb-2"><a href="index.php?vista=admin_promociones" class="text-decoration-none">Gestionar Promociones</a></li>
+                                        <li class="mb-2"><a href="index.php?vista=admin_aprobar_duenos" class="text-decoration-none">Aprobar Dueños</a></li>
+                                        <li class="mb-2"><a href="index.php?vista=admin_aprobar_clientes" class="text-decoration-none">Aprobar Clientes</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -131,7 +135,7 @@ require_once __DIR__ . '/../includes/security_headers.php';
                                 </div>
                                 <div class="card-body">
                                     <ul class="list-unstyled mb-0">
-                                        <li class="mb-2"><a href="index.php?vista=promocioness" class="text-decoration-none">Pedir Promoción</a></li>
+                                        <li class="mb-2"><a href="index.php?vista=promociones" class="text-decoration-none">Pedir Promoción</a></li>
                                         <li class="mb-2"><a href="index.php?vista=cliente_promociones" class="text-decoration-none">Mis Solicitudes</a></li>
                                     </ul>
                                 </div>
@@ -148,7 +152,7 @@ require_once __DIR__ . '/../includes/security_headers.php';
                                 <ul class="list-unstyled mb-0">
                                     <li class="mb-2"><a href="index.php?vista=cliente_perfil" class="text-decoration-none">Mi Perfil</a></li>
                                     <li class="mb-2"><a href="index.php?vista=cliente_mod_perfil" class="text-decoration-none">Modificar Perfil</a></li>
-                                    <li class="mb-2"><a href="logout.php" class="text-decoration-none text-danger">Cerrar Sesión</a></li>
+                                    <li class="mb-2"><a href="public/logout.php" class="text-decoration-none text-danger fw-bold">Cerrar Sesión</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -176,7 +180,7 @@ require_once __DIR__ . '/../includes/security_headers.php';
 
         </main>
 
-        <?php include __DIR__ . './../includes/footer.php'; ?>
+        <?php include __DIR__ . '/../includes/footer.php'; ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
