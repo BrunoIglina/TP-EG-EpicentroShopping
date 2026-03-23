@@ -31,8 +31,10 @@ require_once __DIR__ . '/../includes/security_headers.php';
     <?php endif; ?>
 
     <main class="container compact-container my-4">
-        <?php include __DIR__ . '/../includes/back_button.php'; ?>
-        <h2 class="text-center">Contacto</h2>
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <?php include __DIR__ . '/../includes/back_button.php'; ?>
+          <h2 class="text-center m-0">Contacto</h2>
+        </div>
 
         <div class="accordion" id="faqAccordion">
             <div class="card">

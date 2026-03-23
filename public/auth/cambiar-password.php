@@ -29,10 +29,10 @@ $email = $_GET['email'] ?? '';
       <div class="auth-container">
         <section class="auth-form">
           <?php if (isset($_SESSION['error'])): ?>
-          <div class="alert alert-danger">
-            <?php echo htmlspecialchars($_SESSION['error']);
-							unset($_SESSION['error']); ?>
-          </div>
+            <div class="alert alert-danger">
+              <?php echo htmlspecialchars($_SESSION['error']);
+              unset($_SESSION['error']); ?>
+            </div>
           <?php endif; ?>
 
           <h2>Cambiar Contraseña</h2>
@@ -63,33 +63,33 @@ $email = $_GET['email'] ?? '';
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-  const newPasswordInput = document.getElementById('new_password');
-  const confirmPasswordInput = document.getElementById('confirm_password');
-  const passwordMatchDiv = document.getElementById('passwordMatch');
-  const submitBtn = document.getElementById('submitBtn');
+    const newPasswordInput = document.getElementById('new_password');
+    const confirmPasswordInput = document.getElementById('confirm_password');
+    const passwordMatchDiv = document.getElementById('passwordMatch');
+    const submitBtn = document.getElementById('submitBtn');
 
-  function validatePasswords() {
-    const newPassword = newPasswordInput.value;
-    const confirmPassword = confirmPasswordInput.value;
+    function validatePasswords() {
+      const newPassword = newPasswordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
 
-    if (newPassword && confirmPassword) {
-      if (newPassword === confirmPassword) {
-        passwordMatchDiv.innerHTML = '<div class="alert alert-success mb-0">✓ Las contraseñas coinciden</div>';
-        passwordMatchDiv.style.display = 'block';
-        submitBtn.disabled = false;
+      if (newPassword && confirmPassword) {
+        if (newPassword === confirmPassword) {
+          passwordMatchDiv.innerHTML = '<div class="alert alert-success mb-0">✓ Las contraseñas coinciden</div>';
+          passwordMatchDiv.style.display = 'block';
+          submitBtn.disabled = false;
+        } else {
+          passwordMatchDiv.innerHTML = '<div class="alert alert-danger mb-0">✗ Las contraseñas no coinciden</div>';
+          passwordMatchDiv.style.display = 'block';
+          submitBtn.disabled = true;
+        }
       } else {
-        passwordMatchDiv.innerHTML = '<div class="alert alert-danger mb-0">✗ Las contraseñas no coinciden</div>';
-        passwordMatchDiv.style.display = 'block';
+        passwordMatchDiv.style.display = 'none';
         submitBtn.disabled = true;
       }
-    } else {
-      passwordMatchDiv.style.display = 'none';
-      submitBtn.disabled = true;
     }
-  }
 
-  newPasswordInput.addEventListener('input', validatePasswords);
-  confirmPasswordInput.addEventListener('input', validatePasswords);
+    newPasswordInput.addEventListener('input', validatePasswords);
+    confirmPasswordInput.addEventListener('input', validatePasswords);
   </script>
 </body>
 

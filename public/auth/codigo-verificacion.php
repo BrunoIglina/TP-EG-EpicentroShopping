@@ -31,10 +31,10 @@ $email = $_GET['email'] ?? '';
           <h2>Verificar Código</h2>
 
           <?php if (isset($_SESSION['error'])): ?>
-          <div class="alert alert-danger">
-            <?php echo htmlspecialchars($_SESSION['error']);
+            <div class="alert alert-danger">
+              <?php echo htmlspecialchars($_SESSION['error']);
               unset($_SESSION['error']); ?>
-          </div>
+            </div>
           <?php endif; ?>
 
           <form action="index.php" method="POST">

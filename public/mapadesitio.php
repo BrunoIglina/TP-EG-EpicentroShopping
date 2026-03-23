@@ -25,8 +25,19 @@ require_once __DIR__ . '/../includes/security_headers.php';
 <body>
     <div class="wrapper">
         <?php include __DIR__ . './../includes/header.php'; ?>
-        <?php include __DIR__ . '/../includes/back_button.php'; ?>
-        <h2 class="text-center my-4">MAPA DEL SITIO</h2>
+        <div class="row align-items-center mb-5 mt-3">
+            <div class="col-2 col-md-1 text-start">
+                <?php include __DIR__ . './../includes/back_button.php'; ?>
+            </div>
+
+            <div class="col-8 col-md-10">
+                <h2 class="text-center m-0 fw-bold text-uppercase" style="letter-spacing: 1px;">
+                    Mapa de Sitio
+                </h2>
+            </div>
+
+            <div class="col-2 col-md-1"></div>
+        </div>
         <main class="container my-4 mapa">
 
             <?php if (!isset($_SESSION['user_id'])): ?>

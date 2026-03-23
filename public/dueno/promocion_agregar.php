@@ -8,6 +8,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,19 +18,25 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     <link rel="stylesheet" href="css/fix_header.css">
     <title>Epicentro Shopping - Agregar Promoción</title>
 </head>
+
 <body>
     <?php include __DIR__ . '/../../includes/header.php'; ?>
-    
+
     <div class="form-wrapper mt-5 pt-5">
+
         <div class="container">
+
             <div class="row justify-content-center">
+
                 <div class="col-lg-8">
+
                     <div class="form-card p-4 shadow bg-white rounded">
                         <h2 class="text-center mb-4">Agregar Nueva Promoción</h2>
 
                         <?php if (isset($_SESSION['error'])): ?>
                             <div class="alert alert-danger alert-dismissible fade show">
-                                <?php echo htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
+                                <?php echo htmlspecialchars($_SESSION['error']);
+                                unset($_SESSION['error']); ?>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>
                         <?php endif; ?>
@@ -37,7 +44,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
                         <form action="index.php" method="POST">
                             <input type="hidden" name="modulo" value="dueno">
                             <input type="hidden" name="accion" value="crear_promocion">
-                            
+
                             <div class="mb-3">
                                 <label for="local_id" class="form-label">Nombre del Local</label>
                                 <select id="local_id" name="local_id" class="form-select" required>
@@ -49,12 +56,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="textoPromo" class="form-label">Texto de la Promoción</label>
                                 <textarea id="textoPromo" name="textoPromo" class="form-control" rows="3" required maxlength="200"></textarea>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
@@ -65,11 +72,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
                                     <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" required>
                                 </div>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label class="form-label d-block">Días de la Semana</label>
                                 <div class="row">
-                                    <?php 
+                                    <?php
                                     $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
                                     foreach ($dias as $dia): ?>
                                         <div class="col-6 col-md-4">
@@ -91,7 +98,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
                                     <option value="Premium">Premium</option>
                                 </select>
                             </div>
-                            
+
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary">Agregar Promoción</button>
                                 <button type="button" class="btn btn-secondary" onclick="window.location.href='index.php?vista=dueno_promociones'">Cancelar</button>
@@ -104,4 +111,5 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
