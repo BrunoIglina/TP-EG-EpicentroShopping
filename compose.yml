@@ -1,0 +1,35 @@
+services:
+  app:
+    build: .
+    container_name: epicentro_php
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - /var/www/html/private/lib/vendor
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:11.8
+    container_name: epicentro_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: shopping_db
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "3308:3306"
+    volumes:
+      # Carga automáticamente tu base de datos al iniciar
+      - ./private/bd/shopping_db_v1.sql:/docker-entrypoint-initdb.d/db.sql
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb -u root -e 'SELECT 1;' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+volumes:
+  mariadb_data:

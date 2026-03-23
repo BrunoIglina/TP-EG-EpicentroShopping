@@ -1,0 +1,27 @@
+.btn-back-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: auto;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: none !important;
+    color: white !important;
+    padding: 8px 16px !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3) !important;
+    text-decoration: none !important;
+}
+
+.btn-back-custom:hover {
+    transform: translateX(-4px) !important;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+    color: white !important;
+}
+
+.btn-back-custom:active {
+    transform: translateX(0px) !important;
+}
