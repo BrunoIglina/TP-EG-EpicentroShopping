@@ -13,9 +13,12 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/forms.css">
-    <link rel="stylesheet" href="css/fix_header.css">
+    <link rel="stylesheet" href="./public/css/header.css">
+    <link rel="stylesheet" href="./public/css/forms.css">
+    <link rel="stylesheet" href="./public/css/fix_header.css">
+    <link rel="stylesheet" href="./public/css/back_button.css">
+    <link rel="stylesheet" href="./public/css/buttons.css">
+    <link rel="stylesheet" href="./public/css/styles_fondo_and_titles.css">
     <title>Epicentro Shopping - Agregar Promoción</title>
 </head>
 
@@ -31,7 +34,19 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
                 <div class="col-lg-8">
 
                     <div class="form-card p-4 shadow bg-white rounded">
-                        <h2 class="text-center mb-4">Agregar Nueva Promoción</h2>
+                        <div class="row align-items-center mb-5 mt-3">
+                            <div class="col-2 col-md-1 text-start">
+                                <?php include __DIR__ . '/../../includes/back_button.php'; ?>
+                            </div>
+
+                            <div class="col-8 col-md-10">
+                                <h2 class="text-center m-0 fw-bold text-uppercase" style="letter-spacing: 1px;">
+                                    Agregar Promoción
+                                </h2>
+                            </div>
+
+                            <div class="col-2 col-md-1"></div>
+                        </div>
 
                         <?php if (isset($_SESSION['error'])): ?>
                             <div class="alert alert-danger alert-dismissible fade show">

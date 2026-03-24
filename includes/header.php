@@ -9,7 +9,7 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #202833;">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.php?vista=landing">
-        <img src="./assets/logo2.png" alt="Epicentro Shopping Logo" width="120">
+        <img src="public/assets/logo2.png" alt="Epicentro Shopping Logo" width="120" height="auto">
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -29,7 +29,6 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
             <li class="nav-item">
               <a class="nav-link text-white" href="index.php?vista=landing">Inicio</a>
             </li>
-
             <li class="nav-item">
               <a class="nav-link text-white" href="index.php?vista=locales">Locales</a>
             </li>
@@ -83,10 +82,10 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
           <ul class="navbar-nav ms-auto">
             <?php if (isset($_SESSION['user_id'])): ?>
               <li class="nav-item">
-                <a class="nav-link text-white" href="index.php?vista=cliente_perfil">Mi Perfil</a>
+                <a class="nav-link text-white fw-bold" href="index.php?vista=cliente_perfil">Mi Perfil</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link text-white" href="logout.php">Cerrar Sesión</a>
+                <a class="nav-link text-danger fw-bold" href="public/logout.php">Cerrar Sesión</a>
               </li>
             <?php else: ?>
               <li class="nav-item">
