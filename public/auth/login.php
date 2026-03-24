@@ -13,8 +13,10 @@
   <link rel="stylesheet" href="./public/css/sytles_fondo_and_titles.css">
   <link rel="stylesheet" href="./public/css/back_button.css">
   <link rel="stylesheet" href="./public/css/fix_header.css">
+  <link rel="stylesheet" href="./public/css/login.css">
 
   <title>Epicentro Shopping - Iniciar Sesión</title>
+
 </head>
 
 <body class="auth-page">
@@ -56,7 +58,7 @@
 
           <button class="btn btn-register"
             onclick="window.location.href='index.php?vista=registro'">Registrarse</button>
-          <a href="index.php?vista=recuperar">¿Olvidaste tu contraseña?</a>
+          <a href="index.php?vista=recuperar" aria-label="Recuperar contraseña">¿Olvidaste tu contraseña?</a>
         </section>
       </div>
     </main>
