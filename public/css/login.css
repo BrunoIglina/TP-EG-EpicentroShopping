@@ -1,60 +1,13 @@
-body {
-    background-color: #fff;
-    color: #202833;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+.auth-form a {
+color: #004a99 !important; 
+font-weight: 600;
+text-decoration: underline;
 }
-
-.auth-container {
-    margin-top: 4rem; /* Ajuste para mover toda la caja hacia abajo */
+.auth-form a:hover {
+color: #003366 !important;
 }
-
-.auth-form {
-    max-width: 400px;
-    margin: auto;
-    padding: 2rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.auth-form label, .auth-form input, .auth-form button {
-    display: block;
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-.auth-form button {
-    background-color: #202833;
-    color: #fff;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Cambio de color suave */
-}
-
-.auth-form button:hover {
-    background-color: #3a475e; /* Color diferente al hacer hover */
-}
-
-.registrar {
-    text-decoration: none !important;
-}
-
 .btn-register {
-    background-color: #D4E8FB !important;
-    color: #202833 !important;
-}
-
-.btn-register:hover {
-    text-decoration: none !important;
-    background-color: #bcdcf5 !important; /* Color más claro al hacer hover */
-}
-
-.wrapper {
-    display: grid;
-    min-height: 100vh;
-    grid-template-rows: auto 1fr auto;
+background-color: #495057 !important;
+color: white !important;
+border: none;
 }

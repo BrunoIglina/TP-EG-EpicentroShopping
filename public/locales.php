@@ -47,143 +47,143 @@ function getQueryString($page, $current_get)
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+  <title>Nuestros Locales | Epicentro Shopping - Explorar Tiendas</title>
+
   <link rel="icon" type="image/png" href="public/assets/logo2.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="./public/css/header.css">
-  <link rel="stylesheet" href="./public/css/styles_fondo_and_titles.css">
-  <link rel="stylesheet" href="./public/css/footer.css">
-  <link rel="stylesheet" href="./public/css/back_button.css">
-  <link rel="stylesheet" href="./public/css/tarjetas.css">
-  <link rel="stylesheet" href="./public/css/fix_header.css">
 
-  <title>Epicentro Shopping - Locales</title>
+  <link rel="stylesheet" href="public/css/header.css">
+  <link rel="stylesheet" href="public/css/styles_fondo_and_titles.css">
+  <link rel="stylesheet" href="public/css/footer.css">
+  <link rel="stylesheet" href="public/css/back_button.css">
+  <link rel="stylesheet" href="public/css/tarjetas.css">
+  <link rel="stylesheet" href="public/css/fix_header.css">
 </head>
 
 <body>
+  <a href="#main-content" class="visually-hidden-focusable text-center d-block bg-dark text-white py-2">
+    Saltar al contenido principal
+  </a>
+
   <div class="wrapper">
-    <?php include __DIR__ . './../includes/header.php'; ?>
+    <?php include __DIR__ . '/../includes/header.php'; ?>
 
-    <main>
-      <div class="container-fluid">
-        <div class="row align-items-center mb-5 mt-3">
-          <div class="col-2 col-md-1 text-start">
-            <?php include __DIR__ . './../includes/back_button.php'; ?>
-          </div>
-
-          <div class="col-8 col-md-10">
-            <h2 class="text-center m-0 fw-bold text-uppercase" style="letter-spacing: 1px;">
-              Locales
-            </h2>
-          </div>
-
-          <div class="col-2 col-md-1"></div>
+    <main id="main-content" class="container-fluid py-4">
+      <div class="row align-items-center mb-5 mt-3">
+        <div class="col-2 col-md-1 text-start">
+          <?php include __DIR__ . '/../includes/back_button.php'; ?>
         </div>
 
-        <form method="GET" action="index.php">
-          <input type="hidden" name="vista" value="locales">
+        <div class="col-8 col-md-10">
+          <h1 class="text-center m-0 fw-bold text-uppercase h2" style="letter-spacing: 1px;">
+            Locales
+          </h1>
+        </div>
 
-          <div class="row mb-4">
-            <div class="col-12 d-flex">
-              <input type="text" name="nombre_local" class="form-control me-2"
-                placeholder="Buscar por nombre del local..."
-                value="<?php echo isset($_GET['nombre_local']) ? htmlspecialchars($_GET['nombre_local']) : ''; ?>">
-              <button type="submit" class="btn btn-primary">Buscar</button>
-            </div>
+        <div class="col-2 col-md-1"></div>
+      </div>
+
+      <form method="GET" action="index.php">
+        <input type="hidden" name="vista" value="locales">
+
+        <div class="row mb-4">
+          <div class="col-12 d-flex flex-column flex-md-row gap-2">
+            <label for="nombre_local" class="visually-hidden">Buscar por nombre del local</label>
+            <input type="text" id="nombre_local" name="nombre_local" class="form-control"
+              placeholder="Buscar por nombre del local..."
+              value="<?= isset($_GET['nombre_local']) ? htmlspecialchars($_GET['nombre_local']) : ''; ?>">
+            <button type="submit" class="btn btn-primary px-4">
+              <i class="bi bi-search"></i> Buscar
+            </button>
           </div>
+        </div>
 
-          <div class="row">
-            <div class="col-md-3" style="padding: 0.5rem;">
-              <h3>Filtrar por:</h3>
+        <div class="row">
+          <aside class="col-md-3" style="padding: 0.5rem;">
+            <div class="card p-3 shadow-sm border-0 rounded-3">
+              <h2 class="h5 fw-bold mb-3">Filtrar por:</h2>
 
-              <div class="form-group mb-2">
-                <select name="rubro" class="form-control">
+              <div class="mb-3">
+                <label for="rubro_select" class="form-label small fw-bold">Categoría o Rubro</label>
+                <select id="rubro_select" name="rubro" class="form-select">
                   <option value="">Todos los rubros</option>
-                  <?php foreach ($rubros as $label => $value) { ?>
-                    <option value="<?php echo htmlspecialchars($value); ?>"
-                      <?php echo (isset($_GET['rubro']) && $_GET['rubro'] == $value) ? 'selected' : ''; ?>>
-                      <?php echo htmlspecialchars($label); ?>
+                  <?php foreach ($rubros as $label => $value): ?>
+                    <option value="<?= htmlspecialchars($value); ?>"
+                      <?= (isset($_GET['rubro']) && $_GET['rubro'] == $value) ? 'selected' : ''; ?>>
+                      <?= htmlspecialchars($label); ?>
                     </option>
-                  <?php } ?>
+                  <?php endforeach; ?>
                 </select>
               </div>
 
-
-              <button type="submit" class="btn btn-secondary w-100">Aplicar Filtros</button>
-
-              <a href="index.php?vista=locales" class="btn btn-outline-danger w-100 mt-2">Limpiar Filtros</a>
+              <button type="submit" class="btn btn-secondary w-100 mb-2">Aplicar Filtros</button>
+              <a href="index.php?vista=locales" class="btn btn-outline-danger w-100">Limpiar Filtros</a>
             </div>
+          </aside>
 
-            <div class="col-md-9">
+          <section class="col-md-9">
+            <div class="row g-4">
+              <?php if (empty($paginated_locales)): ?>
+                <div class="col-12 text-center py-5">
+                  <p class="text-muted fs-4">No se encontraron locales con los filtros aplicados.</p>
+                </div>
+              <?php else: ?>
+                <?php foreach ($paginated_locales as $local): ?>
+                  <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+                      <div style="height: 180px; overflow: hidden;">
+                        <img src="index.php?vista=imagen&local_id=<?= $local['id']; ?>"
+                          class="card-img-top w-100 h-100"
+                          alt="Logotipo del local <?= htmlspecialchars($local['nombre']); ?>"
+                          style="object-fit: cover;">
+                      </div>
 
-              <div class="row">
-                <?php
-                // (Empty State)
-                if (empty($paginated_locales)) { ?>
-                  <div class="col-12 text-center py-5">
-                    <h4 class="text-muted">No se encontraron locales con los filtros aplicados.</h4>
-                  </div>
-                  <?php } else {
-                  foreach ($paginated_locales as $local) { ?>
+                      <div class="card-body d-flex flex-column text-center p-4">
+                        <h3 class="h5 card-title fw-bold text-dark"><?= htmlspecialchars($local['nombre']); ?></h3>
 
-                    <div class="col-md-4 col-sm-12" style="padding: .5rem;">
-
-                      <div class="card h-100 shadow-sm text-center">
-
-                        <div style="height: 200px; overflow: hidden;">
-                          <img src="index.php?vista=imagen&local_id=<?php echo $local['id']; ?>" class="card-img-top"
-                            alt="<?php echo htmlspecialchars($local['nombre']); ?>"
-                            style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="my-2">
+                          <span class="badge bg-primary text-uppercase"><?= htmlspecialchars($local['rubro']); ?></span>
                         </div>
 
-                        <div class="card-body d-flex flex-column">
-                          <h4 class="card-title"><?php echo htmlspecialchars($local['nombre']); ?></h4>
+                        <p class="card-text mt-auto text-muted small">
+                          <i class="bi bi-geo-alt"></i> Ubicación: <?= htmlspecialchars($local['ubicacion']); ?>
+                        </p>
 
-                          <p class="card-text mb-2">
-                            <span class="badge bg-secondary"><?php echo htmlspecialchars($local['rubro']); ?></span>
-                          </p>
-
-                          <p class="card-text mt-auto text-muted" style="font-size: 0.9rem;">
-                            <small>Ubicación: <?php echo htmlspecialchars($local['ubicacion']); ?></small>
-                          </p>
-
-                          <a href="index.php?vista=promociones&local_id=<?php echo $local['id']; ?>"
-                            class="btn btn-primary mt-3 w-100">Ver Promociones</a>
-                        </div>
+                        <a href="index.php?vista=promociones&local_id=<?= $local['id']; ?>"
+                          class="btn btn-primary mt-3 w-100 py-2 fw-bold"
+                          aria-label="Ver promociones de <?= htmlspecialchars($local['nombre']); ?>">
+                          Ver Promociones
+                        </a>
                       </div>
                     </div>
-                  <?php } ?>
-                <?php } ?>
-              </div>
-
-              <?php
-              if ($total_pages > 1) { ?>
-                <nav class="d-flex justify-content-center mt-4">
-                  <ul class="pagination">
-
-                    <li class="page-item <?php echo $current_page <= 1 ? 'disabled' : ''; ?>">
-                      <a class="page-link" href="?<?php echo getQueryString($current_page - 1, $_GET); ?>">Anterior</a>
-                    </li>
-
-                    <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
-                      <li class="page-item <?php echo $i == $current_page ? 'active' : ''; ?>">
-                        <a class="page-link" href="?<?php echo getQueryString($i, $_GET); ?>"><?php echo $i; ?></a>
-                      </li>
-                    <?php } ?>
-
-                    <li class="page-item <?php echo $current_page >= $total_pages ? 'disabled' : ''; ?>">
-                      <a class="page-link" href="?<?php echo getQueryString($current_page + 1, $_GET); ?>">Siguiente</a>
-                    </li>
-                  </ul>
-                </nav>
-              <?php } ?>
-
+                  </div>
+                <?php endforeach; ?>
+              <?php endif; ?>
             </div>
-          </div>
-        </form>
 
-      </div>
+            <?php if ($total_pages > 1): ?>
+              <nav aria-label="Navegación de páginas de locales" class="mt-5">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item <?= $current_page <= 1 ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?<?= getQueryString($current_page - 1, $_GET); ?>" <?= $current_page <= 1 ? 'aria-disabled="true"' : ''; ?>>Anterior</a>
+                  </li>
+                  <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                    <li class="page-item <?= $i == $current_page ? 'active' : ''; ?>">
+                      <a class="page-link" href="?<?= getQueryString($i, $_GET); ?>" <?= $i == $current_page ? 'aria-current="page"' : ''; ?>><?= $i; ?></a>
+                    </li>
+                  <?php endfor; ?>
+                  <li class="page-item <?= $current_page >= $total_pages ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?<?= getQueryString($current_page + 1, $_GET); ?>" <?= $current_page >= $total_pages ? 'aria-disabled="true"' : ''; ?>>Siguiente</a>
+                  </li>
+                </ul>
+              </nav>
+            <?php endif; ?>
+          </section>
+        </div>
+      </form>
     </main>
-    <?php include __DIR__ . './../includes/footer.php'; ?>
+    <?php include __DIR__ . '/../includes/footer.php'; ?>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

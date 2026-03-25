@@ -6,23 +6,23 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
 ?>
 
 <header>
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #202833;">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow" style="background-color: #202833;" role="navigation">
     <div class="container-fluid">
-      <a class="navbar-brand" href="index.php?vista=landing">
-        <img src="public/assets/logo2.png" alt="Epicentro Shopping Logo" width="120" height="auto">
+      <a class="navbar-brand" href="index.php?vista=landing" aria-label="Ir a la página principal">
+        <img src="public/assets/logo2.png" alt="Logotipo de Epicentro Shopping - Volver al Inicio" width="120" height="auto">
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar">
+        aria-controls="offcanvasNavbar" aria-label="Abrir menú de navegación">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel"
         role="dialog" style="background-color: #202833;">
         <div class="offcanvas-header">
-          <h2 class="offcanvas-title text-white" id="offcanvasNavbarLabel">Menú</h2>
+          <h2 class="offcanvas-title h5 text-white" id="offcanvasNavbarLabel">Menú de Navegación</h2>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
-            aria-label="Cerrar"></button>
+            aria-label="Cerrar menú"></button>
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-center flex-grow-1">
@@ -47,11 +47,11 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
 
             <?php if ($user_tipo == 'Administrador'): ?>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                <a class="nav-link dropdown-toggle text-white" href="#" id="dropAdmin" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
                   Gestionar Shopping
                 </a>
-                <ul class="dropdown-menu dropdown-menu-dark">
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropAdmin">
                   <li><a class="dropdown-item" href="index.php?vista=admin_locales">Gestionar Locales</a></li>
                   <li><a class="dropdown-item" href="index.php?vista=admin_novedades">Gestionar Novedades</a></li>
                   <li><a class="dropdown-item" href="index.php?vista=admin_promociones">Gestionar Promociones</a></li>
@@ -63,11 +63,11 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
 
             <?php if ($user_tipo == 'Dueno'): ?>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                <a class="nav-link dropdown-toggle text-white" href="#" id="dropDueno" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
                   Gestionar Promociones
                 </a>
-                <ul class="dropdown-menu dropdown-menu-dark">
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropDueno">
                   <li><a class="dropdown-item" href="index.php?vista=dueno_promociones">Mis Promociones</a></li>
                   <li><a class="dropdown-item" href="index.php?vista=dueno_solicitudes">Administrar Solicitudes</a></li>
                   <li>
@@ -89,7 +89,7 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
               </li>
             <?php else: ?>
               <li class="nav-item">
-                <a class="nav-link text-white" href="index.php?vista=login">Iniciar Sesión</a>
+                <a class="nav-link text-white fw-bold border border-secondary rounded-pill px-3" href="index.php?vista=login">Iniciar Sesión</a>
               </li>
             <?php endif; ?>
           </ul>
