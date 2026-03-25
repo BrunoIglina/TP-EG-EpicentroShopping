@@ -37,32 +37,14 @@ main {
     color: #9a8c98;
 }
 
-/*
-
-header .logo img {
-    max-width: 150px;
-}
-
-header nav ul {
-    list-style: none;
-    display: flex;
-    gap: 1rem;
-}
-
-header nav ul li a {
-    color: #ffb400;
-    text-decoration: none;
-}
-
-header nav ul li a.active {
-    text-decoration: underline;
-}
-
-
-footer {
-    background-color: #4a4e69;
-    color: #ffb400;
-    text-align: center;
-    padding: 1rem;
-    margin-top: 2rem;
-}*/
+.card-body p, .card-body strong {
+        color: #212529 !important; 
+    }
+    .text-promo-title {
+        color: #0d6efd !important;
+        font-weight: 800;
+    }
+    .label-dark {
+        color: #000000 !important;
+        font-weight: 700;
+    }
