@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-
+ 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="public/css/back_button.css">
     <link rel="stylesheet" href="public/css/fix_header.css">
 </head>
-
+ 
 <body>
     <a href="#main-content" class="visually-hidden-focusable text-center d-block bg-dark text-white py-2">
         Saltar al contenido principal

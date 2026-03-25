@@ -54,36 +54,39 @@
                         <?php endif; ?>
 
                         <form method="POST" action="index.php" enctype="multipart/form-data">
+
                             <input type="hidden" name="modulo" value="admin">
                             <input type="hidden" name="accion" value="editar_local">
-                            <input type="hidden" name="id_local" value="<?= $local['id']; ?>">
-                            <input type="hidden" name="nombre_antiguo_local" value="<?= htmlspecialchars($local['nombre']); ?>">
+
+                            <input type="hidden" name="id_local" value="<?php echo $local['id']; ?>">
+                            <input type="hidden" name="nombre_antiguo_local"
+                                value="<?php echo htmlspecialchars($local['nombre']); ?>">
 
                             <div class="mb-3">
-                                <label for="codigo_local_display" class="form-label fw-bold">Código Local</label>
-                                <input type="text" id="codigo_local_display" class="form-control bg-light" 
-                                       value="<?= $local['id']; ?>" disabled aria-disabled="true">
+                                <label class="form-label">Código Local</label>
+                                <input type="text" class="form-control" value="<?php echo $local['id']; ?>" disabled>
                             </div>
 
                             <div class="mb-3">
-                                <label for="nombre_local" class="form-label fw-bold">Nombre del comercio</label>
+                                <label for="nombre_local" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="nombre_local" name="nombre_local"
-                                       value="<?= htmlspecialchars($local['nombre']); ?>" required>
+                                    value="<?php echo htmlspecialchars($local['nombre']); ?>" required>
                             </div>
 
                             <div class="mb-3">
-                                <label for="ubicacion_local" class="form-label fw-bold">Ubicación</label>
+                                <label for="ubicacion_local" class="form-label">Ubicación</label>
                                 <input type="text" class="form-control" id="ubicacion_local" name="ubicacion_local"
-                                       value="<?= htmlspecialchars($local['ubicacion']); ?>" required>
+                                    value="<?php echo htmlspecialchars($local['ubicacion']); ?>" required>
                             </div>
 
                             <div class="mb-3">
-                                <label for="rubro_local" class="form-label fw-bold">Rubro</label>
+                                <label for="rubro_local" class="form-label">Rubro</label>
                                 <select class="form-select" id="rubro_local" name="rubro_local" required>
+                                    <option value="" disabled>Seleccione un rubro</option>
                                     <?php foreach ($rubros as $label => $value): ?>
-                                        <option value="<?= htmlspecialchars($value); ?>"
-                                            <?= ($value == $local['rubro']) ? 'selected' : ''; ?>>
-                                            <?= htmlspecialchars($label); ?>
+                                        <option value="<?php echo htmlspecialchars($value); ?>"
+                                            <?php echo ($value == $local['rubro']) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($label); ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select>

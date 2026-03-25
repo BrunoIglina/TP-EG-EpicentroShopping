@@ -21,7 +21,8 @@
 <body>
   <div class="wrapper">
     <?php include __DIR__ . '/../../includes/header.php'; ?>
-    <div class="container">
+    
+    <main class="container">
       <div class="row align-items-center mb-5 mt-3">
         <div class="col-2 col-md-1 text-start">
           <?php include __DIR__ . '/../../includes/back_button.php'; ?>
@@ -35,6 +36,7 @@
 
         <div class="col-2 col-md-1"></div>
       </div>
+
       <div class="row justify-content-center">
         <div class="col-lg-6 col-md-8">
           <div class="form-card">
@@ -43,12 +45,11 @@
               <div class="alert alert-danger alert-dismissible fade show">
                 <?php echo htmlspecialchars($_SESSION['error']);
                 unset($_SESSION['error']); ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
               </div>
             <?php endif; ?>
 
             <form action="index.php" method="post" enctype="multipart/form-data">
-
               <input type="hidden" name="modulo" value="admin">
               <input type="hidden" name="accion" value="crear_local">
 
@@ -103,7 +104,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </main>
 
     <?php include __DIR__ . '/../../includes/footer.php'; ?>
   </div>
