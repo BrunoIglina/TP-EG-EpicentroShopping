@@ -4,6 +4,22 @@ require_once __DIR__ . '/queries/locales.queries.php';
 
 switch ($vista) {
 
+    case 'promociones':
+        $local_id = (int)($_GET['local_id'] ?? 0);
+        $limit = 6;
+        $page = max(1, (int)($_GET['page'] ?? 1));
+        $offset = ($page - 1) * $limit;
+
+
+        $local = get_local($local_id);
+
+        $promos = get_promociones_by_local($local_id, $limit, $offset) ?? [];
+        $total_items = get_total_promociones_by_local($local_id);
+        $total_pages = max(1, (int)ceil($total_items / $limit));
+
+
+        $categorias = ['Inicial', 'Medium', 'Premium'];
+        break;
     case 'admin_promociones':
         $limit = 6;
         $page = max(1, (int)($_GET['page'] ?? 1));
@@ -54,5 +70,6 @@ switch ($vista) {
         $promos = get_promociones_cliente($id_usuario, $limit, $offset) ?? [];
         $total_promos = get_total_promociones_cliente($id_usuario);
         $total_pages = max(1, (int)ceil($total_promos / $limit));
+        $categorias = ['Inicial', 'Medium', 'Premium'];
         break;
 }

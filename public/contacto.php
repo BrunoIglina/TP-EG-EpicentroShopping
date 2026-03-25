@@ -1,21 +1,21 @@
-<?php
-require_once __DIR__ . '/../includes/navigation_history.php';
-require_once __DIR__ . '/../includes/security_headers.php';
-?>
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-	<link rel="icon" type="image/png" href="./assets/logo2.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+	<link rel="icon" type="image/png" href="public/assets/logo2.png">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="./css/footer.css">
-	<link rel="stylesheet" href="./css/header.css">
-	<link rel="stylesheet" href="./css/back_button.css">
-	<link rel="stylesheet" href="./css/fix_header.css">
-	<link rel="stylesheet" href="./css/contacto.css">
+
+	<link rel="stylesheet" href="public/css/footer.css">
+	<link rel="stylesheet" href="public/css/header.css">
+	<link rel="stylesheet" href="public/css/back_button.css">
+	<link rel="stylesheet" href="public/css/fix_header.css">
+	<link rel="stylesheet" href="public/css/contacto.css">
+	<link rel="stylesheet" href="public/css/styles_fondo_and_titles.css">
+	<link rel="stylesheet" href="public/css/buttons.css">
+
 	<title>Contacto - Epicentro Shopping</title>
 </head>
 <?php include __DIR__ . './../includes/header.php'; ?>
@@ -104,7 +104,7 @@ require_once __DIR__ . '/../includes/security_headers.php';
 		</form>
 	</main>
 
-	<?php include __DIR__ . './../includes/footer.php'; ?>
+	<?php include __DIR__ . '/../includes/footer.php'; ?>
 
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
