@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
- 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="public/css/back_button.css">
     <link rel="stylesheet" href="public/css/fix_header.css">
 </head>
- 
+
 <body>
     <a href="#main-content" class="visually-hidden-focusable text-center d-block bg-dark text-white py-2">
         Saltar al contenido principal
@@ -50,7 +50,7 @@
                 </div>
             <?php endif; ?>
 
-            <section class="admin-section px-lg-5">
+            <div class="admin-section px-lg-5">
                 <form id="approvalForm" method="POST" action="index.php">
                     <input type="hidden" name="modulo" value="admin">
                     <input type="hidden" name="accion" value="estado_usuario">
@@ -74,8 +74,7 @@
                                                 <button type="button" class="btn btn-success btn-sm px-4 fw-bold shadow-sm" 
                                                         data-bs-toggle="modal" data-bs-target="#confirmModal"
                                                         data-id="<?= $row['id']; ?>"
-                                                        data-email="<?= htmlspecialchars($row['email']); ?>"
-                                                        aria-label="Aprobar cliente <?= htmlspecialchars($row['email']); ?>">
+                                                        data-email="<?= htmlspecialchars($row['email']); ?>">
                                                     APROBAR CUENTA
                                                 </button>
                                             </td>
@@ -97,7 +96,7 @@
                     <nav aria-label="Navegación de páginas de clientes" class="mt-5">
                         <ul class="pagination justify-content-center">
                             <li class="page-item <?= ($page == 1) ? 'disabled' : ''; ?>">
-                                <a class="page-link shadow-sm" href="index.php?vista=admin_aprobar_clientes&page=<?= $page - 1; ?>" <?= ($page == 1) ? 'aria-disabled="true"' : ''; ?>>Anterior</a>
+                                <a class="page-link shadow-sm" href="index.php?vista=admin_aprobar_clientes&page=<?= $page - 1; ?>" <?= ($page == 1) ? 'aria-disabled="true" tabindex="-1"' : ''; ?>>Anterior</a>
                             </li>
                             <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                                 <li class="page-item <?= ($i == $page) ? 'active' : ''; ?>">
@@ -105,18 +104,18 @@
                                 </li>
                             <?php endfor; ?>
                             <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : ''; ?>">
-                                <a class="page-link shadow-sm" href="index.php?vista=admin_aprobar_clientes&page=<?= $page + 1; ?>" <?= ($page >= $total_pages) ? 'aria-disabled="true"' : ''; ?>>Siguiente</a>
+                                <a class="page-link shadow-sm" href="index.php?vista=admin_aprobar_clientes&page=<?= $page + 1; ?>" <?= ($page >= $total_pages) ? 'aria-disabled="true" tabindex="-1"' : ''; ?>>Siguiente</a>
                             </li>
                         </ul>
                     </nav>
                 <?php endif; ?>
-            </section>
+            </div>
         </main>
 
         <?php include __DIR__ . '/../../includes/footer.php'; ?>
     </div>
 
-    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg">
                 <div class="modal-header bg-success text-white">

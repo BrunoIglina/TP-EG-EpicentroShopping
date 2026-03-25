@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -15,14 +14,13 @@
     <link rel="stylesheet" href="./public/css/fix_header.css">
     <title>Epicentro Shopping - Aprobar Dueños de Locales</title>
 </head>
-
 <body>
     <a href="#main-content" class="visually-hidden-focusable text-center d-block bg-dark text-white py-2">
         Saltar al contenido principal
     </a>
-
     <div class="wrapper">
         <?php include __DIR__ . '/../../includes/header.php'; ?>
+
         <main id="main-content" class="container">
             <div class="row align-items-center mb-5 mt-3">
                 <div class="col-2 col-md-1 text-start">
@@ -34,16 +32,8 @@
                         Gestión de Dueños de Locales
                     </h1>
                 </div>
-
                 <div class="col-2 col-md-1"></div>
             </div>
-
-            <?php if (isset($_SESSION['success'])): ?>
-                <div class="alert alert-success text-center">
-                    <?php echo htmlspecialchars($_SESSION['success']);
-                    unset($_SESSION['success']); ?>
-                </div>
-            <?php endif; ?>
 
             <table class="table table-striped">
                 <thead>
@@ -59,7 +49,7 @@
                                 <td><?php echo htmlspecialchars($row['email']); ?></td>
                                 <td>
                                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#confirmModal"
-                                        data-id="<?php echo htmlspecialchars($row['id']); ?>"
+                                        data-id="<?php echo $row['id']; ?>"
                                         data-email="<?php echo htmlspecialchars($row['email']); ?>"
                                         aria-label="Aprobar dueño <?php echo htmlspecialchars($row['email']); ?>">Aprobar</button>
                                 </td>
@@ -80,8 +70,7 @@
                     </li>
                     <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                         <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-                            <a class="page-link"
-                                href="index.php?vista=admin_aprobar_duenos&page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                            <a class="page-link" href="index.php?vista=admin_aprobar_duenos&page=<?php echo $i; ?>"><?php echo $i; ?></a>
                         </li>
                     <?php endfor; ?>
                     <li class="page-item <?php echo ($page >= $total_pages) ? 'disabled' : ''; ?>">
@@ -90,10 +79,11 @@
                 </ul>
             </div>
         </main>
+
         <?php include __DIR__ . '/../../includes/footer.php'; ?>
     </div>
 
-    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -127,5 +117,4 @@
         });
     </script>
 </body>
-
 </html>

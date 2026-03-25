@@ -43,7 +43,7 @@
                 <div class="col-2 col-md-1"></div>
             </div>
 
-            <section class="admin-section px-lg-5">
+            <div class="admin-section px-lg-5">
 
                 <?php if (isset($_SESSION['success'])): ?>
                     <div class="alert alert-success alert-dismissible fade show text-center mb-4" role="alert">
@@ -98,7 +98,7 @@
                     <nav aria-label="Navegación de páginas de promociones" class="mt-5">
                         <ul class="pagination justify-content-center">
                             <li class="page-item <?= ($page <= 1) ? 'disabled' : ''; ?>">
-                                <a class="page-link shadow-sm" href="index.php?vista=admin_promociones&page=<?= $page - 1; ?>" <?= ($page <= 1) ? 'aria-disabled="true"' : ''; ?>>Anterior</a>
+                                <a class="page-link shadow-sm" href="index.php?vista=admin_promociones&page=<?= $page - 1; ?>" <?= ($page <= 1) ? 'aria-disabled="true" tabindex="-1"' : ''; ?>>Anterior</a>
                             </li>
                             <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                                 <li class="page-item <?= ($i == $page) ? 'active' : ''; ?>">
@@ -106,12 +106,12 @@
                                 </li>
                             <?php endfor; ?>
                             <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : ''; ?>">
-                                <a class="page-link shadow-sm" href="index.php?vista=admin_promociones&page=<?= $page + 1; ?>" <?= ($page >= $total_pages) ? 'aria-disabled="true"' : ''; ?>>Siguiente</a>
+                                <a class="page-link shadow-sm" href="index.php?vista=admin_promociones&page=<?= $page + 1; ?>" <?= ($page >= $total_pages) ? 'aria-disabled="true" tabindex="-1"' : ''; ?>>Siguiente</a>
                             </li>
                         </ul>
                     </nav>
                 <?php endif; ?>
-            </section>
+            </div>
         </main>
 
         <?php include __DIR__ . '/../../includes/footer.php'; ?>
@@ -122,7 +122,7 @@
         <input type="hidden" name="accion" value="estado_promocion">
     </form>
 
-    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg">
                 <div class="modal-header bg-dark text-white">
