@@ -3,8 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="icon" type="image/png" href="assets/logo2.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
@@ -34,7 +34,8 @@
 
         <div class="col-2 col-md-1"></div>
       </div>
-      <section class="admin-section">
+
+      <div class="admin-section">
 
         <button class="btn btn-primary btn-sm mb-3 d-block mx-auto"
           onclick="location.href='index.php?vista=admin_novedad_agregar'">
@@ -42,23 +43,23 @@
         </button>
 
         <?php if (isset($_SESSION['success'])): ?>
-          <div class="alert alert-success alert-dismissible fade show">
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?php echo htmlspecialchars($_SESSION['success']);
             unset($_SESSION['success']); ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
           </div>
         <?php endif; ?>
 
         <?php if (isset($_SESSION['error'])): ?>
-          <div class="alert alert-danger alert-dismissible fade show">
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <?php echo htmlspecialchars($_SESSION['error']);
             unset($_SESSION['error']); ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
           </div>
         <?php endif; ?>
 
         <?php if (!$novedades): ?>
-          <div class="alert alert-warning">No hay novedades cargadas</div>
+          <div class="alert alert-warning" role="alert">No hay novedades cargadas</div>
         <?php else: ?>
           <div class="table-responsive-lg">
             <table class="table table-striped table-bordered">
@@ -82,8 +83,9 @@
                     <td><?php echo htmlspecialchars($novedad['fecha_hasta']); ?></td>
                     <td>
                       <?php if (!empty($novedad['imagen'])): ?>
-                        <img src="index.php?vista=imagen&novedad_id=<?php echo $novedad['id']; ?>" alt="Imagen de la novedad"
-                          class="img-fluid" style="max-width: 100px;">
+                        <img src="index.php?vista=imagen&novedad_id=<?php echo $novedad['id']; ?>" 
+                             alt="Imagen de la novedad <?php echo htmlspecialchars($novedad['tituloNovedad']); ?>"
+                             class="img-fluid" style="max-width: 100px;">
                       <?php else: ?>
                         Sin imagen
                       <?php endif; ?>
@@ -106,7 +108,7 @@
             </table>
           </div>
 
-          <nav>
+          <nav aria-label="Paginación de novedades">
             <ul class="pagination justify-content-center">
               <li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
                 <a class="page-link" href="index.php?vista=admin_novedades&page=<?php echo $page - 1; ?>">Anterior</a>
@@ -122,17 +124,17 @@
             </ul>
           </nav>
         <?php endif; ?>
-      </section>
+      </div>
     </main>
 
     <?php include __DIR__ . '/../../includes/footer.php'; ?>
   </div>
 
-  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="confirmModalLabel">Confirmar Eliminación</h5>
+          <h3 class="modal-title h5" id="confirmModalLabel">Confirmar Eliminación</h3>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
         <div class="modal-body">
