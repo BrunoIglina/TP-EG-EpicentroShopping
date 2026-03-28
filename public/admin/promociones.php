@@ -2,145 +2,163 @@
 <html lang="es">
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-	<link rel="icon" type="image/png" href="assets/logo2.png">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="./public/css/footer.css">
-	<link rel="stylesheet" href="./public/css/header.css">
-	<link rel="stylesheet" href="./public/css/styles_fondo_and_titles.css">
-	<link rel="stylesheet" href="./public/css/admin_promociones.css">
-	<link rel="stylesheet" href="./public/css/back_button.css">
-	<link rel="stylesheet" href="./public/css/fix_header.css">
-	<title>Epicentro Shopping - Administración de Promociones</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+    <title>Panel de Administración: Promociones Pendientes | Epicentro Shopping</title>
+
+    <link rel="icon" type="image/png" href="public/assets/logo2.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="public/css/header.css">
+    <link rel="stylesheet" href="public/css/footer.css">
+    <link rel="stylesheet" href="public/css/admin_promociones.css">
+    <link rel="stylesheet" href="public/css/back_button.css">
+    <link rel="stylesheet" href="public/css/fix_header.css">
+    <link rel="stylesheet" href="public/css/styles_fondo_and_titles.css">
 </head>
 
 <body>
-	<div class="wrapper">
-		<?php include __DIR__ . '/../../includes/header.php'; ?>
-		<main class="container-fluid">
-			<div class="row align-items-center mb-5 mt-3">
-				<div class="col-2 col-md-1 text-start">
-					<?php include __DIR__ . '/../../includes/back_button.php'; ?>
-				</div>
+    <a href="#main-content" class="visually-hidden-focusable text-center d-block bg-dark text-white py-2">
+        Saltar al contenido principal
+    </a>
 
-				<div class="col-8 col-md-10">
-					<h2 class="text-center m-0 fw-bold text-uppercase" style="letter-spacing: 1px;">
-						Administración de Promociones
-					</h2>
-				</div>
+    <div class="wrapper">
+        <?php include __DIR__ . '/../../includes/header.php'; ?>
 
-				<div class="col-2 col-md-1"></div>
-			</div>
-			<section class="admin-section">
+        <main id="main-content" class="container-fluid py-4">
+            <div class="row align-items-center mb-5 mt-3">
+                <div class="col-2 col-md-1 text-start">
+                    <?php include __DIR__ . '/../../includes/back_button.php'; ?>
+                </div>
 
-				<?php if (isset($_SESSION['success'])): ?>
-					<div class="alert alert-success text-center">
-						<?php echo htmlspecialchars($_SESSION['success']);
-						unset($_SESSION['success']); ?>
-					</div>
-				<?php endif; ?>
+                <div class="col-8 col-md-10">
+                    <h1 class="text-center m-0 fw-bold text-uppercase h2" style="letter-spacing: 1px;">
+                        Administración de Promociones
+                    </h1>
+                    <p class="text-center text-muted m-0">Validación de solicitudes pendientes</p>
+                </div>
 
-				<div class="table-responsive">
-					<table class="table table-bordered text-center align-middle">
-						<thead class="table-dark">
-							<tr>
-								<th>Texto de la Promoción</th>
-								<th>Fecha de Inicio</th>
-								<th>Fecha de Fin</th>
-								<th>Acción</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php if (!empty($promociones)): ?>
-								<?php foreach ($promociones as $row): ?>
-									<tr>
-										<td><?php echo htmlspecialchars($row['textoPromo']); ?></td>
-										<td><?php echo htmlspecialchars($row['fecha_inicio']); ?></td>
-										<td><?php echo htmlspecialchars($row['fecha_fin']); ?></td>
-										<td>
-											<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#confirmModal'
-												data-id='<?php echo $row['id']; ?>' data-action='aprobar'>Aprobar</button>
-											<button type='button' class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#confirmModal'
-												data-id='<?php echo $row['id']; ?>' data-action='rechazar'>Rechazar</button>
-										</td>
-									</tr>
-								<?php endforeach; ?>
-							<?php else: ?>
-								<tr>
-									<td colspan='4'>No hay promociones pendientes</td>
-								</tr>
-							<?php endif; ?>
-						</tbody>
-					</table>
-				</div>
+                <div class="col-2 col-md-1"></div>
+            </div>
 
-				<div class="pagination-container mt-4">
-					<ul class="pagination justify-content-center">
-						<li class="page-item <?php echo ($page == 1) ? 'disabled' : ''; ?>">
-							<a class="page-link" href="index.php?vista=admin_promociones&page=<?php echo $page - 1; ?>">Anterior</a>
-						</li>
-						<?php for ($i = 1; $i <= $total_pages; $i++): ?>
-							<li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
-								<a class="page-link" href="index.php?vista=admin_promociones&page=<?php echo $i; ?>"><?php echo $i; ?></a>
-							</li>
-						<?php endfor; ?>
-						<li class="page-item <?php echo ($page >= $total_pages) ? 'disabled' : ''; ?>">
-							<a class="page-link" href="index.php?vista=admin_promociones&page=<?php echo $page + 1; ?>">Siguiente</a>
-						</li>
-					</ul>
-				</div>
-			</section>
-		</main>
-		<?php include __DIR__ . '/../../includes/footer.php'; ?>
-	</div>
+            <div class="admin-section px-lg-5">
 
-	<form id="actionForm" method="POST" action="index.php">
-		<input type="hidden" name="modulo" value="admin">
-		<input type="hidden" name="accion" value="estado_promocion">
-	</form>
+                <?php if (isset($_SESSION['success'])): ?>
+                    <div class="alert alert-success alert-dismissible fade show text-center mb-4" role="alert">
+                        <?= htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                    </div>
+                <?php endif; ?>
 
-	<div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Confirmar Acción</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-				</div>
-				<div class="modal-body">
-					¿Está seguro de que desea <span id="modalAction"></span> esta promoción?
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-					<button type="button" class="btn btn-primary" id="confirmActionBtn">Confirmar</button>
-				</div>
-			</div>
-		</div>
-	</div>
+                <div class="table-responsive rounded-4 shadow-sm">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-dark text-center">
+                            <tr>
+                                <th scope="col" class="py-3">Texto de la Promoción</th>
+                                <th scope="col" class="py-3">Fecha de Inicio</th>
+                                <th scope="col" class="py-3">Fecha de Fin</th>
+                                <th scope="col" class="py-3">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center bg-white">
+                            <?php if (!empty($promociones)): ?>
+                                <?php foreach ($promociones as $row): ?>
+                                    <tr>
+                                        <td class="fw-bold"><?= htmlspecialchars($row['textoPromo']); ?></td>
+                                        <td><?= htmlspecialchars($row['fecha_inicio']); ?></td>
+                                        <td><?= htmlspecialchars($row['fecha_fin']); ?></td>
+                                        <td>
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <button type="button" class="btn btn-success btn-sm px-3 fw-bold shadow-sm" 
+                                                        data-bs-toggle="modal" data-bs-target="#confirmModal"
+                                                        data-id="<?= $row['id']; ?>" data-action="aprobar">
+                                                    Aprobar
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm px-3 fw-bold shadow-sm" 
+                                                        data-bs-toggle="modal" data-bs-target="#confirmModal"
+                                                        data-id="<?= $row['id']; ?>" data-action="rechazar">
+                                                    Rechazar
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="4" class="py-5 text-muted fs-5">No hay promociones pendientes de revisión</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
 
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$('#confirmModal').on('show.bs.modal', function(event) {
-				var button = $(event.relatedTarget);
-				var promocionId = button.data('id');
-				var action = button.data('action');
-				$(this).find('#modalAction').text(action);
+                <?php if ($total_pages > 1): ?>
+                    <nav aria-label="Navegación de páginas de promociones" class="mt-5">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item <?= ($page <= 1) ? 'disabled' : ''; ?>">
+                                <a class="page-link shadow-sm" href="index.php?vista=admin_promociones&page=<?= $page - 1; ?>" <?= ($page <= 1) ? 'aria-disabled="true" tabindex="-1"' : ''; ?>>Anterior</a>
+                            </li>
+                            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                <li class="page-item <?= ($i == $page) ? 'active' : ''; ?>">
+                                    <a class="page-link shadow-sm" href="index.php?vista=admin_promociones&page=<?= $i; ?>" <?= ($i == $page) ? 'aria-current="page"' : ''; ?>><?= $i; ?></a>
+                                </li>
+                            <?php endfor; ?>
+                            <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : ''; ?>">
+                                <a class="page-link shadow-sm" href="index.php?vista=admin_promociones&page=<?= $page + 1; ?>" <?= ($page >= $total_pages) ? 'aria-disabled="true" tabindex="-1"' : ''; ?>>Siguiente</a>
+                            </li>
+                        </ul>
+                    </nav>
+                <?php endif; ?>
+            </div>
+        </main>
 
-				$('#confirmActionBtn').off('click').on('click', function() {
-					var form = $('#actionForm');
-					// Limpiamos inputs previos si los hubiera para no duplicar
-					form.find('input[name="accion_crud"], input[name="promocion_id"]').remove();
+        <?php include __DIR__ . '/../../includes/footer.php'; ?>
+    </div>
 
-					form.append('<input type="hidden" name="accion_crud" value="' + action + '">');
-					form.append('<input type="hidden" name="promocion_id" value="' + promocionId + '">');
-					form.submit();
-				});
-			});
-		});
-	</script>
+    <form id="actionForm" method="POST" action="index.php">
+        <input type="hidden" name="modulo" value="admin">
+        <input type="hidden" name="accion" value="estado_promocion">
+    </form>
+
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-dark text-white">
+                    <h2 class="modal-title h5" id="confirmModalLabel">Confirmar Acción</h2>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <p class="fs-5 m-0">¿Está seguro de que desea <strong id="modalAction" class="text-primary text-uppercase"></strong> esta promoción?</p>
+                </div>
+                <div class="modal-footer border-0 justify-content-center pb-4">
+                    <button type="button" class="btn btn-secondary px-4 fw-bold shadow-sm" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary px-4 fw-bold shadow-sm" id="confirmActionBtn">Confirmar Acción</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#confirmModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var promocionId = button.data('id');
+                var action = button.data('action');
+                $(this).find('#modalAction').text(action);
+
+                $('#confirmActionBtn').off('click').on('click', function() {
+                    var form = $('#actionForm');
+                    form.find('input[name="accion_crud"], input[name="promocion_id"]').remove();
+                    form.append('<input type="hidden" name="accion_crud" value="' + action + '">');
+                    form.append('<input type="hidden" name="promocion_id" value="' + promocionId + '">');
+                    form.submit();
+                });
+            });
+        });
+    </script>
 </body>
-
 </html>

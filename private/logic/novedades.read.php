@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/queries/novedades.queries.php';
 
+$novedades = [];
+$page = 1;
+$total_pages = 1;
+
 switch ($vista) {
 
     case 'admin_novedades':
@@ -33,12 +37,12 @@ switch ($vista) {
         break;
 
     case 'novedades':
-        $limit = 5;
+        $limit = 6;
         $page = max(1, (int)($_GET['page'] ?? 1));
         $offset = ($page - 1) * $limit;
         $id_usuario = $_SESSION['user_id'] ?? 0;
-        $tipo_usuario = $_SESSION['tipo'] ?? 'Cliente';
-        $categoria_usuario = $_SESSION['categoria'] ?? 'Inicial';
+        $tipo_usuario = $_SESSION['user_tipo'] ?? 'Cliente';
+        $categoria_usuario = $_SESSION['user_categoria'] ?? 'Inicial';
         $todas_novedades = get_novedades_permitidas($id_usuario, $tipo_usuario, $categoria_usuario) ?? [];
         $total_novedades = count($todas_novedades);
         $total_pages = max(1, (int)ceil($total_novedades / $limit));

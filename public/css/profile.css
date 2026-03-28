@@ -124,6 +124,21 @@
     margin-bottom: 2rem;
 }
 
+.profile-role.badge {
+background-color: #f8f9fa !important;
+color: #1a2a6c !important;
+border: 1px solid #dee2e6;
+}
+
+.stat-number {
+color: #0d6efd !important;
+}
+
+.info-label {
+color: #495057 !important;
+letter-spacing: 0.5px;
+}
+
 @media (max-width: 768px) {
     .profile-wrapper {
         padding-top: 120px;

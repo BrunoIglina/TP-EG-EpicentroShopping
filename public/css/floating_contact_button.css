@@ -1,0 +1,67 @@
+/* Floating Contact Button */
+.floating-contact-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: #202833;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 1rem;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.floating-contact-btn:hover {
+  background-color: #2a3540;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+  color: #fff;
+  text-decoration: none;
+}
+
+.floating-contact-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.floating-contact-btn-icon {
+  font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .floating-contact-btn {
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    gap: 6px;
+  }
+
+  .floating-contact-btn-icon {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-contact-btn {
+    bottom: 12px;
+    right: 12px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    gap: 4px;
+  }
+
+  .floating-contact-btn-icon {
+    font-size: 0.9rem;
+  }
+}
