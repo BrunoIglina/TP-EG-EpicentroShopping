@@ -33,7 +33,8 @@ function enviar_email_contacto($nombre, $email, $mensaje)
     try {
         configurar_smtp($mail);
 
-        $mail->setFrom($email, $nombre);
+        $mail->setFrom('noreply@epicentroshopping.com', 'Epicentro Shopping');
+        $mail->addReplyTo($email, $nombre);
         $mail->addAddress('admin@epicentroshopping.com');
         $mail->Subject = 'Nuevo mensaje de contacto';
         $mail->Body = "Nombre: $nombre\nEmail: $email\n\nMensaje:\n$mensaje";
@@ -48,11 +49,20 @@ function enviar_email_contacto($nombre, $email, $mensaje)
 
 function configurar_smtp($mail)
 {
+    $ruta_env = __DIR__ . '/../../../.env';
+
+    if (!file_exists($ruta_env)) {
+        error_log("Falta el archivo .env en: " . $ruta_env);
+        die("Error de configuración del sistema de correos.");
+    }
+
+    $env = parse_ini_file($ruta_env);
+
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'biprueba1@gmail.com';
-    $mail->Password = 'drmcehryxztedefq';
+    $mail->Username = $env['SMTP_USER'];
+    $mail->Password = $env['SMTP_PASS'];
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $mail->Port = 465;
 

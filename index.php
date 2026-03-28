@@ -3,14 +3,13 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// 1. Carga de dependencias y sesión (Rutas desde la raíz)
 require_once __DIR__ . '/private/lib/vendor/autoload.php';
 session_start();
 
 require_once __DIR__ . '/includes/navigation_history.php';
 require_once __DIR__ . '/includes/security_headers.php';
 
-// 2. ROUTER DE ACCIONES (POST)
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $modulo = $_POST['modulo'] ?? '';
 
@@ -32,11 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
-// 3. ROUTER DE VISTAS (GET)
+
 $vista = $_GET['vista'] ?? 'landing';
 
 switch ($vista) {
-  // --- PÁGINAS PÚBLICAS ---
+
   case 'landing':
     require_once __DIR__ . '/private/logic/locales.read.php';
     require_once __DIR__ . '/public/landing.php';
@@ -53,6 +52,11 @@ switch ($vista) {
     require_once __DIR__ . '/public/mapadesitio.php';
     break;
   case 'contacto':
+    $env_path = __DIR__ . '/.env';
+    if (file_exists($env_path)) {
+      $env = parse_ini_file($env_path);
+      $site_key = $env['RECAPTCHA_SITE_KEY'] ?? '';
+    }
     require_once __DIR__ . '/public/contacto.php';
     break;
 

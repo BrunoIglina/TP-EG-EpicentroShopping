@@ -10,11 +10,12 @@ $proto_policy = $is_local ? "http: https:" : "https:";
 
 header("Content-Security-Policy: " .
     "default-src 'self' $proto_policy; " .
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://code.jquery.com; " .
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://code.jquery.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; " .
     "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " .
     "img-src 'self' data: $proto_policy; " .
     "font-src 'self' data: $proto_policy; " .
-    "connect-src 'self';");
+    "connect-src 'self'; " .
+    "frame-src 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/;");
 
 if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
     header("Strict-Transport-Security: max-age=31536000; includeSubDomains");

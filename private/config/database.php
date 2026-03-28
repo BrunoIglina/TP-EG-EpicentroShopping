@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 class Database
 {
     private static $instance = null;
@@ -10,20 +7,41 @@ class Database
 
     private function __construct()
     {
-        $servername = "db";
-        $username = "root";
-        $password = "";
-        $dbname = "shopping_db";
-        $port = 3306;
+        $env_path = __DIR__ . '/../../.env';
+        if (!file_exists($env_path)) {
+            die("Error crítico: No se encontró el archivo de configuración.");
+        }
+        $env = parse_ini_file($env_path);
 
-        $this->conn = new mysqli($servername, $username, $password, $dbname, $port);
+        $is_local = ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1');
 
-        if ($this->conn->connect_error) {
-            error_log("Error de conexión a BD: " . $this->conn->connect_error);
-            die("Error al conectar con la base de datos. Por favor, contacte al administrador.");
+        if ($is_local) {
+            $servername = $env['LOCAL_DB_HOST'];
+            $username   = $env['LOCAL_DB_USER'];
+            $password   = $env['LOCAL_DB_PASS'];
+            $dbname     = $env['LOCAL_DB_NAME'];
+        } else {
+            $servername = $env['PROD_DB_HOST'];
+            $username   = $env['PROD_DB_USER'];
+            $password   = $env['PROD_DB_PASS'];
+            $dbname     = $env['PROD_DB_NAME'];
         }
 
-        $this->conn->set_charset("utf8mb4");
+        $port = 3306;
+
+        // Intentamos la conexión
+        try {
+            $this->conn = new mysqli($servername, $username, $password, $dbname, $port);
+
+            if ($this->conn->connect_error) {
+                throw new Exception("Error de conexión: " . $this->conn->connect_error);
+            }
+
+            $this->conn->set_charset("utf8mb4");
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            die("Lo sentimos, hay un problema técnico con la base de datos. Por favor, intente más tarde.");
+        }
     }
 
     public static function getInstance()

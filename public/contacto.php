@@ -16,18 +16,18 @@
 	<link rel="stylesheet" href="public/css/styles_fondo_and_titles.css">
 	<link rel="stylesheet" href="public/css/buttons.css">
 
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 	<title>Contacto - Epicentro Shopping</title>
 </head>
-<?php include __DIR__ . './../includes/header.php'; ?>
+<?php include __DIR__ . '/../includes/header.php'; ?>
 
 <body class="wrapper">
 
-
-	<?php
-	if (isset($_GET['success'])): ?>
-		<div class="alert alert-success">Tu mensaje ha sido enviado con éxito.</div>
+	<?php if (isset($_GET['success'])): ?>
+		<div class="alert alert-success mt-3 text-center">Tu mensaje ha sido enviado con éxito.</div>
 	<?php elseif (isset($_GET['error'])): ?>
-		<div class="alert alert-danger">Hubo un problema al enviar tu mensaje. Inténtalo de nuevo.</div>
+		<div class="alert alert-danger mt-3 text-center">Hubo un problema. Verifica el CAPTCHA e inténtalo de nuevo.</div>
 	<?php endif; ?>
 
 	<main class="container compact-container my-4">
@@ -87,20 +87,25 @@
 			</div>
 		</div>
 
-		<form action="../private/logic/helpers/procesar_contacto.php" method="POST" class="mt-4">
-			<div class="form-group">
+		<form action="private/logic/helpers/procesar_contacto.php" method="POST" class="mt-4">
+			<div class="form-group mb-3">
 				<label for="nombre">Nombre</label>
 				<input type="text" class="form-control" id="nombre" name="nombre" required>
 			</div>
-			<div class="form-group">
+			<div class="form-group mb-3">
 				<label for="email">Correo Electrónico</label>
 				<input type="email" class="form-control" id="email" name="email" required>
 			</div>
-			<div class="form-group">
+			<div class="form-group mb-3">
 				<label for="mensaje">Mensaje</label>
 				<textarea class="form-control" id="mensaje" name="mensaje" rows="4" required></textarea>
 			</div>
-			<button type="submit" class="btn btn-primary btn-block">Enviar</button>
+
+			<div class="form-group mb-3 d-flex justify-content-center">
+				<div class="g-recaptcha" data-sitekey="<?php echo htmlspecialchars($site_key ?? ''); ?>"></div>
+			</div>
+
+			<button type="submit" class="btn btn-primary btn-block w-100">Enviar</button>
 		</form>
 	</main>
 
