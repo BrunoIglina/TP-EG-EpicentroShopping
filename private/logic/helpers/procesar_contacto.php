@@ -3,6 +3,32 @@ require_once __DIR__ . '/../../lib/vendor/autoload.php';
 require_once __DIR__ . '/email.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+
+    $ruta_env = __DIR__ . '/../../../.env';
+    if (!file_exists($ruta_env)) {
+        header("Location: ../../../index.php?vista=contacto&error=1");
+        exit;
+    }
+
+    $env = parse_ini_file($ruta_env);
+    $secret_key = $env['RECAPTCHA_SECRET_KEY'];
+
+
+    if (empty($_POST['g-recaptcha-response'])) {
+        header("Location: ../../../index.php?vista=contacto&error=1");
+        exit;
+    }
+
+    $recaptcha_response = $_POST['g-recaptcha-response'];
+    $url = "https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$recaptcha_response}";
+    $respuesta_google = json_decode(file_get_contents($url));
+
+    if (!$respuesta_google->success) {
+        header("Location: ../../../index.php?vista=contacto&error=1");
+        exit;
+    }
+
     $nombre = strip_tags(trim($_POST["nombre"]));
     $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
     $mensaje = strip_tags(trim($_POST["mensaje"]));
