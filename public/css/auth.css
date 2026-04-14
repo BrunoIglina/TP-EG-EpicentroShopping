@@ -220,3 +220,46 @@ html, body {
         font-size: 1.5rem;
     }
 }
+
+
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+
+.toggle-checkbox {
+  display: none;
+}
+
+.masked-input {
+  width: 100%;
+  padding-right: 40px !important;
+
+  -webkit-text-security: disc; 
+}
+
+
+.toggle-checkbox:checked ~ .masked-input {
+  -webkit-text-security: none;
+}
+
+
+.toggle-label {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #6c757d;
+  z-index: 10;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.toggle-checkbox:checked ~ .toggle-label {
+  color: #0d6efd; 
+}

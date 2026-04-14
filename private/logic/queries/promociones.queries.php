@@ -18,6 +18,31 @@ function get_all_promociones_activas(): array
     $stmt->close();
     return $promociones;
 }
+function get_all_promociones_activas_con_locales(): array
+{
+    $conn = getDB();
+    $sql = "
+        SELECT p.id as promo_id, p.textoPromo, p.fecha_inicio, p.fecha_fin, 
+               p.diasSemana, p.categoriaCliente, p.local_id, l.nombre as nombre_local
+        FROM promociones p
+        INNER JOIN locales l ON p.local_id = l.id
+        WHERE p.estadoPromo = 'Aprobada'
+          AND CURRENT_DATE() BETWEEN p.fecha_inicio AND p.fecha_fin
+        ORDER BY p.fecha_fin DESC
+    ";
+    $stmt = $conn->prepare($sql);
+    
+    if (!$stmt->execute()) {
+        error_log("Error en get_all_promociones_activas_con_locales: " . $stmt->error);
+        return [];
+    }
+    
+    $result = $stmt->get_result();
+    $promociones = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+    
+    return $promociones;
+}
 
 function get_promociones_pendientes(int $limit, int $offset): array
 {

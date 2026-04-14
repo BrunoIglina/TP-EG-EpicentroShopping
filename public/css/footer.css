@@ -33,7 +33,51 @@ footer a:hover {
   text-decoration: underline;
 }
 
-/* Para páginas de autenticación */
+
 .auth-page footer {
   margin-top: 0;
+}
+
+
+
+.mega-footer {
+    background-color: #1a1f26; 
+    border-top: 1px solid #2d3748;
+}
+
+.footer-heading {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.footer-subheading {
+    color: #e53e3e; 
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.footer-link {
+    color: #a0aec0;
+    text-decoration: none;
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 0.6rem;
+    transition: color 0.2s ease-in-out;
+}
+
+.footer-link:hover {
+    color: #ffffff;
+}
+
+.footer-divider {
+    border-color: #2d3748;
+    margin: 2rem 0;
 }
