@@ -72,4 +72,23 @@ switch ($vista) {
         $total_pages = max(1, (int)ceil($total_promos / $limit));
         $categorias = ['Inicial', 'Medium', 'Premium'];
         break;
+
+        case 'promociones_general':
+        if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] !== 'Cliente') {
+            $_SESSION['mensaje_error'] = "Debes iniciar sesión como cliente para ver esta sección.";
+            header("Location: index.php?vista=login");
+            exit();
+        }
+
+        $categoriaCliente = $_SESSION['user_categoria'] ?? 'Inicial';
+        $categorias = ['Inicial', 'Medium', 'Premium'];
+        $indiceCliente = array_search($categoriaCliente, $categorias);
+
+        $todas_las_promos = get_all_promociones_activas_con_locales() ?? [];
+
+        $promos_disponibles = array_filter($todas_las_promos, function($promo) use ($categorias, $indiceCliente) {
+            $indicePromo = array_search($promo['categoriaCliente'], $categorias);
+            return $indicePromo <= $indiceCliente;
+        });
+        break;
 }

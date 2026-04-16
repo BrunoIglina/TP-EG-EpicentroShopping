@@ -1,5 +1,6 @@
-<?php
-// public/dueno/promocion_agregar.php
+<?php 
+  $fecha_hoy = date('Y-m-d'); 
+
 
 if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     header("Location: index.php");
@@ -15,10 +16,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./public/css/header.css">
     <link rel="stylesheet" href="./public/css/forms.css">
-    <link rel="stylesheet" href="./public/css/fix_header.css">
     <link rel="stylesheet" href="./public/css/back_button.css">
     <link rel="stylesheet" href="./public/css/buttons.css">
     <link rel="stylesheet" href="./public/css/styles_fondo_and_titles.css">
+    <link rel="stylesheet" href="./public/css/fix_header.css">
     <title>Epicentro Shopping - Agregar Promoción</title>
 </head>
 
@@ -28,7 +29,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
     <div class="form-wrapper mt-5 pt-5">
 
         <div class="container">
-
+                                <?php include __DIR__ . '/../../includes/back_button.php'; ?>
             <div class="row justify-content-center">
 
                 <div class="col-lg-8">
@@ -36,7 +37,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
                     <div class="form-card p-4 shadow bg-white rounded">
                         <div class="row align-items-center mb-5 mt-3">
                             <div class="col-2 col-md-1 text-start">
-                                <?php include __DIR__ . '/../../includes/back_button.php'; ?>
+
                             </div>
 
                             <div class="col-8 col-md-10">
@@ -80,11 +81,11 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_tipo'] != 'Dueno') {
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="fecha_inicio" class="form-label">Fecha de Inicio</label>
-                                    <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" required>
+                                    <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" min="<?php echo $fecha_hoy; ?>" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="fecha_fin" class="form-label">Fecha de Fin</label>
-                                    <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" required>
+                                    <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" min="<?php echo $fecha_hoy; ?>" required>
                                 </div>
                             </div>
 

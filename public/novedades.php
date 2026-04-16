@@ -9,6 +9,14 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+// Diccionario para traducir los meses al español
+$meses_espanol = [
+    '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo',
+    '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio',
+    '07' => 'Julio', '08' => 'Agosto', '09' => 'Septiembre',
+    '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre'
+];
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +38,7 @@ $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     <link rel="stylesheet" href="public/css/footer.css">
     <link rel="stylesheet" href="public/css/back_button.css">
     <link rel="stylesheet" href="public/css/tarjetas.css">
-    <link rel="stylesheet" href="public/css/fix_header.css">
+
     <link rel="stylesheet" href="public/css/wrapper.css">
 </head>
 
@@ -75,17 +83,48 @@ $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
                                     <div class="mb-3">
                                         <span class="badge bg-secondary text-uppercase" style="font-size: 0.75rem;">
-                                            Vigente hasta: <?= htmlspecialchars($novedad['fecha_hasta']); ?>
+                                            <?php 
+                                                $fecha_h = trim($novedad['fecha_hasta']);
+                                                if (!empty($fecha_h) && strpos($fecha_h, '0000-00-00') === false) {
+                                                    try {
+                                                        $dt_h = new DateTime($fecha_h);
+                                                        $dia = $dt_h->format('d');
+                                                        $mes = $meses_espanol[$dt_h->format('m')];
+                                                        $anio = $dt_h->format('Y');
+                                                        echo "Vigente hasta: $dia de $mes de $anio";
+                                                    } catch (Exception $e) {
+                                                        echo "Vigente hasta: " . htmlspecialchars($fecha_h);
+                                                    }
+                                                } else {
+                                                    echo "Vigente hasta: No especificada";
+                                                }
+                                            ?>
                                         </span>
                                     </div>
 
-                                    <p class="card-text text-dark mb-4">
+                                    <p class="card-text text-dark mb-4 texto-novedad-clamp">
                                         <?= htmlspecialchars($novedad['textoNovedad']); ?>
                                     </p>
 
                                     <div class="mt-auto pt-3 border-top">
                                         <p class="text-muted small mb-0">
-                                            <i class="bi bi-calendar3"></i> <?= htmlspecialchars($novedad['fecha_desde']); ?>
+                                            <i class="bi bi-calendar3"></i> 
+                                            <?php 
+                                                $fecha_d = trim($novedad['fecha_desde']);
+                                                if (!empty($fecha_d) && strpos($fecha_d, '0000-00-00') === false) {
+                                                    try {
+                                                        $dt_d = new DateTime($fecha_d);
+                                                        $dia = $dt_d->format('d');
+                                                        $mes = $meses_espanol[$dt_d->format('m')];
+                                                        $anio = $dt_d->format('Y');
+                                                        echo "Fecha Desde: $dia de $mes de $anio";
+                                                    } catch (Exception $e) {
+                                                        echo htmlspecialchars($fecha_d);
+                                                    }
+                                                } else {
+                                                    echo "Fecha no especificada";
+                                                }
+                                            ?>
                                         </p>
                                     </div>
                                 </div>
