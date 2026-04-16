@@ -33,9 +33,6 @@ $user_tipo = isset($_SESSION['user_tipo']) ? $_SESSION['user_tipo'] : 'Visitante
               <a class="nav-link text-white" href="index.php?vista=locales">Locales</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="index.php?vista=mapadesitio">Mapa</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link text-white" href="index.php?vista=novedades">Novedades</a>
             </li>
 

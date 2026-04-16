@@ -90,7 +90,6 @@ switch ($vista) {
     break;
   case 'admin_local_editar':
     require_once __DIR__ . '/private/logic/locales.read.php';
-    require_once __DIR__ . '/private/logic/novedades.read.php';
     require_once __DIR__ . '/public/admin/local_editar.php';
     break;
 
@@ -144,10 +143,20 @@ switch ($vista) {
     break;
 
   // --- MÓDULO CLIENTE ---
+
+  
+  case 'promociones_general':
+
+    require_once __DIR__ . '/private/logic/promociones.read.php'; 
+    require_once __DIR__ . '/public/client/promociones_general.php';
+    break;
+
   case 'cliente_perfil':
     require_once __DIR__ . '/private/logic/usuarios.read.php';
     require_once __DIR__ . '/public/client/miperfil.php';
     break;
+
+  // ... (el resto de tus cases de cliente)
   case 'cliente_mod_perfil':
     require_once __DIR__ . '/private/logic/usuarios.read.php';
     require_once __DIR__ . '/public/client/mod_perfil.php';

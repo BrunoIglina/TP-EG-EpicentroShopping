@@ -7,116 +7,99 @@ if (!isset($_GET['local_id'])) {
 $categoriaCliente = $_SESSION['user_categoria'] ?? null;
 $tipoUsuario = $_SESSION['user_tipo'] ?? 'Visitante';
 $clienteId = $_SESSION['user_id'] ?? 0;
-
-
+$categorias = ['Inicial', 'Medium', 'Premium']; 
 ?>
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <title>Promociones de <?php echo htmlspecialchars($local["nombre"]); ?> | Epicentro Shopping</title>
   <link rel="icon" type="image/png" href="public/assets/logo2.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-
-  <link rel="stylesheet" href="public/css/footer.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="public/css/header.css">
-  <link rel="stylesheet" href="public/css/styles_fondo_and_titles.css">
-  <link rel="stylesheet" href="public/css/tarjetas.css">
-  <link rel="stylesheet" href="public/css/back_button.css">
-  <link rel="stylesheet" href="public/css/fix_header.css">
+  <link rel="stylesheet" href="public/css/footer.css">
   <link rel="stylesheet" href="public/css/wrapper.css">
-
-  <title>Promociones - <?php echo htmlspecialchars($local["nombre"]); ?></title>
+  <link rel="stylesheet" href="./public/css/back_button.css">
 </head>
-
-<body>
+<body class="bg-light">
   <div class="wrapper">
     <?php include __DIR__ . '/../../includes/header.php'; ?>
 
-    <main class="container py-4">
-      <div class="row align-items-center mb-5 mt-2">
-        <div class="col-2 col-md-1 text-start">
-          <?php include __DIR__ . '/../../includes/back_button.php'; ?>
-        </div>
-        <div class="col-8 col-md-10">
-          <h2 class="text-center m-0 fw-bold text-uppercase" style="letter-spacing: 1px;">
-            <?php echo htmlspecialchars($local["nombre"]); ?>
-          </h2>
-          <p class="text-center text-muted m-0 mt-1">Promociones Disponibles</p>
-        </div>
-        <div class="col-2 col-md-1"></div>
-      </div>
+    <main class="container py-5">
+      
+      <div class="row align-items-center mb-5">
+        <div class="col-auto">
 
-      <?php
-      if (isset($_SESSION['mensaje_error'])) {
-        echo "<div class='alert alert-danger alert-dismissible fade show text-center' role='alert'>"
-          . htmlspecialchars($_SESSION['mensaje_error']) .
-          "<button type='button' class='btn-close' data-bs-dismiss='alert'></button></div>";
-        unset($_SESSION['mensaje_error']);
-      }
-      if (isset($_SESSION['mensaje_exito'])) {
-        echo "<div class='alert alert-success alert-dismissible fade show text-center' role='alert'>"
-          . htmlspecialchars($_SESSION['mensaje_exito']) .
-          "<button type='button' class='btn-close' data-bs-dismiss='alert'></button></div>";
-        unset($_SESSION['mensaje_exito']);
-      }
-      ?>
+        </div>
+        <div class="col">
+          <h2 class="text-center m-0 fw-bold text-uppercase h1"><?php echo htmlspecialchars($local["nombre"]); ?></h2>
+          <p class="text-center text-muted m-0 mt-2 fs-5">Catálogo de Promociones Vigentes</p>
+        </div>
+        <div class="col-auto" style="width: 100px;"></div> </div>
+                    <?php include __DIR__ . '/../../includes/back_button.php'; ?>
+      <?php if (isset($_SESSION['mensaje_error'])): ?>
+        <div class='alert alert-danger alert-dismissible fade show text-center shadow-sm' role='alert'>
+          <i class="bi bi-exclamation-triangle-fill"></i> <?= htmlspecialchars($_SESSION['mensaje_error']); ?>
+          <button type='button' class='btn-close' data-bs-dismiss='alert'></button>
+        </div>
+        <?php unset($_SESSION['mensaje_error']); ?>
+      <?php endif; ?>
 
-      <div class="row g-4 mb-4 justify-content-center">
+      <div class="row g-4 justify-content-center">
         <?php if (!empty($promos)): ?>
           <?php foreach ($promos as $row): ?>
+            <?php 
+              $promoCategoria = $row["categoriaCliente"];
+              $indiceCliente = array_search($categoriaCliente, $categorias);
+              $indicePromo = array_search($promoCategoria, $categorias);
+              
+              $isLocked = ($tipoUsuario === 'Cliente' && $indicePromo > $indiceCliente);
+              $cardClass = $isLocked ? 'border-danger-subtle bg-white opacity-75' : 'border-primary-subtle bg-white border-top border-4';
+            ?>
             <div class="col-12 col-md-6 col-lg-4 d-flex">
-              <div class="card w-100 shadow-sm border-0 rounded-4 overflow-hidden h-100">
-                <div class="card-header bg-dark text-white text-center py-3">
-                  <span class="badge bg-primary px-3 py-2 text-uppercase">
-                    Nivel: <?php echo htmlspecialchars($row["categoriaCliente"]); ?>
+              <div class="card w-100 shadow-sm rounded-4 overflow-hidden h-100 <?= $cardClass ?>">
+                
+                <div class="card-header <?= $isLocked ? 'bg-danger text-white' : 'bg-primary text-white' ?> text-center py-3 border-0">
+                  <span class="fw-bold text-uppercase" style="letter-spacing: 1px;">
+                    <?php if($isLocked): ?>
+                      <i class="bi bi-lock-fill"></i> Solo Nivel <?= htmlspecialchars($promoCategoria) ?>+
+                    <?php else: ?>
+                      <i class="bi bi-unlock-fill"></i> Nivel <?= htmlspecialchars($promoCategoria) ?>
+                    <?php endif; ?>
                   </span>
                 </div>
+
                 <div class="card-body d-flex flex-column text-center p-4">
-                  <h4 class="fw-bold mb-3"><?php echo htmlspecialchars($row["textoPromo"]); ?></h4>
+                  <h4 class="fw-bold mb-4" style="color: #2b3440;"><?php echo htmlspecialchars($row["textoPromo"]); ?></h4>
+                  
+                  <ul class="list-unstyled mb-4 text-start small text-muted bg-light p-3 rounded-3">
+                    <li class="mb-2"><i class="bi bi-calendar-event text-primary"></i> <strong>Válido:</strong> <?= date('d/m/Y', strtotime($row["fecha_inicio"])) ?> al <?= date('d/m/Y', strtotime($row["fecha_fin"])) ?></li>
+                    <li><i class="bi bi-clock text-primary"></i> <strong>Días:</strong> <?= htmlspecialchars(str_replace(',', ', ', $row["diasSemana"])) ?></li>
+                  </ul>
 
-                  <div class="mb-3 small text-muted">
-                    <div class="mb-1"><strong>Vigencia:</strong></div>
-                    <div><?php echo htmlspecialchars($row["fecha_inicio"]); ?> al <?php echo htmlspecialchars($row["fecha_fin"]); ?></div>
-                  </div>
-
-                  <div class="mb-4 small">
-                    <strong>Días:</strong> <?php echo htmlspecialchars(str_replace(',', ', ', $row["diasSemana"])); ?>
-                  </div>
-
-                  <div class="mt-auto pt-3 border-top">
+                  <div class="mt-auto">
                     <?php
                     if ($tipoUsuario === 'Visitante') {
-                      echo "<a href='index.php?vista=login' class='btn btn-primary w-100 fw-bold py-2'>INICIAR SESIÓN PARA PEDIR</a>";
+                      echo "<a href='index.php?vista=login' class='btn btn-outline-primary w-100 fw-bold py-2'>Iniciar Sesión para Pedir</a>";
                     } elseif ($tipoUsuario === 'Cliente') {
-                      $promoId = (int)$row["promo_id"];
-                      $promoCategoria = $row["categoriaCliente"];
+                      $yaPidio = ya_pidio_promocion($clienteId, $row["promo_id"]); 
 
-                      // Lógica de comparación de niveles
-                      $indiceCliente = array_search($categoriaCliente, $categorias);
-                      $indicePromo = array_search($promoCategoria, $categorias);
-                      $yaPidio = ya_pidio_promocion($clienteId, $promoId);
-
-                      if ($indicePromo > $indiceCliente) {
-                        // Caso: No tiene nivel suficiente
-                        echo "<button class='btn btn-secondary w-100 opacity-50 py-2' disabled style='cursor: not-allowed;'>NIVEL INSUFICIENTE</button>";
+                      if ($isLocked) {
+                        echo "<button class='btn btn-danger w-100 py-2 fw-bold' disabled><i class='bi bi-x-circle'></i> Nivel Insuficiente</button>";
                       } elseif ($yaPidio) {
-                        // Caso: Ya la pidió
-                        echo "<button class='btn btn-success w-100 opacity-75 py-2' disabled style='cursor: not-allowed;'>YA SOLICITADA</button>";
+                        echo "<button class='btn btn-success w-100 py-2 fw-bold' disabled><i class='bi bi-check-circle-fill'></i> Ya Solicitada</button>";
                       } else {
-                        // Caso: Puede pedirla
-                        echo "<form method='POST' action='index.php' class='w-100'>";
+                        echo "<form method='POST' action='index.php'>";
                         echo "<input type='hidden' name='modulo' value='cliente'>";
                         echo "<input type='hidden' name='action' value='pedir_promocion'>";
-                        echo "<input type='hidden' name='promo_id' value='" . $promoId . "'>";
-                        echo "<button type='submit' class='btn btn-primary w-100 fw-bold py-2 shadow-sm'>PEDIR PROMOCIÓN</button>";
+                        echo "<input type='hidden' name='promo_id' value='" . (int)$row["promo_id"] . "'>";
+                        echo "<button type='submit' class='btn btn-primary w-100 fw-bold py-2 shadow-sm'><i class='bi bi-bag-plus-fill'></i> Solicitar Promoción</button>";
                         echo "</form>";
                       }
                     } else {
-                      // Admin o Dueño no pueden "pedir" promos como clientes
-                      echo "<button class='btn btn-outline-secondary w-100 py-2' disabled>VISTA PREVIA</button>";
+                      echo "<button class='btn btn-secondary w-100 py-2' disabled>Vista Previa Administrador</button>";
                     }
                     ?>
                   </div>
@@ -126,34 +109,14 @@ $clienteId = $_SESSION['user_id'] ?? 0;
           <?php endforeach; ?>
         <?php else: ?>
           <div class="col-12 text-center py-5">
-            <h4 class="text-muted">Este local no tiene promociones vigentes por el momento.</h4>
+            <i class="bi bi-inbox text-muted" style="font-size: 3rem;"></i>
+            <h4 class="text-muted mt-3">Este local no tiene promociones vigentes por el momento.</h4>
           </div>
         <?php endif; ?>
       </div>
-
-      <?php if ($total_pages > 1): ?>
-        <nav class="mt-4">
-          <ul class="pagination justify-content-center">
-            <li class="page-item <?php echo $current_page <= 1 ? 'disabled' : ''; ?>">
-              <a class="page-link" href="index.php?vista=promociones&local_id=<?= $local_id ?>&page=<?= $current_page - 1 ?>">Anterior</a>
-            </li>
-            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-              <li class="page-item <?php echo $i == $current_page ? 'active' : ''; ?>">
-                <a class="page-link" href="index.php?vista=promociones&local_id=<?= $local_id ?>&page=<?= $i ?>"><?= $i ?></a>
-              </li>
-            <?php endfor; ?>
-            <li class="page-item <?php echo $current_page >= $total_pages ? 'disabled' : ''; ?>">
-              <a class="page-link" href="index.php?vista=promociones&local_id=<?= $local_id ?>&page=<?= $current_page + 1 ?>">Siguiente</a>
-            </li>
-          </ul>
-        </nav>
-      <?php endif; ?>
-
     </main>
     <?php include __DIR__ . '/../../includes/footer.php'; ?>
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

@@ -1,3 +1,6 @@
+<?php 
+  $fecha_hoy = date('Y-m-d'); 
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -66,12 +69,12 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="fecha_desde" class="form-label">Fecha Desde</label>
-                                    <input type="date" class="form-control" id="fecha_desde" name="fecha_desde" required>
+                                    <input type="date" class="form-control" id="fecha_desde" name="fecha_desde" min="<?php echo $fecha_hoy; ?>" required>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label for="fecha_hasta" class="form-label">Fecha Hasta</label>
-                                    <input type="date" class="form-control" id="fecha_hasta" name="fecha_hasta" required>
+                                    <input type="date" class="form-control" id="fecha_hasta" name="fecha_hasta" min="<?php echo $fecha_hoy; ?>" required>
                                 </div>
                             </div>
 

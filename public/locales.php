@@ -1,30 +1,38 @@
 <?php
 $filtered_locales = $locales;
 
-// FILTRO: Por Nombre
+// FILTROS ACTUALES (Nombre, ID, Rubro)
 if (isset($_GET['nombre_local']) && $_GET['nombre_local'] != '') {
   $nombre_local = $_GET['nombre_local'];
   $filtered_locales = array_filter($filtered_locales, function ($local) use ($nombre_local) {
     return stripos($local['nombre'], $nombre_local) !== false;
   });
 }
-
 if (isset($_GET['local_id']) && $_GET['local_id'] != '') {
   $local_id = $_GET['local_id'];
   $filtered_locales = array_filter($filtered_locales, function ($local) use ($local_id) {
     return $local['id'] == $local_id;
   });
 }
-
-// FILTRO: Por Rubro (Categoría)
 if (isset($_GET['rubro']) && $_GET['rubro'] != '') {
   $rubro = $_GET['rubro'];
   $filtered_locales = array_filter($filtered_locales, function ($local) use ($rubro) {
     return $local['rubro'] == $rubro;
   });
 }
+if (isset($_GET['promos_activas']) && $_GET['promos_activas'] != '') {
+  $promos_activas = $_GET['promos_activas'];
+  $filtered_locales = array_filter($filtered_locales, function ($local) use ($promos_activas) {
+    if ($promos_activas === 'si') {
+      return isset($local['tiene_promos']) && $local['tiene_promos'] > 0;
+    } elseif ($promos_activas === 'no') {
+      return !isset($local['tiene_promos']) || $local['tiene_promos'] == 0;
+    }
+    // Si el valor es 'indiferente' (o cualquier otro), no se filtra nada.
+    return true; 
+  });
+}
 
-// PAGINACIÓN
 $items_per_page = 6;
 $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $total_items = count($filtered_locales);
@@ -42,17 +50,14 @@ function getQueryString($page, $current_get)
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-
-  <title>Nuestros Locales | Epicentro Shopping - Explorar Tiendas</title>
-
+  <title>Nuestros Locales | Epicentro Shopping</title>
   <link rel="icon" type="image/png" href="public/assets/logo2.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="public/css/header.css">
   <link rel="stylesheet" href="public/css/styles_fondo_and_titles.css">
   <link rel="stylesheet" href="public/css/footer.css">
@@ -60,12 +65,7 @@ function getQueryString($page, $current_get)
   <link rel="stylesheet" href="public/css/tarjetas.css">
   <link rel="stylesheet" href="public/css/fix_header.css">
 </head>
-
 <body>
-  <a href="#main-content" class="visually-hidden-focusable text-center d-block bg-dark text-white py-2">
-    Saltar al contenido principal
-  </a>
-
   <div class="wrapper">
     <?php include __DIR__ . '/../includes/header.php'; ?>
 
@@ -74,51 +74,59 @@ function getQueryString($page, $current_get)
         <div class="col-2 col-md-1 text-start">
           <?php include __DIR__ . '/../includes/back_button.php'; ?>
         </div>
-
         <div class="col-8 col-md-10">
-          <h1 class="text-center m-0 fw-bold text-uppercase h2" style="letter-spacing: 1px;">
-            Locales
-          </h1>
+          <h1 class="text-center m-0 fw-bold text-uppercase h2" style="letter-spacing: 1px;">Locales</h1>
         </div>
-
         <div class="col-2 col-md-1"></div>
       </div>
 
       <form method="GET" action="index.php">
         <input type="hidden" name="vista" value="locales">
-
+        
         <div class="row mb-4">
           <div class="col-12 d-flex flex-column flex-md-row gap-2">
-            <label for="nombre_local" class="visually-hidden">Buscar por nombre del local</label>
-            <input type="text" id="nombre_local" name="nombre_local" class="form-control"
-              placeholder="Buscar por nombre del local..."
-              value="<?= isset($_GET['nombre_local']) ? htmlspecialchars($_GET['nombre_local']) : ''; ?>">
-            <button type="submit" class="btn btn-primary px-4">
-              <i class="bi bi-search"></i> Buscar
-            </button>
+            <input type="text" id="nombre_local" name="nombre_local" class="form-control" placeholder="Buscar por nombre del local..." value="<?= isset($_GET['nombre_local']) ? htmlspecialchars($_GET['nombre_local']) : ''; ?>">
+            <button type="submit" class="btn btn-primary px-4"><i class="bi bi-search"></i> Buscar</button>
           </div>
         </div>
 
         <div class="row">
           <aside class="col-md-3" style="padding: 0.5rem;">
-            <div class="card p-3 shadow-sm border-0 rounded-3">
-              <h2 class="h5 fw-bold mb-3">Filtrar por:</h2>
-
+            <div class="card p-4 shadow-sm border-0 rounded-4 mb-4">
+              <h2 class="h5 fw-bold mb-3"><i class="bi bi-funnel-fill text-primary"></i> Filtrar por:</h2>
+              
               <div class="mb-3">
                 <label for="rubro_select" class="form-label small fw-bold">Categoría o Rubro</label>
                 <select id="rubro_select" name="rubro" class="form-select">
                   <option value="">Todos los rubros</option>
                   <?php foreach ($rubros as $label => $value): ?>
-                    <option value="<?= htmlspecialchars($value); ?>"
-                      <?= (isset($_GET['rubro']) && $_GET['rubro'] == $value) ? 'selected' : ''; ?>>
+                    <option value="<?= htmlspecialchars($value); ?>" <?= (isset($_GET['rubro']) && $_GET['rubro'] == $value) ? 'selected' : ''; ?>>
                       <?= htmlspecialchars($label); ?>
                     </option>
                   <?php endforeach; ?>
                 </select>
               </div>
 
+              <div class="mb-4">
+                <label for="promos_activas_select" class="form-label small fw-bold">Promociones Activas</label>
+                <select id="promos_activas_select" name="promos_activas" class="form-select">
+                  <option value="indiferente" <?= (!isset($_GET['promos_activas']) || $_GET['promos_activas'] == 'indiferente') ? 'selected' : ''; ?>>Indiferente (Todos)</option>
+                  <option value="si" <?= (isset($_GET['promos_activas']) && $_GET['promos_activas'] == 'si') ? 'selected' : ''; ?>>Sí, con promos vigentes</option>
+                  <option value="no" <?= (isset($_GET['promos_activas']) && $_GET['promos_activas'] == 'no') ? 'selected' : ''; ?>>No, sin promociones</option>
+                </select>
+              </div>
+
               <button type="submit" class="btn btn-secondary w-100 mb-2">Aplicar Filtros</button>
               <a href="index.php?vista=locales" class="btn btn-outline-danger w-100">Limpiar Filtros</a>
+              
+              <?php if(isset($_SESSION['user_tipo']) && $_SESSION['user_tipo'] === 'Cliente'): ?>
+                <hr class="my-4">
+                <h3 class="h6 fw-bold text-warning-emphasis mb-2"><i class="bi bi-lightning-charge-fill text-warning"></i> Atajo </h3>
+                <p class="small text-muted mb-3">Mira todas las promociones del shopping que aplican para tu nivel (<?= htmlspecialchars($_SESSION['user_categoria'] ?? 'Inicial') ?>).</p>
+                <a href="index.php?vista=promociones_general" class="btn btn-warning w-100 fw-bold shadow-sm">
+                  Ver Promociones Disponibles Para Mi Nivel
+                </a>
+              <?php endif; ?>
             </div>
           </aside>
 
@@ -131,28 +139,32 @@ function getQueryString($page, $current_get)
               <?php else: ?>
                 <?php foreach ($paginated_locales as $local): ?>
                   <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
-                      <div style="height: 180px; overflow: hidden;">
-                        <img src="index.php?vista=imagen&local_id=<?= $local['id']; ?>"
-                          class="card-img-top w-100 h-100"
-                          alt="Logotipo del local <?= htmlspecialchars($local['nombre']); ?>"
-                          style="object-fit: cover;">
+                    <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden position-relative">
+                      
+                      <?php if(isset($local['tiene_promos']) && $local['tiene_promos'] > 0): ?>
+                        <div class="position-absolute top-0 end-0 m-2 z-1 d-flex flex-column gap-1 align-items-end">
+                          <span class="badge bg-danger shadow-sm px-2 py-1 text-uppercase" style="font-size: 0.7rem;">
+                            <i class="bi bi-tag-fill"></i> Promos Activas
+                          </span>
+                          <span class="badge bg-warning text-dark shadow-sm px-2 py-1 text-uppercase" style="font-size: 0.65rem;">
+                            <i class="bi bi-star-fill"></i> Nivel <?= htmlspecialchars($local['nivel_minimo']); ?>+
+                          </span>
+                        </div>
+                      <?php endif; ?>
+
+                      <div style="height: 180px; overflow: hidden;" class="bg-light d-flex align-items-center justify-content-center">
+                        <img src="index.php?vista=imagen&local_id=<?= $local['id']; ?>" class="card-img-top w-100 h-100" alt="Logotipo de <?= htmlspecialchars($local['nombre']); ?>" style="object-fit: cover;">
                       </div>
 
                       <div class="card-body d-flex flex-column text-center p-4">
                         <h3 class="h5 card-title fw-bold text-dark"><?= htmlspecialchars($local['nombre']); ?></h3>
-
                         <div class="my-2">
-                          <span class="badge bg-primary text-uppercase"><?= htmlspecialchars($local['rubro']); ?></span>
+                          <span class="badge bg-dark-subtle text-dark text-uppercase"><?= htmlspecialchars($local['rubro']); ?></span>
                         </div>
-
-                        <p class="card-text mt-auto text-muted small">
-                          <i class="bi bi-geo-alt"></i> Ubicación: <?= htmlspecialchars($local['ubicacion']); ?>
+                        <p class="card-text mt-auto text-muted small mb-4">
+                          <i class="bi bi-geo-alt-fill text-primary"></i> <?= htmlspecialchars($local['ubicacion']); ?>
                         </p>
-
-                        <a href="index.php?vista=promociones&local_id=<?= $local['id']; ?>"
-                          class="btn btn-primary mt-3 w-100 py-2 fw-bold"
-                          aria-label="Ver promociones de <?= htmlspecialchars($local['nombre']); ?>">
+                        <a href="index.php?vista=promociones&local_id=<?= $local['id']; ?>" class="btn btn-primary mt-auto w-100 py-2 fw-bold">
                           Ver Promociones
                         </a>
                       </div>
@@ -185,8 +197,6 @@ function getQueryString($page, $current_get)
     </main>
     <?php include __DIR__ . '/../includes/footer.php'; ?>
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

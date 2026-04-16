@@ -9,7 +9,19 @@ require_once __DIR__ . '/../helpers/subirImagen.php';
 function get_all_locales(?int $limit = null, ?int $offset = null): array
 {
     $conn = getDB();
-    $sql = "SELECT * FROM locales ORDER BY nombre";
+    
+    // Hacemos un LEFT JOIN para contar las promos vigentes y obtener el nivel mínimo
+    $sql = "
+        SELECT l.*, 
+               COUNT(p.id) as tiene_promos,
+               MIN(p.categoriaCliente) as nivel_minimo
+        FROM locales l
+        LEFT JOIN promociones p ON l.id = p.local_id 
+            AND p.estadoPromo = 'Aprobada' 
+            AND CURRENT_DATE() BETWEEN p.fecha_inicio AND p.fecha_fin
+        GROUP BY l.id
+        ORDER BY l.nombre
+    ";
 
     if ($limit !== null && $offset !== null) {
         $sql .= " LIMIT ? OFFSET ?";
